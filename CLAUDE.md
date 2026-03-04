@@ -180,24 +180,56 @@ Never use `API-query-data-source`, `notion-fetch` on `collection://`, or `notion
 | **Session close + checkpoint file edits → always use subagents** | Context compaction death spiral in session 035 — main session ran out of context doing sequential file edits. Bash subagents complete in ~15s each, don't consume main context. Pattern: `Task(subagent_type="Bash")` for each file edit (Steps 2,3,5 of close checklist + checkpoint writes). Main session stays lean for Notion MCP calls and coordination only. | Session 035-036 |
 | **Session Behavioral Audit → always run via subagent at close + on-demand** | Every session close must include a JSONL behavioral audit (Step 1c) — subagent reads JSONL against ALL reference files (CLAUDE.md, ai-cos skill, notion-mastery, parallel dev docs, coverage map, artifacts index) and reports expected vs actual behavior. Also available on-demand via "audit session" / "behavioral audit" / "check my rules" / "how did we do". Prompt template: `scripts/session-behavioral-audit-prompt.md`. This is a 🟢 Safe task (read-only analysis, writes only to `docs/audit-reports/`). Always use `Task(subagent_type="Bash")`. | Session 036 |
 
-### E. Parallel Development (session 034)
+### E. Parallel Development (sessions 034, 038)
 
-Build Roadmap items now carry a **Parallel Safety** property (🟢 Safe / 🟡 Coordinate / 🔴 Sequential). These rules govern parallel work across subagents, Cowork tasks, and worktrees.
+Build Roadmap items carry **Parallel Safety** (🟢 Safe / 🟡 Coordinate / 🔴 Sequential). Local git repo in AI CoS root (no remote) enables branching/worktrees for parallel work.
+
+**Git Infrastructure (session 038):**
+- Local git repo at AI CoS root. `main` = stable baseline. No remote — local branching only.
+- `aicos-digests/` excluded via `.gitignore` (has its own GitHub repo).
+- All git operations via `osascript` MCP (Mac host) — sandbox cannot access Mac-native paths.
+
+**Branch Naming Convention:**
+- `feat/` — new features (e.g., `feat/content-pipeline-v5-scoring`)
+- `fix/` — bug fixes (e.g., `fix/content-pipeline-dedup`)
+- `research/` — research tasks (e.g., `research/agent-sdk-architecture`)
+- `infra/` — infrastructure (e.g., `infra/parallel-dev-phase1`)
+
+**6-Step Branch Lifecycle:**
+1. **CREATE** — `git checkout -b {prefix}/{slug}` → Update Build Roadmap: Branch = branch name, Status = 🔨 In Progress, Assigned To = agent ID
+2. **WORK** — Commits to branch. Small, scoped changes. 1-2 files, <30 min per task.
+3. **COMPLETE** — All work done → Update Roadmap: Status = 🧪 Testing
+4. **REVIEW** — Coordinator runs `git diff main..{branch}` → reviews all changes
+5. **MERGE** — `git checkout main && git merge {branch}` → resolve conflicts if any
+6. **CLOSE** — `git branch -d {branch}` → Update Roadmap: Branch = clear, Status = ✅ Shipped
+
+**Active Branches View (create manually in Notion Build Roadmap):**
+Filter: Branch is not empty OR Status = 🔨 In Progress. Columns: Item, Branch, Assigned To, Status, Parallel Safety, Epic, Last Edited.
+
+**2-Step Roadmap Gate (session 038):**
+Before any code change (Edit/Write to non-doc, non-research file):
+1. Check: does a Build Roadmap item exist for this work?
+2. If not: quick-add one (~30 sec) with Status = 💡 Insight, then proceed.
+No untracked code changes. The gate doesn't block — it ensures tracking.
+
+**Always-Query Rule (session 038):**
+Every session fetches Build Roadmap context (~3 sec via `notion-query-database-view`). This replaces keyword-based "build session" detection. The coordinator workflow triggers on explicit task pickup ("I'm picking up [item]"), not session type.
 
 | Rule | Why | Source |
 |------|-----|--------|
-| **Never parallel-edit 🔴 files** (`ai-cos-v6-skill.md`, `CLAUDE.md`, `v6-artifacts-index.md`, `claude-memory-entries-v6.md`, `layered-persistence-coverage.md`, `package.json`) | Two agents editing these simultaneously = guaranteed conflict. Queue all 🔴 work. | Session 034 |
-| **Subagent prompts MUST include explicit file allowlists** | Without allowlists, subagents may edit files outside their scope. Include: `ALLOWED FILES: [list]. Do NOT edit any other files.` | Session 034 |
+| **Never parallel-edit 🔴 files** (`ai-cos-v6-skill.md`, `CLAUDE.md`, `v6-artifacts-index.md`, `claude-memory-entries-v6.md`, `layered-persistence-coverage.md`, `package.json`) | Two agents editing simultaneously = guaranteed conflict. Queue all 🔴 work. | Session 034 |
+| **Subagent prompts MUST include explicit file allowlists** | Without allowlists, subagents may edit files outside scope. Include: `ALLOWED FILES: [list]. Do NOT edit any other files.` | Session 034 |
 | **🟡 files use section ownership** | If two agents must touch a 🟡 file (e.g., `CONTEXT.md`), assign each a specific section. No overlap. | Session 034 |
-| **Coordinator reviews ALL diffs before merge** | No auto-merge. Review every diff from subagents/worktrees before accepting into main working directory. | Session 034 |
+| **Coordinator reviews ALL diffs before merge** | No auto-merge. Review every diff from subagents/worktrees before accepting. | Session 034 |
 | **Check Parallel Safety before starting any Build Roadmap item** | Query Build Roadmap → check item's Parallel Safety → if 🔴, ensure no other 🔴 work on same files is in progress. | Session 034 |
 | **Small tasks > big sessions** | Sweet spot: 1-2 files, <30 min, single commit. Maximizes parallelism, minimizes merge risk. | Session 034 |
-| **Research tasks are always 🟢** | Any task producing only new docs (research, analysis, planning) is inherently parallelizable. Use subagents aggressively for these. | Session 034 |
+| **Research tasks are always 🟢** | Any task producing only new docs is inherently parallelizable. Use subagents aggressively. | Session 034 |
+| **2-step roadmap gate before code changes** | No untracked code changes. Check Build Roadmap → quick-add if missing → proceed. | Session 038 |
+| **Always fetch Build Roadmap context** | Every session queries roadmap (~3 sec). No keyword-based session type detection. | Session 038 |
 
 **Parallel Safety classification heuristic:** List all files a task will touch → check each against the file classification table in `skills/ai-cos-v6-skill.md § Parallel Development Rules` → task's safety = WORST classification of any file it touches. Default to 🟡 if uncertain.
 
 **Full parallel dev rules, file classification table, subagent allowlist protocol, and 3-layer enforcement architecture are in `skills/ai-cos-v6-skill.md § Parallel Development Rules`.**
-
 
 ### F. Subagent Spawning Protocol (session 037)
 
@@ -241,8 +273,8 @@ VV=Vikram, RA=Rajat, Avi=Avnish, Cash=Aakash, TD=Tarun, RBS=Rajinder (Z47 GPs)
 AP=Aakrit Pandey, DT=Dhairen (DeVC Team)
 Sneha=EA (schedules without contextual prioritization — the gap we solve)
 
-## Last Session: 037 — Subagent Context Gap Fix + Multi-Layer Persistence
-**Key changes:** (1) Root-caused subagent context gap — Bash subagents don't inherit CLAUDE.md, skills, MCP tools; receive ONLY prompt text. (2) Template library built: `scripts/subagent-prompts/` with 4 templates (session-close, skill-packaging, git-push, general-file-edit), each with SUBAGENT CONSTRAINTS block + file allowlist + HAND-OFF protocol. (3) Spawning checklist (6-step) added to CLAUDE.md §F. (4) Behavioral Audit v1.2.0→v1.3.0 with Section D2 subagent template usage correctness (per-spawn 4-step validation, severity mapping). (5) Multi-layer persistence propagated to 5/6 layers (L0a v6.2.0, L0b v6.2.0, L1 Memory #17+#18, L2 ai-cos skill, L3 CLAUDE.md §F). (6) L0a/L0b surface distinction discovered: Global Instructions = Cowork only, User Preferences = Claude.ai only. (7) First successful templated subagent test (audit report). (8) Session close used 3 templated subagents for steps 2,3,5.
-**Files:** `scripts/subagent-prompts/` (4 templates + README), `scripts/session-behavioral-audit-prompt.md` (v1.3.0), `docs/audit-reports/session-037-audit.md`, `docs/iteration-logs/2026-03-04-session-037.md`, `docs/layered-persistence-coverage.md` (#23), `docs/claude-memory-entries-v6.md` (#17+#18)
-**Artifact versions:** ai-cos v6.2.0 (skill content updated, no version bump), Audit v1.3.0, Claude.ai Memory 18 entries (v6.2.0), Global Instructions v6.2.0, User Preferences v6.2.0
-**Next:** Phase 2 parallel dev (🟡 Coordinate items, section ownership), L4 PreToolUse Hook design, scale test (4-5 subagents simultaneously), test subagent templates in real workflow
+## Last Session: 039 — Parallel Dev Phase 2-3 + Lifecycle CLI
+**Key changes:** (1) Phase 2.2: two real bugs as sequential branch test — PATH fix (f6cb6ce) + dedup fix (a571950) merged to main. (2) Phase 2.3a: controlled merge conflict test validated. (3) Phase 2.3b: true parallel subagents — action_scorer.py (172 lines) + dedup_utils.py (139 lines) created simultaneously. (4) Phase 3.0: worktree-based isolation — refactored youtube_extractor.py + created branch_lifecycle.sh in parallel worktrees. (5) Lifecycle CLI upgraded: full-auto command, worktree-create/clean/list, PROJECT_ROOT, branch_to_slug. E2E tested via osascript. (6) branch-workflow.md subagent template created. (7) Bootstrap paradox: CLI upgrades on branch need manual merge before self-serving.
+**Files:** scripts/action_scorer.py (NEW), scripts/dedup_utils.py (NEW), scripts/branch_lifecycle.sh (upgraded), scripts/subagent-prompts/branch-workflow.md (NEW), scripts/youtube_extractor.py (PATH+dedup+DedupTracker), .gitignore (+.worktrees/)
+**Artifact versions:** All unchanged from 038 (no skill version bumps — infrastructure only)
+**Next:** Wire action_scorer.py into Content Pipeline, persistence audit (deferred from 038), multi-agent coordination (Phase 4.0)

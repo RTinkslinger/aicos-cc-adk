@@ -204,10 +204,46 @@ def classify_relevance(title: str, channel: str) -> dict:
         return {'relevant': True, 'confidence': 'low', 'work_score': work_score, 'personal_score': personal_score}
 
 
-def process_videos(videos: list, skip_transcripts: bool = False) -> list:
+def load_processed_ids() -> set:
+    """Load processed video IDs from the dedup file."""
+    dedup_file = Path(__file__).parent / 'processed_videos.json'
+    if not dedup_file.exists():
+        return set()
+    try:
+        with open(dedup_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            return set(data.get('processed_ids', []))
+    except (json.JSONDecodeError, IOError):
+        return set()
+
+
+def save_processed_ids(processed_ids: set) -> None:
+    """Save processed video IDs to the dedup file."""
+    dedup_file = Path(__file__).parent / 'processed_videos.json'
+    data = {
+        'processed_ids': sorted(list(processed_ids)),
+        'last_updated': datetime.now().isoformat(),
+    }
+    try:
+        with open(dedup_file, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    except IOError as e:
+        print(f"Warning: Could not save processed_videos.json: {e}")
+
+
+def process_videos(videos: list, skip_transcripts: bool = False, processed_ids: set = None) -> tuple:
     """Process each video: classify relevance and fetch transcript."""
     processed = []
+    if processed_ids is None:
+        processed_ids = set()
+    newly_processed_ids = set()
     for i, video in enumerate(videos):
+        # Check if already processed (dedup)
+        if video['video_id'] in processed_ids:
+            print(f"  [{i+1}/{len(videos)}] {video['title'][:60]}... (SKIPPED - already processed)")
+            processed.append(video)
+            continue
+
         print(f"  [{i+1}/{len(videos)}] {video['title'][:60]}...")
 
         # Quick relevance check
@@ -234,8 +270,9 @@ def process_videos(videos: list, skip_transcripts: bool = False) -> list:
             video['transcript'] = None
 
         processed.append(video)
+        newly_processed_ids.add(video['video_id'])
 
-    return processed
+    return processed, newly_processed_ids
 
 
 def main():
@@ -246,6 +283,7 @@ def main():
     parser.add_argument('--since-days', type=int, help='Only include videos from the last N days (alternative to --since)')
     parser.add_argument('--limit', type=int, help='Max number of videos to process')
     parser.add_argument('--skip-transcripts', action='store_true', help='Skip transcript fetching (metadata only)')
+    parser.add_argument('--force', action='store_true', help='Skip dedup and process all videos')
     parser.add_argument('--output-dir', default=None, help='Output directory (default: ../queue/)')
 
     args = parser.parse_args()
@@ -291,9 +329,13 @@ def main():
         print("No videos found. Check your playlist URL or video IDs.")
         sys.exit(1)
 
+    # Load processed video IDs (dedup)
+    processed_ids = set() if args.force else load_processed_ids()
+    skipped_count = len(processed_ids)
+
     # Process videos
     print(f"\nProcessing {len(videos)} videos...")
-    processed = process_videos(videos, skip_transcripts=args.skip_transcripts)
+    processed, newly_processed_ids = process_videos(videos, skip_transcripts=args.skip_transcripts, processed_ids=processed_ids)
 
     # Build output
     relevant = [v for v in processed if v.get('relevance', {}).get('relevant', True)]
@@ -305,6 +347,7 @@ def main():
         'total_videos': len(processed),
         'relevant_videos': len(relevant),
         'skipped_personal': len(skipped),
+        'skipped_dedup': skipped_count,
         'videos': processed,
     }
 
@@ -314,10 +357,15 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
 
+    # Save processed IDs to dedup file
+    all_processed = processed_ids | newly_processed_ids
+    save_processed_ids(all_processed)
+
     print(f"\n{'='*60}")
     print(f"Done! Processed {len(processed)} videos:")
     print(f"  - {len(relevant)} work-relevant (with transcripts)")
     print(f"  - {len(skipped)} skipped (personal content)")
+    print(f"  - {skipped_count} already processed (dedup)")
     print(f"\nOutput saved to: {output_file}")
     print(f"\nNext: Say 'process my content queue' (Cowork desktop or scheduled at 9 PM)")
     print(f"{'='*60}")

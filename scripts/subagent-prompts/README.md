@@ -39,6 +39,8 @@ When a subagent task requires MCP-only operations:
 2. Subagent outputs clear instructions for what main session must do next
 3. Main session picks up MCP tasks (Notion writes, osascript, present_files, etc.)
 
+For git operations, prefer using the lifecycle CLI (`scripts/branch_lifecycle.sh`) via osascript rather than raw git commands. The lifecycle CLI abstracts branch creation, worktree management, review, merge, and cleanup into single commands. See `branch-workflow.md` for patterns.
+
 ## Template Usage
 
 Main session should:
@@ -56,5 +58,6 @@ Main session should:
 | `skill-packaging.md` | Step 6 — package .skill ZIP, hand off to main for present_files |
 | `git-push-deploy.md` | Commit locally, hand off to main for osascript git push |
 | `general-file-edit.md` | Any 🔴 file edit with sandbox-aware constraints |
+| `branch-workflow.md` | Main session reference for lifecycle CLI orchestration (branches + worktrees) |
 
 Created: Session 037 (March 4, 2026)

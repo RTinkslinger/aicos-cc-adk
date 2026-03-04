@@ -23,6 +23,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timedelta
@@ -35,6 +36,25 @@ try:
 except ImportError:
     print("ERROR: youtube-transcript-api not installed. Run: pip3 install youtube-transcript-api")
     sys.exit(1)
+
+
+def find_yt_dlp() -> str:
+    """Find yt-dlp binary, checking PATH and common install locations."""
+    found = shutil.which('yt-dlp')
+    if found:
+        return found
+    # Fallback paths for launchd/cron environments with limited PATH
+    fallback_paths = [
+        os.path.expanduser('~/.local/bin/yt-dlp'),
+        '/opt/homebrew/bin/yt-dlp',
+        '/usr/local/bin/yt-dlp',
+        '/usr/bin/yt-dlp',
+    ]
+    for path in fallback_paths:
+        if os.path.isfile(path) and os.access(path, os.X_OK):
+            return path
+    # Last resort — hope it's on PATH at runtime
+    return 'yt-dlp'
 
 
 def extract_video_id(url_or_id: str) -> str:
@@ -53,7 +73,7 @@ def extract_video_id(url_or_id: str) -> str:
 def get_playlist_videos(playlist_url: str, limit: int = None, since_date: str = None) -> list:
     """Use yt-dlp to get video metadata from a playlist."""
     cmd = [
-        'yt-dlp', '--flat-playlist',
+        find_yt_dlp(), '--flat-playlist',
         '--print', '%(id)s\t%(title)s\t%(channel)s\t%(duration)s\t%(upload_date)s\t%(webpage_url)s',
         '--no-warnings',
     ]

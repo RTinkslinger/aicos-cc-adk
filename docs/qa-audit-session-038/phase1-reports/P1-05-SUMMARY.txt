@@ -1,0 +1,67 @@
+CONTENT PIPELINE SCHEMA INTEGRITY AUDIT — SUMMARY
+==================================================
+
+REPORT: P1-05-content-pipeline-schema.md
+COMPLETED: 2026-03-04
+AUDITOR: Subagent (Bash)
+STATUS: ✅ COMPLETE
+
+KEY FINDINGS:
+─────────────
+
+1. SCHEMA DRIFT DETECTED (3 ACTIVE PATTERNS)
+   • core_argument (singular) vs core_arguments (plural) — 5 files affected
+   • evidence vs data_points — 5 files affected
+   • framework vs frameworks — 5 files affected
+   • key_question_impact vs key_question — 5 files affected
+   
+   Status: 🟡 MITIGATED — Runtime normalization in digests.ts handles all drift
+
+2. TWO SCHEMA VERSIONS IN PRODUCTION
+   • v3 (Legacy): 5 files (ben-horowitz-*, from-writing-code-*, how-to-code-*, 
+                            the-powerful-*, the-saas-*)
+   • v4 (Current): 7 files (agi-po-*, ben-marc-*, cursor-*, design-*, india-*, 
+                             nuclear-*, startup-*)
+   
+   Root Cause: Different LLM templates across sessions (Session 027 issue)
+
+3. NORMALIZATION LAYER IS ROBUST
+   • 14 total normalizations defined (7 active, 7 available as fallback)
+   • 100% drift pattern coverage
+   • 60+ DigestClient field accesses verified as safe
+   
+   Status: ✅ WORKING CORRECTLY
+
+4. JSON VALIDITY
+   • All 12 digest files are syntactically valid JSON ✅
+   • All required fields present in all files ✅
+   • DigestClient rendering is safe ✅
+   
+   Status: ✅ PASS
+
+OVERALL ASSESSMENT: 97% Schema Integrity ✅
+────────────────────────────────────────────
+
+The content pipeline is FUNCTIONALLY SOUND with ROBUST NORMALIZATION.
+No immediate blocking issues. Recommendations are for long-term maintenance.
+
+PRIORITY ACTIONS:
+─────────────────
+
+Priority 1 (5 min): Fix schema mismatch in types.ts
+  → Add optional fields: summary?, key_insights?, topic_map?
+  
+Priority 2 (5 min): Verify SKILL.md template specifies v4 only
+  → Ensure no legacy singular forms being generated
+  
+Priority 3 (Optional): Migrate or delete v3 files
+  → Keep as-is if normalization is acceptable
+  → Re-analyze if consistency is critical
+  
+Priority 4 (10 min, Optional): Add JSON schema validation to publish_digest.py
+  → Catch malformed LLM output earlier in pipeline
+  
+Priority 5 (10 min): Document schema versions in docs/schema-changelog.md
+  → Help future developers understand history
+
+FULL DETAILS: See P1-05-content-pipeline-schema.md (667 lines)

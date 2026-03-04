@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.aakash.youtube-extractor</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/Aakash/Claude Projects/Aakash AI CoS/scripts/youtube_extractor.py</string>
+        <string>https://youtube.com/playlist?list=PLSAj-XU9ZUhPHrwSpZKxop1mDL8NgVPkD</string>
+        <string>--since-days</string>
+        <string>3</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>20</integer>
+        <key>Minute</key>
+        <integer>30</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/Aakash/Claude Projects/Aakash AI CoS/logs/youtube-extractor-stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/Aakash/Claude Projects/Aakash AI CoS/logs/youtube-extractor-stderr.log</string>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/Aakash/Claude Projects/Aakash AI CoS/scripts</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
+    </dict>
+</dict>
+</plist>

@@ -1,0 +1,35 @@
+PHASE 1 ARTIFACTS & PERSISTENCE AUDIT — COMPLETE
+Session: 038 (Audit subprocess)
+Date: March 4, 2026
+
+REPORT: P1-04-artifacts-persistence.md
+
+RESULTS:
+--------
+✅ 43/46 tests passed (93.5%)
+
+Version Alignment: ✅ PASS (6/6 artifacts correct)
+Coverage Map Verification: ✅ PASS (15/15 spot-checks)
+Layer Population: ✅ PASS (all 6 layers present)
+Orphaned Rules: ✅ PASS (none found)
+
+❌ CRITICAL ISSUES FOUND:
+- Memory entry #15: 504 chars (exceeds 500-char limit by 4)
+- Memory entry #16: 543 chars (exceeds by 43)
+- Memory entry #17: 579 chars (exceeds by 79)
+- Memory entry #18: 1 char (malformed/truncated)
+
+IMPACT: These entries will be truncated in Claude.ai Memory, losing critical rules
+around layered persistence, sandbox operations, and subagent handling.
+
+MINOR ISSUES:
+- Rule #10 (Notion bulk-read) at 2 layers (recommend 3+)
+
+NEXT STEPS (Priority):
+1. [P0] Trim/split Memory entries #15-17 to fit ≤500 chars
+2. [P0] Restore full content to Memory entry #18
+3. [P1] Sync corrected entries to Claude.ai Memory
+4. [P2] Add Notion bulk-read pattern to Memory L1 (upgrade coverage)
+
+AUDIT DETAILS:
+Full report: /sessions/laughing-trusting-wright/audit-workspace/phase1-reports/P1-04-artifacts-persistence.md

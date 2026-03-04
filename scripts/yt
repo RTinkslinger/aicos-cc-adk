@@ -1,0 +1,37 @@
+#!/bin/bash
+# yt — Quick YouTube extractor for AI CoS
+# Usage:
+#   yt                    → Extract from default playlist (last 3 days)
+#   yt 7                  → Extract from default playlist (last 7 days)
+#   yt <PLAYLIST_URL>     → Extract from custom playlist (last 3 days)
+#   yt <PLAYLIST_URL> 7   → Extract from custom playlist (last 7 days)
+#   yt --urls <URL1> ...  → Extract specific videos
+
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || readlink "$0" 2>/dev/null || echo "$0")")" && pwd)"
+EXTRACTOR="$SCRIPT_DIR/youtube_extractor.py"
+DEFAULT_PLAYLIST="https://youtube.com/playlist?list=PLSAj-XU9ZUhPHrwSpZKxop1mDL8NgVPkD"
+DEFAULT_DAYS=3
+
+# Pass through --urls mode directly
+if [ "$1" == "--urls" ]; then
+    shift
+    python3 "$EXTRACTOR" --urls "$@"
+    exit $?
+fi
+
+# No args = default playlist, default days
+if [ $# -eq 0 ]; then
+    python3 "$EXTRACTOR" "$DEFAULT_PLAYLIST" --since-days "$DEFAULT_DAYS"
+    exit $?
+fi
+
+# Single numeric arg = default playlist, custom days
+if [[ "$1" =~ ^[0-9]+$ ]]; then
+    python3 "$EXTRACTOR" "$DEFAULT_PLAYLIST" --since-days "$1"
+    exit $?
+fi
+
+# First arg is a URL
+PLAYLIST="$1"
+DAYS="${2:-$DEFAULT_DAYS}"
+python3 "$EXTRACTOR" "$PLAYLIST" --since-days "$DAYS"

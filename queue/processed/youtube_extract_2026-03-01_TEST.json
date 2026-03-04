@@ -1,0 +1,64 @@
+{
+  "extraction_timestamp": "2026-03-01T20:30:00",
+  "source_playlist": "test_synthetic",
+  "total_videos": 3,
+  "relevant_videos": 2,
+  "skipped_personal": 1,
+  "videos": [
+    {
+      "video_id": "test_vid_001",
+      "title": "Why India's SaaS Market Will Be $50B by 2030 — Deep Dive with Venture Investors",
+      "channel": "The SaaS Podcast",
+      "duration_seconds": "3600",
+      "upload_date": "20260225",
+      "url": "https://www.youtube.com/watch?v=test_vid_001",
+      "relevance": {
+        "relevant": true,
+        "confidence": "high",
+        "work_score": 8,
+        "personal_score": 0
+      },
+      "transcript": {
+        "success": true,
+        "full_text": "Welcome to this deep dive on India's SaaS market trajectory. We're joined by three venture investors who collectively have over $2 billion in assets under management across India's technology ecosystem. The Indian SaaS market has been growing at 30% CAGR, and we believe this is just the beginning. Several factors are converging: first, the engineering talent pool in India is now the largest in the world, with over 5 million developers. Second, the cost advantage remains significant — you can build a world-class SaaS product at 30-40% of Silicon Valley costs. Third, and this is critical, Indian SaaS companies are now winning global enterprise deals, not just SMB. Companies like Freshworks, Zoho, and now a new generation of AI-native SaaS companies are showing that India can compete at the highest levels. On the AI front, we're seeing incredible innovation. Indian startups are building AI agents for specific vertical workflows — healthcare scheduling, legal document review, financial compliance. The interesting thesis here is that AI doesn't replace SaaS, it makes SaaS more valuable by adding intelligence layers. For investors, the key question is: which segments will see the most disruption? We believe cybersecurity, developer tools, and vertical SaaS for healthcare and fintech are the three biggest opportunities in India right now. The unit economics are compelling — average ACV is moving from $5K to $50K as companies move upmarket. And the IPO pipeline is strong — we expect 5-7 Indian SaaS companies to go public in the next 2 years.",
+        "segments": [],
+        "language": "en"
+      }
+    },
+    {
+      "video_id": "test_vid_002",
+      "title": "The Nuclear Energy Renaissance: How Fusion and Fission Are Reshaping Global Power",
+      "channel": "Real Engineering",
+      "duration_seconds": "2400",
+      "upload_date": "20260220",
+      "url": "https://www.youtube.com/watch?v=test_vid_002",
+      "relevance": {
+        "relevant": true,
+        "confidence": "high",
+        "work_score": 5,
+        "personal_score": 0
+      },
+      "transcript": {
+        "success": true,
+        "full_text": "Nuclear energy is experiencing a dramatic comeback. After decades of decline following Chernobyl and Fukushima, multiple converging trends are driving a nuclear renaissance. First, AI data centers are creating unprecedented electricity demand — a single large AI training cluster can consume as much power as a small city. Microsoft, Google, and Amazon have all signed nuclear power agreements. Second, small modular reactors or SMRs are finally becoming commercially viable. Companies like NuScale, Kairos Power, and TerraPower are building the first generation of SMR power plants. The economics have shifted dramatically — SMRs can be factory-built and deployed in 3-4 years versus 10-15 for traditional nuclear plants. Third, fusion is no longer science fiction. Commonwealth Fusion Systems expects to demonstrate net energy gain by 2027. Helion Energy has a power purchase agreement with Microsoft. The investment landscape is fascinating — over $6 billion has flowed into fusion startups in the last 3 years alone. For the venture world, the adjacent opportunities are enormous: nuclear supply chain components, advanced materials, radiation detection, nuclear-grade sensors, cooling systems, and the entire software stack for plant monitoring and safety. This is a multi-trillion dollar market transition that will reshape energy geopolitics for the next century.",
+        "segments": [],
+        "language": "en"
+      }
+    },
+    {
+      "video_id": "test_vid_003",
+      "title": "Best Mumbai Street Food Tour 2026 — Hidden Gems",
+      "channel": "Food Explorer India",
+      "duration_seconds": "1200",
+      "upload_date": "20260228",
+      "url": "https://www.youtube.com/watch?v=test_vid_003",
+      "relevance": {
+        "relevant": false,
+        "confidence": "high",
+        "work_score": 0,
+        "personal_score": 3
+      },
+      "transcript": null
+    }
+  ]
+}

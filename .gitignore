@@ -1,0 +1,55 @@
+# AI CoS Git Ignore
+# This repo is LOCAL ONLY (no remote) — used for branching/worktrees in parallel dev
+
+# Separate git repo — has its own remote on GitHub
+aicos-digests/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+venv/
+.venv/
+
+# Node (if any scripts use it)
+node_modules/
+
+# Environment & secrets
+.env
+.env.*
+*.key
+*.pem
+
+# OS files
+.DS_Store
+Thumbs.db
+._*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Large files / media
+*.mp4
+*.mp3
+*.wav
+*.avi
+*.mov
+*.mkv
+
+# Temporary / build artifacts
+/tmp/
+*.tmp
+*.bak
+*.log
+
+# Cowork session artifacts (transient)
+.claude/

@@ -29,6 +29,8 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from dedup_utils import DedupTracker
+
 # Attempt imports
 try:
     from youtube_transcript_api import YouTubeTranscriptApi
@@ -224,33 +226,6 @@ def classify_relevance(title: str, channel: str) -> dict:
         return {'relevant': True, 'confidence': 'low', 'work_score': work_score, 'personal_score': personal_score}
 
 
-def load_processed_ids() -> set:
-    """Load processed video IDs from the dedup file."""
-    dedup_file = Path(__file__).parent / 'processed_videos.json'
-    if not dedup_file.exists():
-        return set()
-    try:
-        with open(dedup_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            return set(data.get('processed_ids', []))
-    except (json.JSONDecodeError, IOError):
-        return set()
-
-
-def save_processed_ids(processed_ids: set) -> None:
-    """Save processed video IDs to the dedup file."""
-    dedup_file = Path(__file__).parent / 'processed_videos.json'
-    data = {
-        'processed_ids': sorted(list(processed_ids)),
-        'last_updated': datetime.now().isoformat(),
-    }
-    try:
-        with open(dedup_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-    except IOError as e:
-        print(f"Warning: Could not save processed_videos.json: {e}")
-
-
 def process_videos(videos: list, skip_transcripts: bool = False, processed_ids: set = None) -> tuple:
     """Process each video: classify relevance and fetch transcript."""
     processed = []
@@ -349,8 +324,10 @@ def main():
         print("No videos found. Check your playlist URL or video IDs.")
         sys.exit(1)
 
-    # Load processed video IDs (dedup)
-    processed_ids = set() if args.force else load_processed_ids()
+    # Load processed video IDs (dedup) using DedupTracker
+    dedup_path = Path(__file__).parent / 'processed_videos.json'
+    tracker = DedupTracker(dedup_path)
+    processed_ids = set() if args.force else tracker.load()
     skipped_count = len(processed_ids)
 
     # Process videos
@@ -377,9 +354,9 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
 
-    # Save processed IDs to dedup file
+    # Save processed IDs to dedup file using DedupTracker
     all_processed = processed_ids | newly_processed_ids
-    save_processed_ids(all_processed)
+    tracker.save(all_processed)
 
     print(f"\n{'='*60}")
     print(f"Done! Processed {len(processed)} videos:")

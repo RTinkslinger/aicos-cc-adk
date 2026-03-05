@@ -1,37 +1,38 @@
 #!/bin/bash
-# yt — Quick YouTube extractor for AI CoS
+# yt — Trigger AI CoS content pipeline on the droplet via SSH
+#
 # Usage:
-#   yt                    → Extract from default playlist (last 3 days)
-#   yt 7                  → Extract from default playlist (last 7 days)
-#   yt <PLAYLIST_URL>     → Extract from custom playlist (last 3 days)
-#   yt <PLAYLIST_URL> 7   → Extract from custom playlist (last 7 days)
-#   yt --urls <URL1> ...  → Extract specific videos
+#   yt                    → Run pipeline (default playlist, last 3 days)
+#   yt 7                  → Run pipeline (default playlist, last 7 days)
+#   yt --urls <URL1> ...  → Process specific video URLs
+#   yt --dry-run          → Extract + analyze only, skip publish/Notion
+#
+# The pipeline runs on the DO droplet (aicos-droplet via Tailscale).
+# Output streams in real time. Typical run: 3-4 min per new video.
 
-SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || readlink "$0" 2>/dev/null || echo "$0")")" && pwd)"
-EXTRACTOR="$SCRIPT_DIR/youtube_extractor.py"
-DEFAULT_PLAYLIST="https://youtube.com/playlist?list=PLSAj-XU9ZUhPHrwSpZKxop1mDL8NgVPkD"
-DEFAULT_DAYS=3
+DROPLET="aicos-droplet"
+REMOTE_DIR="/opt/ai-cos-mcp"
+RUNNER="uv run python -m runners.pipeline"
 
-# Pass through --urls mode directly
-if [ "$1" == "--urls" ]; then
-    shift
-    python3 "$EXTRACTOR" --urls "$@"
-    exit $?
+# Build remote command from arguments
+ARGS=""
+
+# Pass through --urls and --dry-run directly
+if [ "$1" == "--urls" ] || [ "$1" == "--dry-run" ]; then
+    ARGS="$@"
+# Single numeric arg = --since-days N
+elif [[ "$1" =~ ^[0-9]+$ ]]; then
+    ARGS="--since-days $1"
+# No args = defaults (3 days)
+elif [ $# -eq 0 ]; then
+    ARGS=""
+else
+    echo "Usage: yt [DAYS] [--urls URL1 URL2 ...] [--dry-run]"
+    exit 1
 fi
 
-# No args = default playlist, default days
-if [ $# -eq 0 ]; then
-    python3 "$EXTRACTOR" "$DEFAULT_PLAYLIST" --since-days "$DEFAULT_DAYS"
-    exit $?
-fi
+echo "Running pipeline on $DROPLET..."
+echo "Command: $RUNNER $ARGS"
+echo ""
 
-# Single numeric arg = default playlist, custom days
-if [[ "$1" =~ ^[0-9]+$ ]]; then
-    python3 "$EXTRACTOR" "$DEFAULT_PLAYLIST" --since-days "$1"
-    exit $?
-fi
-
-# First arg is a URL
-PLAYLIST="$1"
-DAYS="${2:-$DEFAULT_DAYS}"
-python3 "$EXTRACTOR" "$PLAYLIST" --since-days "$DAYS"
+ssh -t root@${DROPLET} "cd ${REMOTE_DIR} && ${RUNNER} ${ARGS}"

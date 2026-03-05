@@ -193,6 +193,7 @@ Aakash's requests generally fall into these categories:
 
 → Query Build Roadmap DB (data source `6e1ffb7e-01f1-4295-a7ea-67d5c9216d8f`). For "what should I build next?": filter Status = 🎯 Planned + Priority P0/P1, sort by priority. For insights: create page with Status = 💡 Insight, Source = appropriate feed type. Use optimized recipes from CLAUDE.md — no trial-and-error. For session close Step 1b: if this session produced build insights or capability gap discoveries, create Build Roadmap entries with Status = 💡 Insight.
 
+**Always-Query Rule:** Every session fetches Build Roadmap state (~3 sec via `notion-query-database-view` with `view://4eb66bc1-322b-4522-bb14-253018066fef`). This replaces keyword-based "build session" detection. The coordinator workflow triggers on explicit task pickup, not session type.
 ## Cowork Operating Ref (repeated-mistake prevention)
 
 **Sandbox constraints:** Cowork runs in a Linux VM with NO outbound network. Never `curl`, `wget`, `git push`, or `fetch` from sandbox Bash. For any outbound operation, use `osascript` MCP to run on Mac host: `do shell script "cd '/Users/Aakash/Claude Projects/Aakash AI CoS/aicos-digests' && git push origin main 2>&1"`.
@@ -329,6 +330,8 @@ When working on Build Roadmap items in parallel:
 5. On completion: coordinator merges, sets Status = 🧪 Testing or ✅ Shipped
 6. Never assign two 🔴 items simultaneously. Queue them.
 
+7. **2-Step Roadmap Gate** — Before any code change (Edit/Write to non-doc, non-research file): (1) Check: does a Build Roadmap item exist for this work? (2) If not: quick-add one (~30 sec) with Status = 💡 Insight, then proceed. No untracked code changes. The gate doesn't block — it ensures tracking.
+8. **Coordinator Recipe** — When picking up parallel work: (1) Query Build Roadmap for 🟢/🟡 items at 📋 Backlog or 🎯 Planned. (2) Present candidates to user. (3) For approved items: create branch (`feat/`, `fix/`, `research/`, `infra/` prefix), update Roadmap (Branch + Status = 🔨 In Progress). (4) Spawn subagents with file allowlists. (5) On completion: review diffs, merge to main, update Roadmap (Status = ✅ Shipped, clear Branch).
 ## Step 4: Use Real Data
 
 When making recommendations or analyses, always query Notion directly using the database IDs above. Never hallucinate data. If you don't have the information, say so and query for it.

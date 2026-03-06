@@ -342,18 +342,19 @@ Source, Task Breakdown (populated when item moves to In Progress).
 notion-query-database-view with view_url: "view://4eb66bc1-322b-4522-bb14-253018066fef"
 ```
 
-**Creating items:**
+**Creating items (IMPORTANT — use exact emoji-prefixed values):**
 ```
 notion-create-pages with parent: { data_source_id: "6e1ffb7e-01f1-4295-a7ea-67d5c9216d8f" }
 properties: {
   "Item": "Description",
-  "Status": "Insight",
-  "Priority": "[auto-assessed]",
-  "Epic": "[from standard set]",
-  "Source": "[category]",
+  "Status": "💡 Insight",  // 💡 Insight | 📋 Backlog | 🎯 Planned | 🔨 In Progress | 🧪 Testing | ✅ Shipped | 🚫 Won't Do
+  "Priority": "P1 - Next",  // P0 - Now | P1 - Next | P2 - Later | P3 - Someday
+  "Epic": "Infrastructure",  // Content Pipeline v5 | Action Frontend | Knowledge Store | Multi-Surface | Meeting Optimizer | Always-On | Infrastructure
+  "Source": "Build Insight",  // Builder Request | Build Insight | Bug/Regression | Verification Failure | Dependency | Refactor | Architecture Decision | External Inspiration | User Feedback
   "Sprint#": [current sprint number],
+  "T-Shirt Size": "S (1-3hr)",  // XS (< 1hr) | S (1-3hr) | M (3-8hr) | L (1-3 sessions) | XL (3+ sessions)
   "Technical Notes": "[auto-filled context]",
-  "Parallel Safety": "[auto-classified]"
+  "Parallel Safety": "🟢 Safe"  // 🟢 Safe | 🟡 Coordinate | 🔴 Sequential
 }
 ```
 

@@ -544,3 +544,78 @@ def search_companies(query: str, limit: int = 5) -> list[dict[str, Any]]:
         }
         for r in results.get("results", [])
     ]
+
+
+def fetch_recent_digests(limit: int = 10) -> list[dict[str, Any]]:
+    """Fetch recent Content Digest entries from Notion.
+
+    Returns list of dicts with key fields, sorted by Processing Date descending.
+    """
+    client = _get_client()
+
+    results = client.data_sources.query(
+        data_source_id=CONTENT_DIGEST_DB,
+        page_size=limit,
+        sorts=[{"property": "Processing Date", "direction": "descending"}],
+    )
+
+    digests: list[dict[str, Any]] = []
+    for page in results.get("results", []):
+        props = page.get("properties", {})
+        digests.append({
+            "id": page.get("id", ""),
+            "title": _extract_plain_text(props.get("Video Title", {}), "title"),
+            "channel": _extract_plain_text(props.get("Channel", {}), "rich_text"),
+            "relevance_score": _extract_plain_text(props.get("Relevance Score", {}), "select"),
+            "net_newness": _extract_plain_text(props.get("Net Newness", {}), "select"),
+            "content_type": _extract_plain_text(props.get("Content Type", {}), "select"),
+            "action_status": _extract_plain_text(props.get("Action Status", {}), "select"),
+            "connected_buckets": _extract_plain_text(props.get("Connected Buckets", {}), "multi_select"),
+            "summary": _extract_plain_text(props.get("Summary", {}), "rich_text")[:300],
+            "digest_url": props.get("Digest URL", {}).get("url", ""),
+            "video_url": props.get("Video URL", {}).get("url", ""),
+        })
+
+    print(f"Fetched {len(digests)} recent digests from Notion")
+    return digests
+
+
+def fetch_actions(status_filter: str | None = None, limit: int = 20) -> list[dict[str, Any]]:
+    """Fetch Actions Queue entries from Notion.
+
+    Args:
+        status_filter: Optional status to filter by (Proposed, Accepted, In Progress, Done, Dismissed)
+        limit: Max number of actions to return
+    """
+    client = _get_client()
+
+    query_kwargs: dict[str, Any] = {
+        "data_source_id": ACTIONS_QUEUE_DB,
+        "page_size": limit,
+    }
+
+    if status_filter:
+        query_kwargs["filter"] = {
+            "property": "Status",
+            "select": {"equals": status_filter},
+        }
+
+    results = client.data_sources.query(**query_kwargs)
+
+    actions: list[dict[str, Any]] = []
+    for page in results.get("results", []):
+        props = page.get("properties", {})
+        actions.append({
+            "id": page.get("id", ""),
+            "action": _extract_plain_text(props.get("Action", {}), "title"),
+            "priority": _extract_plain_text(props.get("Priority", {}), "select"),
+            "status": _extract_plain_text(props.get("Status", {}), "select"),
+            "action_type": _extract_plain_text(props.get("Action Type", {}), "select"),
+            "assigned_to": _extract_plain_text(props.get("Assigned To", {}), "select"),
+            "reasoning": _extract_plain_text(props.get("Reasoning", {}), "rich_text")[:300],
+            "thesis_connection": _extract_plain_text(props.get("Thesis Connection", {}), "rich_text"),
+            "source": _extract_plain_text(props.get("Source", {}), "select"),
+        })
+
+    print(f"Fetched {len(actions)} actions from Notion")
+    return actions

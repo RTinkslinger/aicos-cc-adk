@@ -1,44 +1,41 @@
 # Checkpoint
-*Written: 2026-03-06 10:30 IST*
+*Written: 2026-03-06 11:30 IST*
 
 ## Current Task
-Public MCP endpoint buildout (Phase 1 of DATA-SOVEREIGNTY.md) — Cloudflare Tunnel + thesis/digest/actions MCP tools + Claude.ai integration.
+Complete Data Sovereignty implementation — all phases through SyncAgent orchestration.
 
 ## Progress
-- [x] Cloudflare Tunnel set up (mcp.3niac.com → droplet:8000, systemd, auto-TLS)
-- [x] 5 new MCP tools added: cos_create_thesis_thread, cos_update_thesis, cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions (9 total)
-- [x] server.py switched to streamable-http transport
-- [x] Claude.ai connected as remote MCP connector (https://mcp.3niac.com/mcp)
-- [x] Tested from Claude.ai: cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions confirmed working
-- [x] CUSTOM-MCP-SETUP-HTTP.md created (full setup guide)
-- [x] DATA-SOVEREIGNTY.md updated (Layer 0, 6-phase plan)
-- [x] Claude.ai memory entries updated to v7.1.0 (19 entries, MCP routing + conviction guardrail)
-- [x] Memory entries pasted into Claude.ai Settings
-- [x] Committed: f547331 (server.py, notion_client.py, DATA-SOVEREIGNTY.md, CUSTOM-MCP-SETUP-HTTP.md, CLAUDE.md, LEARNINGS.md)
-- [x] Build Roadmap: QA task created (P1/Planned) for full MCP tool response validation
-- [ ] Phase 1 step 1g: Add ai-cos-mcp to Claude Code `.mcp.json` (Tailscale or tunnel endpoint)
-- [ ] Phase 1 step 1h: Update CLAUDE.md prompts ("use cos_* tools for thesis, not Notion MCP directly")
-- [ ] Full QA of all MCP tool response payloads from Claude.ai (correctness, edge cases)
-- [ ] Commit memory-entries.md v7.1.0 + CHANGELOG.md + LEARNINGS.md update
+- [x] Phase 1: Public MCP endpoint (Cloudflare Tunnel, streamable-http, Claude.ai connector)
+- [x] Phase 1g: `.mcp.json` for Claude Code MCP connection
+- [x] Phase 1h: CLAUDE.md MCP Tool Routing section + conviction guardrail
+- [x] Phase 2: Thesis Postgres backing (thesis_threads table, write-ahead, seed 7 threads, sync_queue)
+- [x] Phase 3: Actions Queue bidirectional (actions_queue table, seed 100 actions, Outcome-only pull from Notion)
+- [x] Phase 4: Change detection engine (change_events table, field-level diffs for thesis + actions)
+- [x] Phase 4c: SyncAgent runner (runners/sync_agent.py — thesis + actions + retry queue)
+- [x] Phase 4: SyncAgent cron (*/10 on droplet, logs to sync_agent.log)
+- [x] Phase 5 deferred: companies + network tables exist, sync deferred indefinitely
+- [x] Claude.ai memory v7.1.0 (19 entries, MCP routing + conviction guardrail) — pasted
+- [x] Fix: Actions sync only pulls Outcome from Notion, NOT Status
+- [x] All committed: f01f737 (fix), 0f8f63f (main data sovereignty commit)
+- [ ] TRACES.md: Iteration 2 not yet written (this session's data sovereignty work)
+- [ ] Full QA of MCP tool responses from Claude.ai (Build Roadmap task exists)
+- [ ] CLAUDE.md Build Roadmap recipe still has wrong Source field options
 
 ## Key Decisions (not yet persisted)
-- **Conviction guardrail**: Claude.ai should never set the `conviction` parameter on thesis tools — must ask Aakash. Persisted in memory-entries.md but not yet in CLAUDE.md.
-- **MCP tool routing rule**: Thesis Tracker = all reads+writes via cos_* tools. Content Digest + Actions Queue = reads via cos_* tools, writes still via Notion MCP. Persisted in memory-entries.md #19.
-- **Build Roadmap Source field options**: actual values are "Session Insight", "AI CoS Relevance Note", "User Request", "Bug/Regression", "Architecture Decision", "External Inspiration" — logged to LEARNINGS.md but CLAUDE.md recipe not yet updated.
-- **No Postgres for thesis yet**: MCP tools are a pass-through routing layer (droplet → Notion API). Phase 2 adds thesis_threads Postgres table with write-ahead pattern.
+- **Actions field ownership**: Status = droplet-owned (MCP tools / Action Frontend), Outcome = Notion-owned (human feedback). Persisted in code but not in CLAUDE.md or DATA-SOVEREIGNTY.md explicitly.
+- **SyncAgent cron at 10 min** — separate from 5-min content pipeline. Handles thesis status pull + actions outcome pull + retry queue drain.
+- **`current_role` is a reserved word in Postgres** — network table uses quoted `"current_role"`. Logged in mental note but not LEARNINGS.md.
 
 ## Next Steps
-1. Commit uncommitted files: `claude-ai-sync/memory-entries.md`, `claude-ai-sync/CHANGELOG.md`, `LEARNINGS.md`
-2. Phase 1 step 1g: Add MCP config for Claude Code (`.mcp.json` or project settings)
-3. Phase 1 step 1h: Add CLAUDE.md guidance that thesis writes prefer cos_* tools
-4. Update CLAUDE.md Build Roadmap recipe with correct Source field options
-5. QA all 9 MCP tool responses from Claude.ai (Build Roadmap task exists)
+1. Write TRACES.md Iteration 2 for this session
+2. Update CLAUDE.md Build Roadmap Source field options (from LEARNINGS.md)
+3. QA all 15 MCP tool responses from Claude.ai
+4. Consider adding SyncAgent to content pipeline cron wrapper for unified logging
+5. Portfolio DB needs integration sharing before it can be synced
 
 ## Context
-- Tunnel ID: `a381fcd4-b7fa-4226-8615-a77cfa498d09`
-- Domain: `3niac.com` (Cloudflare Registrar), DNS: `mcp.3niac.com`
-- Droplet config: `/etc/cloudflared/config.yml`, service: `cloudflared.service`
-- MCP endpoint: `https://mcp.3niac.com/mcp` (FastMCP default path)
-- TRACES.md: Milestone 2, Iteration 1 already written
-- Sprint: 2
-- LEARNINGS.md: 3 patterns (emoji select values, Epic options, Source field options)
+- **Postgres tables (7):** thesis_threads (7 rows), actions_queue (100 rows), companies (0), network (0), change_events (0), sync_queue (0), action_outcomes (0)
+- **MCP tools (15):** health_check, cos_load_context, cos_score_action, cos_get_preferences, cos_create_thesis_thread, cos_update_thesis, cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions, cos_sync_thesis_status, cos_seed_thesis_db, cos_retry_sync_queue, cos_sync_actions, cos_full_sync, cos_get_changes
+- **Cron:** pipeline */5, sync_agent */10
+- **Commits this session:** f547331, 0f8f63f, f01f737
+- Sprint: 2, Milestone 2, Iteration 1 written (Iteration 2 pending)

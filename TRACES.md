@@ -27,4 +27,13 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 
 ---
 
+### Iteration 2 - 2026-03-06
+**Phase:** Data Sovereignty — Phases 1 (completion) through 4
+**Focus:** Postgres backing for thesis + actions, bidirectional sync, change detection, SyncAgent
+
+**Changes:** `lib/thesis_db.py` (new — Postgres CRUD for thesis_threads, sync_queue ops), `lib/actions_db.py` (new — Postgres CRUD for actions_queue, Outcome-only Notion pull), `lib/change_detection.py` (new — field-level diff engine), `runners/sync_agent.py` (new — orchestrates all sync), `server.py` (write-ahead pattern for thesis tools, 6 new MCP tools: sync_thesis_status, seed_thesis_db, retry_sync_queue, sync_actions, full_sync, get_changes), `notion_client.py` (seed function, status sync, actions sync/push, outcome field in fetch_actions), `.mcp.json` (new — Claude Code MCP connection), `CLAUDE.md` (MCP Tool Routing section, conviction guardrail, updated server docs), `DATA-SOVEREIGNTY.md` (revised phases, Companies/Network/Portfolio deferred), `claude-ai-sync/memory-entries.md` (v7.1.0 — MCP routing + conviction guardrail)
+**Decisions:** Write-ahead pattern (Postgres first → Notion push → queue on failure). Actions field ownership: Status = droplet-owned, Outcome = Notion-owned (human feedback). SyncAgent on 10-min cron. Companies/Network/Portfolio sync deferred indefinitely.
+**Infra:** 7 Postgres tables, 15 MCP tools, SyncAgent cron */10, thesis seeded (7), actions seeded (100).
+**Next:** QA all MCP tools from Claude.ai. Update CLAUDE.md Source field options.
+
 ---

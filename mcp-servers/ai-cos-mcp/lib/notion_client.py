@@ -59,6 +59,7 @@ def create_digest_entry(
     rabbit_holes: str = "",
     proposed_actions_summary: str = "",
     processing_date: str | None = None,
+    upload_date: str | None = None,
 ) -> dict[str, Any]:
     """Create a Content Digest DB entry with all available fields."""
     client = _get_client()
@@ -115,6 +116,10 @@ def create_digest_entry(
     if processing_date:
         properties["date:Processing Date:start"] = processing_date
         properties["date:Processing Date:is_datetime"] = 0
+
+    if upload_date:
+        properties["date:Upload Date:start"] = upload_date
+        properties["date:Upload Date:is_datetime"] = 0
 
     page = client.pages.create(
         parent={"data_source_id": CONTENT_DIGEST_DB},
@@ -257,6 +262,7 @@ def create_thesis_thread(
         "Thread Name": {"title": [{"text": {"content": thread_name}}]},
         "Core Thesis": {"rich_text": [{"text": {"content": _truncate_rich_text(core_thesis)}}]},
         "Conviction": {"select": {"name": conviction}},
+        "Status": {"select": {"name": "Exploring"}},
         "Discovery Source": {"select": {"name": discovery_source}},
         "date:Date Discovered:start": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "date:Date Discovered:is_datetime": 0,

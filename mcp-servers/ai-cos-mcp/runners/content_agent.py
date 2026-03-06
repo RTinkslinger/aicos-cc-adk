@@ -534,6 +534,7 @@ def process_extraction(
                     rabbit_holes=_format_rabbit_holes(digest),
                     proposed_actions_summary=_format_proposed_actions_summary(digest),
                     processing_date=datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                    upload_date=digest.get("upload_date") or None,
                 )
                 digest_page_id = notion_page.get("id")
             except Exception as e:

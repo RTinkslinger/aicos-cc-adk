@@ -1,41 +1,36 @@
 # Checkpoint
-*Written: 2026-03-06 11:30 IST*
+*Written: 2026-03-06 14:00 IST*
 
 ## Current Task
-Complete Data Sovereignty implementation — all phases through SyncAgent orchestration.
+MCP QA validation complete. Data Sovereignty fully implemented (all phases except deferred Phase 5).
 
 ## Progress
-- [x] Phase 1: Public MCP endpoint (Cloudflare Tunnel, streamable-http, Claude.ai connector)
-- [x] Phase 1g: `.mcp.json` for Claude Code MCP connection
-- [x] Phase 1h: CLAUDE.md MCP Tool Routing section + conviction guardrail
-- [x] Phase 2: Thesis Postgres backing (thesis_threads table, write-ahead, seed 7 threads, sync_queue)
-- [x] Phase 3: Actions Queue bidirectional (actions_queue table, seed 100 actions, Outcome-only pull from Notion)
-- [x] Phase 4: Change detection engine (change_events table, field-level diffs for thesis + actions)
-- [x] Phase 4c: SyncAgent runner (runners/sync_agent.py — thesis + actions + retry queue)
-- [x] Phase 4: SyncAgent cron (*/10 on droplet, logs to sync_agent.log)
-- [x] Phase 5 deferred: companies + network tables exist, sync deferred indefinitely
-- [x] Claude.ai memory v7.1.0 (19 entries, MCP routing + conviction guardrail) — pasted
-- [x] Fix: Actions sync only pulls Outcome from Notion, NOT Status
-- [x] All committed: f01f737 (fix), 0f8f63f (main data sovereignty commit)
-- [ ] TRACES.md: Iteration 2 not yet written (this session's data sovereignty work)
-- [ ] Full QA of MCP tool responses from Claude.ai (Build Roadmap task exists)
-- [ ] CLAUDE.md Build Roadmap recipe still has wrong Source field options
+- [x] QA all 17 MCP tools from Claude.ai (was 15, added 2 new)
+- [x] Fix: thesis create Notion push — date property format (`date:Field:start` → `{"date": {"start": ...}}`)
+- [x] Fix: sync_queue status queries (nonexistent `status` column → `attempts`/`next_retry_at`)
+- [x] Fix: deploy.sh now preserves SyncAgent 10-min cron
+- [x] Phase 4b: Action generation from change events (conviction→High, status changes, Gold outcomes)
+- [x] Phase 4d: `cos_sync_status` dashboard + `cos_process_changes` manual trigger
+- [x] Cleanup: 3 QA test threads removed from Postgres + Notion, sync queue cleared
+- [ ] TRACES.md: Iteration 3 needs writing + compaction (milestone 2 archive)
+- [ ] LEARNINGS.md: date format pattern not yet logged
+- [ ] CLAUDE.md: Build Roadmap Source field options still wrong, tool count now 17 not 15/12
+- [ ] CLAUDE.md: MCP Tool Routing table needs updating (17 tools, new tools listed)
 
 ## Key Decisions (not yet persisted)
-- **Actions field ownership**: Status = droplet-owned (MCP tools / Action Frontend), Outcome = Notion-owned (human feedback). Persisted in code but not in CLAUDE.md or DATA-SOVEREIGNTY.md explicitly.
-- **SyncAgent cron at 10 min** — separate from 5-min content pipeline. Handles thesis status pull + actions outcome pull + retry queue drain.
-- **`current_role` is a reserved word in Postgres** — network table uses quoted `"current_role"`. Logged in mental note but not LEARNINGS.md.
+- `date:Field:start` shorthand works for Content Digest DB but NOT Thesis Tracker DB with `data_source_id` parent. Use `{"date": {"start": ...}}` format for safety.
+- Action generation rules: conviction→High = research action, status parked = deprioritize, reactivated = resurface, Gold outcome = pattern analysis.
+- MCP tool count now 17 (was 15): added `cos_sync_status` and `cos_process_changes`.
 
 ## Next Steps
-1. Write TRACES.md Iteration 2 for this session
-2. Update CLAUDE.md Build Roadmap Source field options (from LEARNINGS.md)
-3. QA all 15 MCP tool responses from Claude.ai
-4. Consider adding SyncAgent to content pipeline cron wrapper for unified logging
-5. Portfolio DB needs integration sharing before it can be synced
+1. Write TRACES.md Iteration 3 + run compaction (iterations 1-3 → milestone 2 archive)
+2. Log date format learning to LEARNINGS.md
+3. Update CLAUDE.md: tool count (17), Source field options, MCP Tool Routing table
+4. Update DATA-SOVEREIGNTY.md Phase 4 to mark 4b+4d complete
+5. Consider: update claude-ai-sync/memory-entries.md with new tool count
 
 ## Context
-- **Postgres tables (7):** thesis_threads (7 rows), actions_queue (100 rows), companies (0), network (0), change_events (0), sync_queue (0), action_outcomes (0)
-- **MCP tools (15):** health_check, cos_load_context, cos_score_action, cos_get_preferences, cos_create_thesis_thread, cos_update_thesis, cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions, cos_sync_thesis_status, cos_seed_thesis_db, cos_retry_sync_queue, cos_sync_actions, cos_full_sync, cos_get_changes
-- **Cron:** pipeline */5, sync_agent */10
-- **Commits this session:** f547331, 0f8f63f, f01f737
-- Sprint: 2, Milestone 2, Iteration 1 written (Iteration 2 pending)
+- **MCP tools (17):** +cos_sync_status, +cos_process_changes (added this session)
+- **Commits this session:** 25bbb0f (date fix), 938550f (4b+4d), d958f83 (sync_queue fix), a16529a (deploy.sh fix)
+- **Postgres:** thesis_threads now 7 rows (cleaned 3 QA test rows), actions_queue 100, sync_queue 0
+- Sprint: 2, Milestone 2, Iteration 2 written (Iteration 3 pending → triggers compaction)

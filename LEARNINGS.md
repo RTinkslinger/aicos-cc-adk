@@ -20,3 +20,8 @@ Patterns confirmed 2+ times graduate to CLAUDE.md during milestone compaction.
   Works: Actual Source options are: "Session Insight", "AI CoS Relevance Note", "User Request", "Bug/Regression", "Architecture Decision", "External Inspiration"
   Context: CLAUDE.md Build System Protocol has generic Source values that don't match the actual DB. Always use exact DB option strings.
   Confirmed: 1x
+
+- Tried: Notion date property with `date:Field:start` shorthand in `pages.create()` with `data_source_id` parent for Thesis Tracker DB
+  Works: Standard Notion API format `{"date": {"start": "YYYY-MM-DD"}}` — works for all DBs
+  Context: `date:Field:start` shorthand works for Content Digest DB but fails for Thesis Tracker with misleading validation error ("Thread Name.id should be defined"). The shorthand is a Notion client convention that doesn't work consistently across all databases when using data_source_id. Use standard format for safety.
+  Confirmed: 1x

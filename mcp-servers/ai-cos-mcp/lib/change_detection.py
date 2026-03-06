@@ -154,6 +154,149 @@ def mark_changes_processed(change_ids: list[int]) -> None:
         conn.close()
 
 
+def generate_actions_from_changes(changes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Generate proposed actions from unprocessed change events.
+
+    Rules:
+    - Thesis conviction → High: propose "Review portfolio for thesis X investment opportunities"
+    - Thesis status Active → Parked: propose "Archive actions connected to thesis X"
+    - Thesis status Parked/Archived → Active: propose "Resurface actions for reactivated thesis X"
+    - Action outcome → Gold: propose "Find similar actions to the Gold-rated one"
+    """
+    from lib.actions_db import create_action
+
+    generated = []
+    for change in changes:
+        table = change.get("table_name", "")
+        field = change.get("field_name", "")
+        new_val = change.get("new_value", "")
+        old_val = change.get("old_value", "")
+        record_id = change.get("record_id", 0)
+
+        action_text = None
+        action_type = ""
+        priority = ""
+        reasoning = ""
+
+        if table == "thesis_threads" and field == "conviction" and new_val == "High":
+            # Look up thread name
+            thread_name = _get_thread_name(record_id)
+            action_text = f"Review portfolio and pipeline for '{thread_name}' investment opportunities — conviction just reached High"
+            action_type = "Research"
+            priority = "P1 - Next"
+            reasoning = f"Thesis '{thread_name}' conviction moved from {old_val} to High. High-conviction thesis should trigger active deal sourcing."
+
+        elif table == "thesis_threads" and field == "status":
+            thread_name = _get_thread_name(record_id)
+            if new_val in ("Parked", "Archived") and old_val in ("Active", "Exploring"):
+                action_text = f"Review and deprioritize pending actions connected to '{thread_name}' (now {new_val})"
+                action_type = "Thesis Update"
+                priority = "P2 - Later"
+                reasoning = f"Thesis '{thread_name}' moved from {old_val} to {new_val}. Connected actions may no longer be relevant."
+            elif new_val in ("Active", "Exploring") and old_val in ("Parked", "Archived"):
+                action_text = f"Resurface and review actions for reactivated thesis '{thread_name}'"
+                action_type = "Thesis Update"
+                priority = "P1 - Next"
+                reasoning = f"Thesis '{thread_name}' reactivated from {old_val} to {new_val}. Check for new signals and pending actions."
+
+        elif table == "actions_queue" and field == "outcome" and new_val == "Gold":
+            action_text = f"Analyze what made action #{record_id} Gold-rated — find similar high-value patterns"
+            action_type = "Research"
+            priority = "P2 - Later"
+            reasoning = f"Action outcome rated Gold. Understanding what makes actions valuable improves future scoring."
+
+        if action_text:
+            try:
+                row = create_action(
+                    action=action_text,
+                    action_type=action_type,
+                    priority=priority,
+                    source="SyncAgent",
+                    created_by="AI CoS",
+                    assigned_to="Aakash",
+                    reasoning=reasoning,
+                )
+                generated.append({
+                    "action": action_text,
+                    "priority": priority,
+                    "trigger": f"{table}.{field}: {old_val} → {new_val}",
+                    "pg_id": row["id"],
+                })
+            except Exception as e:
+                print(f"[ChangeDetection] Failed to generate action: {e}")
+
+    return generated
+
+
+def _get_thread_name(record_id: int) -> str:
+    """Look up thesis thread name by Postgres ID."""
+    conn = _get_conn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT thread_name FROM thesis_threads WHERE id = %s", (record_id,))
+            row = cur.fetchone()
+            return row[0] if row else f"Thread #{record_id}"
+    finally:
+        conn.close()
+
+
+def get_sync_status() -> dict[str, Any]:
+    """Get unified sync status dashboard."""
+    conn = _get_conn()
+    try:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+            # Thesis sync status
+            cur.execute("SELECT COUNT(*) as total, MAX(last_synced_at) as last_sync FROM thesis_threads")
+            thesis = dict(cur.fetchone())
+
+            # Actions sync status
+            cur.execute("SELECT COUNT(*) as total, MAX(last_synced_at) as last_sync FROM actions_queue")
+            actions = dict(cur.fetchone())
+
+            # Unsynced actions (no Notion page ID)
+            cur.execute("SELECT COUNT(*) as count FROM actions_queue WHERE notion_page_id IS NULL")
+            unsynced_actions = cur.fetchone()["count"]
+
+            # Sync queue depth
+            cur.execute("SELECT COUNT(*) as pending FROM sync_queue WHERE status = 'pending'")
+            queue_pending = cur.fetchone()["pending"]
+
+            cur.execute("SELECT COUNT(*) as failed FROM sync_queue WHERE status = 'failed'")
+            queue_failed = cur.fetchone()["failed"]
+
+            # Recent changes
+            cur.execute("SELECT COUNT(*) as unprocessed FROM change_events WHERE NOT processed")
+            unprocessed_changes = cur.fetchone()["unprocessed"]
+
+            cur.execute("""
+                SELECT table_name, field_name, old_value, new_value, detected_at
+                FROM change_events ORDER BY detected_at DESC LIMIT 5
+            """)
+            recent_changes = [dict(r) for r in cur.fetchall()]
+
+            return {
+                "thesis": {
+                    "total_threads": thesis["total"],
+                    "last_sync": str(thesis["last_sync"]) if thesis["last_sync"] else None,
+                },
+                "actions": {
+                    "total_actions": actions["total"],
+                    "last_sync": str(actions["last_sync"]) if actions["last_sync"] else None,
+                    "unsynced_to_notion": unsynced_actions,
+                },
+                "sync_queue": {
+                    "pending": queue_pending,
+                    "failed": queue_failed,
+                },
+                "changes": {
+                    "unprocessed": unprocessed_changes,
+                    "recent": recent_changes,
+                },
+            }
+    finally:
+        conn.close()
+
+
 def _log_change(
     cur, table_name: str, record_id: int, notion_page_id: str,
     field_name: str, old_value: str, new_value: str,

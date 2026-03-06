@@ -133,6 +133,28 @@ def drain_sync_queue() -> dict:
     return result
 
 
+def process_changes() -> dict:
+    """Generate actions from unprocessed change events."""
+    from lib.change_detection import generate_actions_from_changes, get_unprocessed_changes, mark_changes_processed
+
+    print("[SyncAgent] Processing change events...")
+    changes = get_unprocessed_changes()
+    if not changes:
+        print("[SyncAgent] No unprocessed changes")
+        return {"processed": 0, "actions_generated": 0, "actions": []}
+
+    generated = generate_actions_from_changes(changes)
+    mark_changes_processed([c["id"] for c in changes])
+
+    result = {
+        "processed": len(changes),
+        "actions_generated": len(generated),
+        "actions": generated,
+    }
+    print(f"[SyncAgent] Processed {len(changes)} changes, generated {len(generated)} actions")
+    return result
+
+
 def full_sync() -> dict:
     """Run all sync operations."""
     timestamp = datetime.now(timezone.utc).isoformat()
@@ -141,12 +163,14 @@ def full_sync() -> dict:
     thesis_result = sync_thesis()
     actions_result = sync_actions()
     queue_result = drain_sync_queue()
+    changes_result = process_changes()
 
     result = {
         "timestamp": timestamp,
         "thesis": thesis_result,
         "actions": actions_result,
         "queue": queue_result,
+        "changes": changes_result,
     }
     print(f"[SyncAgent] Full sync complete")
     return result

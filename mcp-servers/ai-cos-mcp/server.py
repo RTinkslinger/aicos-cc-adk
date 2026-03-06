@@ -446,5 +446,29 @@ def cos_get_changes(limit: int = 20) -> dict:
     return {"changes": changes, "count": len(changes)}
 
 
+@mcp.tool()
+def cos_sync_status() -> dict:
+    """Get unified sync status dashboard.
+
+    Shows: thesis/actions sync state, last sync times, queue depth,
+    unsynced items, and recent change events. Use for monitoring sync health.
+    """
+    from lib.change_detection import get_sync_status
+
+    return get_sync_status()
+
+
+@mcp.tool()
+def cos_process_changes() -> dict:
+    """Process unprocessed change events and generate actions from them.
+
+    Turns field-level changes (conviction moves, status changes, outcome ratings)
+    into proposed actions. Run after sync to close the feedback loop.
+    """
+    from runners.sync_agent import process_changes
+
+    return process_changes()
+
+
 if __name__ == "__main__":
     mcp.run(transport="streamable-http", host="0.0.0.0", port=8000)

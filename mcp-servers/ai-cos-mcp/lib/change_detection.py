@@ -82,7 +82,8 @@ def detect_thesis_changes(notion_threads: list[dict[str, Any]]) -> list[dict[str
 def detect_action_changes(notion_actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Compare Notion actions state against Postgres and log changes.
 
-    Detects: Status changes (Proposed→Accepted, etc.), Priority changes.
+    Detects: Outcome changes (human feedback: Unknown→Helpful→Gold).
+    Status is NOT synced from Notion — it's managed by MCP tools / Action Frontend.
     """
     conn = _get_conn()
     changes = []
@@ -101,34 +102,19 @@ def detect_action_changes(notion_actions: list[dict[str, Any]]) -> list[dict[str
                 if not pg_row:
                     continue
 
-                # Status change
-                notion_status = action.get("status", "")
-                if notion_status and notion_status != pg_row["status"]:
+                # Outcome change (human-owned field, synced FROM Notion)
+                notion_outcome = action.get("outcome", "")
+                if notion_outcome and notion_outcome != (pg_row["outcome"] or ""):
                     _log_change(
                         cur, "actions_queue", pg_row["id"], notion_page_id,
-                        "status", pg_row["status"], notion_status,
+                        "outcome", pg_row["outcome"] or "", notion_outcome,
                     )
                     changes.append({
                         "table": "actions_queue",
                         "action": action.get("action", ""),
-                        "field": "status",
-                        "old": pg_row["status"],
-                        "new": notion_status,
-                    })
-
-                # Priority change
-                notion_priority = action.get("priority", "")
-                if notion_priority and notion_priority != pg_row["priority"]:
-                    _log_change(
-                        cur, "actions_queue", pg_row["id"], notion_page_id,
-                        "priority", pg_row["priority"], notion_priority,
-                    )
-                    changes.append({
-                        "table": "actions_queue",
-                        "action": action.get("action", ""),
-                        "field": "priority",
-                        "old": pg_row["priority"],
-                        "new": notion_priority,
+                        "field": "outcome",
+                        "old": pg_row["outcome"] or "",
+                        "new": notion_outcome,
                     })
 
         conn.commit()

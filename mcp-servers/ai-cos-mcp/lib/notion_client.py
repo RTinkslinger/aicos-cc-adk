@@ -842,6 +842,7 @@ def fetch_actions(status_filter: str | None = None, limit: int = 20) -> list[dic
             "reasoning": _extract_plain_text(props.get("Reasoning", {}), "rich_text")[:300],
             "thesis_connection": _extract_plain_text(props.get("Thesis Connection", {}), "rich_text"),
             "source": _extract_plain_text(props.get("Source", {}), "select"),
+            "outcome": _extract_plain_text(props.get("Outcome", {}), "select"),
         })
 
     print(f"Fetched {len(actions)} actions from Notion")

@@ -210,8 +210,9 @@ def upsert_from_notion(
 ) -> dict[str, Any]:
     """Upsert an action from Notion data. Used during sync pull.
 
-    If the action exists in Postgres (by notion_page_id), updates fields
-    where Notion is newer. If not, inserts a new row.
+    For existing rows: only updates Outcome (human-owned field from Notion).
+    Status is NOT synced from Notion — it's managed by MCP tools / Action Frontend.
+    For new rows (initial seed): inserts all fields.
     """
     conn = _get_conn()
     try:
@@ -224,33 +225,28 @@ def upsert_from_notion(
             existing = cur.fetchone()
 
             if existing:
-                # Only update if Notion edit is newer than local edit
-                # (or if no local edit has happened since last sync)
-                last_local = existing["last_local_edit"]
-                last_synced = existing["last_synced_at"]
-
-                # If local was edited after last sync, local wins — skip Notion update
-                if last_local and last_synced and last_local > last_synced:
-                    return dict(existing)
-
-                cur.execute(
-                    """
-                    UPDATE actions_queue SET
-                        action = %s, action_type = %s, status = %s, priority = %s,
-                        source = %s, assigned_to = %s, created_by = %s, reasoning = %s,
-                        source_content = %s, thesis_connection = %s, relevance_score = %s,
-                        outcome = %s, last_notion_edit = NOW(), last_synced_at = NOW(),
-                        updated_at = NOW()
-                    WHERE notion_page_id = %s RETURNING *
-                    """,
-                    (
-                        action, action_type, status, priority, source, assigned_to,
-                        created_by, reasoning, source_content, thesis_connection,
-                        relevance_score, outcome, notion_page_id,
-                    ),
-                )
-                row = dict(cur.fetchone())
+                # Only sync Outcome from Notion (human-owned feedback field)
+                # Status, Priority, etc. are managed locally — not overwritten
+                if outcome and outcome != (existing["outcome"] or ""):
+                    cur.execute(
+                        """
+                        UPDATE actions_queue SET
+                            outcome = %s, last_notion_edit = NOW(), last_synced_at = NOW(),
+                            updated_at = NOW()
+                        WHERE notion_page_id = %s RETURNING *
+                        """,
+                        (outcome, notion_page_id),
+                    )
+                    row = dict(cur.fetchone())
+                else:
+                    # Nothing changed — just mark synced
+                    cur.execute(
+                        "UPDATE actions_queue SET last_synced_at = NOW() WHERE notion_page_id = %s RETURNING *",
+                        (notion_page_id,),
+                    )
+                    row = dict(cur.fetchone())
             else:
+                # New action from Notion (manual creation or initial seed) — take all fields
                 cur.execute(
                     """
                     INSERT INTO actions_queue

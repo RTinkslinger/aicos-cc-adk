@@ -36,6 +36,7 @@ try:
     from lib.notion_client import (
         create_action_entry,
         create_digest_entry,
+        create_thesis_thread,
         fetch_thesis_threads,
         update_thesis_tracker,
     )
@@ -136,12 +137,16 @@ def _load_context_sections(include_thesis_fallback: bool = False) -> str:
 
 
 def _format_thesis_threads_from_notion() -> str:
-    """Fetch thesis threads from Notion and format as markdown for the prompt."""
+    """Fetch thesis threads from Notion and format as markdown for the prompt.
+
+    Includes open key questions so the analysis model can flag when
+    content answers existing questions.
+    """
     if not HAS_NOTION:
         return ""
 
     try:
-        threads = fetch_thesis_threads()
+        threads = fetch_thesis_threads(include_key_questions=True)
     except Exception as e:
         print(f"  WARNING: Failed to fetch thesis threads from Notion: {e}")
         return ""
@@ -157,11 +162,15 @@ def _format_thesis_threads_from_notion() -> str:
         if t["core_thesis"]:
             line += f" — {t['core_thesis']}"
         lines.append(line)
-        if t["key_question"]:
+        if t.get("open_questions"):
+            lines.append(f"  - Open questions:")
+            for q in t["open_questions"]:
+                lines.append(f"    - [OPEN] {q}")
+        elif t.get("key_question"):
             lines.append(f"  - Key question: {t['key_question']}")
-        if t["key_companies"]:
+        if t.get("key_companies"):
             lines.append(f"  - Key companies: {t['key_companies']}")
-        if t["connected_buckets"]:
+        if t.get("connected_buckets"):
             lines.append(f"  - Buckets: {t['connected_buckets']}")
 
     return "\n".join(lines)
@@ -327,6 +336,120 @@ def score_proposed_actions(digest: dict[str, Any]) -> dict[str, Any]:
     return digest
 
 
+def _format_summary(digest: dict[str, Any]) -> str:
+    """Build Summary from essence_notes core arguments."""
+    en = digest.get("essence_notes", {})
+    args = en.get("core_arguments", [])
+    if not args:
+        return ""
+    return "\n".join(f"• {a}" for a in args)
+
+
+def _format_key_insights(digest: dict[str, Any]) -> str:
+    """Build Key Insights from essence_notes frameworks + data points."""
+    en = digest.get("essence_notes", {})
+    parts: list[str] = []
+    for fw in en.get("frameworks", []):
+        parts.append(f"[Framework] {fw}")
+    for dp in en.get("data_points", []):
+        parts.append(f"[Data] {dp}")
+    for pred in en.get("predictions", []):
+        parts.append(f"[Prediction] {pred}")
+    return "\n".join(parts) if parts else ""
+
+
+def _format_thesis_connections_text(digest: dict[str, Any]) -> str:
+    """Format thesis connections for Notion rich_text."""
+    tcs = digest.get("thesis_connections", [])
+    if not tcs:
+        return ""
+    lines: list[str] = []
+    for tc in tcs:
+        direction = tc.get("evidence_direction", "")
+        strength = tc.get("strength", "")
+        lines.append(f"• {tc.get('thread', '')} [{strength}, {direction}]: {tc.get('connection', '')}")
+    return "\n".join(lines)
+
+
+def _format_portfolio_relevance(digest: dict[str, Any]) -> str:
+    """Format portfolio connections for Notion rich_text."""
+    pcs = digest.get("portfolio_connections", [])
+    if not pcs:
+        return ""
+    lines: list[str] = []
+    for pc in pcs:
+        lines.append(f"• {pc.get('company', '')}: {pc.get('relevance', '')}")
+        if pc.get("key_question"):
+            lines.append(f"  Key Q: {pc['key_question']}")
+    return "\n".join(lines)
+
+
+def _format_essence_notes(digest: dict[str, Any]) -> str:
+    """Format essence notes for Notion rich_text."""
+    en = digest.get("essence_notes", {})
+    if not en:
+        return ""
+    parts: list[str] = []
+    for arg in en.get("core_arguments", []):
+        parts.append(f"• {arg}")
+    for quote in en.get("key_quotes", []):
+        speaker = quote.get("speaker", "")
+        ts = quote.get("timestamp", "")
+        parts.append(f'"{quote.get("text", "")}" —{speaker} [{ts}]')
+    return "\n".join(parts) if parts else ""
+
+
+def _format_watch_sections(digest: dict[str, Any]) -> str:
+    """Format watch sections for Notion rich_text."""
+    ws = digest.get("watch_sections", [])
+    if not ws:
+        return ""
+    lines: list[str] = []
+    for s in ws:
+        lines.append(f"• [{s.get('timestamp_range', '')}] {s.get('title', '')}")
+        lines.append(f"  Why: {s.get('why_watch', '')}")
+    return "\n".join(lines)
+
+
+def _format_contra_signals(digest: dict[str, Any]) -> str:
+    """Format contra signals for Notion rich_text."""
+    cs = digest.get("contra_signals", [])
+    if not cs:
+        return ""
+    lines: list[str] = []
+    for c in cs:
+        strength = c.get("strength", "")
+        lines.append(f"• [{strength}] {c.get('what', '')}")
+        if c.get("implication"):
+            lines.append(f"  → {c['implication']}")
+    return "\n".join(lines)
+
+
+def _format_rabbit_holes(digest: dict[str, Any]) -> str:
+    """Format rabbit holes for Notion rich_text."""
+    rhs = digest.get("rabbit_holes", [])
+    if not rhs:
+        return ""
+    lines: list[str] = []
+    for r in rhs:
+        lines.append(f"• {r.get('title', '')}: {r.get('what', '')}")
+        if r.get("entry_point"):
+            lines.append(f"  Start: {r['entry_point']}")
+    return "\n".join(lines)
+
+
+def _format_proposed_actions_summary(digest: dict[str, Any]) -> str:
+    """Format proposed actions summary for Notion rich_text."""
+    actions = digest.get("proposed_actions", [])
+    if not actions:
+        return ""
+    lines: list[str] = []
+    for a in actions:
+        score_str = f" (score: {a['score']})" if a.get("score") else ""
+        lines.append(f"• [{a.get('priority', 'P2')}]{score_str} {a.get('action', '')}")
+    return "\n".join(lines)
+
+
 def process_extraction(
     extraction_path: Path,
     system_prompt: str,
@@ -399,26 +522,48 @@ def process_extraction(
                     net_newness=digest.get("net_newness", {}).get("category", "Mixed"),
                     connected_buckets=digest.get("connected_buckets", []),
                     digest_url=pub_result.get("url", ""),
+                    content_type=digest.get("content_type", ""),
+                    duration=digest.get("duration", ""),
+                    summary=_format_summary(digest),
+                    key_insights=_format_key_insights(digest),
+                    thesis_connections=_format_thesis_connections_text(digest),
+                    portfolio_relevance=_format_portfolio_relevance(digest),
+                    essence_notes=_format_essence_notes(digest),
+                    watch_sections=_format_watch_sections(digest),
+                    contra_signals=_format_contra_signals(digest),
+                    rabbit_holes=_format_rabbit_holes(digest),
+                    proposed_actions_summary=_format_proposed_actions_summary(digest),
+                    processing_date=datetime.now(timezone.utc).strftime("%Y-%m-%d"),
                 )
                 digest_page_id = notion_page.get("id")
             except Exception as e:
                 print(f"  Notion digest entry failed: {e}")
 
-            # Create action entries
-            for action in digest.get("proposed_actions", []):
+            # Create action entries (proposed_actions + portfolio_connection actions)
+            all_actions = list(digest.get("proposed_actions", []))
+            for pc in digest.get("portfolio_connections", []):
+                all_actions.extend(pc.get("actions", []))
+
+            source_content_str = f"{digest.get('title', '')} — {digest.get('url', '')}"
+
+            for action in all_actions:
                 try:
                     create_action_entry(
                         action_text=action["action"],
                         priority=action.get("priority", "P2"),
                         action_type=action.get("type", "content"),
-                        company=action.get("company"),
-                        thesis_connection=action.get("thesis_connection"),
+                        assigned_to=action.get("assigned_to", "Aakash"),
+                        company_name=action.get("company"),
+                        thesis_connection=" | ".join(action.get("thesis_connections", [])) or action.get("thesis_connection"),
                         source_digest_page_id=digest_page_id,
+                        relevance_score=action.get("score"),
+                        reasoning=action.get("reasoning", ""),
+                        source_content=source_content_str,
                     )
                 except Exception as e:
                     print(f"  Action entry failed: {e}")
 
-            # Update thesis tracker with new evidence
+            # Update thesis tracker with new evidence + conviction assessments
             for tc in digest.get("thesis_connections", []):
                 if tc.get("strength") in ("Strong", "Moderate"):
                     try:
@@ -426,9 +571,35 @@ def process_extraction(
                             thesis_name=tc["thread"],
                             new_evidence=f"From '{title}': {tc['connection']}",
                             evidence_direction=tc.get("evidence_direction", "for"),
+                            conviction=tc.get("conviction_assessment"),
+                            new_key_questions=tc.get("new_key_questions"),
+                            answered_questions=tc.get("answered_questions"),
+                            investment_implications=tc.get("investment_implications"),
+                            key_companies=tc.get("key_companies_mentioned"),
                         )
                     except Exception as e:
                         print(f"  Thesis update failed: {e}")
+
+            # Create new thesis threads if suggested
+            for nts in digest.get("new_thesis_suggestions", []):
+                try:
+                    create_thesis_thread(
+                        thread_name=nts["thread_name"],
+                        core_thesis=nts.get("core_thesis", ""),
+                        key_questions=nts.get("key_questions"),
+                        connected_buckets=nts.get("connected_buckets"),
+                        discovery_source="Content Pipeline",
+                        conviction="New",
+                    )
+                    # Also append the initial evidence as a block
+                    if nts.get("initial_evidence"):
+                        update_thesis_tracker(
+                            thesis_name=nts["thread_name"],
+                            new_evidence=f"Initial signal from '{title}': {nts['initial_evidence']}",
+                            evidence_direction=nts.get("evidence_direction", "for"),
+                        )
+                except Exception as e:
+                    print(f"  New thesis creation failed: {e}")
 
         # 5. Log to preference store
         if HAS_POSTGRES:
@@ -445,7 +616,7 @@ def process_extraction(
                         },
                         source_digest_slug=digest.get("slug"),
                         company=action.get("company"),
-                        thesis_thread=action.get("thesis_connection"),
+                        thesis_thread=" | ".join(action.get("thesis_connections", [])) or action.get("thesis_connection"),
                     )
                 except Exception as e:
                     print(f"  Preference log failed: {e}")

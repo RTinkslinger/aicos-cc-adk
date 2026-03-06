@@ -28,7 +28,7 @@ This is a **local-only git repo** (no remote). Used for branching/worktrees in p
 |-----------|---------|
 | `CONTEXT.md` | Master context — read this first |
 | `scripts/` | Operational scripts (YouTube extractor, content pipeline, action scorer, branch lifecycle CLI) |
-| `skills/` | Historical skill files + Agent SDK system prompt reference (`ai-cos-v6-skill.md`) |
+| `[Archive] Cowork Skills/` | Archived Cowork-era skill files (v2-v6). Reference only — not used in CC. |
 | `docs/` | All documentation by type (see `docs/README.md` for index) |
 | `docs/architecture/` | Canonical architecture docs: BUILD-SYSTEM.md, architecture-v0.2, vision-v4 |
 | `docs/notion/` | Notion operations guide + database schemas — read before any Notion tool call |
@@ -144,6 +144,7 @@ Trigger: "close session" / "end session" / "wrap up". All steps are conditional 
 3. **Update MEMORY.md** → Only if stable cross-session patterns were discovered (not session-specific details).
 4. **Update CONTEXT.md** → Only if domain knowledge changed: thesis threads, methodology, people, priorities. NOT for session bookkeeping.
 5. **Notion sync** → Only if Notion-tracked data changed (Thesis Tracker, Build Roadmap).
+6. **Claude.ai sync** → Only if architectural changes happened (new infrastructure, schema changes, new runners, workflow changes). Update `claude-ai-sync/memory-entries.md` + `claude-ai-sync/CHANGELOG.md`. Tell Aakash to paste into Claude.ai Settings → Memory.
 
 ## Parallel Development Rules
 
@@ -173,59 +174,59 @@ Back-propagation (daily 10:00 AM): Actions Queue Done → Content Digest "Action
 
 Key scripts: `youtube_extractor.py` (extraction), `content_digest_pdf.py` (PDF generation), `publish_digest.py` (JSON → Notion + digest site), `process_youtube_queue.py` (pipeline analysis), `action_scorer.py` (scoring model), `dedup_utils.py` (deduplication).
 
-**Transition:** ContentAgent (Agent SDK runner) will replace the manual analysis step. See `docs/architecture/doc2-architecture-v0.2-enhanced.md` for runner specs.
+**ContentAgent is live** — runs autonomously on the droplet as part of the unified pipeline. See `docs/architecture/architecture-v0.3.md` for runner specs.
 
 ## Architecture Direction
 
-The AI CoS is evolving from a session-based build system to a persistent, autonomous architecture:
+The AI CoS is a persistent, autonomous architecture with the first runner (ContentAgent) live:
 
 **Three-layer system:**
-- **Observation Layer** — Signal sources (YouTube, Granola, Email, Calendar, screenshots, etc.) produce normalized Signals
-- **Intelligence Layer** — Agent SDK runners + MCP tools reason over data, score actions, learn from preferences
-- **Interface Layer** — Claude mobile, digest.wiki, Notion, WhatsApp (future)
+- **Observation Layer** — Signal sources (YouTube ✅, Granola, Email, Calendar, screenshots, etc.) produce normalized Signals
+- **Intelligence Layer** — Runners + MCP tools reason over data, score actions, learn from preferences
+- **Interface Layer** — Claude mobile, digest.wiki, Notion, Claude Code, WhatsApp (future)
 
-**ai-cos-mcp server** (FastMCP Python, planned for `mcp-servers/`):
-- Key tools: `cos_load_context`, `cos_score_action`, `cos_get_preferences`, `cos_propose_actions`
-- Deployed to DO droplet, connected from all Claude surfaces
+**ai-cos-mcp server** (FastMCP Python, ✅ live on droplet):
+- Live tools: `health_check`, `cos_load_context`, `cos_score_action`, `cos_get_preferences`
+- Connected via Tailscale from all Claude surfaces
 
-**Agent SDK runners** (5 narrow specialists):
-- PostMeetingAgent (Granola → IDS updates → actions)
-- ContentAgent (content queue → analysis → digests → actions)
-- OptimiserAgent (scoring models → ranked lists → gap analysis)
-- IngestAgent (screenshots, URLs → Network/Companies DB)
-- SyncAgent (Notion ↔ Postgres consistency)
+**Runners** (5 narrow specialists):
+- ContentAgent ✅ (content queue → analysis → digests → Notion → Actions Queue → thesis updates)
+- PostMeetingAgent 🔜 (Granola → IDS updates → actions)
+- OptimiserAgent 🔜 (scoring models → ranked lists → gap analysis)
+- IngestAgent 🔜 (screenshots, URLs → Network/Companies DB)
+- SyncAgent 🔜 (Notion ↔ Postgres consistency per DATA-SOVEREIGNTY.md)
 
-**Preference Store** — `action_outcomes` table (Postgres): every accept/reject with scoring factor snapshots. Injected into all reasoning sessions for calibration. The compounding mechanism.
+**Preference Store** — `action_outcomes` table ✅ (Postgres): every accept/reject with scoring factor snapshots. The compounding mechanism.
 
-**Cloud infrastructure:** DO droplet ($12/mo), Postgres, Tailscale for secure networking.
+**Cloud infrastructure** ✅ — DO droplet ($12/mo), Postgres, Tailscale, systemd services.
 
-**Build phases:**
-1. MCP server + Preference Store foundation
+**Data sovereignty** — `DATA-SOVEREIGNTY.md` defines field-level ownership between Notion (human fields) and droplet (enriched fields).
+
+**Build phases (updated):**
+1. ~~MCP server + Preference Store foundation~~ ✅ ~70% complete
 2. Action Frontend on digest.wiki (accept/dismiss UX)
-3. Cloud infrastructure (Postgres, sync worker)
-4. Agent SDK Runners (SyncAgent → ContentAgent → PostMeetingAgent → IngestAgent → OptimiserAgent)
-5. WhatsApp integration (proactive push)
+3. Autonomous Runners (SyncAgent → PostMeetingAgent → IngestAgent)
+4. Optimisation + Multi-Surface (OptimiserAgent → WhatsApp)
 
-**Full specs:** `docs/architecture/doc2-architecture-v0.2-enhanced.md` (architecture), `docs/architecture/doc3-vision-document.md` (vision), `docs/architecture/BUILD-SYSTEM.md` (historical build system reference)
+**Full specs:** `docs/architecture/architecture-v0.3.md` (architecture), `docs/architecture/vision-v5.md` (vision). Historical originals in `docs/architecture/From Clowork handover (sessino 40 in cowork)/`.
 
 ## Current Build State
 
-**What works today:**
-- Content Pipeline v4 (YouTube → analysis → digests → Notion → Actions Queue)
-- digest.wiki (Next.js 16, live at https://digest.wiki, WhatsApp-shareable)
-- Notion as full data layer (8 databases, cross-referenced)
-- IDS methodology fully encoded in CONTEXT.md
-- Scoring models defined (`action_scorer.py`, 172 lines)
-- Parallel development system (branch lifecycle CLI, worktrees, file safety classification)
-- 20 portfolio companies deep-researched, 76 actions generated
-- 6 active thesis threads tracked in Notion Thesis Tracker
+**What's live:**
+- **Content Pipeline on Droplet** — Autonomous: extraction + ContentAgent + publish + Notion writes + Actions Queue + Thesis Tracker updates. Cron every 5 min.
+- **ai-cos-mcp server** — FastMCP Python on DO droplet (systemd, always-on). Tools: health_check, cos_load_context, cos_score_action, cos_get_preferences.
+- **digest.wiki** — Next.js 16, live at https://digest.wiki, auto-deploys on git push (~15s)
+- **Preference Store** — `action_outcomes` table in Postgres on droplet
+- **Notion as full data layer** — 8 databases with cross-references
+- **Thesis Tracker** — AI-managed conviction engine (6-level conviction spectrum, key questions as [OPEN]/[ANSWERED] blocks, autonomous thread creation, evidence accumulation)
+- **Cross-surface alignment** — `claude-ai-sync/` folder for Claude.ai memory sync
+- **Data Sovereignty** — `DATA-SOVEREIGNTY.md` defines field-level ownership between Notion and droplet
 
 **What's being built next:**
-1. Custom ai-cos-mcp server (FastMCP Python on DO droplet)
-2. Preference Store (action_outcomes table in Postgres)
-3. Action Frontend on digest.wiki (accept/dismiss)
-4. Agent SDK runners (5 specialists)
-5. Content Pipeline v5 (full portfolio coverage, semantic matching, multi-source)
+1. Action Frontend on digest.wiki (accept/dismiss UX)
+2. Wire `action_scorer.py` into Content Pipeline
+3. Autonomous runners (PostMeetingAgent, SyncAgent, IngestAgent, OptimiserAgent)
+4. Content Pipeline v5 (multi-source, semantic matching)
 
 ---
 

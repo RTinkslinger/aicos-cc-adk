@@ -8,7 +8,7 @@
 |----------|----------------|-------------|-------------|-------------|
 | **Content Digest** | **Droplet** | Creates analysis, stores full record | View layer (Action Status editable) | Push: droplet → Notion |
 | **Actions Queue** | **Both** | Creates proposals; some triages arrive here first | Some triages happen here first | Bidirectional, conflict-aware |
-| **Thesis Tracker** | **Notion** | Reads + adds evidence via API | All surfaces write here, Aakash edits directly | Pull: Notion → droplet cache |
+| **Thesis Tracker** | **Notion** (AI-managed) | Creates threads, updates conviction/evidence/key questions via API | AI writes all fields; Aakash edits Status only | Pull: Notion → droplet cache; Push: droplet → Notion (conviction, evidence, new threads) |
 | **Companies DB** | **Droplet (enriched)** + Notion (human fields) | Full enriched version — agent-curated IDS, computed data | Limited view: human-managed fields (name, deal status, sector) | Pull Notion fields periodically. Change detection → actions. |
 | **Network DB** | **Droplet (enriched)** + Notion (human fields) | Same as Companies — enriched, evolving | Human-managed core fields | Same as Companies |
 | **Portfolio DB** | **Droplet (enriched)** + Notion (human fields) | Same as Companies/Network — enriched, evolving | Financial data, follow-ons, human-managed fields. Each entry has a hidden `Company Name` relation property linking to Companies DB. | Same as Companies/Network |
@@ -52,12 +52,20 @@ Actions can be triaged from multiple surfaces — some triage events arrive at t
 - **Conflict:** Field-level last-writer-wins. Status field is most conflict-prone.
 - **Sync:** Push proposals droplet → Notion. Pull status changes Notion → droplet. Bidirectional on triage events.
 
-### Thesis Tracker
-- **SoT:** Notion
-- **Droplet reads:** Thread Name, Status, Conviction, Core Thesis, Key Question, Key Companies, Connected Buckets
-- **Droplet writes (via Notion API):** New evidence blocks appended to page body
-- **Multiple write surfaces:** Claude.ai (Cowork), Claude Code, pipeline — all write to Notion directly
-- **Sync:** Pull to local cache on pipeline start. Cache refresh period: every pipeline run (5 min). If Notion unreachable, use last cached state (or CONTEXT.md fallback).
+### Thesis Tracker (AI-Managed Conviction Engine)
+- **SoT:** Notion — but AI-managed. All fields are written by AI except Status (human-only).
+- **Droplet reads:** Thread Name, Status, Conviction, Core Thesis, Key Question (property + page blocks for [OPEN]/[ANSWERED] questions), Key Companies, Connected Buckets, Evidence For, Evidence Against, Investment Implications
+- **Droplet writes (via Notion API):**
+  - Creates new thesis threads autonomously (Conviction = "New", Discovery Source = "Content Pipeline")
+  - Appends evidence blocks to page body with `[date] [source] (direction) evidence` format
+  - Updates Conviction level (New → Evolving → Evolving Fast → Low → Medium → High)
+  - Appends to Evidence For / Evidence Against property text (IDS notation: + for, ? against)
+  - Adds key questions as `[OPEN]` page blocks, marks `[ANSWERED]` when evidence resolves them
+  - Updates Investment Implications, Key Companies
+- **Human writes:** Status only (Active / Exploring / Parked / Archived) — this weights action scoring
+- **Multiple write surfaces:** Claude.ai, Claude Code, Content Pipeline — all write to Notion directly
+- **Conviction spectrum:** New / Evolving / Evolving Fast (maturity axis) → Low / Medium / High (strength axis for well-formed thesis)
+- **Sync:** Pull to local cache on pipeline start (includes page blocks for key questions). Cache refresh: every pipeline run (5 min). If Notion unreachable, use last cached state (or CONTEXT.md fallback).
 
 ### Companies DB
 - **SoT:** Droplet (enriched) + Notion (human fields)

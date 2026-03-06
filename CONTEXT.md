@@ -1,6 +1,6 @@
 # Aakash AI Chief of Staff — Master Context Document
-# Last Updated: 2026-03-05 (Session 040 — Claude Code Transition)
-# This file is the SINGLE SOURCE OF TRUTH for all Claude Code sessions
+# Last Updated: 2026-03-06 (Milestone 2 — Thesis Tracker Redesign + Infrastructure)
+# This file is the SINGLE SOURCE OF TRUTH for all Claude surfaces
 
 ---
 
@@ -81,6 +81,8 @@ Action Score = f(
 ```
 Thresholds: ≥7 surface as action, 4-6 tag as low-confidence, <4 context enrichment only.
 
+**Thesis-weighted scoring:** Actions connected to thesis threads that Aakash has marked as "Active" (Status field) receive a multiplier on `key_question_relevance` and `conviction_change_potential` factors. This is the mechanism by which Aakash's human attention signals influence AI prioritization.
+
 ### People Scoring Model (subset — for meeting-type actions)
 
 For every person in Aakash's universe, compute:
@@ -101,20 +103,46 @@ Person Score = f(
 
 ---
 
-## THREE-LAYER ARCHITECTURE
+## THREE-LAYER ARCHITECTURE (Uber Build Vision)
 
-The system is evolving from session-based development to a persistent, autonomous architecture. Full specs in `docs/architecture/`.
+The system architecture. "Aakash + AI CoS = singular entity." Full specs in `docs/architecture/`.
 
 ### Layer 1: Observation (Signal Processor)
-Continuously monitors all of Aakash's surfaces: YouTube, Granola meetings, email, calendar, LinkedIn/X, screenshots. Each signal source produces a normalized Signal fed into the Intelligence Layer. Currently live: YouTube (Content Pipeline v4), Granola MCP (connected), Calendar MCP, Gmail MCP.
+Monitors Aakash's surfaces: YouTube, Granola meetings, email, calendar, LinkedIn/X, screenshots. Each signal source produces normalized signals fed into the Intelligence Layer.
+
+| Source | Status | Mechanism |
+|--------|--------|-----------|
+| YouTube | **Live** | Droplet cron (every 5 min) — yt-dlp extraction + ContentAgent analysis |
+| Granola | Connected | MCP — `query_granola_meetings`, `get_meeting_transcript` |
+| Calendar | Connected | Google Calendar MCP |
+| Gmail | Connected | Gmail MCP (raw access, not yet processed by agents) |
+| X / LinkedIn | Manual | No API — screenshot/URL drop to IngestAgent (future) |
+| WhatsApp | Future | Primary comms channel, no integration yet |
 
 ### Layer 2: Intelligence (The Brain)
-Agent SDK runners + MCP tools reason over data. Five specialist runners planned: PostMeetingAgent, ContentAgent, OptimiserAgent, IngestAgent, SyncAgent. The custom `ai-cos-mcp` server provides shared tools (`cos_score_action`, `cos_get_preferences`, `cos_load_context`, etc.). The Preference Store (`action_outcomes` table in Postgres) enables learning from every accept/reject decision.
+Agent SDK runners + MCP tools reason over data. The custom `ai-cos-mcp` server (FastMCP Python on DO droplet) provides shared tools.
+
+**Live runners:**
+- **ContentAgent** — Content queue → thesis/portfolio matching → structured analysis → digest JSON → Notion entries → Actions Queue. Running on droplet as part of unified pipeline.
+
+**Planned runners:**
+- **PostMeetingAgent** — Granola transcript → IDS updates → actions
+- **OptimiserAgent** — Scoring models → ranked lists → gap analysis
+- **IngestAgent** — Screenshots, URLs → Network/Companies DB
+- **SyncAgent** — Notion ↔ Postgres consistency
+
+**MCP Server tools:** `health_check`, `cos_load_context`, `cos_score_action`, `cos_get_preferences`. Deployed on DO droplet, connected via Tailscale.
+
+**Preference Store:** `action_outcomes` table in Postgres. Every accept/reject with scoring factor snapshots. Injected into reasoning sessions for calibration. The compounding mechanism.
 
 ### Layer 3: Interface (Operating Surface)
-How Aakash interacts: Claude mobile (primary conversational), digest.wiki (content digests + future action triage), Notion (structured data UI), WhatsApp (future proactive push). Claude Code is the build surface, not an end-user interface.
+- **Claude mobile** (primary conversational) — action review, thesis discussion, research
+- **digest.wiki** — Content digests + future action triage frontend
+- **Notion** — Structured data UI, human status updates
+- **Claude Code** — Build surface (not end-user interface)
+- **WhatsApp** (future) — Proactive push
 
-**See:** `docs/architecture/doc2-architecture-v0.2-enhanced.md` (full architecture spec), `docs/architecture/doc3-vision-document.md` (vision + build phases)
+**Build order:** Content Pipeline → Action Frontend → Knowledge Store → Multi-Surface → Meeting Optimizer → Always-On.
 
 ---
 
@@ -240,263 +268,318 @@ Founder (MPI gate) → Traction (independent view, product love, unit economics)
 
 ---
 
-## THESIS TRACKER (Notion Sync Point)
+## THESIS TRACKER (AI-Managed Conviction Engine)
 
 **Database ID:** `4e55c12373c54e309c2031aa9f0c8f60`
 **Data Source ID:** `3c8d1a34-e723-4fb1-be28-727777c22ec6`
 **URL:** https://www.notion.so/4e55c12373c54e309c2031aa9f0c8f60
 
-The Thesis Tracker is the **shared state** for thesis threads across all Claude surfaces. Both Claude.ai and Claude Code have Notion access, making this the sync point that closes the feedback loop.
+The Thesis Tracker is an **AI-managed conviction engine**. The AI autonomously creates new thesis threads, updates evidence, adjusts conviction, and formulates key questions. Thesis threads are living hypotheses that grow, strengthen, weaken, or die based on continuous signal processing from all sources (content, meetings, research, email, communication analysis).
+
+**Aakash's role is curation, not authorship.** He sets the Status field (Active/Exploring/Parked/Archived) which acts as a hard attention signal — Active thesis threads receive higher weight in action scoring. Everything else is AI-managed.
 
 ### Schema
-- **Thread Name** (title) — Name of the thesis thread
-- **Status** — Active / Exploring / Parked / Archived
-- **Conviction** — High / Medium / Low / TBD
-- **Core Thesis** — One-liner: what is the durable value insight?
-- **Key Question** — The open question that moves conviction up or down
-- **Evidence For** — IDS notation: ++ and + signals
-- **Evidence Against** — IDS notation: ? and ?? signals
-- **Key Companies** — Companies connected to this thesis
-- **Key People** — High-value people for this thread
-- **Connected Buckets** — Multi-select: New Cap Tables, Deepen Existing, New Founders, Thesis Evolution
-- **Discovery Source** — Claude.ai / Claude Code / Meeting / Research / X/LinkedIn / Other
-- **Investment Implications** — What should Aakash DO about this thesis?
-- **Date Discovered** — When the thread was first identified
-- **Last Updated** — Auto-set on edit
 
-### Sync Protocol
-**When discovering a new thesis thread:**
-1. Create a new page in the Thesis Tracker with Discovery Source = "Claude Code" (or "Claude.ai" from that surface)
-2. Fill in at minimum: Thread Name, Status (Exploring), Core Thesis, Key Question, Discovery Source
-3. Also update CONTEXT.md's thesis threads section
+| Field | Type | Managed By | Description |
+|-------|------|-----------|-------------|
+| Thread Name | title | AI | Short thesis label |
+| **Status** | select | **Aakash only** | Active / Exploring / Parked / Archived. Human attention signal that weights action scoring. |
+| **Conviction** | select | AI | **New** / **Evolving** / **Evolving Fast** / **Low** / **Medium** / **High**. New-Evolving-EvolvingFast = maturity (how well-formed). Low-Medium-High = strength (well-formed thesis, how confident). |
+| Core Thesis | rich_text | AI | Elaboration of the thread name — the durable value insight |
+| Key Questions | rich_text | AI | Summary count ("3 open, 1 answered"). Actual questions as page content blocks (see below). |
+| Evidence For | rich_text | AI | IDS notation: ++ and + signals. Append-only with timestamps. |
+| Evidence Against | rich_text | AI | IDS notation: ? and ?? signals. Append-only. |
+| Key Companies | rich_text | AI | Companies connected to this thesis |
+| Key People | rich_text | AI | People relevant to this thread |
+| Connected Buckets | multi_select | AI | New Cap Tables, Deepen Existing, New Founders, Thesis Evolution |
+| Discovery Source | select | AI (set once) | What first triggered creation: ContentAgent, Claude.ai, Meeting, Research, X/LinkedIn, Other |
+| Investment Implications | rich_text | AI | What should Aakash DO about this thesis — continuously updated |
+| Date Discovered | date | AI (set once) | When the thread was first identified |
+| Last Updated | auto | System | Auto-set on edit |
 
-**When updating an existing thread:**
-1. Query the Thesis Tracker for the thread by name
-2. Update the relevant fields (evidence, conviction, companies, people)
-3. The Last Updated timestamp auto-updates
+### Key Questions as Page Content Blocks
 
-**When reading thesis state:**
-1. Query data source `3c8d1a34-e723-4fb1-be28-727777c22ec6` to get all thesis threads
-2. Use this as the authoritative source for thesis-related recommendations
-3. Connect thesis threads to People Scoring Model (thesis_intersection factor)
+The `Key Questions` property holds a summary. Actual questions live as **page content blocks** in the Notion page body, using this format:
+
+```
+[OPEN] Question text — Added YYYY-MM-DD via SourceAgent
+[ANSWERED YYYY-MM-DD via SourceAgent] Question text → Answer summary. Evidence: +/++/?
+```
+
+When a question gets answered (from any signal source), the answer becomes evidence (for or against), and conviction updates accordingly. Key Questions are the mechanism by which conviction moves.
+
+### Conviction Lifecycle
+
+```
+New → Evolving → Evolving Fast → Low / Medium / High
+         ↓                              ↓
+    (no evidence                  (evidence weakens)
+     for 30+ days)                      ↓
+         ↓                           Low → Parked
+      Auto-park                    (by Aakash)
+```
+
+- **New** — Just identified from a single signal. Minimal evidence.
+- **Evolving** — Active evidence accumulation, direction not yet clear.
+- **Evolving Fast** — Rapid signal flow, thesis crystallizing quickly. Velocity signal = pay attention.
+- **Low** — Well-formed thesis, evidence points weak. May be parked.
+- **Medium** — Well-formed, moderate evidence strength.
+- **High** — Well-formed, strong convergent evidence. Investable.
+
+### AI Thesis Management Protocol
+
+**Creating new threads:** AI creates freely whenever it identifies a pattern worth tracking. Always starts at Conviction = "New". No human approval needed. The maturity lifecycle filters noise from signal.
+
+**Updating existing threads:** On every signal (content analysis, meeting transcript, research session, email), AI checks for thesis connections. If found:
+1. Append evidence block to page body
+2. Update Evidence For / Evidence Against property
+3. Re-evaluate conviction based on accumulated evidence
+4. Update Key Questions (mark answered, add new)
+5. Update Investment Implications if conviction changed
+
+**Signal sources that trigger thesis updates:**
+- ContentAgent (content digests) — already live
+- PostMeetingAgent (Granola transcripts) — planned
+- Claude.ai research sessions — via Notion write-through
+- IngestAgent (screenshots, URLs) — planned
+- Email/communication analysis — future
+
+### Status → Action Scoring Weight
+
+When Aakash marks a thesis as **Active**, all actions in the Actions Queue connected to that thesis receive a scoring multiplier on `key_question_relevance` and `conviction_change_potential`. This creates the feedback loop:
+
+```
+AI proposes thesis → Aakash marks Active → AI prioritizes connected actions
+→ Action outcomes feed back as evidence → Conviction updates → Better actions
+```
 
 ---
 
-## CONTENT PIPELINE v4 (YouTube → more surfaces coming)
+## CONTENT PIPELINE (Droplet — Autonomous)
 
-**Purpose:** Process Aakash's content consumption through an AI pipeline that extracts investing-relevant insights, connects to active thesis threads and portfolio/deal pipeline, generates rich digests (PDF + mobile-friendly HTML), and proposes concrete actions. Currently supports YouTube; designed to extend to podcasts, articles, bookmarks.
+**Purpose:** Process Aakash's content consumption through an autonomous AI pipeline. Extracts investing-relevant insights, connects to thesis threads and portfolio, generates rich digests, writes to Notion, and proposes scored actions.
 
-**Trigger phrases:** "process my content queue", "process my YouTube queue", "process my videos"
+### Architecture (Current — Droplet Pipeline)
 
-### Architecture
-- **Part 1 — Mac Extractor** (`scripts/youtube_extractor.py` or CLI shortcut `yt`): Runs on Mac. Uses yt-dlp + youtube-transcript-api. Saves JSON to `queue/`.
-- **Part 2 — Content Analysis**: Processes queue with thesis/portfolio matching, generates structured analysis, PDF digests, writes to Notion Content Digest DB, proposes actions to Actions Queue.
-- **Part 3 — Mobile Review** (Claude.ai): "Review my content actions" / "review my portfolio actions" queries pending items for approve/dismiss.
-
-**Transition:** ContentAgent (Agent SDK runner) will replace the manual analysis step. See `docs/architecture/doc2-architecture-v0.2-enhanced.md` for runner specs.
-
-### Queue Flow
 ```
-Mac (8:30 PM daily via launchd): youtube_extractor.py → queue/youtube_extract_*.json
-Analysis: queue/ → content analysis → PDF digests → Notion → review
-Post-processing: move to queue/processed/
-Back-propagation (daily): Actions Queue Done → Content Digest "Actions Taken"
+YouTube Playlists
+        │
+        ▼
+┌───────────────────────────┐
+│ 1. EXTRACTION              │  Runs on: DO Droplet (cron every 5 min)
+│    extraction.py           │  Tool: yt-dlp + youtube-transcript-api
+│    + dedup tracking        │  Output: queue/*.json
+│    Cookies: Safari export  │  Dedup: won't re-extract processed videos
+└───────────┬───────────────┘
+            │ JSON files in queue/
+            ▼
+┌───────────────────────────┐
+│ 2. ANALYSIS (ContentAgent) │  Runs on: DO Droplet (Claude API)
+│    content_agent.py        │  Reads: Thesis Tracker, portfolio context
+│    + content_analysis.md   │  Produces per-video: DigestData JSON
+│    (system prompt)         │  Cross-refs: thesis threads, portfolio companies
+└───────────┬───────────────┘
+            │ analysis results
+            ▼
+┌───────────────────────────────────────────────────────┐
+│ 3. OUTPUT (three parallel tracks)                      │
+│                                                        │
+│ A) digest.wiki                                         │
+│    publishing.py → aicos-digests/src/data/*.json       │
+│    → git push → Vercel auto-deploy                     │
+│    → https://digest.wiki/d/{slug} (~15s)              │
+│                                                        │
+│ B) Notion Records                                      │
+│    → Content Digest DB (full analysis metadata)        │
+│    → Actions Queue (scored actions with relations       │
+│      to Company, Thesis, Source Digest)                 │
+│    → Thesis Tracker updates (evidence blocks)          │
+│                                                        │
+│ C) Preference Store                                    │
+│    → action_outcomes table (Postgres)                  │
+│    → Every proposed action logged with scoring factors  │
+└───────────────────────────────────────────────────────┘
 ```
+
+### Infrastructure
+
+| Component | Location | Details |
+|-----------|----------|---------|
+| Droplet | `aicos-droplet` via Tailscale | Ubuntu 24.04, DO $12/mo |
+| MCP Server | `systemd ai-cos-mcp.service` | FastMCP Python, always-on |
+| Pipeline | `cron every 5 min` | `pipeline.sh` → extraction + analysis + publish |
+| Postgres | Droplet local | `action_outcomes` table for preference store |
+| Deploy | `deploy.sh` from Mac | rsync → droplet → uv sync → systemctl restart |
+| Digest site | `aicos-digests/` on droplet | git push → Vercel auto-deploy |
+
+### Key Files (on droplet: `/opt/ai-cos-mcp/`)
+
+| File | Purpose |
+|------|---------|
+| `server.py` | FastMCP server entry point |
+| `runners/pipeline.py` | Unified pipeline orchestrator |
+| `runners/extraction.py` | YouTube extraction (yt-dlp) |
+| `runners/content_agent.py` | ContentAgent — analysis + Notion writes |
+| `runners/publishing.py` | JSON → digest site → git push → Vercel |
+| `runners/prompts/content_analysis.md` | System prompt for Claude analysis |
+| `lib/notion_client.py` | Notion REST API wrapper (Content Digest DB, Actions Queue, Thesis Tracker, Companies DB) |
+| `lib/scoring.py` | Action scoring model implementation |
+| `lib/preferences.py` | Postgres preference store (action_outcomes) |
 
 ### Content Digest DB
-- **Database ID:** `3fde8298-419e-4558-b95e-c3a4b5a69299`
+
 - **Data Source ID:** `df2d73d6-e020-46e8-9a8a-7b9da48b6ee2`
-- Properties: Video Title, Channel, Video URL, Upload Date, Duration, Summary, Thesis Connections, Portfolio Relevance, Key Insights, Proposed Actions, Action Status, Connected Buckets, Content Type, Relevance Score, Discovery Source, Processing Date, Batch ID
-- **v3 Fields:** Topic Map, Watch These Sections, Net Newness (select), Contra Signals, Rabbit Holes, Essence Notes
+- Properties: Video Title, Channel, Video URL, Duration, Content Type, Relevance Score, Net Newness, Connected Buckets, Summary, Key Insights, Essence Notes, Watch These Sections, Contra Signals, Rabbit Holes, Thesis Connections, Portfolio Relevance, Proposed Actions, Digest URL, Discovery Source, Action Status, Processing Date
 
-### HTML Content Digest Site
-- **Project:** `aicos-digests/` — Next.js 16 + TypeScript + Tailwind CSS v4
-- **Architecture:** SSG. Each digest = JSON file in `src/data/{slug}.json` → rendered at `/d/{slug}` with dynamic OG tags
-- **Deployment:** Live at https://digest.wiki. Push to `main` → GitHub Action → Vercel (~90s)
-- **GitHub repo:** `RTinkslinger/aicos-digests` (private)
-- **Pipeline integration:** `scripts/publish_digest.py` saves JSON, deploys via git push → GitHub Action
+### HTML Digest Site (digest.wiki)
 
-### Intelligence Architecture
-The pipeline is an **AI strategist, not a keyword matcher**. Context layers:
-| Layer | Source | Status |
-|-------|--------|--------|
-| Base | Portfolio DB (Notion) | ✅ Live |
-| Depth | Deep Research Enrichment (`portfolio-research/*.md`) | ✅ Available |
-| History | Previous Content Digests (net newness baseline) | ✅ Live |
-| Conviction | Structured Interviews | 🔜 Planned |
-| Real-time | Email/Messaging access | 🔜 Future |
-| Signal | Meeting notes (Granola) | 🔜 Future |
+- **Tech:** Next.js 16 + React 19 + Tailwind CSS 4 (SSG)
+- **Domain:** digest.wiki (Vercel)
+- **GitHub:** `RTinkslinger/aicos-digests`
+- **Deploy:** git push → Vercel auto-deploy (~15s). Manual: `npx vercel deploy --prod`
+- **Data:** Static JSON in `src/data/{slug}.json`, rendered at `/d/{slug}` with OG tags for WhatsApp sharing
 
 ---
 
-## PORTFOLIO ACTIONS TRACKER
+## ACTIONS QUEUE
 
 **Database ID:** `e1094b9890aa45b884f37ab46fda7661`
 **Data Source ID:** `1df4858c-6629-4283-b31d-50c5e7ef885d`
 
-The Actions Queue is the **single action sink** for ALL action types — portfolio, thesis, network, and research. Actions flow here from Content Pipeline, deep research, meetings, manual entry, and agent-generated analysis. Thesis Tracker stays as pure conviction/knowledge tracker; thesis-related actions route through Actions Queue with Thesis relation.
+The Actions Queue is the **single action sink** for ALL action types. Actions flow here from Content Pipeline, research, meetings, manual entry, and agent-generated analysis.
 
 ### Schema
-- **Action** (title) — Concise action description
-- **Company** (relation to Portfolio DB `4dba9b7f-e623-41a5-9cb7-2af5976280ee`) — Links to portfolio company (optional)
-- **Thesis** (relation to Thesis Tracker `3c8d1a34-e723-4fb1-be28-727777c22ec6`) — Links to thesis thread (optional). An action can relate to a company, a thesis, or both.
-- **Source Digest** (relation to Content Digest DB `df2d73d6-e020-46e8-9a8a-7b9da48b6ee2`) — Provenance link. Enables back-propagation: when action with Source Digest = X reaches Done, Content Digest DB entry X moves to "Actions Taken".
-- **Action Type** (select): Thesis Update, Meeting/Outreach, Research, Follow-on Eval, Portfolio Check-in, Pipeline Action, Content Follow-up
-- **Priority** (select): P0 - Act Now, P1 - This Week, P2 - This Month, P3 - Backlog
-- **Status** (select): Proposed → Accepted → In Progress → Done / Dismissed
-- **Source** (select): Content Pipeline, Agent, Manual, Meeting, Thesis Research, IDS Review
-- **Assigned To** (select): Aakash, Agent, Sneha, Team
-- **Created By** (select): Claude Code, Claude.ai, Manual
-- **Relevance Score** (number) — 0-100
-- **Reasoning** (text) — Why this action matters
-- **Thesis Connection** (text) — Legacy free-text thesis link (prefer Thesis relation)
-- **Source Content** (text) — Legacy free-text source reference (prefer Source Digest relation)
-- **Due Date** (date)
-- **Outcome** (text) — Result after completion
+
+| Field | Type | Description |
+|-------|------|-------------|
+| Action | title | Concise action description |
+| Company | relation (Portfolio DB) | Links to portfolio company (optional) |
+| Thesis | relation (Thesis Tracker) | Links to thesis thread (optional). Action can relate to company, thesis, or both. |
+| Source Digest | relation (Content Digest DB) | Provenance link. Enables back-propagation. |
+| Action Type | select | Research, Meeting/Outreach, Thesis Update, Content Follow-up, Portfolio Check-in, Follow-on Eval, Pipeline Action |
+| Priority | select | P0 - Act Now, P1 - This Week, P2 - This Month, P3 - Backlog |
+| Status | select | Proposed → Accepted → In Progress → Done / Dismissed |
+| Source | select | Content Processing, Agent, Manual, Meeting, Thesis Research, IDS Review |
+| Assigned To | select | Aakash, Agent, Sneha, Team |
+| Created By | select | AI CoS, Manual |
+| Relevance Score | number | 0-100 (from scoring model) |
+| Reasoning | rich_text | Why this action matters — AI-generated justification |
+| Thesis Connection | rich_text | Thesis thread names (pipe-delimited for multiple). Supplements the Thesis relation. |
+| Source Content | rich_text | Context from source that spawned this action |
+| Outcome | select | Unknown, Helpful, Gold (human feedback after completion) |
+
+### Assignment Logic
+
+| Assigned To | When |
+|------------|------|
+| **Agent** | Research, Thesis Update, Content Follow-up — tasks AI can execute autonomously |
+| **Aakash** | Meeting/Outreach, Portfolio Check-in, Follow-on Eval — requires human judgment or presence |
+
+### Action Routing
+
+| Source | Source Field | Created By |
+|--------|-------------|------------|
+| Content Pipeline | Content Processing | AI CoS |
+| Deep Research | Agent | AI CoS |
+| Meeting notes | Meeting | AI CoS |
+| Manual entry | Manual | Manual |
 
 ### Content Digest DB ↔ Actions Queue State Contract
+
 Content Digest `Action Status` state machine:
 - `Pending` → Unreviewed (set by pipeline)
-- `Reviewed` → All proposed actions triaged (accepted → Actions Queue, or rejected)
+- `Reviewed` → All proposed actions triaged
 - `Actions Taken` → At least one downstream action marked Done (back-propagated)
 - `Skipped` → Dismissed without review / duplicate
 
-### Action Routing Protocol
-**From Content Pipeline:** Source = "Content Pipeline", Status = "Proposed", Created By = "Claude Code".
-**From Deep Research:** Source = "Agent", Created By = "Claude Code".
-**From Meetings/Manual:** Source = "Meeting" or "Manual", Created By = "Manual".
+---
 
-**Action Type Mapping:**
-- Follow-up Call → Meeting/Outreach
-- Intro Needed → Meeting/Outreach
-- Risk Flag → Portfolio Check-in
-- Follow-on Decision → Follow-on Eval
-- Strategic Input → Research
-- Market Intel → Thesis Update
+## THESIS THREADS (Canonical Source: Notion Thesis Tracker)
 
-**Priority Mapping:** High → P0, Medium → P1, Low → P2
+The Notion Thesis Tracker is the canonical source for all thesis threads. Query data source `3c8d1a34-e723-4fb1-be28-727777c22ec6` for current state. The list below is a reference snapshot — always prefer the live Notion data.
 
-### Current State (Session 017)
-112 total actions: 76 from deep research enrichment (Session 015) + 36 from Content Pipeline v4 (Session 017). Action types: Research, Meeting/Outreach, Thesis Update, Portfolio Check-in, Content Follow-up, Pipeline Action.
+**Active threads (as of March 2026):**
+
+1. **Agentic AI Infrastructure** — Harness layer is where durable value lives. Layer model (Model/Agent/Harness/Application). Companies: Composio, Smithery.ai, Poetic (YC W25). MCP ecosystem. Developer tooling convergence, CLAW stack emergence.
+2. **Cybersecurity / Pen Testing** — Service → platform transition = venture-scale value creation. Crowdsourced → Automated → AI-augmented. Companies: Bugcrowd, HackerOne, Pentera.
+3. **USTOL / Aviation / Deep Tech Mobility** — Ultra-short takeoff and landing. Electra Aero. Sweet spot between VTOL flexibility and CTOL range.
+4. **SaaS Death / Agentic Replacement** — AI agents replacing traditional SaaS entirely. 4/4 independent source convergence (YC, EO, a16z, 20VC). Klarna as case study. Portfolio exposure: Unifize, CodeAnt, Highperformr need AI moat evaluation.
+5. **CLAW Stack Standardization & Orchestration Moat** — CLAW (Compute, LLM, Agent, Workflow) stack analogous to LAMP/MEAN. Orchestration layer = durable enterprise value. Key question: commoditized by hyperscalers or indie?
+6. **Healthcare AI Agents** — AI enabling personalized care pathways. Early signal, monitor for convergence.
 
 ---
 
-## THESIS THREADS (Active as of March 2026)
+## PERSISTENCE & CROSS-SURFACE ALIGNMENT
 
-Based on analyzed ChatGPT Deep Research sessions + Content Pipeline:
+### Claude Code Persistence
+- **CLAUDE.md** — Project instructions, auto-loaded every session
+- **CONTEXT.md** — Master context, read on demand (this file)
+- **Auto memory** — `~/.claude/projects/.../memory/MEMORY.md`
+- **Build Traces** — `TRACES.md` (rolling window) + `traces/archive/` (milestones)
 
-1. **Agentic AI Infrastructure** — Layer model (Model/Agent/Harness/Application). Thesis: harness layer is where durable value lives. Specific companies: Composio, Smithery.ai, Poetic (YC W25 — "Django for AI agents"). MCP ecosystem. Evidence expanded Session 017: developer tooling convergence (Cursor → Claude Code shift), CLAW stack emergence, infrastructure layer consolidation.
-2. **Cybersecurity / Pen Testing** — Evolution from services to platforms. Crowdsourced → Automated → AI-augmented. Companies: Bugcrowd, HackerOne, Pentera. "Service → platform transition = venture-scale value creation."
-3. **USTOL / Aviation / Deep Tech Mobility** — Ultra-short takeoff and landing. Electra Aero. Sweet spot between VTOL flexibility and CTOL range. Applications: defense, logistics, urban air mobility.
-4. **SaaS Death / Agentic Replacement** (Session 016, **upgraded to High conviction Session 017**) — AI agents replacing traditional SaaS tools entirely. 4/4 independent sources converge (YC, EO, a16z, 20VC). Klarna as case study. Portfolio exposure: Unifize, CodeAnt, Highperformr need AI moat evaluation.
-5. **CLAW Stack Standardization & Orchestration Moat** (Session 017) — CLAW (Compute, LLM, Agent, Workflow) stack analogous to LAMP/MEAN. Orchestration layer is where durable enterprise value lives. Key question: commoditized by hyperscalers or indie? Exploring, Medium conviction.
-6. **Healthcare AI Agents** (Session 017 signal) — AI enabling personalized care pathways. Early signal, monitor for convergence.
+### Cross-Surface Alignment (Claude.ai ↔ Claude Code)
+- **`claude-ai-sync/memory-entries.md`** — Current version of Claude.ai memory entries. Aakash pastes into Claude.ai Settings → Memory manually.
+- **`claude-ai-sync/user-preferences.md`** — Current version of Claude.ai user preferences.
+- **`claude-ai-sync/CHANGELOG.md`** — Version history. Check diff when updating.
+- When architectural changes happen, update `claude-ai-sync/` and tell Aakash to paste.
 
----
-
-## PERSISTENCE
-
-Claude Code persistence: **CLAUDE.md** (project instructions, auto-loaded) + **CONTEXT.md** (master context, read on demand) + **auto memory** (`~/.claude/projects/.../memory/`). Historical Cowork 6-layer persistence model documented in `docs/architecture/BUILD-SYSTEM.md`.
-
-**The Feedback Loop:** Every session that produces new understanding should sync it:
-- **New thesis threads** → Write to Notion Thesis Tracker + update CONTEXT.md
-- **Updated thesis conviction/evidence** → Update existing Thesis Tracker entry
+### The Feedback Loop
+Every interaction that produces new understanding should sync it:
+- **Thesis updates** → AI writes directly to Notion Thesis Tracker (autonomous)
+- **Action outcomes** → Preference store (Postgres `action_outcomes` table)
 - **New build state, patterns, Notion IDs** → Update CONTEXT.md + CLAUDE.md
+- **Cross-surface alignment** → Update `claude-ai-sync/` when architecture changes
 - This ensures compound learning across all Claude surfaces.
 
 ---
 
-## SESSION LIFECYCLE
+## WORK TRACKING
 
-Sessions are the atomic unit of AI CoS work. The system enforces maintenance, not the human.
+**Build Traces** (Claude Code era): Implementation decisions tracked via `TRACES.md` using a rolling window + compaction pattern. See CLAUDE.md § Build Traces Protocol.
 
-**Checkpoint triggers:** "checkpoint" / "save state" → Write to `docs/session-checkpoints/SESSION-{NNN}-CHECKPOINT-{N}.md`
+**Historical record:** 40 Cowork sessions (March 1-5, 2026) built the foundation. Key milestones:
+- Sessions 001-011: Deep discovery — Notion DB mapping, IDS methodology decoding, thesis sessions analyzed, system vision v1→v3
+- Sessions 012-018: Content Pipeline v1→v4, Notion Thesis Tracker, 20 portfolio companies deep-researched (76 actions)
+- Sessions 019-022: digest.wiki built + deployed (Next.js 16, Vercel, WhatsApp-shareable)
+- Sessions 023-033: System Vision v3 ("What's Next?"), Actions Queue architecture, Build Roadmap DB, layered persistence v6.0
+- Sessions 034-040: Parallel development, git infrastructure, action_scorer.py, Claude Code transition
 
-**Session Close Checklist (5 steps, MANDATORY):** See CLAUDE.md for the authoritative checklist. Summary:
-1. Iteration log → `docs/iteration-logs/`
-2. Update CONTEXT.md
-3. Update CLAUDE.md
-4. Thesis Tracker sync → Notion
-5. Confirm completion
-
-**Checkpoint format:**
-```markdown
-# Session {NNN} Checkpoint {N}
-**Timestamp:** {ISO datetime}
-**Session Title:** {descriptive title}
-
-## What's Done
-- {completed items, key decisions, files modified}
-
-## What's In Progress
-- {current task, where you left off}
-
-## What's Pending
-- {remaining tasks from original request}
-
-## Key State
-- **Files modified:** {list}
-- **Notion changes:** {any DB writes/updates}
-- **Decisions made:** {key decisions that affect future work}
-- **New learnings:** {patterns, IDs, gotchas discovered}
-```
-
----
-
-## BUILD HISTORY
-
-39 sessions across 5 days built the system from scratch. Key milestones:
-
-- **Sessions 001-011:** Deep discovery — Notion DB mapping, IDS methodology decoding, 4 ChatGPT thesis sessions analyzed, system vision v1→v2→v3
-- **Sessions 012-013:** Multi-surface persistence architecture, Notion Thesis Tracker, parallel deep research
-- **Sessions 014-018:** Content Pipeline v1→v4 (YouTube → analysis → PDF/HTML digests → Notion → Actions Queue), notion-mastery skill, 20 portfolio companies deep-researched (76 actions)
-- **Sessions 019-022:** digest.wiki built + deployed (Next.js 16, Vercel, WhatsApp-shareable), deploy pipeline solved
-- **Sessions 023-028:** System Vision v3 reframe ("What's Next?"), v5→v6 artifact alignment, session lifecycle enforcement, operating rules expansion
-- **Sessions 029-033:** Actions Queue architecture, Full Cycle command, Build Roadmap DB, layered persistence v6.0 milestone
-- **Sessions 034-039:** Parallel development (git repo, branch lifecycle CLI, worktrees, file safety classification, subagent patterns, action_scorer.py + dedup_utils.py)
-- **Session 040:** Claude Code transition — CLAUDE.md + CONTEXT.md rewritten for Claude Code + Agent SDK + MCP + cloud architecture
-
-For per-session details: `docs/session-timeline.md` and `docs/iteration-logs/`
+**Claude Code era:** Milestone-based. MCP server deployed, Content Pipeline migrated to droplet, ContentAgent live, Actions Queue schema overhauled, Thesis Tracker redesigned as AI-managed conviction engine. See `TRACES.md` for current iteration.
 
 ---
 
 ## CURRENT BUILD STATE
 
-### What Works Today
-- **Content Pipeline v4:** YouTube → Mac extractor (launchd 8:30 PM) → JSON queue → content analysis → PDF/HTML digests → Content Digest DB → Actions Queue
-- **digest.wiki:** Next.js 16, live at https://digest.wiki, WhatsApp-shareable, 12+ section digests with dynamic OG tags
+### What's Live
+- **Content Pipeline on Droplet:** Autonomous — extraction + ContentAgent analysis + publish + Notion writes + Actions Queue + Thesis Tracker updates. Cron every 5 min.
+- **ai-cos-mcp server:** FastMCP Python on DO droplet. Tools: health_check, cos_load_context, cos_score_action, cos_get_preferences. Always-on via systemd.
+- **digest.wiki:** Next.js 16, live at https://digest.wiki, auto-deploys on git push (~15s). WhatsApp-shareable.
 - **Notion as full data layer:** 8 databases with cross-references, all actively used
-- **IDS methodology fully encoded** in CONTEXT.md with notation, conviction, scoring frameworks
-- **Scoring models defined:** Action Scoring (7 factors), People Scoring (9 factors), `action_scorer.py` (172 lines)
-- **Parallel development system:** Local git repo, `branch_lifecycle.sh` CLI, worktrees, file safety classification (🟢/🟡/🔴)
-- **Deep research:** 20 Fund Priority companies researched, 76 actions generated, stored in `portfolio-research/`
-- **6 active thesis threads** tracked in Notion Thesis Tracker
+- **IDS methodology fully encoded** in CONTEXT.md
+- **Scoring models:** Action Scoring (7 factors), People Scoring (9 factors), `scoring.py` (implementation)
+- **Preference Store:** `action_outcomes` table in Postgres, logging all proposed actions
+- **Deep research:** 20 Fund Priority companies researched, 76 actions generated
+- **Thesis Tracker:** AI-managed conviction engine with 6+ active threads
 
 ### What's Being Built Next
-The system is transitioning from session-based development to persistent autonomous architecture. See `docs/architecture/` for full specs.
-
-1. **Custom ai-cos-mcp server** — FastMCP Python on DO droplet. Key tools: `cos_load_context`, `cos_score_action`, `cos_get_preferences`, `cos_propose_actions`. Enables all Claude surfaces to share cross-cutting logic.
-2. **Preference Store** — `action_outcomes` table in Postgres. Every accept/reject with scoring factor snapshots. Injected into reasoning sessions for calibration. The compounding mechanism.
-3. **Action Frontend** — Accept/dismiss on digest.wiki pages, consolidated `/actions` route
-4. **Cloud infrastructure** — DO droplet ($12/mo), Postgres, Tailscale. Sync worker: Notion ↔ Postgres with dirty flag pattern.
-5. **Agent SDK runners** — 5 narrow specialists (PostMeetingAgent, ContentAgent, OptimiserAgent, IngestAgent, SyncAgent). Build order follows dependency: SyncAgent → ContentAgent → PostMeetingAgent → IngestAgent → OptimiserAgent.
-6. **Content Pipeline v5** — Full portfolio coverage (200+ companies), semantic matching, multi-source (podcasts, articles, bookmarks)
-7. **WhatsApp integration** — Proactive push (pre-meeting briefs, signal alerts, follow-up reminders)
+1. **Thesis Tracker implementation** — New conviction options (New/Evolving/Evolving Fast/Low/Medium/High), key questions as blocks, automated conviction updates
+2. **Action Frontend** — Accept/dismiss on digest.wiki, consolidated `/actions` route
+3. **Agent SDK runners** — PostMeetingAgent (Granola → IDS updates → actions), OptimiserAgent, IngestAgent, SyncAgent
+4. **Content Pipeline v5** — Full portfolio coverage, semantic matching, multi-source (podcasts, articles)
+5. **WhatsApp integration** — Proactive push (pre-meeting briefs, signal alerts)
 
 ---
 
 ## HOW TO USE THIS DOCUMENT
 
 **If you're a new Claude Code session:**
-1. Read this entire document FIRST before doing anything
+1. Read this document when working on AI CoS domain logic
 2. Understand the anti-patterns — do NOT default to task automation
 3. Check "Current Build State" for what's done and what's next
 4. Read `docs/architecture/` for full technical specs when building
 5. Frame every response through the action optimizer lens: "Does this help answer 'What's Next?' for Aakash?"
 
 **If you're updating this document:**
-- Update the "Last Updated" date and session number at the top
-- Add new thesis threads as they're discovered
-- Update "Current Build State" as things get built
-- Add new Notion IDs as they're discovered
+- Update the "Last Updated" line at the top
 - Keep this document under control — architecture details belong in `docs/architecture/`, not here
+- Thesis threads: Notion Thesis Tracker is canonical. Only update the snapshot section here periodically.

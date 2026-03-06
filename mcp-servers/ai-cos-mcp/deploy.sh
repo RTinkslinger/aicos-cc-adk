@@ -55,6 +55,10 @@ ssh root@${DROPLET} "
   (crontab -l 2>/dev/null; echo '# ai-cos-mcp: unified content pipeline every 5 min') | crontab -
   (crontab -l 2>/dev/null; echo '*/5 * * * * ${REMOTE_DIR}/cron/pipeline.sh >> ${REMOTE_DIR}/logs/pipeline.log 2>&1 # ai-cos-mcp') | crontab -
 
+  # Add 10-minute SyncAgent cron
+  (crontab -l 2>/dev/null; echo '# ai-cos-mcp: SyncAgent every 10 min') | crontab -
+  (crontab -l 2>/dev/null; echo '*/10 * * * * cd ${REMOTE_DIR} && /root/.local/bin/uv run python -m runners.sync_agent full >> ${REMOTE_DIR}/logs/sync_agent.log 2>&1 # ai-cos-mcp') | crontab -
+
   echo 'Cron jobs installed:'
   crontab -l | grep ai-cos-mcp
 "

@@ -15,3 +15,8 @@ Patterns confirmed 2+ times graduate to CLAUDE.md during milestone compaction.
   Works: Actual Epic options are project-specific: "Content Pipeline v5", "Action Frontend", "Knowledge Store", "Multi-Surface", "Meeting Optimizer", "Always-On", "Infrastructure"
   Context: The Build System Protocol template in CLAUDE.md has generic placeholder Epic values. Must use actual DB options. Update CLAUDE.md recipe if this recurs.
   Confirmed: 1x
+
+- Tried: Build Roadmap Source = "Verification Failure" (from CLAUDE.md Build System Protocol template)
+  Works: Actual Source options are: "Session Insight", "AI CoS Relevance Note", "User Request", "Bug/Regression", "Architecture Decision", "External Inspiration"
+  Context: CLAUDE.md Build System Protocol has generic Source values that don't match the actual DB. Always use exact DB option strings.
+  Confirmed: 1x

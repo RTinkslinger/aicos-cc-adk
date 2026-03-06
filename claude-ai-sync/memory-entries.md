@@ -1,19 +1,17 @@
-# Claude.ai Memory Entries — v7.0.0 (March 6, 2026)
-# 18 entries. Source of truth for what SHOULD be in Claude.ai memory.
-# Aligned with: CONTEXT.md (March 6 update), ai-cos-mcp server (live on droplet)
+# Claude.ai Memory Entries — v7.1.0 (March 6, 2026)
+# 19 entries. Source of truth for what SHOULD be in Claude.ai memory.
+# Aligned with: CONTEXT.md, ai-cos-mcp server (9 tools, public at mcp.3niac.com)
 # These persist across ALL Claude.ai conversations (web, mobile, desktop)
 
-# CHANGE LOG (v6.2.0 → v7.0.0, March 6 2026):
-# - #6: REWRITTEN — thesis threads now AI-managed conviction engine, new conviction spectrum
-# - #7: REWRITTEN — MCP server + ContentAgent live on droplet, Agent SDK era
-# - #8: MINOR EDIT — updated feedback loop with preference store
-# - #9: REWRITTEN — AI creates thesis threads autonomously, new protocol
-# - #11: REWRITTEN — Content Pipeline now autonomous on droplet
-# - #14: REWRITTEN — was Notion skill trigger (Cowork), now cross-surface alignment protocol
-# - #16: REWRITTEN — was Cowork rules (obsolete), now droplet infrastructure
-# - #17: REWRITTEN — was behavioral audit (Cowork), now Actions Queue schema
-# - #18: REWRITTEN — was subagent rules (Cowork), now thesis tracker protocol
-# - #1-5, #10, #12, #13, #15: NO CHANGES (still accurate)
+# CHANGE LOG (v7.0.0 → v7.1.0, March 6 2026):
+# - #7: UPDATED — 9 MCP tools, public endpoint via Cloudflare Tunnel
+# - #9: REWRITTEN — thesis writes routed through MCP tools, conviction guardrail
+# - #10: UPDATED — use cos_create_thesis_thread instead of Notion direct
+# - #12: UPDATED — use cos_get_actions for reads
+# - #16: UPDATED — added Cloudflare Tunnel infrastructure
+# - #18: REWRITTEN — MCP-routed thesis protocol, conviction guardrail
+# - #19: NEW — AI CoS MCP tool routing rules
+# - #1-5, #6, #8, #11, #13-15, #17: NO CHANGES
 
 ---
 
@@ -36,22 +34,22 @@ Z47 GPs: VV (Vikram), RA (Rajat), Avi (Avnish), Cash (Aakash himself), TD (Tarun
 Thesis Tracker (Notion DB 3c8d1a34) is an AI-managed conviction engine. AI autonomously creates threads, updates evidence, adjusts conviction, formulates key questions. Aakash's ONLY role: set Status (Active/Exploring/Parked/Archived) — this weights action scoring. Conviction spectrum: New → Evolving → Evolving Fast (maturity) → Low → Medium → High (well-formed strength). Active thesis threads get higher weight in action scoring. Always query Notion for latest state.
 
 ## #7 — AI CoS Build Architecture
-AI CoS 3-layer arch: (1) Signal Processor — YouTube live via droplet, Granola/Calendar/Gmail MCPs connected, (2) Intelligence Engine — ai-cos-mcp server (FastMCP Python) + ContentAgent runner live on DO droplet, Postgres preference store, scoring models, (3) Operating Interface — Claude mobile, digest.wiki, Notion, WhatsApp (future). ContentAgent runs autonomously every 5 min on droplet. Build: Agent SDK era (not Cowork anymore). Next: PostMeetingAgent, OptimiserAgent, Action Frontend on digest.wiki.
+AI CoS 3-layer arch: (1) Signal Processor — YouTube live via droplet, Granola/Calendar/Gmail MCPs connected, (2) Intelligence Engine — ai-cos-mcp server (FastMCP Python, 9 tools) on DO droplet, publicly accessible at mcp.3niac.com via Cloudflare Tunnel, Postgres preference store, scoring models, (3) Operating Interface — Claude mobile, digest.wiki, Notion, WhatsApp (future). ContentAgent runs autonomously every 5 min. All surfaces (Claude.ai, Claude Code, Content Pipeline) write through ai-cos-mcp tools — droplet is single write authority for thesis data. Next: PostMeetingAgent, OptimiserAgent, Action Frontend.
 
 ## #8 — Feedback Loop
 At end of every research task, analysis, or automation, proactively append "AI CoS relevance" note: (1) connections to active/new thesis threads, (2) people/companies relevant to Z47/DeVC pipeline, (3) patterns or capabilities for AI CoS build, (4) concrete actions that should be scored and added to the action queue. Don't ask permission — just include it. Action outcomes (accept/reject) feed into Postgres preference store for calibration.
 
-## #9 — Thesis Thread Management
-AI creates new thesis threads autonomously in Notion Thesis Tracker (data source 3c8d1a34). Set: Thread Name, Conviction = "New", Core Thesis, Key Question, Discovery Source = "Claude.ai" (from this surface). No human approval needed. When evidence accumulates, update conviction (New→Evolving→High). Key Questions live as page content blocks: [OPEN] or [ANSWERED]. Questions answered = evidence updated = conviction moves.
+## #9 — Thesis Write Protocol (via MCP)
+All thesis writes go through AI CoS MCP tools — never use Notion MCP directly for Thesis Tracker. Workflow: (1) call `cos_get_thesis_threads` to see current state, (2) if evidence maps to existing thread: `cos_update_thesis`, (3) if genuinely new territory: `cos_create_thesis_thread`. Set source="Claude" from this surface. Provide evidence, direction, key questions, and implications — but never set the conviction parameter. Conviction changes require the full evidence picture; ask Aakash "Should conviction move from X to Y?" instead. When in doubt between create and update, ask Aakash.
 
 ## #10 — "Research Deep and Wide"
-Run 6-10 parallel searches from different angles (market structure, key players, funding, technology, competitive dynamics, contrarian views). Synthesize into: Executive Summary, Key Findings, Market Map, Open Questions. End by flagging thesis thread connections and offering to write new threads to Notion Thesis Tracker (data source 3c8d1a34-e723-4fb1-be28-727777c22ec6).
+Run 6-10 parallel searches from different angles (market structure, key players, funding, technology, competitive dynamics, contrarian views). Synthesize into: Executive Summary, Key Findings, Market Map, Open Questions. End by flagging thesis thread connections and offering to create new threads via `cos_create_thesis_thread`.
 
 ## #11 — Content Pipeline (Autonomous on Droplet)
 Content Pipeline runs autonomously on DO droplet (cron every 5 min). YouTube extraction → ContentAgent analysis (Claude API) → digest.wiki publish → Notion writes (Content Digest DB + Actions Queue + Thesis Tracker) → Postgres preference store. Digests live at https://digest.wiki/d/{slug}. Review: query Actions Queue (1df4858c) for Status = "Proposed". Accept/dismiss. No manual triggering needed — pipeline is fully autonomous.
 
 ## #12 — Portfolio Actions Review
-Query Actions Queue (1df4858c-6629-4283-b31d-50c5e7ef885d) for Status = "Proposed". Group by Priority P0→P3. Show: Company, Action Type, Description, Reasoning. Accept→Accepted, Dismiss→Dismissed. Batch support: "accept all P0"/"dismiss all P3". Summarize counts. Link accepted Meeting/Outreach actions to scheduling.
+Use `cos_get_actions` to read the Actions Queue (supports status filter: Proposed, Accepted, In Progress, Done, Dismissed). Group by Priority P0→P3. Show: Company, Action Type, Description, Reasoning. To accept or dismiss actions, update status via Notion (Actions Queue 1df4858c). Batch support: "accept all P0"/"dismiss all P3". Summarize counts. Link accepted Meeting/Outreach actions to scheduling.
 
 ## #13 — Action Scoring Model
 AI CoS Action Scoring Model: f(bucket_impact, conviction_change_potential, key_question_relevance, time_sensitivity, action_novelty, stakeholder_priority, effort_vs_impact). Thesis-weighted: actions connected to Active thesis threads get scoring multiplier. People Scoring is a subset applied to meeting-type actions only.
@@ -63,10 +61,13 @@ Claude Code manages the canonical context (CONTEXT.md, CLAUDE.md). Claude.ai mem
 Critical instructions need multi-surface coverage. Surfaces: Claude.ai (memory + preferences), Claude Code (CLAUDE.md + CONTEXT.md + auto memory + TRACES.md). Thesis Tracker in Notion = shared state across all surfaces. When any surface discovers new understanding, sync to Notion (thesis) and flag for cross-surface update. `claude-ai-sync/` folder in project root = source of truth for Claude.ai content.
 
 ## #16 — Droplet Infrastructure
-AI CoS runs on DO droplet (aicos-droplet, Tailscale). MCP server: systemd service, FastMCP Python. Content Pipeline: cron every 5 min. Postgres: preference store (action_outcomes table). Deploy from Mac: `cd mcp-servers/ai-cos-mcp && bash deploy.sh`. YouTube cookies expire every 1-2 weeks — pipeline warns when stale. Digest site repo also on droplet: `git push → Vercel auto-deploy`.
+AI CoS runs on DO droplet (aicos-droplet, Tailscale). MCP server: systemd service, FastMCP Python, publicly accessible at mcp.3niac.com via Cloudflare Tunnel (zero-trust, auto-TLS, no inbound ports). Content Pipeline: cron every 5 min. Postgres: preference store (action_outcomes table). YouTube cookies expire every 1-2 weeks — pipeline warns when stale. Digest site: git push → Vercel auto-deploy at digest.wiki.
 
 ## #17 — Actions Queue Schema
 Actions Queue (1df4858c) fields: Action (title), Company (relation), Thesis (relation to Thesis Tracker), Source Digest (relation to Content Digest DB), Action Type (select: Research/Meeting-Outreach/Thesis Update/Content Follow-up/Portfolio Check-in/Follow-on Eval/Pipeline Action), Priority (P0-P3), Status (Proposed→Accepted→Done/Dismissed), Source (Content Processing/Agent/Manual/Meeting), Assigned To (Aakash/Agent), Created By (AI CoS/Manual), Reasoning, Relevance Score (0-100), Outcome (Unknown/Helpful/Gold).
 
 ## #18 — Thesis Tracker AI Protocol
-Thesis Tracker is AI-managed. On every signal (content, meeting, research, email), AI checks thesis connections. If found: append evidence block, update Evidence For/Against, re-evaluate conviction, update Key Questions (mark answered/add new), update Investment Implications. AI creates new threads freely at Conviction = "New". Status field is HUMAN-ONLY (Active/Exploring/Parked/Archived). Active = higher action scoring weight.
+When any signal (content, meeting, research) connects to a thesis, use AI CoS MCP tools — not Notion MCP. Steps: (1) `cos_get_thesis_threads` to check current state, (2) `cos_update_thesis` with evidence, direction (for/against/mixed), key questions, investment implications, key companies, (3) or `cos_create_thesis_thread` if genuinely new. Never set conviction yourself — provide evidence and ask Aakash if conviction should change. Status field (Active/Exploring/Parked/Archived) is human-only. Connected Buckets options: New Cap Tables, Deepen Existing, New Founders, Thesis Evolution.
+
+## #19 — AI CoS MCP Tool Routing
+Use AI CoS MCP (mcp.3niac.com) instead of Notion MCP for these databases: Thesis Tracker (all reads + writes via cos_* tools), Content Digest (reads via `cos_get_recent_digests`), Actions Queue (reads via `cos_get_actions`). Notion MCP is still used for: Actions Queue status changes (accept/dismiss), Companies DB, Network DB, Portfolio DB, and any database without a cos_* tool. When a cos_* tool exists for an operation, always prefer it over Notion MCP.

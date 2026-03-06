@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ai-cos-mcp": {
+      "type": "url",
+      "url": "https://mcp.3niac.com/mcp"
+    }
+  }
+}

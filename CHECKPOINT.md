@@ -1,31 +1,44 @@
 # Checkpoint
-*Written: 2026-03-06 ~evening*
+*Written: 2026-03-06 10:30 IST*
 
 ## Current Task
-Updated architecture and vision docs from Cowork-era v0.2/v4 to current Claude Code era v0.3/v5.
+Public MCP endpoint buildout (Phase 1 of DATA-SOVEREIGNTY.md) — Cloudflare Tunnel + thesis/digest/actions MCP tools + Claude.ai integration.
 
 ## Progress
-- [x] Workstream C: Thesis Tracker conviction engine (notion_client.py, content_agent.py, content_analysis.md, Notion schema)
-- [x] DATA-SOVEREIGNTY.md updated for AI-managed Thesis Tracker
-- [x] Deleted cowork-claude-old.md (confirmed redundant)
-- [x] Full project folder inventory and cleanup (duplicates, temp files, empty dirs)
-- [x] Skills folder audit — deleted 3 obsolete skill subdirs, renamed skills/ → [Archive] Cowork Skills/
-- [x] Moved root .skill files to archive
-- [x] Created `docs/architecture/architecture-v0.3.md` — evolved from v0.2, preserves Three-Layer overview + Full Architecture Diagram
-- [x] Created `docs/architecture/vision-v5.md` — evolved from v4, preserves thinking sections, updates ground truth
-- [x] Updated CLAUDE.md — Architecture Direction section, Current Build State, file references
+- [x] Cloudflare Tunnel set up (mcp.3niac.com → droplet:8000, systemd, auto-TLS)
+- [x] 5 new MCP tools added: cos_create_thesis_thread, cos_update_thesis, cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions (9 total)
+- [x] server.py switched to streamable-http transport
+- [x] Claude.ai connected as remote MCP connector (https://mcp.3niac.com/mcp)
+- [x] Tested from Claude.ai: cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions confirmed working
+- [x] CUSTOM-MCP-SETUP-HTTP.md created (full setup guide)
+- [x] DATA-SOVEREIGNTY.md updated (Layer 0, 6-phase plan)
+- [x] Claude.ai memory entries updated to v7.1.0 (19 entries, MCP routing + conviction guardrail)
+- [x] Memory entries pasted into Claude.ai Settings
+- [x] Committed: f547331 (server.py, notion_client.py, DATA-SOVEREIGNTY.md, CUSTOM-MCP-SETUP-HTTP.md, CLAUDE.md, LEARNINGS.md)
+- [x] Build Roadmap: QA task created (P1/Planned) for full MCP tool response validation
+- [ ] Phase 1 step 1g: Add ai-cos-mcp to Claude Code `.mcp.json` (Tailscale or tunnel endpoint)
+- [ ] Phase 1 step 1h: Update CLAUDE.md prompts ("use cos_* tools for thesis, not Notion MCP directly")
+- [ ] Full QA of all MCP tool response payloads from Claude.ai (correctness, edge cases)
+- [ ] Commit memory-entries.md v7.1.0 + CHANGELOG.md + LEARNINGS.md update
 
 ## Key Decisions (not yet persisted)
-- Architecture docs strategy: originals stay in `From Clowork handover/` subfolder as historical record; new v0.3/v5 at `docs/architecture/` level are canonical living references
-- TRACES.md needs Iteration 3 entry for this session's work (architecture doc updates + cleanup)
+- **Conviction guardrail**: Claude.ai should never set the `conviction` parameter on thesis tools — must ask Aakash. Persisted in memory-entries.md but not yet in CLAUDE.md.
+- **MCP tool routing rule**: Thesis Tracker = all reads+writes via cos_* tools. Content Digest + Actions Queue = reads via cos_* tools, writes still via Notion MCP. Persisted in memory-entries.md #19.
+- **Build Roadmap Source field options**: actual values are "Session Insight", "AI CoS Relevance Note", "User Request", "Bug/Regression", "Architecture Decision", "External Inspiration" — logged to LEARNINGS.md but CLAUDE.md recipe not yet updated.
+- **No Postgres for thesis yet**: MCP tools are a pass-through routing layer (droplet → Notion API). Phase 2 adds thesis_threads Postgres table with write-ahead pattern.
 
 ## Next Steps
-1. Update TRACES.md with Iteration 3 (this session: architecture doc updates, project cleanup, skill archiving)
-2. Since Iteration 3 = compaction trigger, run compaction: archive Iterations 1-3 to `traces/archive/milestone-1.md`, update Project Summary and Milestone Index
-3. No explicit user-requested next task pending — session may be closing
+1. Commit uncommitted files: `claude-ai-sync/memory-entries.md`, `claude-ai-sync/CHANGELOG.md`, `LEARNINGS.md`
+2. Phase 1 step 1g: Add MCP config for Claude Code (`.mcp.json` or project settings)
+3. Phase 1 step 1h: Add CLAUDE.md guidance that thesis writes prefer cos_* tools
+4. Update CLAUDE.md Build Roadmap recipe with correct Source field options
+5. QA all 9 MCP tool responses from Claude.ai (Build Roadmap task exists)
 
 ## Context
-- TRACES.md currently has Iterations 1 and 2 in "Current Work" section
-- Iteration 3 will trigger first compaction (every 3 iterations)
-- This session covered: Workstream C (code), project cleanup (file ops), architecture doc evolution (docs)
-- Only the architecture doc work is new since last TRACES.md update (Iterations 1-2 already recorded)
+- Tunnel ID: `a381fcd4-b7fa-4226-8615-a77cfa498d09`
+- Domain: `3niac.com` (Cloudflare Registrar), DNS: `mcp.3niac.com`
+- Droplet config: `/etc/cloudflared/config.yml`, service: `cloudflared.service`
+- MCP endpoint: `https://mcp.3niac.com/mcp` (FastMCP default path)
+- TRACES.md: Milestone 2, Iteration 1 already written
+- Sprint: 2
+- LEARNINGS.md: 3 patterns (emoji select values, Epic options, Source field options)

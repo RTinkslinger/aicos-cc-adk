@@ -156,18 +156,35 @@ Add `thesis_threads` table as primary store. Write-ahead pattern for Notion resi
 
 **Deliverable:** Thesis data survives Notion outages. Droplet is true SoT.
 
-### Phase 3: Companies/Network/Portfolio Initial Pull (Sprint 3-4)
+### Phase 3: Bidirectional Actions Queue (Sprint 2-3)
 
-Postgres schema for remaining DBs, first Notion → local sync.
+Postgres backing for Actions Queue. Droplet-created actions write locally first, then push to Notion. Notion status changes (accept/dismiss) pull back to Postgres. Field-level last-writer-wins using timestamps.
 
-### Phase 4: Bidirectional Actions Queue (After Phase 3)
+| Step | Work | Effort |
+|------|------|--------|
+| 3a. Actions Queue Postgres CRUD | `lib/actions_db.py` — create, update status, find, sync helpers | 30 min |
+| 3b. Seed from Notion | Pull existing actions into Postgres (one-time) | 15 min |
+| 3c. Write-ahead for new actions | ContentAgent and MCP tools write Postgres first → push Notion | 30 min |
+| 3d. Status pull | Pull status changes from Notion → Postgres (accept/dismiss) | 30 min |
 
-Multi-surface triaging without conflicts. Field-level last-writer-wins.
+**Deliverable:** Actions survive Notion outages. Multi-surface triage without conflicts.
 
-### Phase 5: Change Detection → Action Generation (After Phase 4)
+### Phase 4: Change Detection + SyncAgent Orchestration (Sprint 3)
 
-Notion edits become signals. Deal status changes, new founders added → auto-generated actions.
+Detect field changes between sync cycles for thesis + actions. SyncAgent runs on schedule.
 
-### Phase 6: Full SyncAgent Orchestration (Final)
+| Step | Work | Effort |
+|------|------|--------|
+| 4a. Change detection engine | Compare Notion state vs Postgres, log diffs to `change_events` table | 45 min |
+| 4b. Action generation from changes | Change events → proposed actions (e.g. "thesis conviction moved to High") | 30 min |
+| 4c. SyncAgent runner | Orchestrates: thesis status sync, actions bidirectional sync, retry queue drain, change detection — on cron schedule | 1 hr |
+| 4d. MCP tool for sync status | `cos_sync_status` — check last sync times, pending queue, recent changes | 15 min |
 
-Ties it all together. Scheduled runs per table, monitoring, alerting.
+**Deliverable:** Automated sync loop. Changes generate signals. Full observability.
+
+### Phase 5: Companies/Network/Portfolio Sync (DEFERRED)
+
+Postgres tables exist (`companies`, `network`). Portfolio DB needs integration sharing.
+Seeding and sync deferred indefinitely — will implement when agents need local access to these DBs for reasoning (e.g. OptimiserAgent, IngestAgent).
+
+**Trigger to undefer:** When a runner needs to query Companies/Network/Portfolio data faster than Notion API allows, or needs enrichment columns not in Notion.

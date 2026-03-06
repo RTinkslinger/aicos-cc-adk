@@ -1,5 +1,22 @@
 # Claude.ai Sync — Changelog
 
+## v7.1.0 — 2026-03-06
+
+**MCP tool routing + conviction guardrail.** All thesis/digest/actions operations now route through ai-cos-mcp (mcp.3niac.com) instead of Notion MCP directly. Claude.ai can never set conviction — must ask Aakash.
+
+### Memory Entries Changed
+| # | Topic | Change |
+|---|-------|--------|
+| 7 | Build Architecture | UPDATED — 9 MCP tools, public endpoint via Cloudflare Tunnel |
+| 9 | Thesis Management | REWRITTEN — MCP-routed writes, conviction guardrail (never set conviction, ask Aakash) |
+| 10 | Research Protocol | UPDATED — use cos_create_thesis_thread instead of Notion direct |
+| 12 | Actions Review | UPDATED — use cos_get_actions for reads, Notion for status changes |
+| 16 | Infrastructure | UPDATED — Cloudflare Tunnel at mcp.3niac.com |
+| 18 | Thesis Protocol | REWRITTEN — MCP routing, conviction guardrail, Connected Buckets options |
+| 19 | MCP Tool Routing | NEW — routing rules: which DBs use cos_* tools vs Notion MCP |
+
+---
+
 ## v7.0.0 — 2026-03-06
 
 **Major update.** Cowork → Claude Code transition complete. Thesis Tracker redesigned.

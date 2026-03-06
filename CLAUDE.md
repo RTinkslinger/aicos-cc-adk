@@ -77,11 +77,14 @@ cd aicos-digests && npm run build  # verify build
 Deploy: Pipeline on droplet auto-publishes → git push → Vercel deploy hook (~30s). Live at https://digest.wiki.
 Manual deploy from Mac: `cd aicos-digests && npx vercel deploy --prod`
 
-### MCP Server (planned)
+### MCP Server (live)
 ```bash
 cd mcp-servers/ai-cos-mcp && uv run server.py   # local dev
-# Deploy: push to DO droplet via Tailscale
+cd mcp-servers/ai-cos-mcp && bash deploy.sh      # deploy to droplet
 ```
+**Public endpoint:** `https://mcp.3niac.com/mcp` (Cloudflare Tunnel, auto-TLS)
+**Claude Code:** Connected via `.mcp.json` — cos_* tools available directly
+**12 tools:** health_check, cos_load_context, cos_score_action, cos_get_preferences, cos_create_thesis_thread, cos_update_thesis, cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions, cos_sync_thesis_status, cos_seed_thesis_db, cos_retry_sync_queue
 
 ### Agent SDK Runners (planned)
 ```bash
@@ -111,6 +114,20 @@ This applies everywhere these repos are touched: the droplet pipeline (`publishi
 - Do NOT lose the action-optimizer framing by narrowing to only meeting optimization
 - Do NOT design for desktop — Aakash lives on WhatsApp and mobile
 - Do NOT treat meeting optimization as the whole system — it's one output of the action optimizer
+
+## MCP Tool Routing (MANDATORY)
+
+**Prefer ai-cos-mcp tools over direct Notion MCP for these databases:**
+
+| Database | Reads | Writes |
+|----------|-------|--------|
+| **Thesis Tracker** | `cos_get_thesis_threads` | `cos_create_thesis_thread`, `cos_update_thesis` |
+| **Content Digest** | `cos_get_recent_digests` | Pipeline only (no manual writes) |
+| **Actions Queue** | `cos_get_actions` | Notion MCP for status changes (accept/dismiss) |
+
+**Use Notion MCP for:** Companies DB, Network DB, Portfolio DB, and any operation without a cos_* tool.
+
+**Conviction guardrail:** Never set the `conviction` parameter on thesis tools from Claude Code. Provide evidence and ask Aakash if conviction should change. Conviction requires full evidence picture.
 
 ## Notion Operations
 

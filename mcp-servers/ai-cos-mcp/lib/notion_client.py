@@ -526,6 +526,233 @@ def fetch_thesis_threads(include_key_questions: bool = False) -> list[dict[str, 
     return threads
 
 
+def seed_thesis_threads_to_postgres() -> int:
+    """One-time seed: pull all thesis threads from Notion into Postgres.
+
+    Skips threads that already exist in Postgres (by notion_page_id).
+    Returns count of newly inserted threads.
+    """
+    from lib.thesis_db import create_thread, set_notion_page_id
+
+    client = _get_client()
+    results = client.data_sources.query(
+        data_source_id=THESIS_TRACKER_DB,
+        page_size=50,
+    )
+
+    inserted = 0
+    for page in results.get("results", []):
+        page_id = page.get("id", "")
+        props = page.get("properties", {})
+        name = _extract_plain_text(props.get("Thread Name", {}), "title")
+        if not name:
+            continue
+
+        # Check if already in Postgres
+        from lib.thesis_db import find_thread_by_name
+        existing = find_thread_by_name(name)
+        if existing and existing.get("notion_page_id"):
+            continue
+
+        status = _extract_plain_text(props.get("Status", {}), "select")
+        conviction = _extract_plain_text(props.get("Conviction", {}), "select")
+        core_thesis = _extract_plain_text(props.get("Core Thesis", {}), "rich_text")
+        discovery_source = _extract_plain_text(props.get("Discovery Source", {}), "select") or "Content Pipeline"
+        buckets_str = _extract_plain_text(props.get("Connected Buckets", {}), "multi_select")
+        connected_buckets = [b.strip() for b in buckets_str.split(",") if b.strip()] if buckets_str else []
+
+        # Read key questions from page blocks
+        open_qs = []
+        answered_qs = []
+        try:
+            blocks = client.blocks.children.list(block_id=page_id)
+            for block in blocks.get("results", []):
+                if block.get("type") != "paragraph":
+                    continue
+                rt = block.get("paragraph", {}).get("rich_text", [])
+                if not rt:
+                    continue
+                text = rt[0].get("plain_text", "")
+                if text.startswith("[OPEN]"):
+                    open_qs.append(text[7:].strip())
+                elif text.startswith("[ANSWERED]"):
+                    answered_qs.append(text[11:].strip())
+        except Exception:
+            pass
+
+        try:
+            row = create_thread(
+                thread_name=name,
+                core_thesis=core_thesis,
+                conviction=conviction or "New",
+                status=status or "Exploring",
+                discovery_source=discovery_source,
+                connected_buckets=connected_buckets,
+                key_questions=open_qs,
+                notion_page_id=page_id,
+            )
+            # Also copy over existing evidence/companies/implications
+            import psycopg2
+            import psycopg2.extras
+            conn = psycopg2.connect(os.getenv("DATABASE_URL", ""))
+            with conn.cursor() as cur:
+                cur.execute(
+                    """UPDATE thesis_threads SET
+                        evidence_for = %s,
+                        evidence_against = %s,
+                        key_companies = %s,
+                        investment_implications = %s,
+                        key_questions_json = %s::jsonb,
+                        last_synced_at = NOW()
+                    WHERE id = %s""",
+                    (
+                        _extract_plain_text(props.get("Evidence For", {}), "rich_text"),
+                        _extract_plain_text(props.get("Evidence Against", {}), "rich_text"),
+                        _extract_plain_text(props.get("Key Companies", {}), "rich_text"),
+                        _extract_plain_text(props.get("Investment Implications", {}), "rich_text"),
+                        __import__("json").dumps({"open": open_qs, "answered": answered_qs}),
+                        row["id"],
+                    ),
+                )
+            conn.commit()
+            conn.close()
+            inserted += 1
+            print(f"Seeded thesis: {name} [page_id={page_id}]")
+        except Exception as e:
+            print(f"Failed to seed thesis '{name}': {e}")
+
+    print(f"Seed complete: {inserted} new threads inserted")
+    return inserted
+
+
+def sync_thesis_status_from_notion() -> list[dict[str, str]]:
+    """Pull Status field from Notion for all thesis threads and update Postgres.
+
+    Status is the only human-owned field. This syncs Notion → Postgres.
+    Returns list of changes detected.
+    """
+    from lib.thesis_db import update_status_from_notion
+
+    client = _get_client()
+    results = client.data_sources.query(
+        data_source_id=THESIS_TRACKER_DB,
+        page_size=50,
+    )
+
+    changes = []
+    for page in results.get("results", []):
+        page_id = page.get("id", "")
+        props = page.get("properties", {})
+        name = _extract_plain_text(props.get("Thread Name", {}), "title")
+        status = _extract_plain_text(props.get("Status", {}), "select")
+        if page_id and status:
+            try:
+                update_status_from_notion(page_id, status)
+                changes.append({"page_id": page_id, "name": name, "status": status})
+            except Exception as e:
+                print(f"Failed to sync status for {name}: {e}")
+
+    print(f"Synced status for {len(changes)} thesis threads from Notion")
+    return changes
+
+
+def sync_actions_from_notion() -> dict[str, int]:
+    """Pull all actions from Notion into Postgres (upsert).
+
+    Used for bidirectional sync: picks up status changes made in Notion.
+    Returns counts of inserted and updated records.
+    """
+    from lib.actions_db import upsert_from_notion
+
+    client = _get_client()
+    results = client.data_sources.query(
+        data_source_id=ACTIONS_QUEUE_DB,
+        page_size=100,
+    )
+
+    inserted = 0
+    updated = 0
+    for page in results.get("results", []):
+        page_id = page.get("id", "")
+        props = page.get("properties", {})
+        action_text = _extract_plain_text(props.get("Action", {}), "title")
+        if not action_text:
+            continue
+
+        # Check if this is a new insert or update
+        from lib.actions_db import find_action_by_notion_id
+        existing = find_action_by_notion_id(page_id)
+
+        try:
+            upsert_from_notion(
+                notion_page_id=page_id,
+                action=action_text,
+                action_type=_extract_plain_text(props.get("Action Type", {}), "select"),
+                status=_extract_plain_text(props.get("Status", {}), "select"),
+                priority=_extract_plain_text(props.get("Priority", {}), "select"),
+                source=_extract_plain_text(props.get("Source", {}), "select"),
+                assigned_to=_extract_plain_text(props.get("Assigned To", {}), "select"),
+                created_by=_extract_plain_text(props.get("Created By", {}), "select"),
+                reasoning=_extract_plain_text(props.get("Reasoning", {}), "rich_text"),
+                source_content=_extract_plain_text(props.get("Source Content", {}), "rich_text"),
+                thesis_connection=_extract_plain_text(props.get("Thesis Connection", {}), "rich_text"),
+                relevance_score=props.get("Relevance Score", {}).get("number"),
+                outcome=_extract_plain_text(props.get("Outcome", {}), "select"),
+            )
+            if existing:
+                updated += 1
+            else:
+                inserted += 1
+        except Exception as e:
+            print(f"Failed to sync action '{action_text[:50]}': {e}")
+
+    print(f"Actions sync: {inserted} inserted, {updated} updated")
+    return {"inserted": inserted, "updated": updated}
+
+
+def push_action_to_notion(pg_action: dict[str, Any]) -> Optional[str]:
+    """Push a Postgres-created action to Notion. Returns Notion page ID."""
+    client = _get_client()
+
+    properties: dict[str, Any] = {
+        "Action": {"title": [{"text": {"content": pg_action["action"]}}]},
+    }
+
+    if pg_action.get("action_type"):
+        properties["Action Type"] = {"select": {"name": pg_action["action_type"]}}
+    if pg_action.get("status"):
+        properties["Status"] = {"select": {"name": pg_action["status"]}}
+    if pg_action.get("priority"):
+        properties["Priority"] = {"select": {"name": pg_action["priority"]}}
+    if pg_action.get("source"):
+        properties["Source"] = {"select": {"name": pg_action["source"]}}
+    if pg_action.get("assigned_to"):
+        properties["Assigned To"] = {"select": {"name": pg_action["assigned_to"]}}
+    if pg_action.get("created_by"):
+        properties["Created By"] = {"select": {"name": pg_action["created_by"]}}
+    if pg_action.get("reasoning"):
+        properties["Reasoning"] = {"rich_text": [{"text": {"content": _truncate_rich_text(pg_action["reasoning"])}}]}
+    if pg_action.get("source_content"):
+        properties["Source Content"] = {"rich_text": [{"text": {"content": _truncate_rich_text(pg_action["source_content"])}}]}
+    if pg_action.get("thesis_connection"):
+        properties["Thesis Connection"] = {"rich_text": [{"text": {"content": _truncate_rich_text(pg_action["thesis_connection"])}}]}
+    if pg_action.get("relevance_score") is not None:
+        properties["Relevance Score"] = {"number": pg_action["relevance_score"]}
+
+    # Relations
+    if pg_action.get("company_notion_id"):
+        properties["Company"] = {"relation": [{"id": pg_action["company_notion_id"]}]}
+    if pg_action.get("source_digest_notion_id"):
+        properties["Source Digest"] = {"relation": [{"id": pg_action["source_digest_notion_id"]}]}
+
+    page = client.pages.create(
+        parent={"data_source_id": ACTIONS_QUEUE_DB},
+        properties=properties,
+    )
+    print(f"Pushed action to Notion: {pg_action['action'][:50]}")
+    return page.get("id", "")
+
+
 def search_companies(query: str, limit: int = 5) -> list[dict[str, Any]]:
     """Search Companies DB for portfolio matches."""
     client = _get_client()

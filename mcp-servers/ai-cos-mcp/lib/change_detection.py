@@ -258,10 +258,10 @@ def get_sync_status() -> dict[str, Any]:
             unsynced_actions = cur.fetchone()["count"]
 
             # Sync queue depth
-            cur.execute("SELECT COUNT(*) as pending FROM sync_queue WHERE status = 'pending'")
+            cur.execute("SELECT COUNT(*) as pending FROM sync_queue WHERE attempts < 5 AND next_retry_at <= NOW()")
             queue_pending = cur.fetchone()["pending"]
 
-            cur.execute("SELECT COUNT(*) as failed FROM sync_queue WHERE status = 'failed'")
+            cur.execute("SELECT COUNT(*) as failed FROM sync_queue WHERE attempts >= 5")
             queue_failed = cur.fetchone()["failed"]
 
             # Recent changes

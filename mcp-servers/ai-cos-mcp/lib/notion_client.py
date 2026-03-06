@@ -264,8 +264,7 @@ def create_thesis_thread(
         "Conviction": {"select": {"name": conviction}},
         "Status": {"select": {"name": "Exploring"}},
         "Discovery Source": {"select": {"name": discovery_source}},
-        "date:Date Discovered:start": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        "date:Date Discovered:is_datetime": 0,
+        "Date Discovered": {"date": {"start": datetime.now(timezone.utc).strftime("%Y-%m-%d")}},
     }
 
     if connected_buckets:

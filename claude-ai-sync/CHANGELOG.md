@@ -1,5 +1,17 @@
 # Claude.ai Sync — Changelog
 
+## v7.2.0 — 2026-03-07
+
+**Source-of-truth alignment.** Tool count 9→17, SyncAgent now live, Postgres expanded to 7 tables.
+
+### Memory Entries Changed
+| # | Topic | Change |
+|---|-------|--------|
+| 7 | Build Architecture | UPDATED — 17 MCP tools (was 9), SyncAgent live (10-min cron), Postgres 7 tables |
+| 16 | Infrastructure | UPDATED — 7 Postgres tables, SyncAgent cron |
+
+---
+
 ## v7.1.0 — 2026-03-06
 
 **MCP tool routing + conviction guardrail.** All thesis/digest/actions operations now route through ai-cos-mcp (mcp.3niac.com) instead of Notion MCP directly. Claude.ai can never set conviction — must ask Aakash.

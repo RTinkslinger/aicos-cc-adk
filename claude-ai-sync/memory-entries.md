@@ -1,17 +1,12 @@
-# Claude.ai Memory Entries — v7.1.0 (March 6, 2026)
+# Claude.ai Memory Entries — v7.2.0 (March 7, 2026)
 # 19 entries. Source of truth for what SHOULD be in Claude.ai memory.
-# Aligned with: CONTEXT.md, ai-cos-mcp server (9 tools, public at mcp.3niac.com)
+# Aligned with: CONTEXT.md, ai-cos-mcp server (17 tools, public at mcp.3niac.com)
 # These persist across ALL Claude.ai conversations (web, mobile, desktop)
 
-# CHANGE LOG (v7.0.0 → v7.1.0, March 6 2026):
-# - #7: UPDATED — 9 MCP tools, public endpoint via Cloudflare Tunnel
-# - #9: REWRITTEN — thesis writes routed through MCP tools, conviction guardrail
-# - #10: UPDATED — use cos_create_thesis_thread instead of Notion direct
-# - #12: UPDATED — use cos_get_actions for reads
-# - #16: UPDATED — added Cloudflare Tunnel infrastructure
-# - #18: REWRITTEN — MCP-routed thesis protocol, conviction guardrail
-# - #19: NEW — AI CoS MCP tool routing rules
-# - #1-5, #6, #8, #11, #13-15, #17: NO CHANGES
+# CHANGE LOG (v7.1.0 → v7.2.0, March 7 2026):
+# - #7: UPDATED — 9→17 MCP tools, SyncAgent now live (10-min cron)
+# - #16: UPDATED — Postgres 7 tables (not just action_outcomes)
+# - #1-6, #8-15, #17-19: NO CHANGES
 
 ---
 
@@ -34,7 +29,7 @@ Z47 GPs: VV (Vikram), RA (Rajat), Avi (Avnish), Cash (Aakash himself), TD (Tarun
 Thesis Tracker (Notion DB 3c8d1a34) is an AI-managed conviction engine. AI autonomously creates threads, updates evidence, adjusts conviction, formulates key questions. Aakash's ONLY role: set Status (Active/Exploring/Parked/Archived) — this weights action scoring. Conviction spectrum: New → Evolving → Evolving Fast (maturity) → Low → Medium → High (well-formed strength). Active thesis threads get higher weight in action scoring. Always query Notion for latest state.
 
 ## #7 — AI CoS Build Architecture
-AI CoS 3-layer arch: (1) Signal Processor — YouTube live via droplet, Granola/Calendar/Gmail MCPs connected, (2) Intelligence Engine — ai-cos-mcp server (FastMCP Python, 9 tools) on DO droplet, publicly accessible at mcp.3niac.com via Cloudflare Tunnel, Postgres preference store, scoring models, (3) Operating Interface — Claude mobile, digest.wiki, Notion, WhatsApp (future). ContentAgent runs autonomously every 5 min. All surfaces (Claude.ai, Claude Code, Content Pipeline) write through ai-cos-mcp tools — droplet is single write authority for thesis data. Next: PostMeetingAgent, OptimiserAgent, Action Frontend.
+AI CoS 3-layer arch: (1) Signal Processor — YouTube live via droplet, Granola/Calendar/Gmail MCPs connected, (2) Intelligence Engine — ai-cos-mcp server (FastMCP Python, 17 tools) on DO droplet, publicly accessible at mcp.3niac.com via Cloudflare Tunnel, Postgres (7 tables), scoring models, (3) Operating Interface — Claude mobile, digest.wiki, Notion, WhatsApp (future). ContentAgent (5-min cron) + SyncAgent (10-min cron, Notion↔Postgres bidirectional sync) run autonomously. All surfaces (Claude.ai, Claude Code, Content Pipeline) write through ai-cos-mcp tools — droplet is single write authority for thesis data. Next: PostMeetingAgent, OptimiserAgent, Action Frontend.
 
 ## #8 — Feedback Loop
 At end of every research task, analysis, or automation, proactively append "AI CoS relevance" note: (1) connections to active/new thesis threads, (2) people/companies relevant to Z47/DeVC pipeline, (3) patterns or capabilities for AI CoS build, (4) concrete actions that should be scored and added to the action queue. Don't ask permission — just include it. Action outcomes (accept/reject) feed into Postgres preference store for calibration.
@@ -61,7 +56,7 @@ Claude Code manages the canonical context (CONTEXT.md, CLAUDE.md). Claude.ai mem
 Critical instructions need multi-surface coverage. Surfaces: Claude.ai (memory + preferences), Claude Code (CLAUDE.md + CONTEXT.md + auto memory + TRACES.md). Thesis Tracker in Notion = shared state across all surfaces. When any surface discovers new understanding, sync to Notion (thesis) and flag for cross-surface update. `claude-ai-sync/` folder in project root = source of truth for Claude.ai content.
 
 ## #16 — Droplet Infrastructure
-AI CoS runs on DO droplet (aicos-droplet, Tailscale). MCP server: systemd service, FastMCP Python, publicly accessible at mcp.3niac.com via Cloudflare Tunnel (zero-trust, auto-TLS, no inbound ports). Content Pipeline: cron every 5 min. Postgres: preference store (action_outcomes table). YouTube cookies expire every 1-2 weeks — pipeline warns when stale. Digest site: git push → Vercel auto-deploy at digest.wiki.
+AI CoS runs on DO droplet (aicos-droplet, Tailscale). MCP server: systemd service, FastMCP Python, publicly accessible at mcp.3niac.com via Cloudflare Tunnel (zero-trust, auto-TLS, no inbound ports). Content Pipeline: cron every 5 min. SyncAgent: cron every 10 min. Postgres: 7 tables (thesis_threads, actions_queue, action_outcomes, companies, network, sync_queue, change_events). YouTube cookies expire every 1-2 weeks — pipeline warns when stale. Digest site: git push → Vercel auto-deploy at digest.wiki.
 
 ## #17 — Actions Queue Schema
 Actions Queue (1df4858c) fields: Action (title), Company (relation), Thesis (relation to Thesis Tracker), Source Digest (relation to Content Digest DB), Action Type (select: Research/Meeting-Outreach/Thesis Update/Content Follow-up/Portfolio Check-in/Follow-on Eval/Pipeline Action), Priority (P0-P3), Status (Proposed→Accepted→Done/Dismissed), Source (Content Processing/Agent/Manual/Meeting), Assigned To (Aakash/Agent), Created By (AI CoS/Manual), Reasoning, Relevance Score (0-100), Outcome (Unknown/Helpful/Gold).

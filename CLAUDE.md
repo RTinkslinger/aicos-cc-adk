@@ -18,7 +18,7 @@ This is the **Aakash AI Chief of Staff (AI CoS)** project — an action optimize
 
 **Skip CONTEXT.md when:** pure code edits, repo tooling, frontend styling, git operations, or anything that doesn't touch AI CoS domain logic.
 
-**Architecture docs in `docs/architecture/` are canonical technical references.** See Architecture Direction below for summary; see those docs for full specs. For the full trust hierarchy and prior art checklist, see `docs/architecture/REPO-GUIDE.md`.
+**`docs/source-of-truth/` is the single canonical reference folder** — 8 files covering system state, architecture, data, MCP tools, vision, capabilities, methodology, and entity schemas. See `docs/source-of-truth/README.md` for the index. Read these before building anything that touches infrastructure, data, or system design. For the trust hierarchy and prior art checklist, see `docs/architecture/REPO-GUIDE.md`.
 
 ## Repository Structure
 

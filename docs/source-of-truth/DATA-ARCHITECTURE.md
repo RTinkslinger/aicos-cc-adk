@@ -7,7 +7,7 @@ All data stores, schemas, field ownership, and sync patterns for the AI CoS syst
 
 ## Data Layer Overview
 
-Data lives in two systems with field-level ownership defined in `docs/architecture/DATA-SOVEREIGNTY.md`:
+Data lives in two systems with field-level ownership (see ENTITY-SCHEMAS.md for the full 3-actor sovereignty model):
 
 - **Notion** — Human interface. 8 databases. Aakash interacts here. Source of truth for human-managed fields (company names, deal status, person contacts, action status changes).
 - **Postgres (droplet)** — Machine brain. 7 tables. Agents reason here. Source of truth for enriched fields, preference history, sync state, and change events.

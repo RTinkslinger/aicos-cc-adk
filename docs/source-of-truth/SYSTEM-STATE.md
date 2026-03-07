@@ -187,6 +187,59 @@ Signs of expired cookies: WARNING YouTube cookie check failed in pipeline log, a
 
 ---
 
+## Scaling Roadmap
+
+How to scale the droplet as infrastructure grows. Budget is unconstrained; operational simplicity is the constraint.
+
+### Tier 1: Near-Term Growth ($24/mo)
+
+**Trigger:** Postgres DB exceeds 5 GB, adding pgvector or TimescaleDB extension, or running concurrent pipelines that starve MCP responses.
+
+| Spec | Value |
+|------|-------|
+| Plan | $24/mo (Basic) |
+| vCPUs | 2 |
+| RAM | 4 GB |
+| Disk | 80 GB SSD |
+
+pgvector similarity search is RAM-hungry. 4 GB gives comfortable headroom for Postgres with extensions. Second vCPU prevents pipeline runs from starving MCP server responses.
+
+### Tier 2: Multi-Runner + Embeddings ($48/mo)
+
+**Trigger:** Running 3+ autonomous runners, generating embeddings locally, ER pipeline as async worker, or Postgres DB exceeds 20 GB.
+
+| Spec | Value |
+|------|-------|
+| Plan | $48/mo (General Purpose — dedicated CPU) |
+| vCPUs | 2 (dedicated) |
+| RAM | 8 GB |
+| Disk | 160 GB SSD |
+
+General Purpose has dedicated (not shared) vCPUs — critical when runners do sustained work.
+
+### Tier 3: Full Infrastructure ($96/mo)
+
+**Trigger:** Graph store added (Neo4j), processing 10+ signal sources, embedding corpus exceeds 1M vectors, or ML model inference locally.
+
+| Spec | Value |
+|------|-------|
+| Plan | $96/mo (General Purpose) |
+| vCPUs | 4 (dedicated) |
+| RAM | 16 GB |
+| Disk | 320 GB SSD |
+
+### Tier 4: Split Architecture ($100-200/mo)
+
+**Trigger:** System serves multiple users or vector corpus exceeds 10M embeddings. At this point, split into multiple droplets or move to managed services (DO Managed Postgres at $15/mo starting).
+
+### Scaling Principles
+
+- **Prefer vertical scaling** (bigger droplet) until a service needs isolation, zero-downtime deploys, or managed DB backup/recovery.
+- **Prefer Postgres extensions** over new services: pgvector over self-hosted Qdrant (until 1M+ vectors), TimescaleDB over separate time-series DB, Postgres CTEs over Neo4j (until graph queries become the bottleneck).
+- **Resize process:** Power off (1-2 min), resize via DO console, power on — ~5 min total downtime. Disk-only expansion supports live resize. Disk can never shrink (irreversible).
+
+---
+
 ## Detailed Reference
 
 - Full operational runbook: `docs/architecture/DROPLET-RUNBOOK.md`

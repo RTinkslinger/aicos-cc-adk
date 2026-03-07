@@ -13,6 +13,9 @@ Exhaustive reference for the AI CoS current build state. Each file is self-conta
 | **DATA-ARCHITECTURE.md** | 8 Notion DBs + 7 Postgres tables: schemas, field ownership, sync patterns | Before any data operation, understanding where data lives and who owns it |
 | **ARCHITECTURE.md** | 3-layer architecture, runners, integrations, live vs planned components | Understanding system design, planning new capabilities |
 | **VISION-AND-DIRECTION.md** | Vision, build phases, current state vs ideal, gaps, design principles | Strategic planning, contextualizing work, understanding the "why" |
+| **CAPABILITY-MAP.md** | 8 capabilities at IDS levels (+/++/+++), dependency graph, growth model | Planning what to build next, understanding capability dependencies |
+| **METHODOLOGY.md** | 15 build principles, technology evaluation framework, open decision spikes | Making technology choices, understanding why we build the way we do |
+| **ENTITY-SCHEMAS.md** | Vision-state entity schemas, runner pattern template, IDS trail spec, 3-actor sovereignty model | Designing new entities/fields, building new runners, extending data model |
 
 ---
 
@@ -47,15 +50,13 @@ Update these docs when:
 
 ### Cross-References
 
-These docs complement (not replace) existing documentation:
+**This folder is the single canonical reference.** Other docs are operational or historical:
 
 | Doc | Purpose | Location |
 |-----|---------|----------|
 | CLAUDE.md | Coding context, commands, protocols | Project root |
 | CONTEXT.md | Domain context (Aakash's world, priorities, methodology) | Project root |
 | TRACES.md | Recent build history (rolling window) | Project root |
-| `docs/architecture/architecture-v0.3.md` | Full architecture spec | `docs/architecture/` |
-| `docs/architecture/vision-v5.md` | Full vision narrative | `docs/architecture/` |
-| `docs/architecture/DATA-SOVEREIGNTY.md` | Field ownership rules, sync patterns | `docs/architecture/` |
-| `docs/architecture/DROPLET-RUNBOOK.md` | Operational runbook for droplet | `docs/architecture/` |
+| `docs/architecture/DROPLET-RUNBOOK.md` | Operational runbook for droplet (how-to, not architecture) | `docs/architecture/` |
 | `docs/notion/README.md` | Notion operations guide, recipes, gotchas | `docs/notion/` |
+| `docs/architecture/*.md` | Historical architecture narratives (deeper detail, may have drifted) | `docs/architecture/` |

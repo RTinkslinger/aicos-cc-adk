@@ -1,3 +1,5 @@
+> **STALE — Cowork-era artifact.** Claude.ai preferences are now managed directly in Claude.ai Settings. This file is preserved for historical context only.
+
 # Claude.ai User Preferences — v6.2.0 (March 4, 2026)
 # This is the ACTUAL state live in Claude.ai as of this date.
 # Location: Claude.ai → Settings → User Preferences

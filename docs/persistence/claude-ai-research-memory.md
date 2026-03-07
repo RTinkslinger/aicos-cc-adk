@@ -1,3 +1,5 @@
+> **STALE — Cowork-era artifact.** Claude.ai memory is now managed via `claude-ai-sync/memory-entries.md`. This file is preserved for historical context only.
+
 # Claude.ai Memory Entry #10: Deep Research Protocol
 
 Add this as a new memory entry in Claude.ai Settings -> Memory:

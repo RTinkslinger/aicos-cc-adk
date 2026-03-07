@@ -1,3 +1,5 @@
+> **STALE — Cowork-era artifact.** Superseded by `docs/source-of-truth/` and `CLAUDE.md`. This file is preserved for historical context only.
+
 # AI CoS v5 Artifacts Index
 # Last updated: March 4, 2026 — Session 033
 # Single reference point for all critical configuration artifacts

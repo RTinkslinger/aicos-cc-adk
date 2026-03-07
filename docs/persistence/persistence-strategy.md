@@ -1,3 +1,5 @@
+> **STALE — Cowork-era artifact.** Claude Code uses `CLAUDE.md` + `CONTEXT.md` + auto memory (`~/.claude/projects/*/memory/`). This file is preserved for historical context only. See `docs/source-of-truth/` for current system state.
+
 # AI CoS Persistence Strategy — How Context Lives Across All Surfaces
 # Created: March 2, 2026
 

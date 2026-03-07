@@ -14,17 +14,34 @@ How to navigate 39+ sessions of prior work and know what's authoritative.
 
 ---
 
+## Source of Truth (Most Current)
+
+For the most current and accurate build state, see **`docs/source-of-truth/`**:
+
+| File | Covers |
+|------|--------|
+| `SYSTEM-STATE.md` | Infrastructure, services, endpoints, crons, credentials |
+| `MCP-TOOLS-INVENTORY.md` | All 17 MCP tools with full signatures and routing rules |
+| `DATA-ARCHITECTURE.md` | 8 Notion DBs + 7 Postgres tables, schemas, sync patterns |
+| `ARCHITECTURE.md` | 3-layer architecture, runners, integrations, scoring models |
+| `VISION-AND-DIRECTION.md` | Vision, build phases, current vs ideal, gaps |
+
+These are updated after major deploys and milestone compaction. See `docs/source-of-truth/README.md` for the update protocol.
+
 ## Architecture Docs Quick Map
 
 | File | Covers | Read when |
 |------|--------|-----------|
-| `doc2-architecture-v0.2-enhanced.md` | Three-layer system, Agent SDK runners, MCP server, Preference Store, Postgres schema, build phases | Planning any new capability or understanding the target architecture |
-| `doc3-vision-document.md` | Full vision narrative, the "Why", IDS methodology, interaction model, design principles | Onboarding, framing decisions, understanding Aakash's world |
-| `BUILD-SYSTEM.md` | Historical Cowork build system (sessions, subagents, deployment, audit, persistence) | Understanding how things were built. Reference for patterns that may translate to CC. |
-| `engineering-overview-session-040.md` | Full engineering overview of everything built through Session 040 (Cowork era). Content Pipeline data flow, DigestData schema, digest site architecture, Full Cycle DAG pattern | Rebuilding or extending existing components. Best sections: §5 (Content Pipeline), §5.2 (DigestData schema), §6 (digest.wiki), §10 (Full Cycle pattern) |
+| `architecture-v0.3.md` | Three-layer architecture (detailed). Some sections have drifted — see source-of-truth for current state. | Deep architectural understanding beyond what SoT covers |
+| `vision-v5.md` | Full vision narrative, the "Why", IDS methodology, design principles | Onboarding, framing decisions, understanding Aakash's world |
+| `DATA-SOVEREIGNTY.md` | Field-level ownership rules, sync patterns. Build phases now complete (1-4). | Understanding data ownership model |
+| `doc2-architecture-v0.2-enhanced.md` | Cowork-era architecture. Postgres schema superseded by `docs/source-of-truth/DATA-ARCHITECTURE.md`. | Historical context only |
+| `doc3-vision-document.md` | Cowork-era vision narrative | Historical context — superseded by `vision-v5.md` |
+| `BUILD-SYSTEM.md` | Historical Cowork build system | Understanding Cowork-era patterns |
+| `engineering-overview-session-040.md` | Cowork engineering overview. Best sections: Content Pipeline data flow, DigestData schema, digest.wiki arch | Rebuilding or extending existing components |
 | `doc1-brainstorm-summary-enhanced.md` | Original architecture brainstorm | Historical context only |
 
-These docs are evolving. When you make architectural decisions during a session, update the relevant doc — don't create new ones.
+Architecture docs and source-of-truth docs are complementary. Architecture docs have depth and narrative. Source-of-truth docs have current state.
 
 ---
 

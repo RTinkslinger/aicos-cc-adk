@@ -1,3 +1,5 @@
+> **STALE — Cowork-era artifact.** Claude.ai memory is now managed via `claude-ai-sync/memory-entries.md`. This file is preserved for historical context only.
+
 # Claude.ai Memory Entries — v6.2.0 (March 4, 2026)
 # 18 entries. Source of truth for what SHOULD be in Claude.ai memory.
 # Aligned with: System Vision v3, AI CoS Skill v6, User Preferences v6

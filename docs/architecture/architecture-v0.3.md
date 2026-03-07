@@ -1,5 +1,8 @@
 # AI Chief of Staff — Architecture v0.3
 **March 2026 · Updated from v0.2 to reflect Claude Code era build-out**
+
+> **Currency note (2026-03-07):** Some sections of this document have drifted from live state. For the most current and accurate reference, see `docs/source-of-truth/` — particularly ARCHITECTURE.md, MCP-TOOLS-INVENTORY.md, and SYSTEM-STATE.md. Key differences: SyncAgent is now LIVE (10-min cron), 17 MCP tools exist (not 4), Postgres has 7 live tables (not 2), and Data Sovereignty Phases 1-4 are complete.
+
 > Evolved from the Cowork handover architecture (v0.2). Preserves the Three-Layer vision while updating all details for current implementation reality. Original v0.2 preserved in `From Clowork handover (sessino 40 in cowork)/`.
 
 ---
@@ -82,10 +85,11 @@ The pattern: specialist runners handle specific signal types. Each is a focused 
 - **Does:** Profile screenshot → structured Network DB entry (vision extraction). Post URL → thesis signal extraction. New person → relationship edges inferred from shared companies/contexts.
 - **Future:** When X/LinkedIn APIs or MCPs become available, this becomes a continuous observer.
 
-#### SyncAgent 🔜 PLANNED
-- **Trigger:** Cron every 2hr (or event-driven)
-- **Does:** Notion ↔ Postgres sync per DATA-SOVEREIGNTY.md field ownership rules, change detection → action generation, preference store aggregation from Actions Queue status changes. Mostly deterministic Python.
-- **Partial implementation:** Back-propagation sweep (Actions Queue Done → Content Digest "Actions Taken") runs as part of unified pipeline.
+#### SyncAgent ✅ LIVE
+- **Location:** `mcp-servers/ai-cos-mcp/runners/sync_agent.py`
+- **Trigger:** Cron every 10 min on droplet
+- **Does:** Thesis status sync (Notion → Postgres), actions bidirectional sync (Outcome from Notion), retry queue drain (exponential backoff), change detection (field-level diffs → `change_events` table), action generation from changes (conviction→High, status changes, Gold outcomes).
+- **Also running:** Back-propagation sweep (Actions Queue Done → Content Digest "Actions Taken") as part of unified pipeline (5-min cron).
 
 ---
 
@@ -93,26 +97,25 @@ The pattern: specialist runners handle specific signal types. Each is a focused 
 
 The `ai-cos-mcp` server is live on the DO droplet as a systemd service. FastMCP Python. Connected via Tailscale from all Claude surfaces.
 
-**Live tools:**
+**17 live tools** (full inventory in `docs/source-of-truth/MCP-TOOLS-INVENTORY.md`):
 
-| Tool | Purpose |
-|------|---------|
-| `health_check` | Server status verification |
-| `cos_load_context` | Load domain context (CONTEXT.md + Notion state) for any Claude session |
-| `cos_score_action` | Score an action against the 7-factor Action Scoring Model |
-| `cos_get_preferences` | Load preference history from action_outcomes table |
+| Category | Tools |
+|----------|-------|
+| Health | `health_check` |
+| Context | `cos_load_context` |
+| Scoring | `cos_score_action`, `cos_get_preferences` |
+| Thesis CRUD | `cos_create_thesis_thread`, `cos_update_thesis`, `cos_get_thesis_threads` |
+| Data Access | `cos_get_recent_digests`, `cos_get_actions` |
+| Sync Ops | `cos_sync_thesis_status`, `cos_seed_thesis_db`, `cos_retry_sync_queue`, `cos_sync_actions`, `cos_full_sync` |
+| Observability | `cos_get_changes`, `cos_sync_status`, `cos_process_changes` |
 
-**Planned tools:**
+**Planned tools (not yet built):**
 
 | Tool Group | Tools | Used By |
 |-----------|-------|---------|
-| Context | `cos_get_thesis_threads()`, `cos_get_funnel_state()`, `cos_get_ids_state(company)` | Claude mobile, all runners |
-| Learning | `cos_get_action_history(limit, include_outcomes)`, `cos_log_outcome()` | All runners, digest.wiki webhooks |
 | Network | `cos_get_person()`, `cos_get_company()`, `cos_search_network()`, `cos_best_meetings_today()`, `cos_relationship_temp(person)` | OptimiserAgent, Claude mobile |
-| Actions | `cos_propose_actions()`, `cos_update_ids()`, `cos_triage_actions()` | PostMeetingAgent, ContentAgent |
 | Retrieval | `cos_search()` — semantic over Postgres + vector DB (when available) | All runners, Claude mobile |
-| Ingest | `cos_process_screenshot()`, `cos_process_post()`, `cos_run_pipeline()` | IngestAgent, Claude mobile triggers |
-| Sync | `cos_sync_state()`, `cos_log_action()`, `cos_back_propagate()` | SyncAgent |
+| Ingest | `cos_process_screenshot()`, `cos_process_post()` | IngestAgent, Claude mobile triggers |
 
 **Existing MCP tools (connected per surface):** Notion Enhanced Connector, Notion Raw API, Granola MCP, Google Calendar MCP, Gmail MCP, Vercel MCP, PDF Tools. The `ai-cos-mcp` server complements these with cross-cutting AI CoS logic.
 
@@ -149,7 +152,7 @@ The Thesis Tracker is not a passive database — it's an AI-managed conviction e
 
 **Key Questions lifecycle:** Formulated as critical questions that would move conviction up or down. Stored as page content blocks with `[OPEN]` prefix. When evidence answers a question, marked `[ANSWERED]` with evidence citation. This lifecycle is automated by ContentAgent.
 
-**Multiple write surfaces:** ContentAgent (autonomous), Claude.ai (manual), Claude Code (manual). All write to Notion directly. Droplet caches thesis state locally for pipeline runs.
+**Multiple write surfaces:** ContentAgent (autonomous), Claude.ai (manual), Claude Code (manual). All write through ai-cos-mcp tools on the droplet (write-ahead to Postgres, then push to Notion). The droplet is the single write authority.
 
 ### Postgres on Droplet ✅ LIVE
 
@@ -158,11 +161,12 @@ Core machine-speed tables are live on the DO droplet:
 | Table | Status | Description |
 |-------|--------|-------------|
 | `action_outcomes` | ✅ Live | THE preference store. Every accept/reject with scoring factor snapshots. |
-| Content pipeline tables | ✅ Live | Content Digest creation, queue state, processing metadata |
-| `actions_queue` mirror | 🔜 Planned | Full Notion mirror for machine-speed scoring |
-| `network_graph` | 🔜 Planned | People + companies + relationship edges |
-| `ids_trail` | 🔜 Planned | Conviction history per company. Append-only. |
-| `thesis_signals` | 🔜 Planned | Extracted signals per thread, with strength score |
+| `thesis_threads` | ✅ Live | Postgres backing for Thesis Tracker. Write-ahead pattern. |
+| `actions_queue` | ✅ Live | Postgres backing for Actions Queue. Bidirectional sync. |
+| `sync_queue` | ✅ Live | Failed Notion writes queued for retry (exponential backoff). |
+| `change_events` | ✅ Live | Field-level change log from sync detection. |
+| `companies` | Schema only | Postgres mirror schema exists. Sync deferred (Phase 5). |
+| `network` | Schema only | Postgres mirror schema exists. Sync deferred (Phase 5). |
 
 ### Preference Store Schema (action_outcomes) ✅ LIVE
 
@@ -339,7 +343,7 @@ Person Score = f(
 |-------|----------------|--------|
 | **Phase 1 — MCP + Preference Foundation** | Custom `ai-cos-mcp` server on droplet ✅. Postgres with action_outcomes ✅. ContentAgent autonomous ✅. Thesis Tracker conviction engine ✅. Wire `action_scorer.py` into pipeline. Expand MCP tools. | **~70% Complete** |
 | **Phase 2 — Action Frontend** | Accept/dismiss on digest pages. Consolidated `/actions` route on digest.wiki. Portfolio dashboard view. Thesis tracker view with evidence feed. | **Not started** |
-| **Phase 3 — Autonomous Runners** | PostMeetingAgent (Granola → IDS → actions). SyncAgent (Notion ↔ Postgres per DATA-SOVEREIGNTY.md). IngestAgent (screenshots, URLs → DB). | **Not started** |
+| **Phase 3 — Autonomous Runners** | PostMeetingAgent (Granola → IDS → actions). SyncAgent ✅ (live, 10-min cron). IngestAgent (screenshots, URLs → DB). | **SyncAgent done, others not started** |
 | **Phase 4 — Optimisation + Scale** | OptimiserAgent. `cos_best_meetings_today()`. Relationship temperature scoring. Gap analysis. WhatsApp output. Vector DB (if triggered). | **Not started** |
 
 ---

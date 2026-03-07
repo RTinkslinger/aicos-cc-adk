@@ -1,3 +1,5 @@
+> **STALE — Cowork-era artifact.** The 6-layer persistence model no longer applies. Claude Code uses `CLAUDE.md` + `CONTEXT.md` + auto memory. This file is preserved for historical context only.
+
 # Layered Persistence Coverage Map
 # Last audited: Session 037 (March 4, 2026)
 # Next audit due: Session 038

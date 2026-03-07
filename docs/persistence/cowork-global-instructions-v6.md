@@ -1,3 +1,5 @@
+> **STALE — Cowork-era artifact.** Cowork is no longer used. Claude Code uses `CLAUDE.md` for project instructions. This file is preserved for historical context only.
+
 # Cowork Global Instructions — v6.2.0 (March 4, 2026)
 # This is the EXACT text to paste into: Claude Desktop → Settings → Cowork → Global Instructions
 # These instructions apply to ALL Cowork sessions, before any skill loads.

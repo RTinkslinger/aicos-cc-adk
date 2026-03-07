@@ -70,7 +70,7 @@ Actions can be triaged from multiple surfaces — some triage events arrive at t
 - **Human writes:** Status only (Active / Exploring / Parked / Archived) — this weights action scoring
 - **Conviction spectrum:** New / Evolving / Evolving Fast (maturity axis) → Low / Medium / High (strength axis for well-formed thesis)
 - **Sync:** Pull Status from Notion periodically (human-owned field). Cache refresh: every pipeline run (5 min). If Notion unreachable, use last cached state (or CONTEXT.md fallback).
-- **Future:** Add `thesis_threads` Postgres table as primary store with write-ahead pattern (same as Content Digest). Notion becomes eventually-consistent view.
+- **Implementation:** `thesis_threads` Postgres table is live as primary store with write-ahead pattern. All MCP tools write Postgres first, then push to Notion. Failed pushes queued in `sync_queue` with exponential backoff. Notion is the eventually-consistent view.
 
 ### Companies DB
 - **SoT:** Droplet (enriched) + Notion (human fields)
@@ -127,60 +127,17 @@ Layer 4: SyncAgent runner
 
 ## Build Phases
 
-### Phase 1: Public MCP Endpoint + Thesis Write Tools (Sprint 2)
+### Phase 1: Public MCP Endpoint + Thesis Write Tools -- COMPLETE
+All thesis writes centralized through droplet via Cloudflare Tunnel + Streamable HTTP. 17 MCP tools live. Claude.ai + Claude Code connected.
 
-Centralizes thesis writes through the droplet. All surfaces use ai-cos-mcp instead of Notion MCP directly.
+### Phase 2: Thesis Postgres Backing -- COMPLETE
+`thesis_threads` table live. Write-ahead pattern: Postgres first, Notion push, `sync_queue` on failure (exponential backoff). Status synced from Notion (human-owned).
 
-| Step | Work | Effort |
-|------|------|--------|
-| 1a. Install `cloudflared` on droplet | `apt install cloudflared`, create tunnel, point at localhost:PORT | 10 min |
-| 1b. TLS | Automatic via Cloudflare Tunnel — valid certs, no config | Free |
-| 1c. Streamable HTTP transport | Change `server.py` to run with `transport="streamable-http"`. FastMCP 3.1.0 supports this. | 15 min |
-| 1d. Spec compliance | Verify HEAD endpoint + `MCP-Protocol-Version` header. FastMCP 3.x likely handles this. | Verify |
-| 1e. Add thesis write tools | Wrap existing `notion_client.py` functions as MCP tools: `cos_create_thesis_thread`, `cos_update_thesis`, `cos_get_thesis_threads` | 30 min |
-| 1f. Add as Claude.ai connector | Settings → Integrations, paste tunnel URL | 2 min |
-| 1g. Claude Code MCP config | Add ai-cos-mcp to `.mcp.json` (Tailscale endpoint) | 5 min |
-| 1h. Update prompts | Claude.ai memory + CLAUDE.md: "use cos_* tools for thesis, not Notion MCP directly" | 10 min |
+### Phase 3: Bidirectional Actions Queue -- COMPLETE
+`actions_queue` table live. `lib/actions_db.py` provides CRUD. Outcome synced FROM Notion (human feedback). Seeded with 100 existing actions.
 
-**Deliverable:** All thesis writes flow through droplet. Single write authority established.
-
-### Phase 2: Thesis Postgres Backing (Sprint 3)
-
-Add `thesis_threads` table as primary store. Write-ahead pattern for Notion resilience.
-
-| Step | Work | Effort |
-|------|------|--------|
-| 2a. Postgres schema | `thesis_threads` table mirroring Notion fields + enrichment columns | 30 min |
-| 2b. Write-ahead | MCP tools write to Postgres first, then push to Notion. Failed pushes queued for retry. | 1 hr |
-| 2c. Status sync | Pull Status field from Notion periodically (only human-owned field) | 30 min |
-
-**Deliverable:** Thesis data survives Notion outages. Droplet is true SoT.
-
-### Phase 3: Bidirectional Actions Queue (Sprint 2-3)
-
-Postgres backing for Actions Queue. Droplet-created actions write locally first, then push to Notion. Notion status changes (accept/dismiss) pull back to Postgres. Field-level last-writer-wins using timestamps.
-
-| Step | Work | Effort |
-|------|------|--------|
-| 3a. Actions Queue Postgres CRUD | `lib/actions_db.py` — create, update status, find, sync helpers | 30 min |
-| 3b. Seed from Notion | Pull existing actions into Postgres (one-time) | 15 min |
-| 3c. Write-ahead for new actions | ContentAgent and MCP tools write Postgres first → push Notion | 30 min |
-| 3d. Status pull | Pull status changes from Notion → Postgres (accept/dismiss) | 30 min |
-
-**Deliverable:** Actions survive Notion outages. Multi-surface triage without conflicts.
-
-### Phase 4: Change Detection + SyncAgent Orchestration (Sprint 3)
-
-Detect field changes between sync cycles for thesis + actions. SyncAgent runs on schedule.
-
-| Step | Work | Effort |
-|------|------|--------|
-| 4a. Change detection engine | Compare Notion state vs Postgres, log diffs to `change_events` table | 45 min |
-| 4b. Action generation from changes | Change events → proposed actions (e.g. "thesis conviction moved to High") | 30 min |
-| 4c. SyncAgent runner | Orchestrates: thesis status sync, actions bidirectional sync, retry queue drain, change detection — on cron schedule | 1 hr |
-| 4d. MCP tool for sync status | `cos_sync_status` — check last sync times, pending queue, recent changes | 15 min |
-
-**Deliverable:** Automated sync loop. Changes generate signals. Full observability.
+### Phase 4: Change Detection + SyncAgent -- COMPLETE
+`change_events` table logs field-level diffs. Action generation from changes (conviction to High, status changes, Gold outcomes). SyncAgent on 10-min cron orchestrates all sync operations. `cos_sync_status` + `cos_process_changes` MCP tools for observability.
 
 ### Phase 5: Companies/Network/Portfolio Sync (DEFERRED)
 

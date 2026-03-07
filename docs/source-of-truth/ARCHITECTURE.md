@@ -170,8 +170,8 @@ The Thesis Tracker is not a passive database — it's an AI-managed conviction e
 
 ## Detailed Reference
 
-- **Full architecture spec:** `docs/architecture/architecture-v0.3.md`
-- **Full vision narrative:** `docs/architecture/vision-v5.md`
-- **Data sovereignty:** `docs/architecture/DATA-SOVEREIGNTY.md`
-- **Droplet runbook:** `docs/architecture/DROPLET-RUNBOOK.md`
+- **Full architecture spec:** `docs/architecture/architecture-v0.3.md` (historical narrative — deeper detail, may have drifted)
+- **Full vision narrative:** `docs/architecture/vision-v5.md` (historical narrative)
+- **Data sovereignty:** `docs/source-of-truth/ENTITY-SCHEMAS.md` (canonical 3-actor model)
+- **Droplet runbook:** `docs/architecture/DROPLET-RUNBOOK.md` (operational how-to, not architecture)
 - **Repo navigation:** `docs/architecture/REPO-GUIDE.md`

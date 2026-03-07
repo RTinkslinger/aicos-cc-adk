@@ -30,10 +30,10 @@ This is a **local-only git repo** (no remote). Used for branching/worktrees in p
 | `scripts/` | Operational scripts (YouTube extractor, content pipeline, action scorer, branch lifecycle CLI) |
 | `[Archive] Cowork Skills/` | Archived Cowork-era skill files (v2-v6). Reference only — not used in CC. |
 | `docs/` | All documentation by type (see `docs/README.md` for index) |
-| `docs/architecture/` | Canonical architecture docs: BUILD-SYSTEM.md, architecture-v0.2, vision-v4 |
+| `docs/architecture/` | Historical architecture narratives — deeper detail, may have drifted. See `docs/source-of-truth/` for canonical reference. |
 | `docs/notion/` | Notion operations guide + database schemas — read before any Notion tool call |
 | `aicos-digests/` | **Separate git repo** (gitignored). Next.js 16 digest site, deployed at https://digest.wiki |
-| `mcp-servers/` | Planned: ai-cos-mcp server (FastMCP Python) |
+| `mcp-servers/` | Live: ai-cos-mcp server (FastMCP Python on droplet) |
 | `portfolio-research/` | Per-company deep research files (20 companies) |
 | `queue/` | Content Pipeline queue — YouTube extraction JSONs |
 | `digests/` | PDF digest outputs |
@@ -84,7 +84,7 @@ cd mcp-servers/ai-cos-mcp && bash deploy.sh      # deploy to droplet
 ```
 **Public endpoint:** `https://mcp.3niac.com/mcp` (Cloudflare Tunnel, auto-TLS)
 **Claude Code:** Connected via `.mcp.json` — cos_* tools available directly
-**12 tools:** health_check, cos_load_context, cos_score_action, cos_get_preferences, cos_create_thesis_thread, cos_update_thesis, cos_get_thesis_threads, cos_get_recent_digests, cos_get_actions, cos_sync_thesis_status, cos_seed_thesis_db, cos_retry_sync_queue
+**17 tools** — see `docs/source-of-truth/MCP-TOOLS-INVENTORY.md` for full signatures and routing rules.
 
 ### Agent SDK Runners (planned)
 ```bash
@@ -185,67 +185,26 @@ People Scoring Model is a subset — applied when the action type is "meeting."
 ## Content Pipeline Architecture
 
 ```
-Mac (daily 8:30 PM): youtube_extractor.py → queue/*.json
-Analysis: queue/ → content analysis → PDF digests → Notion → review
-Post-processing: queue/processed/
-Back-propagation (daily 10:00 AM): Actions Queue Done → Content Digest "Actions Taken"
+Droplet (cron every 5 min): extraction.py → queue/*.json
+ContentAgent: queue/ → Claude analysis → digest JSON → Notion + Actions Queue + Thesis updates
+Publishing: digest.wiki → git push → Vercel auto-deploy (~15s)
+SyncAgent (10-min cron): Notion ↔ Postgres bidirectional sync, change detection, action generation
 ```
 
-Key scripts: `youtube_extractor.py` (extraction), `content_digest_pdf.py` (PDF generation), `publish_digest.py` (JSON → Notion + digest site), `process_youtube_queue.py` (pipeline analysis), `action_scorer.py` (scoring model), `dedup_utils.py` (deduplication).
+Key scripts (on droplet `/opt/ai-cos-mcp/`): `runners/pipeline.py` (orchestrator), `runners/extraction.py` (yt-dlp extraction), `runners/content_agent.py` (analysis + Notion writes), `runners/publishing.py` (digest site publish), `lib/scoring.py` (scoring model), `scripts/action_scorer.py` (standalone scorer).
 
-**ContentAgent is live** — runs autonomously on the droplet as part of the unified pipeline. See `docs/architecture/architecture-v0.3.md` for runner specs.
+**ContentAgent + SyncAgent are live** — running autonomously on the droplet. See `docs/source-of-truth/ARCHITECTURE.md` for runner specs.
 
-## Architecture Direction
+## Architecture & Build State
 
-The AI CoS is a persistent, autonomous architecture with the first runner (ContentAgent) live:
+See `docs/source-of-truth/` for full current state. Key files:
+- **ARCHITECTURE.md** — Three-layer system, runners (ContentAgent + SyncAgent live), integrations, component status
+- **MCP-TOOLS-INVENTORY.md** — All 17 MCP tools with signatures, routing rules, and categories
+- **SYSTEM-STATE.md** — Infrastructure: droplet, Postgres (7 tables), Cloudflare Tunnel, Tailscale, crons, endpoints
+- **DATA-ARCHITECTURE.md** — 8 Notion DBs + 7 Postgres tables: schemas, field ownership, sync patterns
+- **VISION-AND-DIRECTION.md** — Build phases, gaps, design principles
 
-**Three-layer system:**
-- **Observation Layer** — Signal sources (YouTube ✅, Granola, Email, Calendar, screenshots, etc.) produce normalized Signals
-- **Intelligence Layer** — Runners + MCP tools reason over data, score actions, learn from preferences
-- **Interface Layer** — Claude mobile, digest.wiki, Notion, Claude Code, WhatsApp (future)
-
-**ai-cos-mcp server** (FastMCP Python, ✅ live on droplet):
-- Live tools: `health_check`, `cos_load_context`, `cos_score_action`, `cos_get_preferences`
-- Connected via Tailscale from all Claude surfaces
-
-**Runners** (5 narrow specialists):
-- ContentAgent ✅ (content queue → analysis → digests → Notion → Actions Queue → thesis updates)
-- PostMeetingAgent 🔜 (Granola → IDS updates → actions)
-- OptimiserAgent 🔜 (scoring models → ranked lists → gap analysis)
-- IngestAgent 🔜 (screenshots, URLs → Network/Companies DB)
-- SyncAgent 🔜 (Notion ↔ Postgres consistency per DATA-SOVEREIGNTY.md)
-
-**Preference Store** — `action_outcomes` table ✅ (Postgres): every accept/reject with scoring factor snapshots. The compounding mechanism.
-
-**Cloud infrastructure** ✅ — DO droplet ($12/mo), Postgres, Tailscale, systemd services.
-
-**Data sovereignty** — `DATA-SOVEREIGNTY.md` defines field-level ownership between Notion (human fields) and droplet (enriched fields).
-
-**Build phases (updated):**
-1. ~~MCP server + Preference Store foundation~~ ✅ ~70% complete
-2. Action Frontend on digest.wiki (accept/dismiss UX)
-3. Autonomous Runners (SyncAgent → PostMeetingAgent → IngestAgent)
-4. Optimisation + Multi-Surface (OptimiserAgent → WhatsApp)
-
-**Full specs:** `docs/architecture/architecture-v0.3.md` (architecture), `docs/architecture/vision-v5.md` (vision). Historical originals in `docs/architecture/From Clowork handover (sessino 40 in cowork)/`.
-
-## Current Build State
-
-**What's live:**
-- **Content Pipeline on Droplet** — Autonomous: extraction + ContentAgent + publish + Notion writes + Actions Queue + Thesis Tracker updates. Cron every 5 min.
-- **ai-cos-mcp server** — FastMCP Python on DO droplet (systemd, always-on). Tools: health_check, cos_load_context, cos_score_action, cos_get_preferences.
-- **digest.wiki** — Next.js 16, live at https://digest.wiki, auto-deploys on git push (~15s)
-- **Preference Store** — `action_outcomes` table in Postgres on droplet
-- **Notion as full data layer** — 8 databases with cross-references
-- **Thesis Tracker** — AI-managed conviction engine (6-level conviction spectrum, key questions as [OPEN]/[ANSWERED] blocks, autonomous thread creation, evidence accumulation)
-- **Cross-surface alignment** — `claude-ai-sync/` folder for Claude.ai memory sync
-- **Data Sovereignty** — `DATA-SOVEREIGNTY.md` defines field-level ownership between Notion and droplet
-
-**What's being built next:**
-1. Action Frontend on digest.wiki (accept/dismiss UX)
-2. Wire `action_scorer.py` into Content Pipeline
-3. Autonomous runners (PostMeetingAgent, SyncAgent, IngestAgent, OptimiserAgent)
-4. Content Pipeline v5 (multi-source, semantic matching)
+**Quick status:** ContentAgent (5-min cron) + SyncAgent (10-min cron) live on droplet. 17 MCP tools via ai-cos-mcp server. Thesis Tracker as AI-managed conviction engine. Preference Store active. digest.wiki live. Cross-surface alignment via `claude-ai-sync/`.
 
 ---
 
@@ -367,7 +326,7 @@ properties: {
   "Status": "💡 Insight",  // 💡 Insight | 📋 Backlog | 🎯 Planned | 🔨 In Progress | 🧪 Testing | ✅ Shipped | 🚫 Won't Do
   "Priority": "P1 - Next",  // P0 - Now | P1 - Next | P2 - Later | P3 - Someday
   "Epic": "Infrastructure",  // Content Pipeline v5 | Action Frontend | Knowledge Store | Multi-Surface | Meeting Optimizer | Always-On | Infrastructure
-  "Source": "Build Insight",  // Builder Request | Build Insight | Bug/Regression | Verification Failure | Dependency | Refactor | Architecture Decision | External Inspiration | User Feedback
+  "Source": "Session Insight",  // Session Insight | AI CoS Relevance Note | User Request | Bug/Regression | Architecture Decision | External Inspiration
   "Sprint#": [current sprint number],
   "T-Shirt Size": "S (1-3hr)",  // XS (< 1hr) | S (1-3hr) | M (3-8hr) | L (1-3 sessions) | XL (3+ sessions)
   "Technical Notes": "[auto-filled context]",

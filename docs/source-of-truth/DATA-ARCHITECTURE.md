@@ -236,7 +236,7 @@ SyncAgent detects field change
 
 ## Detailed Reference
 
-- **Field ownership rules:** `docs/architecture/DATA-SOVEREIGNTY.md`
+- **Field ownership rules:** `docs/source-of-truth/ENTITY-SCHEMAS.md` (3-actor sovereignty model)
 - **Notion operations guide:** `docs/notion/README.md`
 - **Thesis DB implementation:** `mcp-servers/ai-cos-mcp/lib/thesis_db.py`
 - **Actions DB implementation:** `mcp-servers/ai-cos-mcp/lib/actions_db.py`

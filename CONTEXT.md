@@ -1,6 +1,6 @@
 # Aakash AI Chief of Staff — Master Context Document
-# Last Updated: 2026-03-06 (Milestone 2 — Thesis Tracker Redesign + Infrastructure)
-# This file is the SINGLE SOURCE OF TRUTH for all Claude surfaces
+# Last Updated: 2026-03-07 (Source-of-truth alignment — conflicts resolved)
+# This file is the domain knowledge layer for all Claude surfaces
 
 ---
 
@@ -105,7 +105,7 @@ Person Score = f(
 
 ## THREE-LAYER ARCHITECTURE (Uber Build Vision)
 
-The system architecture. "Aakash + AI CoS = singular entity." Full specs in `docs/architecture/`.
+The system architecture. "Aakash + AI CoS = singular entity." Full specs in `docs/source-of-truth/`.
 
 ### Layer 1: Observation (Signal Processor)
 Monitors Aakash's surfaces: YouTube, Granola meetings, email, calendar, LinkedIn/X, screenshots. Each signal source produces normalized signals fed into the Intelligence Layer.
@@ -124,14 +124,14 @@ Agent SDK runners + MCP tools reason over data. The custom `ai-cos-mcp` server (
 
 **Live runners:**
 - **ContentAgent** — Content queue → thesis/portfolio matching → structured analysis → digest JSON → Notion entries → Actions Queue. Running on droplet as part of unified pipeline.
+- **SyncAgent** — Notion ↔ Postgres bidirectional sync (thesis status, actions, retry queue, change detection). 10-min cron on droplet.
 
 **Planned runners:**
 - **PostMeetingAgent** — Granola transcript → IDS updates → actions
 - **OptimiserAgent** — Scoring models → ranked lists → gap analysis
 - **IngestAgent** — Screenshots, URLs → Network/Companies DB
-- **SyncAgent** — Notion ↔ Postgres consistency
 
-**MCP Server tools:** `health_check`, `cos_load_context`, `cos_score_action`, `cos_get_preferences`. Deployed on DO droplet, connected via Tailscale.
+**MCP Server tools:** 17 tools across health, context, scoring, thesis CRUD, data access, sync, and observability. See `docs/source-of-truth/MCP-TOOLS-INVENTORY.md` for full inventory. Deployed on DO droplet, connected via Tailscale + Cloudflare Tunnel.
 
 **Preference Store:** `action_outcomes` table in Postgres. Every accept/reject with scoring factor snapshots. Injected into reasoning sessions for calibration. The compounding mechanism.
 
@@ -408,7 +408,7 @@ YouTube Playlists
 | Droplet | `aicos-droplet` via Tailscale | Ubuntu 24.04, DO $12/mo |
 | MCP Server | `systemd ai-cos-mcp.service` | FastMCP Python, always-on |
 | Pipeline | `cron every 5 min` | `pipeline.sh` → extraction + analysis + publish |
-| Postgres | Droplet local | `action_outcomes` table for preference store |
+| Postgres | Droplet local | 7 tables: thesis_threads, actions_queue, action_outcomes, companies, network, sync_queue, change_events |
 | Deploy | `deploy.sh` from Mac | rsync → droplet → uv sync → systemctl restart |
 | Digest site | `aicos-digests/` on droplet | git push → Vercel auto-deploy |
 
@@ -562,9 +562,9 @@ Every interaction that produces new understanding should sync it:
 - **Thesis Tracker:** AI-managed conviction engine with 6+ active threads
 
 ### What's Being Built Next
-1. **Thesis Tracker implementation** — New conviction options (New/Evolving/Evolving Fast/Low/Medium/High), key questions as blocks, automated conviction updates
-2. **Action Frontend** — Accept/dismiss on digest.wiki, consolidated `/actions` route
-3. **Agent SDK runners** — PostMeetingAgent (Granola → IDS updates → actions), OptimiserAgent, IngestAgent, SyncAgent
+1. **Action Frontend** — Accept/dismiss on digest.wiki, consolidated `/actions` route
+2. **Wire action_scorer.py into Content Pipeline** — Live scoring of proposed actions
+3. **Agent SDK runners** — PostMeetingAgent (Granola → IDS updates → actions), OptimiserAgent, IngestAgent
 4. **Content Pipeline v5** — Full portfolio coverage, semantic matching, multi-source (podcasts, articles)
 5. **WhatsApp integration** — Proactive push (pre-meeting briefs, signal alerts)
 
@@ -576,10 +576,10 @@ Every interaction that produces new understanding should sync it:
 1. Read this document when working on AI CoS domain logic
 2. Understand the anti-patterns — do NOT default to task automation
 3. Check "Current Build State" for what's done and what's next
-4. Read `docs/architecture/` for full technical specs when building
+4. Read `docs/source-of-truth/` for full technical specs when building
 5. Frame every response through the action optimizer lens: "Does this help answer 'What's Next?' for Aakash?"
 
 **If you're updating this document:**
 - Update the "Last Updated" line at the top
-- Keep this document under control — architecture details belong in `docs/architecture/`, not here
+- Keep this document under control — architecture details belong in `docs/source-of-truth/`, not here
 - Thesis threads: Notion Thesis Tracker is canonical. Only update the snapshot section here periodically.

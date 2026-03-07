@@ -52,7 +52,7 @@ Use Notion MCP directly for: Companies DB, Network DB, Portfolio DB, Build Roadm
 
 ### 3. cos_score_action
 
-**Purpose:** Score an action using the 7-factor Action Scoring Model.
+**Purpose:** Score an action using the Action Scoring Model (5 of 7 factors implemented; `key_question_relevance` and `stakeholder_priority` planned).
 **Params:**
 - `bucket_impact` (float, 0-10) — Which priority bucket does this serve?
 - `conviction_change` (float, 0-10) — Could this move investment conviction?

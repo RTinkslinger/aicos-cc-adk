@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "name": "ai-cos-cc-adk",
+    "category": "ai-cos",
+    "description": "AI Chief of Staff — action optimizer for Aakash Kumar. ContentAgent + SyncAgent live on droplet, 17 MCP tools via ai-cos-mcp server, Notion + Postgres dual-write.",
+    "repo_url": "https://github.com/RTinkslinger/aicos-cc-adk",
+    "sub_repos": [
+      {
+        "name": "aicos-digests",
+        "path": "aicos-digests/",
+        "repo_url": "https://github.com/RTinkslinger/aicos-digests",
+        "description": "Next.js 16 digest site deployed at digest.wiki"
+      }
+    ]
+  },
+  "state": {
+    "status": "active",
+    "last_session": {
+      "timestamp": "2026-03-10T05:42:00+05:30",
+      "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
+      "key_commit": "9918a0f"
+    },
+    "current_tasks": [
+      "Agent SDK ContentAgent migration (plan exists at docs/plans/2026-03-09-agent-sdk-contentagent-plan.md)",
+      "CC-CAI sync integration (this pilot)"
+    ],
+    "recent_decisions": [
+      {
+        "decision": "Pointed CLAUDE.md canonical reference to docs/source-of-truth/ (8 files)",
+        "rationale": "Single source of truth for system state, architecture, data, MCP tools, vision",
+        "date": "2026-03-10"
+      },
+      {
+        "decision": "Subsumed knowledge infra research into source-of-truth — 3 new canonical docs",
+        "rationale": "Consolidate architecture docs that had drifted",
+        "date": "2026-03-09"
+      }
+    ],
+    "blocked_on": [],
+    "next_session_priorities": [
+      "Complete CC-CAI sync pilot (validate format, push to GitHub)",
+      "Review Agent SDK ContentAgent plan"
+    ],
+    "key_files_changed_last_session": [
+      "CLAUDE.md",
+      "CONTEXT.md",
+      "claude-ai-sync/memory-entries.md",
+      "claude-ai-sync/CHANGELOG.md"
+    ]
+  },
+  "architecture": {
+    "summary": "Local CC project with MCP server on droplet. ContentAgent (5-min cron) + SyncAgent (10-min cron) live. 17 MCP tools via FastMCP Python. Postgres (7 tables) + Notion (8 DBs) dual-write. Cloudflare Tunnel for public endpoint. digest.wiki via Vercel.",
+    "stack": ["Python", "FastAPI", "FastMCP", "PostgreSQL", "Notion API", "Next.js", "Vercel"],
+    "key_patterns": [
+      "MCP tool dispatch via FastMCP",
+      "Dual-write: Postgres + Notion",
+      "Action scoring model: 7-factor weighted",
+      "Content pipeline: extraction > analysis > digest > publish",
+      "Build traces: rolling window + compaction every 3 iterations"
+    ]
+  },
+  "updated_at": "2026-03-12T07:00:00+05:30",
+  "updated_by": "cc"
+}

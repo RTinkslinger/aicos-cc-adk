@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "name": "ai-cos-cc-adk",
+  "display_name": "AI Chief of Staff CC ADK",
+  "category": "ai-cos",
+  "description": "Action optimizer for Aakash Kumar — ContentAgent, SyncAgent, 17 MCP tools, scoring models, content pipeline",
+  "repo_url": "https://github.com/RTinkslinger/aicos-cc-adk",
+  "cai_project": null,
+  "notion_page_id": null,
+  "zone": "build",
+  "sub_repos": ["https://github.com/RTinkslinger/aicos-digests"],
+  "created_at": "2025-09-15",
+  "sync_enabled": true,
+  "tags": ["ai-cos", "mcp", "fastapi", "notion", "content-pipeline", "action-scoring", "primary-project"]
+}

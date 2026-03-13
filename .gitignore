@@ -54,3 +54,4 @@ Thumbs.db
 # Cowork session artifacts (transient) — except sync/ which is tracked for CC-CAI sync
 .claude/*
 !.claude/sync/
+.claude/sync/.last-push

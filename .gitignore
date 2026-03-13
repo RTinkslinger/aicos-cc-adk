@@ -55,4 +55,5 @@ Thumbs.db
 .claude/*
 !.claude/sync/
 !.claude/hooks/
+!.claude/sequential-files.txt
 .claude/sync/.last-push

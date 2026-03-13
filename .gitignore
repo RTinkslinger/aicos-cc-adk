@@ -51,7 +51,8 @@ Thumbs.db
 *.bak
 *.log
 
-# Cowork session artifacts (transient) — except sync/ which is tracked for CC-CAI sync
+# Claude Code — ignore local config, track shared infrastructure (sync + hooks)
 .claude/*
 !.claude/sync/
+!.claude/hooks/
 .claude/sync/.last-push

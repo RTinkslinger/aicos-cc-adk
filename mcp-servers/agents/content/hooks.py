@@ -19,9 +19,9 @@ from shared.logging import get_trace_id, setup_logger
 
 logger = setup_logger("content-agent")
 
-# Track which tools were called during an analysis session.
-# Reset by verify_pipeline_completion at Stop.
-_tools_called: list[str] = []
+# Track which tools were called per session, keyed by trace_id.
+# Each concurrent session gets its own list. Cleaned up at Stop.
+_tools_by_session: dict[str, list[str]] = {}
 
 # Tools we expect to see in a complete pipeline run.
 _EXPECTED_PIPELINE_TOOLS: frozenset[str] = frozenset(
@@ -45,7 +45,8 @@ async def log_analysis_audit(
     verify all expected pipeline steps were completed.
     """
     tool_name = result_data.get("tool_name", "unknown")
-    _tools_called.append(tool_name)
+    trace_id = get_trace_id() or "_default"
+    _tools_by_session.setdefault(trace_id, []).append(tool_name)
 
     tool_output = result_data.get("tool_output", {})
     has_error = False
@@ -81,9 +82,9 @@ async def verify_pipeline_completion(
     during the session. Logs a warning for any missing tools so
     incomplete runs are visible in logs without crashing.
     """
-    global _tools_called  # noqa: PLW0603
-
-    called_set = set(_tools_called)
+    trace_id = get_trace_id() or "_default"
+    session_tools = _tools_by_session.pop(trace_id, [])
+    called_set = set(session_tools)
     missing = _EXPECTED_PIPELINE_TOOLS - called_set
 
     if missing:
@@ -93,7 +94,7 @@ async def verify_pipeline_completion(
                 "event_type": "pipeline_warning",
                 "missing_tools": sorted(missing),
                 "called_tools": sorted(called_set),
-                "trace_id": get_trace_id(),
+                "trace_id": trace_id,
             },
         )
     else:
@@ -102,12 +103,10 @@ async def verify_pipeline_completion(
             extra={
                 "event_type": "pipeline_ok",
                 "called_tools": sorted(called_set),
-                "trace_id": get_trace_id(),
+                "trace_id": trace_id,
             },
         )
 
-    # Reset for the next analysis session
-    _tools_called = []
     return {}
 
 

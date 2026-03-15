@@ -10,7 +10,6 @@ ExecStart=/opt/agents/.venv/bin/python3 -m web.server
 Restart=always
 RestartSec=5
 MemoryMax=1G
-ExecStopPost=/usr/bin/pkill -f chrome
 StandardOutput=append:/opt/agents/logs/web.log
 StandardError=append:/opt/agents/logs/web.log
 

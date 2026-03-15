@@ -13,7 +13,7 @@ from pathlib import Path
 
 from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, ThinkingConfig
 
-from content.hooks import emit_metrics, log_analysis_audit, verify_pipeline_completion
+from content.hooks import emit_metrics, log_analysis_audit
 from content.tools import content_sdk_server
 from shared.logging import set_trace_id, setup_logger
 
@@ -145,7 +145,7 @@ async def run_analysis(video_data: dict) -> dict:
                     HookMatcher(hooks=[log_analysis_audit]),
                 ],
                 "Stop": [
-                    HookMatcher(hooks=[verify_pipeline_completion, emit_metrics]),
+                    HookMatcher(hooks=[emit_metrics]),
                 ],
             },
         )

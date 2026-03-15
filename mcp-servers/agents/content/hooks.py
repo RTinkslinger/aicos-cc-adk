@@ -1,15 +1,18 @@
-"""Content Agent hook callbacks — audit logging and pipeline completion verification.
+"""Content Agent hook callbacks — stateless audit logging and session metrics.
 
 Hook types used:
-  PostToolUse:  log_analysis_audit
-  Stop:         verify_pipeline_completion, emit_metrics
+  PostToolUse:  log_analysis_audit  (stateless — log every tool call)
+  Stop:         emit_metrics        (stateless — log session end)
+
+No stateful tracking. The agent tracks its own completeness via conversation
+context and system prompt instructions. See: agentic-pipeline-reference.md.
 
 Registration (in agent.py):
     from claude_agent_sdk import ClaudeAgentOptions, HookMatcher
     options = ClaudeAgentOptions(
         hooks={
             "PostToolUse": [HookMatcher(hooks=[log_analysis_audit])],
-            "Stop":         [HookMatcher(hooks=[verify_pipeline_completion, emit_metrics])],
+            "Stop":         [HookMatcher(hooks=[emit_metrics])],
         }
     )
 """
@@ -19,18 +22,9 @@ from shared.logging import get_trace_id, setup_logger
 
 logger = setup_logger("content-agent")
 
-# Track which tools were called per session, keyed by trace_id.
-# Each concurrent session gets its own list. Cleaned up at Stop.
-_tools_by_session: dict[str, list[str]] = {}
-
-# Tools we expect to see in a complete pipeline run.
-_EXPECTED_PIPELINE_TOOLS: frozenset[str] = frozenset(
-    {"score_action", "publish_digest"}
-)
-
 
 # -----------------------------------------------------------------------
-# PostToolUse hook
+# PostToolUse hook — stateless audit logging
 # -----------------------------------------------------------------------
 
 
@@ -39,14 +33,12 @@ async def log_analysis_audit(
     tool_use_id: str | None,
     context: object,
 ) -> dict:
-    """PostToolUse: Structured audit log for every tool call in an analysis session.
+    """PostToolUse: Structured audit log for every tool call.
 
-    Appends tool name to the session tracking list so Stop hooks can
-    verify all expected pipeline steps were completed.
+    Stateless — just logs and returns {}. No state accumulation.
+    Tool completion tracking is the agent's job (conversation context).
     """
     tool_name = result_data.get("tool_name", "unknown")
-    trace_id = get_trace_id() or "_default"
-    _tools_by_session.setdefault(trace_id, []).append(tool_name)
 
     tool_output = result_data.get("tool_output", {})
     has_error = False
@@ -67,47 +59,8 @@ async def log_analysis_audit(
 
 
 # -----------------------------------------------------------------------
-# Stop hooks
+# Stop hook — stateless session metrics
 # -----------------------------------------------------------------------
-
-
-async def verify_pipeline_completion(
-    result_data: dict,
-    tool_use_id: str | None,
-    context: object,
-) -> dict:
-    """Stop: Verify that all expected pipeline steps were completed.
-
-    Checks that score_action and publish_digest were both called
-    during the session. Logs a warning for any missing tools so
-    incomplete runs are visible in logs without crashing.
-    """
-    trace_id = get_trace_id() or "_default"
-    session_tools = _tools_by_session.pop(trace_id, [])
-    called_set = set(session_tools)
-    missing = _EXPECTED_PIPELINE_TOOLS - called_set
-
-    if missing:
-        logger.warning(
-            "pipeline_incomplete",
-            extra={
-                "event_type": "pipeline_warning",
-                "missing_tools": sorted(missing),
-                "called_tools": sorted(called_set),
-                "trace_id": trace_id,
-            },
-        )
-    else:
-        logger.info(
-            "pipeline_complete",
-            extra={
-                "event_type": "pipeline_ok",
-                "called_tools": sorted(called_set),
-                "trace_id": trace_id,
-            },
-        )
-
-    return {}
 
 
 async def emit_metrics(

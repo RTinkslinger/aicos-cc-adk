@@ -32,16 +32,24 @@ ssh root@${DROPLET} "mkdir -p ${REMOTE_DIR}/{data/queue/processed,data/sessions,
 
 # 5. Restart services (sync first — it's the gateway)
 echo "[5/6] Restarting services..."
-ssh root@${DROPLET} "
+ssh root@${DROPLET} '
   systemctl restart sync-agent
-  echo '  Waiting for sync-agent...'
-  sleep 3
-  curl -sf http://localhost:8000/health > /dev/null && echo '  sync-agent: OK' || echo '  sync-agent: FAILED'
+  echo "  Waiting for sync-agent..."
+  for i in $(seq 1 30); do
+    if curl -sf --max-time 2 http://localhost:8000/health > /dev/null 2>&1; then
+      echo "  sync-agent: OK (ready after ${i}s)"
+      break
+    fi
+    if [ "$i" -eq 30 ]; then
+      echo "  sync-agent: FAILED after 30s — continuing anyway"
+    fi
+    sleep 1
+  done
 
   systemctl restart content-agent
   systemctl restart web-agent
-  sleep 2
-"
+  sleep 3
+'
 
 # 6. Health check all 3
 echo "[6/6] Health checks..."

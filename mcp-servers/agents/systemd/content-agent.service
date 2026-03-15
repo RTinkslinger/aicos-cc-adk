@@ -1,0 +1,19 @@
+[Unit]
+Description=AI CoS Content Agent
+After=network.target sync-agent.service
+Wants=sync-agent.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/agents
+EnvironmentFile=-/opt/agents/.env
+ExecStart=/opt/agents/.venv/bin/python3 -m content.server
+Restart=always
+RestartSec=5
+WatchdogSec=120
+MemoryMax=768M
+StandardOutput=append:/opt/agents/logs/content.log
+StandardError=append:/opt/agents/logs/content.log
+
+[Install]
+WantedBy=multi-user.target

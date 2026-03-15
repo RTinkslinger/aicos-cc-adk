@@ -149,7 +149,19 @@ Items in our codebase that are stuck in script thinking when they should be agen
 ## Action Items (post-audit)
 
 After completing all 25 audit issues, return to this document and:
-1. Resolve items 1-2 (delete verify_pipeline_completion + tracking state)
+1. ~~Resolve items 1-2 (delete verify_pipeline_completion + tracking state)~~ DONE in C4 fix
 2. Evaluate item 3 (relevance filtering — keep as pre-filter or move to agent?)
 3. Scan for any NEW script-mindset patterns introduced during audit fixes
 4. Update the design spec (§4 Content Agent) to remove completion hook references
+
+### URGENT: Migrate psycopg2 → asyncpg
+
+**Priority: Do immediately after completing audit review.**
+
+psycopg2 is synchronous — every `_get_conn()` + `cur.execute()` call BLOCKS the asyncio event loop. This is the ONLY scenario where the agent server can truly hang (all other hangs are handled by agent-level timeouts).
+
+- **Scope:** 39 connection opens across 5 files (thesis_db, actions_db, preferences, change_detection, tools.py)
+- **Migration:** Replace `psycopg2.connect()` → `await asyncpg.connect()`, `cur.execute()` → `await conn.fetch()`
+- **Alternative:** Wrap all psycopg2 calls in `await loop.run_in_executor(None, blocking_func)` (less clean but lower risk)
+- **Test impact:** All DB-dependent tests need update
+- **Blocks:** Nothing — can be done independently after audit

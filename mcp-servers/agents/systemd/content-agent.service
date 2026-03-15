@@ -10,7 +10,6 @@ EnvironmentFile=-/opt/agents/.env
 ExecStart=/opt/agents/.venv/bin/python3 -m content.server
 Restart=always
 RestartSec=5
-WatchdogSec=120
 MemoryMax=768M
 StandardOutput=append:/opt/agents/logs/content.log
 StandardError=append:/opt/agents/logs/content.log

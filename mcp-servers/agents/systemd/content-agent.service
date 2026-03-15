@@ -6,7 +6,8 @@ Wants=sync-agent.service
 [Service]
 Type=simple
 WorkingDirectory=/opt/agents
-EnvironmentFile=-/opt/agents/.env
+EnvironmentFile=/opt/agents/.env
+ExecStartPre=/bin/bash /opt/agents/scripts/preflight.sh content-agent
 ExecStart=/opt/agents/.venv/bin/python3 -m content.server
 Restart=always
 RestartSec=5

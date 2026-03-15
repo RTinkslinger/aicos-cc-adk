@@ -5,7 +5,8 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/opt/agents
-EnvironmentFile=-/opt/agents/.env
+EnvironmentFile=/opt/agents/.env
+ExecStartPre=/bin/bash /opt/agents/scripts/preflight.sh web-agent
 ExecStart=/opt/agents/.venv/bin/python3 -m web.server
 Restart=always
 RestartSec=5

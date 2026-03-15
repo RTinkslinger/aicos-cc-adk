@@ -13,6 +13,8 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 
 *Full details: `traces/archive/milestone-N.md`*
 
+<!-- end-header -->
+
 ---
 
 ## Current Work (Milestone 3 in progress)

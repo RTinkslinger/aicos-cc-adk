@@ -22,7 +22,7 @@ This is the **Aakash AI Chief of Staff (AI CoS)** project — an action optimize
 
 ## Repository Structure
 
-This is a **local-only git repo** (no remote). Used for branching/worktrees in parallel development.
+**GitHub remote:** `https://github.com/RTinkslinger/aicos-cc-adk.git`
 
 | Directory | Purpose |
 |-----------|---------|
@@ -93,9 +93,9 @@ cd agents/ && python -m agents.<runner_name>     # run individual agent
 
 ## Remote Repo Sync Discipline
 
-This project (AI CoS) is a **local-only git repo**, but it contains sub-directories that are **separate git repos with GitHub remotes** (e.g., `aicos-digests/`, future repos in `mcp-servers/`). These are gitignored from the parent.
+This project now has a **GitHub remote** (`RTinkslinger/aicos-cc-adk`). It also contains sub-directories that are **separate git repos with their own remotes** (e.g., `aicos-digests/`). These sub-repos are gitignored from the parent.
 
-**Mandatory protocol for all remote-connected repos:**
+**Mandatory protocol for all remote-connected repos (including this one):**
 1. **Pull before editing:** Always `git pull --ff-only origin main` before making any changes
 2. **Push after editing:** Always `git push origin main` after committing
 3. **Author identity:** Use `Aakash Kumar <hi@aacash.me>` — Vercel and other services may reject unknown authors
@@ -105,6 +105,7 @@ This applies everywhere these repos are touched: the droplet pipeline (`publishi
 **Current remote repos:**
 | Directory | Remote | Purpose |
 |-----------|--------|---------|
+| `.` (root) | `github.com/RTinkslinger/aicos-cc-adk` | AI CoS main repo |
 | `aicos-digests/` | `github.com/RTinkslinger/aicos-digests` | digest.wiki Next.js site |
 
 ## Anti-Patterns
@@ -390,3 +391,22 @@ When a parallel edit causes a merge conflict, add that file to the critical file
   2. Patterns confirmed 2+ times > graduate to CLAUDE.md anti-patterns
   3. Universal patterns (not project-specific) > also add to ~/.claude/CLAUDE.md
   4. Clear graduated entries from LEARNINGS.md
+
+
+### Cross-Sync Session Protocol (MANDATORY)
+
+Before ending any session on a synced project, update `.claude/sync/state.json`:
+
+1. **Semantic fields** (via Edit tool):
+   - `state.last_session.summary` — 1-2 sentences of what was accomplished
+   - `state.current_tasks` — array of active work items
+   - `state.recent_decisions` — array of `{decision, rationale, date}` objects
+   - `state.next_session_priorities` — array of next steps
+
+2. **Pending inbox** (via Edit tool): For substantive decisions or messages, add items to `state.pending_inbox[]`:
+   ```json
+   {"type": "decision|task|note|flag|research", "content": "message text"}
+   ```
+   Optional: `"context": {}`, `"priority": "normal|urgent|low"`. sync-push.sh generates full inbox messages automatically.
+
+3. **Cross-project relevance**: If this session's work affects other synced projects, read `~/.claude/sync-registry.json` for project paths and write messages to target inboxes via sync-write.sh.

@@ -7,6 +7,7 @@ SDK @tool functions: registered via create_sdk_mcp_server(), used by ClaudeSDKCl
 from __future__ import annotations
 
 import json
+import os
 
 from claude_agent_sdk import create_sdk_mcp_server, tool
 
@@ -364,7 +365,7 @@ async def validate_tool(args: dict) -> dict:
 
 web_sdk_server = create_sdk_mcp_server(
     name="web",
-    version="1.0.0",
+    version=os.environ.get("AGENT_SDK_VERSION", "1.0.0"),
     tools=[
         browse_tool,
         scrape_tool,

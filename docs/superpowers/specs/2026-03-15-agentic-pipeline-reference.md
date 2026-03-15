@@ -154,6 +154,10 @@ After completing all 25 audit issues, return to this document and:
 3. Scan for any NEW script-mindset patterns introduced during audit fixes
 4. Update the design spec (§4 Content Agent) to remove completion hook references
 
+### Post-audit: Add UNIQUE constraint for idempotency (M5)
+
+`idempotency_log` table (if it exists) or the tables that store request_id need a `UNIQUE(request_id, tool_name)` constraint to prevent race conditions where two concurrent requests with the same request_id both pass the SELECT check. This is a DB schema change — apply during the asyncpg migration.
+
 ### URGENT: Convert batch tools to singular + simplify idempotency (H6)
 
 `write_actions(actions: list)` is a script-pattern batch tool. In agentic architecture:

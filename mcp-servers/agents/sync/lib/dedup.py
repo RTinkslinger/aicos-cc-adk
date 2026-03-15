@@ -45,8 +45,11 @@ class DedupTracker:
         }
         try:
             self.filepath.parent.mkdir(parents=True, exist_ok=True)
-            with open(self.filepath, "w", encoding="utf-8") as f:
+            # M4: atomic write — temp file + rename prevents corruption on crash
+            tmp = self.filepath.with_suffix(".tmp")
+            with open(tmp, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
+            tmp.replace(self.filepath)
         except IOError as e:
             print(f"Warning: Could not save dedup file {self.filepath}: {e}")
 

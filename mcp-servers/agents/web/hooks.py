@@ -20,6 +20,7 @@ Registration (in agent.py):
 
 from __future__ import annotations
 
+import asyncio
 import time
 from urllib.parse import urlparse
 
@@ -30,6 +31,7 @@ logger = setup_logger("web-agent")
 # Track request timestamps per domain for rate limiting
 # domain -> list of UNIX timestamps (pruned to the last 60 seconds on each check)
 _domain_counts: dict[str, list[float]] = {}
+_domain_lock = asyncio.Lock()  # M3: protect concurrent access
 
 # Max requests per domain per 60-second window
 _RATE_LIMIT = 10
@@ -56,33 +58,33 @@ async def rate_limit_check(input_data: dict, tool_use_id: str | None, context: o
     if not domain:
         return {}
 
-    now = time.time()
-    _domain_counts.setdefault(domain, [])
-    # Prune entries older than 60 seconds
-    _domain_counts[domain] = [t for t in _domain_counts[domain] if now - t < 60]
+    async with _domain_lock:  # M3: thread-safe access
+        now = time.time()
+        _domain_counts.setdefault(domain, [])
+        _domain_counts[domain] = [t for t in _domain_counts[domain] if now - t < 60]
 
-    if len(_domain_counts[domain]) >= _RATE_LIMIT:
-        logger.warning(
-            "rate_limit_exceeded",
-            extra={
-                "event_type": "rate_limit",
-                "domain": domain,
-                "count": len(_domain_counts[domain]),
-                "trace_id": get_trace_id(),
-            },
-        )
-        return {
-            "hookSpecificOutput": {
-                "hookEventName": "PreToolUse",
-                "permissionDecision": "deny",
-                "permissionDecisionReason": (
-                    f"Rate limit exceeded for {domain} ({_RATE_LIMIT} req/min). "
-                    "Wait before retrying."
-                ),
+        if len(_domain_counts[domain]) >= _RATE_LIMIT:
+            logger.warning(
+                "rate_limit_exceeded",
+                extra={
+                    "event_type": "rate_limit",
+                    "domain": domain,
+                    "count": len(_domain_counts[domain]),
+                    "trace_id": get_trace_id(),
+                },
+            )
+            return {
+                "hookSpecificOutput": {
+                    "hookEventName": "PreToolUse",
+                    "permissionDecision": "deny",
+                    "permissionDecisionReason": (
+                        f"Rate limit exceeded for {domain} ({_RATE_LIMIT} req/min). "
+                        "Wait before retrying."
+                    ),
+                }
             }
-        }
 
-    _domain_counts[domain].append(now)
+        _domain_counts[domain].append(now)
     return {}
 
 

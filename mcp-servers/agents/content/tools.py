@@ -179,6 +179,6 @@ async def load_context_tool(args: dict[str, Any]) -> dict[str, Any]:  # noqa: AR
 
 content_sdk_server = create_sdk_mcp_server(
     name="tools",
-    version="1.0.0",
+    version=os.environ.get("AGENT_SDK_VERSION", "1.0.0"),
     tools=[score_action_tool, publish_digest_tool, load_context_tool],
 )

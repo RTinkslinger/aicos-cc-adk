@@ -106,7 +106,7 @@ async def run_analysis(video_data: dict) -> dict:
         prompt = _build_analysis_prompt(video_data)
 
         options = ClaudeAgentOptions(
-            model="claude-sonnet-4-6",
+            model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
             permission_mode="dontAsk",
             system_prompt=_load_system_prompt(),
             mcp_servers={

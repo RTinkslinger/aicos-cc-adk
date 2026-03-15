@@ -45,8 +45,8 @@ async def run_agent_task(
             prompt += f"\nReturn results matching this schema: {output_schema}"
 
         options = ClaudeAgentOptions(
-            model="claude-sonnet-4-6",
-            fallback_model="claude-opus-4-6",
+            model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
+            fallback_model=os.environ.get("AGENT_FALLBACK_MODEL", "claude-opus-4-6"),
             permission_mode="dontAsk",
             system_prompt=_load_system_prompt(),
             mcp_servers={"web": web_sdk_server},

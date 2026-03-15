@@ -63,7 +63,7 @@ async def reason_about_changes(
             }
 
         options = ClaudeAgentOptions(
-            model="claude-sonnet-4-6",
+            model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
             permission_mode="dontAsk",
             system_prompt=_load_system_prompt(),
             disallowed_tools=["Bash", "Write", "Edit", "Read"],

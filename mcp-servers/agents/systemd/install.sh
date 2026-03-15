@@ -17,16 +17,22 @@ systemctl enable sync-agent web-agent content-agent
 echo "Installing health check cron (every minute)..."
 chmod +x ${AGENTS_DIR}/cron/health_check.sh
 
-# Remove old agent cron entries, add new
-crontab -l 2>/dev/null | grep -v 'agents' | crontab - 2>/dev/null || true
-(crontab -l 2>/dev/null; echo "# agents: health check every minute") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * ${AGENTS_DIR}/cron/health_check.sh >> ${AGENTS_DIR}/logs/health.log 2>&1 # agents") | crontab -
+# Use /etc/cron.d/ drop-in files (Debian/Ubuntu best practice)
+# Atomic, idempotent, no collision with user crontab, re-run safe
+cat > /etc/cron.d/agents-health << EOF
+# AI CoS agents health check — every minute
+* * * * * root ${AGENTS_DIR}/cron/health_check.sh >> ${AGENTS_DIR}/logs/health.log 2>&1
+EOF
+chmod 644 /etc/cron.d/agents-health
 
 echo "Installing postgres backup cron (daily 2am UTC)..."
 mkdir -p /opt/backups/postgres
-(crontab -l 2>/dev/null; echo "# agents: postgres backup daily") | crontab -
-(crontab -l 2>/dev/null; echo "0 2 * * * pg_dump \$DATABASE_URL 2>/dev/null | gzip > /opt/backups/postgres/aicos-\$(date +\\%Y\\%m\\%d).sql.gz && find /opt/backups/postgres/ -mtime +7 -delete # agents") | crontab -
+cat > /etc/cron.d/agents-backup << 'EOF'
+# AI CoS postgres backup — daily at 2am UTC, 7-day retention
+0 2 * * * root . /opt/agents/.env && pg_dump $DATABASE_URL 2>/dev/null | gzip > /opt/backups/postgres/aicos-$(date +\%Y\%m\%d).sql.gz && find /opt/backups/postgres/ -mtime +7 -delete
+EOF
+chmod 644 /etc/cron.d/agents-backup
 
 echo "Done. Start services with: systemctl start sync-agent web-agent content-agent"
 echo "Cron jobs installed:"
-crontab -l | grep agents
+ls -la /etc/cron.d/agents-*

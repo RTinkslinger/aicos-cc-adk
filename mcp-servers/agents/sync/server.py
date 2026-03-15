@@ -17,14 +17,27 @@ from __future__ import annotations
 import asyncio
 import logging
 
+from contextlib import asynccontextmanager
+
 from dotenv import load_dotenv
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 
 from shared.logging import setup_logger
 
 load_dotenv()
 
 logger = setup_logger("sync-agent", "/opt/agents/logs/sync.log")
+
+
+@asynccontextmanager
+async def _lifespan(app):
+    """Start background sync loop on server startup."""
+    task = asyncio.create_task(_sync_loop())
+    logger.info("server_started", extra={"port": 8000})
+    yield
+    task.cancel()
+    logger.info("server_stopped")
+
 
 mcp = FastMCP(
     "sync-agent",
@@ -34,6 +47,7 @@ mcp = FastMCP(
         "Serves all state reads, write-receives from Content Agent, "
         "bidirectional sync, and proxies web tools to Web Agent."
     ),
+    lifespan=_lifespan,
 )
 
 # ---------------------------------------------------------------------------
@@ -393,11 +407,8 @@ async def _sync_loop() -> None:
 # ---------------------------------------------------------------------------
 
 
-@mcp.on_startup()
-async def _on_startup() -> None:
-    """Start the background sync loop when the server starts."""
-    asyncio.create_task(_sync_loop())
-    logger.info("server_started", extra={"port": 8000})
+### NOTE: FastMCP 3.x uses `lifespan` context manager, not `on_startup`.
+### The lifespan is injected via the constructor — see `mcp = FastMCP(...)` above.
 
 
 # ---------------------------------------------------------------------------

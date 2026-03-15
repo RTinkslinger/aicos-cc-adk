@@ -11,6 +11,8 @@ import asyncio
 import datetime
 import os
 
+from contextlib import asynccontextmanager
+
 from dotenv import load_dotenv
 from fastmcp import FastMCP
 
@@ -31,6 +33,16 @@ logger = setup_logger("content-agent", "/opt/agents/logs/content.log")
 # FastMCP server
 # -----------------------------------------------------------------------
 
+@asynccontextmanager
+async def _lifespan(app):
+    """Start pipeline loop on server startup."""
+    task = asyncio.create_task(_pipeline_loop())
+    logger.info("content_agent_started", extra={"event_type": "startup", "port": 8002})
+    yield
+    task.cancel()
+    logger.info("content_agent_stopped")
+
+
 mcp = FastMCP(
     "content-agent",
     instructions=(
@@ -41,6 +53,7 @@ mcp = FastMCP(
         "Use pipeline_status to check pipeline health. "
         "Content Agent calls Web Agent for extraction and Sync Agent for all DB writes."
     ),
+    lifespan=_lifespan,
 )
 
 # Register the 4 FastMCP tools
@@ -168,11 +181,7 @@ async def _pipeline_loop() -> None:
 # -----------------------------------------------------------------------
 
 
-@mcp.on_event("startup")  # type: ignore[attr-defined]
-async def _on_startup() -> None:
-    """Schedule the pipeline loop as a background task on startup."""
-    asyncio.create_task(_pipeline_loop())
-    logger.info("content_agent_started", extra={"event_type": "startup", "port": 8002})
+### NOTE: Startup handled via lifespan context manager (FastMCP 3.x pattern)
 
 
 # -----------------------------------------------------------------------

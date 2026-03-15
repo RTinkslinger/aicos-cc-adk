@@ -269,7 +269,7 @@ async def interact_tool(args: dict) -> dict:
     return {"content": [{"type": "text", "text": str(status)}]}
 
 
-@tool("fingerprint_tool", "Classify a site: detect framework, CMS, page type, SPA, auth required", {"url": str})
+@tool("fingerprint", "Classify a site: detect framework, CMS, page type, SPA, auth required", {"url": str})
 async def fingerprint_sdk_tool(args: dict) -> dict:
     """Fingerprint a site to determine the best extraction strategy."""
     from web.lib.fingerprint import fingerprint

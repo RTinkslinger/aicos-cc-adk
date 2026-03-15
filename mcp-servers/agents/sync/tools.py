@@ -30,6 +30,7 @@ async def health_check() -> dict[str, Any]:
 
     database_url = os.getenv("DATABASE_URL", "")
     result: dict[str, Any] = {"server": "ok", "database": "unknown"}
+    conn = None
     try:
         conn = psycopg2.connect(database_url)
         cur = conn.cursor()
@@ -40,10 +41,12 @@ async def health_check() -> dict[str, Any]:
         cur.execute("SELECT COUNT(*) FROM sync_queue WHERE attempts < 5")
         result["sync_queue_pending"] = cur.fetchone()[0]
         cur.close()
-        conn.close()
         result["database"] = "ok"
     except Exception as e:
         result["database"] = f"error: {e}"
+    finally:
+        if conn is not None:
+            conn.close()
     return result
 
 

@@ -108,6 +108,14 @@ This applies everywhere these repos are touched: the droplet pipeline (`publishi
 | `.` (root) | `github.com/RTinkslinger/aicos-cc-adk` | AI CoS main repo |
 | `aicos-digests/` | `github.com/RTinkslinger/aicos-digests` | digest.wiki Next.js site |
 
+## Agent SDK Build Rules (MANDATORY)
+
+Any agent building or modification MUST cross-reference the Agent SDK documentation and research before implementation:
+1. **Read before coding:** Review relevant docs from `docs/research/claude-agent-sdk-reference/` (14 files covering every SDK topic)
+2. **Verify patterns:** Every SDK pattern (tools, hooks, permissions, sessions, deployment) must be verified against official docs, not memory
+3. **No silent fallbacks:** If the Agent SDK can't do something, STOP and discuss before taking an alternative path
+4. **Research first:** Read `docs/research/2026-03-15-agent-web-mastery/` for web browsing problem statements and solutions
+
 ## Anti-Patterns
 
 - Do NOT default to morning briefs, dashboards, or generic task automation

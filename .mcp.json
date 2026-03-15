@@ -3,6 +3,10 @@
     "ai-cos-mcp": {
       "type": "http",
       "url": "https://mcp.3niac.com/mcp"
+    },
+    "web-tools-mcp": {
+      "type": "http",
+      "url": "https://web.3niac.com/mcp"
     }
   }
 }

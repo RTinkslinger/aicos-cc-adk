@@ -12,8 +12,6 @@ ExecStart=/opt/agents/.venv/bin/python3 -m sync.server
 Restart=always
 RestartSec=5
 MemoryMax=512M
-StandardOutput=append:/opt/agents/logs/sync.log
-StandardError=append:/opt/agents/logs/sync.log
 
 [Install]
 WantedBy=multi-user.target

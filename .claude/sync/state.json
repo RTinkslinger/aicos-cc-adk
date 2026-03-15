@@ -3,7 +3,7 @@
   "project": {
     "name": "ai-cos-cc-adk",
     "category": "ai-cos",
-    "description": "AI Chief of Staff \u2014 action optimizer for Aakash Kumar. ContentAgent + SyncAgent live on droplet, 17 MCP tools via ai-cos-mcp server, Notion + Postgres dual-write.",
+    "description": "AI Chief of Staff — action optimizer for Aakash Kumar. ContentAgent + SyncAgent live on droplet, 17 MCP tools via ai-cos-mcp server, Notion + Postgres dual-write.",
     "repo_url": "https://github.com/RTinkslinger/aicos-cc-adk",
     "sub_repos": [
       {
@@ -17,8 +17,8 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-13T23:25:54Z",
-      "summary": "claude-ai-sync v7.2.0 \u2014 aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
+      "timestamp": "2026-03-15T05:22:07Z",
+      "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
     "current_tasks": [
@@ -32,7 +32,7 @@
         "date": "2026-03-10"
       },
       {
-        "decision": "Subsumed knowledge infra research into source-of-truth \u2014 3 new canonical docs",
+        "decision": "Subsumed knowledge infra research into source-of-truth — 3 new canonical docs",
         "rationale": "Consolidate architecture docs that had drifted",
         "date": "2026-03-09"
       }
@@ -43,29 +43,10 @@
       "Review Agent SDK ContentAgent plan"
     ],
     "key_files_changed_last_session": [
-      ".claude/hooks/sync-pull.sh",
-      ".claude/hooks/sync-push.sh",
-      ".mcp.json",
-      "CLAUDE.md",
-      ".claude/hooks/stop-check.sh",
       "CHECKPOINT.md",
-      "docs/cc-cai-sync/",
-      "docs/plans/2026-03-09-agent-sdk-contentagent-plan.md",
       "tmp-mcp-summary.md"
     ],
-    "pending_inbox": [
-      {
-        "type": "task",
-        "content": "Web & Frontend Skills Portfolio shipped in CC (all 6 phases). Cloud deployment NOT done. Handoff guide at Skills Factory: Web & Browsers/web-tools-mcp-handoff.md. Blockers: (1) Droplet RAM upgrade 1GB to 4GB, (2) Install Chrome+Playwright on droplet, (3) Build web-tools MCP as separate service (fault isolation from ai-cos-mcp), (4) Expose via Cloudflare Tunnel at web.3niac.com/mcp, (5) Deploy cookie-sync.sh to cron + rsync to droplet, (6) Connect CAI to web-tools MCP as remote connector.",
-        "priority": "urgent",
-        "context": {
-          "source_project": "skills-factory",
-          "handoff_doc": "Web & Browsers/web-tools-mcp-handoff.md",
-          "design_doc": "docs/superpowers/specs/2026-03-14-web-frontend-skills-portfolio-design.md",
-          "key_sections": "Section 7 (droplet infra), Section 8 (CAI integration)"
-        }
-      }
-    ]
+    "pending_inbox": []
   },
   "architecture": {
     "summary": "Local CC project with MCP server on droplet. ContentAgent (5-min cron) + SyncAgent (10-min cron) live. 17 MCP tools via FastMCP Python. Postgres (7 tables) + Notion (8 DBs) dual-write. Cloudflare Tunnel for public endpoint. digest.wiki via Vercel.",
@@ -86,6 +67,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-13T23:25:54Z",
+  "updated_at": "2026-03-15T05:22:07Z",
   "updated_by": "cc"
 }

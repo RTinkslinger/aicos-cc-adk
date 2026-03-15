@@ -165,7 +165,7 @@ def generate_actions_from_changes(changes: list[dict[str, Any]], request_id: str
     - Thesis status Parked/Archived → Active: propose "Resurface actions for reactivated thesis X"
     - Action outcome → Gold: propose "Find similar actions to the Gold-rated one"
     """
-    from lib.actions_db import create_action
+    from sync.lib.actions_db import create_action
 
     generated = []
     for change in changes:

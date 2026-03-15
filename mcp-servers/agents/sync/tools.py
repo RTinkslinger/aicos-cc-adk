@@ -120,7 +120,7 @@ async def cos_score_action(
 
     All inputs on 0-10 scale. Returns score (0-10) and classification.
     """
-    from lib.scoring import ActionInput, classify_action, score_action
+    from content.lib.scoring import ActionInput, classify_action, score_action
 
     action = ActionInput(
         bucket_impact=bucket_impact,
@@ -644,9 +644,36 @@ async def cos_sync_actions() -> dict[str, Any]:
     Pulls status changes from Notion (accept/dismiss), pushes locally-created
     actions to Notion. Detects field-level changes.
     """
-    from runners.sync_agent import sync_actions
+    from sync.lib.actions_db import get_unsynced_actions, set_notion_page_id
+    from sync.lib.change_detection import detect_action_changes
+    from sync.lib.notion_client import fetch_actions, push_action_to_notion, sync_actions_from_notion
 
-    return sync_actions()
+    # 1. Pull from Notion (picks up status changes, manual actions)
+    notion_actions = fetch_actions(limit=100)
+    field_changes = detect_action_changes(notion_actions)
+    pull_result = sync_actions_from_notion()
+
+    # 2. Push unsynced local actions to Notion
+    unsynced = get_unsynced_actions()
+    pushed = 0
+    push_errors = 0
+    for action in unsynced:
+        try:
+            notion_page_id = push_action_to_notion(action)
+            if notion_page_id:
+                set_notion_page_id(action["id"], notion_page_id)
+                pushed += 1
+        except Exception as e:
+            push_errors += 1
+            logger.error("push_action_failed", extra={"action": str(action.get("action", ""))[:50], "error": str(e)})
+
+    return {
+        "pulled_inserted": pull_result.get("inserted", 0),
+        "pulled_updated": pull_result.get("updated", 0),
+        "pushed": pushed,
+        "push_errors": push_errors,
+        "changes_detected": len(field_changes),
+    }
 
 
 async def cos_full_sync() -> dict[str, Any]:
@@ -654,9 +681,21 @@ async def cos_full_sync() -> dict[str, Any]:
 
     Orchestrates all sync operations in one call.
     """
-    from runners.sync_agent import full_sync
+    from datetime import datetime, timezone
 
-    return full_sync()
+    timestamp = datetime.now(timezone.utc).isoformat()
+    thesis_result = await cos_sync_thesis_status()
+    actions_result = await cos_sync_actions()
+    queue_result = await cos_retry_sync_queue()
+    changes_result = await cos_process_changes()
+
+    return {
+        "timestamp": timestamp,
+        "thesis": thesis_result,
+        "actions": actions_result,
+        "queue": queue_result,
+        "changes": changes_result,
+    }
 
 
 async def cos_retry_sync_queue() -> dict[str, Any]:
@@ -700,9 +739,20 @@ async def cos_process_changes() -> dict[str, Any]:
     Turns field-level changes (conviction moves, status changes, outcome ratings)
     into proposed actions.
     """
-    from runners.sync_agent import process_changes
+    from sync.lib.change_detection import generate_actions_from_changes, get_unprocessed_changes, mark_changes_processed
 
-    return process_changes()
+    changes = get_unprocessed_changes()
+    if not changes:
+        return {"processed": 0, "actions_generated": 0, "actions": []}
+
+    generated = generate_actions_from_changes(changes)
+    mark_changes_processed([c["id"] for c in changes])
+
+    return {
+        "processed": len(changes),
+        "actions_generated": len(generated),
+        "actions": generated,
+    }
 
 
 async def cos_seed_thesis_db() -> dict[str, Any]:

@@ -541,7 +541,7 @@ def seed_thesis_threads_to_postgres() -> int:
     Skips threads that already exist in Postgres (by notion_page_id).
     Returns count of newly inserted threads.
     """
-    from lib.thesis_db import create_thread, set_notion_page_id
+    from sync.lib.thesis_db import create_thread, set_notion_page_id
 
     client = _get_client()
     results = client.data_sources.query(
@@ -558,7 +558,7 @@ def seed_thesis_threads_to_postgres() -> int:
             continue
 
         # Check if already in Postgres
-        from lib.thesis_db import find_thread_by_name
+        from sync.lib.thesis_db import find_thread_by_name
         existing = find_thread_by_name(name)
         if existing and existing.get("notion_page_id"):
             continue
@@ -640,7 +640,7 @@ def sync_thesis_status_from_notion() -> list[dict[str, str]]:
     Status is the only human-owned field. This syncs Notion → Postgres.
     Returns list of changes detected.
     """
-    from lib.thesis_db import update_status_from_notion
+    from sync.lib.thesis_db import update_status_from_notion
 
     client = _get_client()
     results = client.data_sources.query(
@@ -671,7 +671,7 @@ def sync_actions_from_notion() -> dict[str, int]:
     Used for bidirectional sync: picks up status changes made in Notion.
     Returns counts of inserted and updated records.
     """
-    from lib.actions_db import upsert_from_notion
+    from sync.lib.actions_db import upsert_from_notion
 
     client = _get_client()
     results = client.data_sources.query(
@@ -689,7 +689,7 @@ def sync_actions_from_notion() -> dict[str, int]:
             continue
 
         # Check if this is a new insert or update
-        from lib.actions_db import find_action_by_notion_id
+        from sync.lib.actions_db import find_action_by_notion_id
         existing = find_action_by_notion_id(page_id)
 
         try:

@@ -154,6 +154,15 @@ After completing all 25 audit issues, return to this document and:
 3. Scan for any NEW script-mindset patterns introduced during audit fixes
 4. Update the design spec (§4 Content Agent) to remove completion hook references
 
+### URGENT: Convert batch tools to singular + simplify idempotency (H6)
+
+`write_actions(actions: list)` is a script-pattern batch tool. In agentic architecture:
+- `write_action(action: dict)` — singular, one action per call
+- Content Agent calls it N times — agent handles the loop through reasoning
+- Each call is independent, simple, idempotent
+- Eliminates partial failure problem entirely (H6)
+- Same pattern for `write_digest`, `update_thesis`, `create_thesis_thread`
+
 ### URGENT: Migrate psycopg2 → asyncpg
 
 **Priority: Do immediately after completing audit review.**

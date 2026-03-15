@@ -36,7 +36,7 @@ ssh root@${DROPLET} "
   systemctl restart sync-agent
   echo '  Waiting for sync-agent...'
   sleep 3
-  curl -sf http://localhost:8000/health_check > /dev/null && echo '  sync-agent: OK' || echo '  sync-agent: FAILED'
+  curl -sf http://localhost:8000/health > /dev/null && echo '  sync-agent: OK' || echo '  sync-agent: FAILED'
 
   systemctl restart content-agent
   systemctl restart web-agent
@@ -48,7 +48,7 @@ echo "[6/6] Health checks..."
 for svc in "sync-agent:8000" "content-agent:8002" "web-agent:8001"; do
   name="${svc%%:*}"
   port="${svc##*:}"
-  ssh root@${DROPLET} "curl -sf http://localhost:${port}/health_check > /dev/null" \
+  ssh root@${DROPLET} "curl -sf http://localhost:${port}/health > /dev/null" \
     && echo "  ${name} (port ${port}): OK" \
     || echo "  ${name} (port ${port}): FAILED"
 done

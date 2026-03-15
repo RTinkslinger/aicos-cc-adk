@@ -14,7 +14,7 @@ check_and_restart() {
   local service=$1
   local port=$2
 
-  if curl -sf --max-time 10 "http://localhost:${port}/health_check" > /dev/null 2>&1; then
+  if curl -sf --max-time 10 "http://localhost:${port}/health" > /dev/null 2>&1; then
     return 0
   fi
 

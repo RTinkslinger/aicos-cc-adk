@@ -50,6 +50,21 @@ mcp = FastMCP(
     lifespan=_lifespan,
 )
 
+
+# ---------------------------------------------------------------------------
+# GET /health — ops liveness check (C2 audit fix)
+# ---------------------------------------------------------------------------
+
+from starlette.requests import Request
+from starlette.responses import JSONResponse
+
+
+@mcp.custom_route("/health", methods=["GET"])
+async def health_get(request: Request) -> JSONResponse:
+    """Simple GET health check for ops tooling (systemd, cron, deploy, Cloudflare)."""
+    return JSONResponse({"status": "ok", "agent": "sync-agent", "port": 8000})
+
+
 # ---------------------------------------------------------------------------
 # Register tools from tools.py by wrapping each plain async function
 # ---------------------------------------------------------------------------

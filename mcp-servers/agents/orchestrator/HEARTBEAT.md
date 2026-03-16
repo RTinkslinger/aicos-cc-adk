@@ -57,7 +57,7 @@ If <12 hours: skip.
 cat state/orc_iteration.txt
 ```
 
-If divisible by 30 and > 0: read `state/COMPACTION_PROTOCOL.md` and follow it.
+If divisible by 30 and > 0: read `COMPACTION_PROTOCOL.md` and follow it.
 
 ---
 

@@ -205,7 +205,7 @@ After every prompt, write one-line summary to `state/content_last_log.txt`. The 
 
 ### Session Compaction
 When prompt includes "COMPACTION REQUIRED":
-1. Read `state/CHECKPOINT_FORMAT.md`
+1. Read `CHECKPOINT_FORMAT.md`
 2. Write checkpoint to `state/content_checkpoint.md`
 3. End response with: **COMPACT_NOW**
 

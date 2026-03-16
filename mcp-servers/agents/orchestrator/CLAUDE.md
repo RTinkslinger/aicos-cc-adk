@@ -88,7 +88,7 @@ The Stop hook reads this and appends it to the shared traces file.
 
 ### Session Compaction
 When your prompt includes "COMPACTION REQUIRED":
-1. Read `state/CHECKPOINT_FORMAT.md`
+1. Read `CHECKPOINT_FORMAT.md`
 2. Write checkpoint to `state/orc_checkpoint.md`
 3. End response with exact word: **COMPACT_NOW**
 
@@ -101,7 +101,7 @@ If `state/orc_checkpoint.md` exists at heartbeat start:
 
 ### Traces Compaction
 Every 30 iterations (check `state/orc_iteration.txt`, if divisible by 30 and > 0):
-1. Read `state/COMPACTION_PROTOCOL.md`
+1. Read `COMPACTION_PROTOCOL.md`
 2. Follow the traces compaction procedure
 
 ---

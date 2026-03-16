@@ -400,6 +400,7 @@ async def run_agent() -> None:
         orc_session = read_session_num("orc")
         reset_manifest_tokens("orc", orc_session)
         orc_needs_restart = False
+        consecutive_zero_turns = 0
         _live_log(ORC_LIVE_LOG, f"=== Orchestrator started — session #{orc_session} ===")
 
         try:
@@ -425,6 +426,17 @@ async def run_agent() -> None:
                             )
                             if msg.result and "COMPACT_NOW" in msg.result:
                                 orc_needs_restart = True
+                            # Detect dead session (budget exhausted or broken)
+                            if msg.num_turns == 0:
+                                consecutive_zero_turns += 1
+                            else:
+                                consecutive_zero_turns = 0
+
+                    # 2 consecutive zero-turn heartbeats = session is dead, restart
+                    if consecutive_zero_turns >= 2:
+                        logger.warning("Orchestrator dead (2 zero-turn heartbeats) — restarting session")
+                        _live_log(ORC_LIVE_LOG, "!!! SESSION DEAD — restarting !!!")
+                        orc_needs_restart = True
 
                     if not orc_needs_restart:
                         await asyncio.sleep(HEARTBEAT_INTERVAL)

@@ -3,12 +3,13 @@
 Manages two persistent ClaudeSDKClient sessions connected via @tool bridge.
 Thin wrapper — ALL intelligence in CLAUDE.md files, ALL logging in hooks.
 
-Does 5 things:
+Does 6 things:
   1. Creates persistent ClaudeSDKClient for content agent
   2. Creates persistent ClaudeSDKClient for orchestrator (with @tool bridge)
   3. Sends "heartbeat" to orchestrator every 60s
   4. Tracks token usage for both agents -> traces/manifest.json
   5. Detects COMPACT_NOW -> restarts the appropriate agent session
+  6. Writes real-time live logs (PostToolUse hooks + AssistantMessage extraction)
 """
 from __future__ import annotations
 
@@ -27,6 +28,8 @@ AGENTS_ROOT = Path(__file__).parent.parent
 MANIFEST_PATH = AGENTS_ROOT / "traces" / "manifest.json"
 ORC_WORKSPACE = Path(__file__).parent
 CONTENT_WORKSPACE = AGENTS_ROOT / "content"
+ORC_LIVE_LOG = ORC_WORKSPACE / "live.log"
+CONTENT_LIVE_LOG = CONTENT_WORKSPACE / "live.log"
 
 logger = logging.getLogger("lifecycle")
 logging.basicConfig(
@@ -42,6 +45,75 @@ class ClientState:
 
 
 clients = ClientState()
+
+
+# --- Live log helpers ---
+
+
+def _live_log(path: Path, line: str) -> None:
+    """Append a timestamped line to a live log file."""
+    ts = datetime.now(timezone.utc).strftime("%H:%M:%S")
+    try:
+        with open(path, "a") as f:
+            f.write(f"{ts} {line}\n")
+            f.flush()
+    except Exception:
+        pass
+
+
+def _log_assistant_message(path: Path, msg: Any) -> None:
+    """Extract ThinkingBlock, TextBlock, ToolUseBlock from AssistantMessage."""
+    from claude_agent_sdk import TextBlock
+
+    try:
+        from claude_agent_sdk import ThinkingBlock
+    except ImportError:
+        ThinkingBlock = None
+
+    try:
+        from claude_agent_sdk import ToolUseBlock
+    except ImportError:
+        ToolUseBlock = None
+
+    for block in msg.content:
+        if ThinkingBlock and isinstance(block, ThinkingBlock):
+            thinking = getattr(block, "thinking", "")[:200]
+            _live_log(path, f"(think) {thinking}")
+        elif isinstance(block, TextBlock):
+            text = block.text[:200]
+            if text.strip():
+                _live_log(path, f"TEXT: {text}")
+        elif ToolUseBlock and isinstance(block, ToolUseBlock):
+            name = getattr(block, "name", "?")
+            inp = str(getattr(block, "input", ""))[:130]
+            _live_log(path, f"TOOL_CALL {name}: {inp}")
+
+
+def _log_result_message(path: Path, msg: Any) -> None:
+    """Log ResultMessage summary."""
+    turns = getattr(msg, "num_turns", 0)
+    cost = getattr(msg, "total_cost_usd", 0) or 0
+    _live_log(path, f"=== DONE: ${cost:.4f} | {turns} turns ===")
+
+
+# --- PostToolUse hook factories ---
+
+
+def _make_tool_hook(log_path: Path):
+    """Create a PostToolUse hook callback that writes to the given live log."""
+
+    async def hook(input_data: dict, tool_use_id: str | None, context: Any) -> dict:
+        try:
+            name = input_data.get("tool_name", "?")
+            inp = str(input_data.get("tool_input", ""))[:130]
+            resp = str(input_data.get("tool_response", ""))[:150]
+            _live_log(log_path, f"TOOL {name}: {inp}")
+            _live_log(log_path, f"  <- {resp}")
+        except Exception:
+            pass
+        return {}
+
+    return hook
 
 
 # --- Manifest helpers ---
@@ -135,11 +207,13 @@ def create_bridge_server():
             result_text = ""
             async for msg in clients.content_client.receive_response():
                 if isinstance(msg, AssistantMessage):
+                    _log_assistant_message(CONTENT_LIVE_LOG, msg)
                     for block in msg.content:
                         if isinstance(block, TextBlock):
                             result_text += block.text
                 elif isinstance(msg, ResultMessage):
                     update_manifest_tokens("content", msg.usage)
+                    _log_result_message(CONTENT_LIVE_LOG, msg)
                     logger.info(
                         "Bridge: content done — turns=%d, cost=$%.4f",
                         msg.num_turns,
@@ -153,7 +227,7 @@ def create_bridge_server():
             logger.error("Bridge: error reading content response: %s", e)
         finally:
             clients.content_busy = False
-            logger.info("Bridge: content agent finished, ready for next prompt")
+            _live_log(CONTENT_LIVE_LOG, "--- idle (ready for next prompt) ---")
 
     @tool(
         "send_to_content_agent",
@@ -175,6 +249,7 @@ def create_bridge_server():
 
         prompt = args["prompt"]
         logger.info("Bridge: forwarding to content agent (%d chars)", len(prompt))
+        _live_log(CONTENT_LIVE_LOG, f">>> PROMPT: {prompt[:200]}")
         clients.content_busy = True
         await clients.content_client.query(prompt)
 
@@ -192,10 +267,10 @@ def create_bridge_server():
 
 
 def build_orc_options(bridge_server):
-    from claude_agent_sdk import ClaudeAgentOptions
+    from claude_agent_sdk import ClaudeAgentOptions, HookMatcher
 
-    # No system_prompt — SDK reads CLAUDE.md from cwd via setting_sources.
-    # dontAsk + allowed_tools = auto-approve listed tools, auto-deny unlisted.
+    orc_tool_hook = _make_tool_hook(ORC_LIVE_LOG)
+
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
         permission_mode="dontAsk",
@@ -204,6 +279,7 @@ def build_orc_options(bridge_server):
             "mcp__bridge__send_to_content_agent",
         ],
         mcp_servers={"bridge": bridge_server},
+        hooks={"PostToolUse": [HookMatcher(hooks=[orc_tool_hook])]},
         setting_sources=["project"],
         effort="low",
         max_turns=15,
@@ -217,10 +293,10 @@ def build_orc_options(bridge_server):
 
 
 def build_content_options():
-    from claude_agent_sdk import AgentDefinition, ClaudeAgentOptions, ThinkingConfigEnabled
+    from claude_agent_sdk import AgentDefinition, ClaudeAgentOptions, HookMatcher, ThinkingConfigEnabled
 
-    # No system_prompt — SDK reads CLAUDE.md from cwd via setting_sources.
-    # dontAsk + allowed_tools = auto-approve listed tools, auto-deny unlisted.
+    content_tool_hook = _make_tool_hook(CONTENT_LIVE_LOG)
+
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
         permission_mode="dontAsk",
@@ -233,6 +309,7 @@ def build_content_options():
             "mcp__web__cookie_status", "mcp__web__watch_url",
         ],
         mcp_servers={"web": {"type": "http", "url": "http://localhost:8001/mcp"}},
+        hooks={"PostToolUse": [HookMatcher(hooks=[content_tool_hook])]},
         agents={
             "web-researcher": AgentDefinition(
                 description="Web research specialist for complex multi-step web tasks",
@@ -307,7 +384,7 @@ async def restart_content_client():
 
 
 async def run_agent() -> None:
-    from claude_agent_sdk import ClaudeSDKClient, ResultMessage
+    from claude_agent_sdk import AssistantMessage, ClaudeSDKClient, ResultMessage
 
     bridge_server = create_bridge_server()
 
@@ -316,12 +393,14 @@ async def run_agent() -> None:
         reset_manifest_tokens("content", read_session_num("content"))
         clients.content_client = await start_content_client()
         clients.content_needs_restart = False
+        _live_log(CONTENT_LIVE_LOG, f"=== Content agent started — session #{read_session_num('content')} ===")
         logger.info("Content agent started — session #%d", read_session_num("content"))
 
         # Start orchestrator
         orc_session = read_session_num("orc")
         reset_manifest_tokens("orc", orc_session)
         orc_needs_restart = False
+        _live_log(ORC_LIVE_LOG, f"=== Orchestrator started — session #{orc_session} ===")
 
         try:
             async with ClaudeSDKClient(options=build_orc_options(bridge_server)) as orc_client:
@@ -331,10 +410,14 @@ async def run_agent() -> None:
                     if clients.content_needs_restart:
                         await restart_content_client()
 
+                    _live_log(ORC_LIVE_LOG, ">>> heartbeat")
                     await orc_client.query("heartbeat")
                     async for msg in orc_client.receive_response():
-                        if isinstance(msg, ResultMessage):
+                        if isinstance(msg, AssistantMessage):
+                            _log_assistant_message(ORC_LIVE_LOG, msg)
+                        elif isinstance(msg, ResultMessage):
                             update_manifest_tokens("orc", msg.usage)
+                            _log_result_message(ORC_LIVE_LOG, msg)
                             logger.info(
                                 "Heartbeat done — turns=%d, cost=$%.4f",
                                 msg.num_turns,

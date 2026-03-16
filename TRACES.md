@@ -207,4 +207,49 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - Traces compaction (file rotation at 20K chars) separate from session compaction (context restart at 100K tokens)
 **Next:** Commit, deploy to droplet, E2E test heartbeat → inbox relay → content pipeline flow
 
+### Iteration 11 - 2026-03-16
+**Phase:** v3 Deploy + E2E + Bug Fixes
+**Focus:** Deploy v3 to droplet, E2E testing, identify/fix bugs, backfill content_digests
+
+**Deploy:** All 3 services running (state-mcp:8000, web-tools-mcp:8001, orchestrator). Content agent managed by lifecycle.py.
+**E2E Results:**
+- Orchestrator sends heartbeat, triggers content pipeline via @tool bridge ✅
+- Content agent processes 20VC YouTube channel, produces full DigestData JSON ✅
+- Content agent writes to Postgres, publishes to digest.wiki repo ✅
+- BUT: orchestrator blocked for 10+ min waiting for content agent response (Bug 1)
+**Bugs Found (9 total):**
+1. Synchronous @tool bridge blocks orchestrator — FIXED: fire-and-forget with asyncio.create_task + content_busy flag
+2. First deploy needs seed files (traces/, state/) — noted
+3. Old files not cleaned on deploy (system_prompt.md persisted) — noted
+4. Idle heartbeat too expensive ($0.41/6 turns) — effort should be "low", inline checklist
+5. Orchestrator re-reads HEARTBEAT.md every heartbeat — should remember (persistent session)
+6. Double iteration increment (agent manually + Stop hook) — let hook handle it
+7. Content agent returned gibberish on 2nd bridge call — investigate
+8. last_pipeline_run.txt never written by content agent — prompt gap
+9. Content agent processes all historical content (no dedup on first run) — needs since-date guard
+**Permission mode:** bypassPermissions blocked as root → acceptEdits still prompts for Bash → dontAsk + allowed_tools is correct pattern
+**Backfill:** content_digests had 8 rows (only v3 agent), old v1 pipeline wrote to Notion only. Backfilled 17 from disk JSON files, deleted 2 duplicate-slug entries. Now 23 rows = single source of truth.
+**Changes:** `orchestrator/lifecycle.py` (fire-and-forget @tool bridge, content_busy flag), `orchestrator/CLAUDE.md` (async send_to_content_agent docs), `orchestrator/HEARTBEAT.md` (handle busy response)
+**Next:** Fix remaining bugs (effort=low, inline heartbeat, dedup guard), redeploy, monitor costs
+
+### Iteration 12 - 2026-03-16
+**Phase:** v3 Bug Fixes + Data Reconciliation + E2E Test
+**Focus:** Fix async bridge, Postgres-as-queue pipeline, content_digests backfill, Notion sync, tag removal
+
+**Changes:**
+- `orchestrator/lifecycle.py` (async @tool bridge: fire-and-forget with asyncio.create_task + content_busy flag)
+- `orchestrator/CLAUDE.md` (async bridge docs, handle busy response)
+- `orchestrator/HEARTBEAT.md` (handle busy response in steps 2+3)
+- `content/CLAUDE.md` (Postgres-as-queue pipeline: 3-phase discover/process/wrap, content-driven inbox routing, watch list read-only guardrail, removed notion_synced references, updated DB schema docs)
+- `state/server.py` (removed type param from post_message — no more tags, CAI sends plain content)
+**Postgres migrations (on droplet):**
+- content_digests: added status column, dropped notion_synced/last_synced_at/notion_page_id, added UNIQUE(url), added status index
+- Backfilled 17 rows from disk JSON, deleted 2 dupes + 2 failed = 21 published
+- Backfilled upload_date + processing_date
+**Data reconciliation:** Disk (21 JSON) = Postgres (21 published) = Notion (21 entries, freshly pushed)
+**Droplet fixes:** watch_list.json reverted to curated playlist, cai_inbox cleared, view-logs.py deployed
+**Next:** E2E test — CAI inbox → orchestrator relay → content agent digest pipeline
+
+---
+
 ---

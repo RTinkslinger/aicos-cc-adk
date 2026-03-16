@@ -56,7 +56,7 @@ You do NOT write to any other table.
 
 ## 5. Sending Work to Content Agent
 
-Use `send_to_content_agent`. Provide a clear prompt.
+Use `send_to_content_agent`. It returns **immediately** — the content agent works in the background. If the content agent is already busy, it returns a busy message.
 
 **Content pipeline trigger:**
 > Run your content pipeline cycle. Check watch list for new content, analyze, score, and publish.
@@ -66,7 +66,7 @@ Use `send_to_content_agent`. Provide a clear prompt.
 > 1. [id=42, type=track_source] Add YouTube playlist https://youtube.com/playlist?list=PLxyz to watch list
 > 2. [id=43, type=research_request] Research Composio competitive landscape
 
-**Important:** Only mark inbox messages processed AFTER receiving the Content Agent's acknowledgment response.
+**Important:** After sending work, mark inbox messages as processed immediately (the content agent has received the prompt). If `send_to_content_agent` returns "busy", skip and retry next heartbeat.
 
 ---
 

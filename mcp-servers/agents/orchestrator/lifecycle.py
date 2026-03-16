@@ -38,6 +38,7 @@ logging.basicConfig(
 class ClientState:
     content_client: Any = None
     content_needs_restart: bool = False
+    content_busy: bool = False
 
 
 clients = ClientState()
@@ -128,10 +129,36 @@ def create_bridge_server():
         tool,
     )
 
+    async def _read_content_response():
+        """Background task: read content agent response, track tokens, detect compaction."""
+        try:
+            result_text = ""
+            async for msg in clients.content_client.receive_response():
+                if isinstance(msg, AssistantMessage):
+                    for block in msg.content:
+                        if isinstance(block, TextBlock):
+                            result_text += block.text
+                elif isinstance(msg, ResultMessage):
+                    update_manifest_tokens("content", msg.usage)
+                    logger.info(
+                        "Bridge: content done — turns=%d, cost=$%.4f",
+                        msg.num_turns,
+                        msg.total_cost_usd or 0,
+                    )
+
+            if "COMPACT_NOW" in result_text:
+                clients.content_needs_restart = True
+                logger.info("Bridge: content agent signaled COMPACT_NOW")
+        except Exception as e:
+            logger.error("Bridge: error reading content response: %s", e)
+        finally:
+            clients.content_busy = False
+            logger.info("Bridge: content agent finished, ready for next prompt")
+
     @tool(
         "send_to_content_agent",
-        "Send prompt to the persistent Content Agent and return its response. "
-        "Use for: content pipeline triggers, inbox message relay, any work for the content agent.",
+        "Send prompt to the persistent Content Agent. Returns immediately — content agent works in background. "
+        "If content agent is busy, returns a busy message. Check on next heartbeat.",
         {"prompt": str},
     )
     async def send_to_content_agent(args: dict[str, Any]) -> dict[str, Any]:
@@ -141,32 +168,22 @@ def create_bridge_server():
                 "is_error": True,
             }
 
+        if clients.content_busy:
+            return {
+                "content": [{"type": "text", "text": "Content agent is still processing previous work. Will check again next heartbeat."}],
+            }
+
         prompt = args["prompt"]
         logger.info("Bridge: forwarding to content agent (%d chars)", len(prompt))
+        clients.content_busy = True
         await clients.content_client.query(prompt)
 
-        result_text = ""
-        async for msg in clients.content_client.receive_response():
-            if isinstance(msg, AssistantMessage):
-                for block in msg.content:
-                    if isinstance(block, TextBlock):
-                        result_text += block.text
-            elif isinstance(msg, ResultMessage):
-                update_manifest_tokens("content", msg.usage)
-                logger.info(
-                    "Bridge: content done — turns=%d, cost=$%.4f",
-                    msg.num_turns,
-                    msg.total_cost_usd or 0,
-                )
+        # Fire-and-forget: spawn background reader, return immediately
+        asyncio.create_task(_read_content_response())
 
-        if "COMPACT_NOW" in result_text:
-            clients.content_needs_restart = True
-            logger.info("Bridge: content agent signaled COMPACT_NOW")
-
-        if len(result_text) > MAX_RESPONSE_CHARS:
-            result_text = result_text[:MAX_RESPONSE_CHARS] + "\n[Response truncated]"
-
-        return {"content": [{"type": "text", "text": result_text}]}
+        return {
+            "content": [{"type": "text", "text": "Prompt sent to content agent. Working in background."}],
+        }
 
     return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent])
 

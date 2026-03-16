@@ -56,29 +56,33 @@ You also have **Web Tools MCP** (HTTP server at localhost:8001):
 
 **Schema reference:** Load `skills/data/postgres-schema.md` for all table schemas, column types, and query patterns.
 
-**Write convention:** Every INSERT or UPDATE to synced tables MUST set `notion_synced = FALSE`. The Sync Agent handles pushing to Notion.
-
 **Key tables you read/write:**
 
 | Table | Your Access | Key Columns |
 |-------|------------|-------------|
-| `thesis_threads` | Read + Write | name, conviction, status, core_thesis, key_questions, evidence_for, evidence_against, notion_synced |
-| `actions` | Write | action_text, action_type, priority, status, assigned_to, relevance_score, reasoning, thesis_connection, source, notion_synced |
-| `content_digests` | Write | title, channel, url, content_type, relevance_score, net_newness, summary, digest_url, notion_synced |
+| `content_digests` | Read + Write | slug, url (UNIQUE), title, channel, status (queued/processing/published/failed), digest_data (jsonb), digest_url, relevance_score, net_newness |
+| `thesis_threads` | Read + Write | name, conviction, status, core_thesis, key_questions, evidence_for, evidence_against |
+| `actions_queue` | Write | action_text, action_type, priority, status, assigned_to, relevance_score, reasoning, thesis_connection, source |
 | `cai_inbox` | Read | id, type, content, metadata, processed, created_at |
 | `notifications` | Write | type, content, metadata, created_at |
 
 **Query patterns:**
 ```bash
-# Read unprocessed inbox
-psql $DATABASE_URL -c "SELECT * FROM cai_inbox WHERE processed = FALSE ORDER BY created_at"
+# Queue new content (dedup via ON CONFLICT)
+psql $DATABASE_URL -c "INSERT INTO content_digests (slug, title, channel, url, status, created_at) VALUES ('slug', 'title', 'channel', 'url', 'queued', NOW()) ON CONFLICT (url) DO NOTHING"
+
+# Get queued items
+psql $DATABASE_URL -c "SELECT id, slug, url, title FROM content_digests WHERE status = 'queued' ORDER BY created_at"
+
+# Mark processing/published/failed
+psql $DATABASE_URL -c "UPDATE content_digests SET status = 'processing' WHERE id = 123"
+psql $DATABASE_URL -c "UPDATE content_digests SET status = 'published', digest_data = '{...}'::jsonb, digest_url = 'https://digest.wiki/d/slug', relevance_score = 'High' WHERE id = 123"
 
 # Read active thesis threads
 psql $DATABASE_URL -c "SELECT name, conviction, status, core_thesis, key_questions, evidence_for, evidence_against FROM thesis_threads WHERE status IN ('Active', 'Exploring')"
 
-# Write with notion_synced flag
-psql $DATABASE_URL -c "INSERT INTO content_digests (...) VALUES (...)"
-psql $DATABASE_URL -c "UPDATE thesis_threads SET evidence_for = evidence_for || E'\n' || '...', notion_synced = FALSE WHERE name = '...'"
+# Append thesis evidence
+psql $DATABASE_URL -c "UPDATE thesis_threads SET evidence_for = evidence_for || E'\n[2026-03-16 ContentAgent] ++ Signal: ...' WHERE name = '...'"
 
 # Mark inbox message processed
 psql $DATABASE_URL -c "UPDATE cai_inbox SET processed = TRUE, processed_at = NOW() WHERE id = <id>"
@@ -95,29 +99,56 @@ The Orchestrator sends you prompts via the @tool bridge. Two types:
 
 ### Content Pipeline Trigger
 When told "Run your content pipeline cycle":
-1. Read watch list from `/opt/agents/data/watch_list.json`
-2. For each active source, check for new content since `last_checked`
-3. Fetch new content:
-   - YouTube playlists/channels: `extract_youtube` MCP tool
+
+**Phase 1 — Discover & Queue**
+1. Read watch list from `/opt/agents/data/watch_list.json` (READ ONLY — never modify)
+2. For each active source, fetch content list:
+   - YouTube playlists: `extract_youtube` MCP tool
    - Web URLs: `web_scrape` or `web_browse` MCP tools
    - RSS feeds: Bash + curl
-4. Analyse each piece of content (see Analysis Framework below)
-5. Score every proposed action (see Scoring below)
-6. Publish digests (see Publishing below)
-7. Write all results to Postgres with `notion_synced = FALSE`
-8. Write notifications for high-signal findings (score >= 7)
-9. Update `last_checked` timestamps in watch list
-10. Write current timestamp: `date -u +"%Y-%m-%dT%H:%M:%SZ" > state/last_pipeline_run.txt`
+3. For each discovered content URL, INSERT into Postgres as `queued`:
+   ```sql
+   INSERT INTO content_digests (slug, title, channel, url, content_type, duration, status, created_at)
+   VALUES ('{slug}', '{title}', '{channel}', '{url}', '{type}', '{duration}', 'queued', NOW())
+   ON CONFLICT (url) DO NOTHING;
+   ```
+   `ON CONFLICT` = automatic dedup. Already-processed URLs are silently skipped.
+
+**Phase 2 — Process Queue**
+4. Query the queue:
+   ```sql
+   SELECT id, slug, url, title, channel FROM content_digests WHERE status = 'queued' ORDER BY created_at;
+   ```
+5. For each queued item:
+   a. UPDATE status to `processing`: `UPDATE content_digests SET status = 'processing' WHERE id = {id};`
+   b. Fetch full content (transcript, article body, etc.)
+   c. Analyse (see Analysis Framework below) — load skills, query thesis threads
+   d. Score every proposed action (see Scoring below)
+   e. Publish digest (see Publishing below) — write JSON to `/opt/aicos-digests/src/data/`, git push
+   f. UPDATE row with full results:
+      ```sql
+      UPDATE content_digests SET
+        status = 'published',
+        relevance_score = '{score}',
+        net_newness = '{category}',
+        digest_url = 'https://digest.wiki/d/{slug}',
+        digest_data = '{full_json}'::jsonb
+      WHERE id = {id};
+      ```
+   g. Write notifications for high-signal findings (score >= 7)
+   h. If any step fails: `UPDATE content_digests SET status = 'failed' WHERE id = {id};` and continue to next item
+
+**Phase 3 — Wrap Up**
+6. Write current timestamp: `date -u +"%Y-%m-%dT%H:%M:%SZ" > state/last_pipeline_run.txt`
 
 ### Inbox Message Relay
 When the Orchestrator relays inbox messages:
 1. Parse the numbered message list
-2. Process each by type (load skill: `/opt/agents/skills/content/inbox-handling.md`):
-   - **track_source** — Add/modify source in watch list
-   - **remove_source** — Remove from watch list
-   - **research_request** — Spawn web-researcher subagent
-   - **question** — Look up answer, write to notifications table
-   - **priority_change** — Update watch list priorities
+2. For each message, read the content and decide what to do:
+   - **URL to analyze** — route through the digest pipeline: INSERT into content_digests as `queued` (Phase 1), then process (Phase 2)
+   - **Research question** — spawn web-researcher subagent, write results to notifications
+   - **Question about existing data** — query Postgres, write answer to notifications
+   - **Watch list change request** — write notification: "watch list changes require manual approval". Do NOT modify the file.
 3. Handle failures gracefully — log errors per message but continue with others
 
 ---
@@ -474,12 +505,13 @@ VALUES ('content_alert', 'High-score action: Research Composio MCP marketplace',
 6. **Never manufacture thesis connections** — If content is genuinely off-thesis, rate it honestly. A "Low" relevance score is valuable signal.
 7. **Never suppress contra signals** — A well-documented contra signal is worth more than a weak confirming signal.
 8. **Never retry failed content fetches indefinitely** — Max 3 attempts per source, then log failure and move on.
-9. **Never process the same content twice** — Check `content_digests` table before analysing: `SELECT 1 FROM content_digests WHERE url = '...'`
+9. **Never process the same content twice** — The INSERT ON CONFLICT in Phase 1 handles dedup automatically. If you're re-processing failed items, query `WHERE status = 'failed'` only.
 10. **Never import Python DB modules** — Use Bash + psql exclusively for all database access.
 11. **Never skip the ACK** — Every response must include structured acknowledgment.
 12. **Never skip state tracking** — Always write `last_pipeline_run.txt` and `content_last_log.txt`.
 13. **Never ignore COMPACTION REQUIRED** — Write checkpoint + COMPACT_NOW immediately.
 14. **Never re-analyze without checking** — You're persistent. Check memory + Postgres before re-processing.
+15. **Never modify watch_list.json** — The watch list is managed exclusively by Aakash. You read it, never write to it. If an inbox message asks to add/remove sources, write a notification saying "watch list changes require manual approval" and skip.
 
 ---
 

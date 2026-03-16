@@ -77,3 +77,20 @@ Patterns confirmed 2+ times graduate to CLAUDE.md during milestone compaction.
   Works: Standard Notion API format `{"date": {"start": "YYYY-MM-DD"}}` — works for all DBs
   Context: `date:Field:start` shorthand works for Content Digest DB but fails for Thesis Tracker with misleading validation error ("Thread Name.id should be defined"). The shorthand is a Notion client convention that doesn't work consistently across all databases when using data_source_id. Use standard format for safety.
   Confirmed: 1x
+
+### 2026-03-16 - Sprint 3 (cont.)
+
+- Tried: `permission_mode="bypassPermissions"` for Agent SDK on droplet (running as root)
+  Works: Use `permission_mode="dontAsk"` with explicit `allowed_tools` list. `bypassPermissions` maps to `--dangerously-skip-permissions` which is blocked when running as root/sudo.
+  Context: `acceptEdits` also insufficient — still prompts for Bash and MCP tools. Only `dontAsk` + `allowed_tools` gives fully autonomous headless operation.
+  Confirmed: 2x (bypassPermissions failed, acceptEdits failed, dontAsk+allowed_tools works)
+
+- Tried: Synchronous @tool bridge — `send_to_content_agent` waits for full content agent response before returning to orchestrator
+  Works: Fire-and-forget pattern — `asyncio.create_task()` for response reader, return immediately, `content_busy` flag prevents concurrent sends
+  Context: Content agent pipeline takes 5-10+ min. Synchronous bridge blocks orchestrator heartbeat entirely — no iteration logs, no new heartbeats, 60s interval meaningless.
+  Confirmed: 1x (first deploy, orchestrator stuck for 10+ min)
+
+- Tried: `$DATABASE_URL` in SSH commands to droplet (`ssh root@droplet "psql $DATABASE_URL ..."`)
+  Works: Must use the literal connection string, not env var. `$DATABASE_URL` is only set inside systemd services (via EnvironmentFile), not in root's shell.
+  Context: Caused false alarm that content_digests table was "empty" when it actually had 8 rows. The psql command fell through to default socket connection as postgres role.
+  Confirmed: 1x

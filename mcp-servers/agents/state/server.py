@@ -150,21 +150,20 @@ async def update_thesis(thesis_name: str, evidence: str, direction: str = "for")
 # Tool 4: post_message
 # ---------------------------------------------------------------------------
 @mcp.tool()
-async def post_message(type: str, content: str, metadata: dict | None = None) -> dict:
+async def post_message(content: str, metadata: dict | None = None) -> dict:
     """Post a message to the CAI inbox for agent processing.
 
-    Content Agent checks inbox every 1 minute.
+    Orchestrator checks inbox every ~60 seconds and relays to Content Agent.
+    Just describe what you need in plain text — the agent figures out what to do.
 
     Args:
-        type: Message type. One of: track_source, research_request,
-              thesis_update, watch_list_add, watch_list_remove, general.
-        content: Message body text.
+        content: Message body text. Include URLs, questions, or instructions.
         metadata: Optional metadata dict for structured context.
 
     Returns:
         The newly created inbox message record.
     """
-    row = await db_post_message(type, content, metadata)
+    row = await db_post_message("message", content, metadata)
     return {
         "status": "posted",
         "message": {

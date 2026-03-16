@@ -178,10 +178,14 @@ def build_orc_options(bridge_server):
     from claude_agent_sdk import ClaudeAgentOptions
 
     # No system_prompt — SDK reads CLAUDE.md from cwd via setting_sources.
-    # bypassPermissions — full tool access, no restrictions.
+    # dontAsk + allowed_tools = auto-approve listed tools, auto-deny unlisted.
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
-        permission_mode="acceptEdits",
+        permission_mode="dontAsk",
+        allowed_tools=[
+            "Bash", "Read", "Write", "Edit", "Glob", "Grep",
+            "mcp__bridge__send_to_content_agent",
+        ],
         mcp_servers={"bridge": bridge_server},
         setting_sources=["project"],
         effort="medium",
@@ -199,10 +203,18 @@ def build_content_options():
     from claude_agent_sdk import AgentDefinition, ClaudeAgentOptions, ThinkingConfigEnabled
 
     # No system_prompt — SDK reads CLAUDE.md from cwd via setting_sources.
-    # bypassPermissions — full tool access, no restrictions.
+    # dontAsk + allowed_tools = auto-approve listed tools, auto-deny unlisted.
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
-        permission_mode="acceptEdits",
+        permission_mode="dontAsk",
+        allowed_tools=[
+            "Bash", "Read", "Write", "Edit", "Grep", "Glob", "Agent", "Skill",
+            "mcp__web__web_browse", "mcp__web__web_scrape", "mcp__web__web_search",
+            "mcp__web__extract_youtube", "mcp__web__extract_transcript",
+            "mcp__web__fingerprint", "mcp__web__check_strategy",
+            "mcp__web__manage_session", "mcp__web__validate",
+            "mcp__web__cookie_status", "mcp__web__watch_url",
+        ],
         mcp_servers={"web": {"type": "http", "url": "http://localhost:8001/mcp"}},
         agents={
             "web-researcher": AgentDefinition(

@@ -94,3 +94,8 @@ Patterns confirmed 2+ times graduate to CLAUDE.md during milestone compaction.
   Works: Must use the literal connection string, not env var. `$DATABASE_URL` is only set inside systemd services (via EnvironmentFile), not in root's shell.
   Context: Caused false alarm that content_digests table was "empty" when it actually had 8 rows. The psql command fell through to default socket connection as postgres role.
   Confirmed: 1x
+
+- Tried: Filesystem hooks in `.claude/settings.json` with flat structure: `{"hooks": {"Stop": [{"type": "command", "command": "..."}]}}`
+  Works: Needs extra matcher group nesting: `{"hooks": {"Stop": [{"hooks": [{"type": "command", "command": "..."}]}]}}`
+  Context: SDK parses the event array looking for matcher group objects (objects with a `hooks` array inside). Without the wrapper, it finds 0 matchers and silently proceeds. No warning or error emitted. GitHub issue #11544 documents this exact pattern.
+  Confirmed: 2x (both orchestrator and content agent hooks silently didn't fire until schema fixed)

@@ -38,7 +38,7 @@ def get_options():
 
     No MCP servers. No Agent tool. Simpler config than Content Agent.
     """
-    from claude_agent_sdk import ClaudeAgentOptions, ThinkingConfig
+    from claude_agent_sdk import ClaudeAgentOptions, ThinkingConfigEnabled
 
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
@@ -57,7 +57,7 @@ def get_options():
         # No MCP servers — Sync Agent uses Bash + psql + python3 scripts
         # No agents — Sync Agent does not spawn subagents
         setting_sources=["project"],
-        thinking=ThinkingConfig(type="enabled", budget_tokens=5000),
+        thinking=ThinkingConfigEnabled(type="enabled", budget_tokens=5000),
         effort="medium",
         max_turns=20,
         max_budget_usd=1.0,

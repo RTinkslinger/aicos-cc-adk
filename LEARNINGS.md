@@ -63,6 +63,16 @@ Patterns confirmed 2+ times graduate to CLAUDE.md during milestone compaction.
   Context: FastMCP 2.x had `@mcp.on_startup()` decorator. v3.x (3.1.1, installed via pyproject.toml `fastmcp>=2.0.0`) removed it in favor of ASGI-standard `lifespan` pattern. Agent subagents generated code with the old API since their training data predates v3.
   Confirmed: 2x (sync/server.py `@mcp.on_startup()` + content/server.py `@mcp.on_event("startup")` both crashed)
 
+- Tried: `ThinkingConfig(type="enabled", budget_tokens=10000)` in Agent SDK runner
+  Works: Import and use `ThinkingConfigEnabled` instead. `ThinkingConfig` is a `types.UnionType` alias (`ThinkingConfigAdaptive | ThinkingConfigEnabled | ThinkingConfigDisabled`), not a class. Must use the concrete variant.
+  Context: Agent SDK exports `ThinkingConfig` as a union type for type annotations. The constructors are the individual variants. Subagents generated code using `ThinkingConfig()` because the name looks like a class.
+  Confirmed: 2x (content/runner.py + sync/runner.py both crashed with same TypeError)
+
+- Tried: ALTER TABLE on `action_outcomes` as role `aicos` (via DATABASE_URL)
+  Works: Connect as `postgres` superuser: `sudo -u postgres psql -d aicos_db -c "ALTER TABLE action_outcomes OWNER TO aicos;"` then re-run the ALTER as `aicos`.
+  Context: The `action_outcomes` table was created by `postgres` role (not `aicos`), so only the owner or superuser can ALTER it. The DATABASE_URL connects as `aicos`. Fix ownership first via superuser, then the migration succeeds.
+  Confirmed: 1x
+
 - Tried: Notion date property with `date:Field:start` shorthand in `pages.create()` with `data_source_id` parent for Thesis Tracker DB
   Works: Standard Notion API format `{"date": {"start": "YYYY-MM-DD"}}` — works for all DBs
   Context: `date:Field:start` shorthand works for Content Digest DB but fails for Thesis Tracker with misleading validation error ("Thread Name.id should be defined"). The shorthand is a Notion client convention that doesn't work consistently across all databases when using data_source_id. Use standard format for safety.

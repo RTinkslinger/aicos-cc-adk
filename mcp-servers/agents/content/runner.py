@@ -36,7 +36,7 @@ def get_options():
     Uses dontAsk permission mode: only tools in allowed_tools run,
     everything else is auto-denied with no prompts.
     """
-    from claude_agent_sdk import AgentDefinition, ClaudeAgentOptions, ThinkingConfig
+    from claude_agent_sdk import AgentDefinition, ClaudeAgentOptions, ThinkingConfigEnabled
 
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
@@ -114,7 +114,7 @@ def get_options():
             ),
         },
         setting_sources=["project"],
-        thinking=ThinkingConfig(type="enabled", budget_tokens=10000),
+        thinking=ThinkingConfigEnabled(type="enabled", budget_tokens=10000),
         effort="high",
         max_turns=30,
         max_budget_usd=3.0,

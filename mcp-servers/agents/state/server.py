@@ -57,13 +57,13 @@ async def get_state(include: list[str] | None = None) -> dict:
         threads = await get_threads()
         result["thesis_threads"] = [
             {
-                "name": t["name"],
+                "name": t["thread_name"],
                 "core_thesis": t["core_thesis"],
                 "conviction": t["conviction"],
                 "status": t["status"],
                 "evidence_for": t["evidence_for"],
                 "evidence_against": t["evidence_against"],
-                "key_questions": t["key_questions"],
+                "key_questions": t["key_question_summary"],
             }
             for t in threads
         ]
@@ -107,7 +107,7 @@ async def create_thesis_thread(name: str, core_thesis: str) -> dict:
         "status": "created",
         "thread": {
             "id": row["id"],
-            "name": row["name"],
+            "name": row["thread_name"],
             "core_thesis": row["core_thesis"],
             "conviction": row["conviction"],
             "notion_synced": row["notion_synced"],
@@ -138,7 +138,7 @@ async def update_thesis(thesis_name: str, evidence: str, direction: str = "for")
         "status": "updated",
         "thread": {
             "id": row["id"],
-            "name": row["name"],
+            "name": row["thread_name"],
             "evidence_for": row["evidence_for"],
             "evidence_against": row["evidence_against"],
             "notion_synced": row["notion_synced"],

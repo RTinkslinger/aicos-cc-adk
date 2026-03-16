@@ -10,8 +10,8 @@ async def get_threads() -> list[dict]:
     pool = await get_pool()
     rows = await pool.fetch(
         """
-        SELECT id, name, core_thesis, conviction, status,
-               evidence_for, evidence_against, key_questions,
+        SELECT id, thread_name, core_thesis, conviction, status,
+               evidence_for, evidence_against, key_question_summary,
                notion_page_id, notion_synced, created_at, updated_at
         FROM thesis_threads
         ORDER BY updated_at DESC
@@ -20,7 +20,7 @@ async def get_threads() -> list[dict]:
     return [dict(row) for row in rows]
 
 
-async def create_thread(name: str, core_thesis: str) -> dict:
+async def create_thread(thread_name: str, core_thesis: str) -> dict:
     """Create a new thesis thread with notion_synced=FALSE.
 
     Sync Agent will pick up the unsynced row and push to Notion.
@@ -28,23 +28,23 @@ async def create_thread(name: str, core_thesis: str) -> dict:
     pool = await get_pool()
     row = await pool.fetchrow(
         """
-        INSERT INTO thesis_threads (name, core_thesis, notion_synced)
+        INSERT INTO thesis_threads (thread_name, core_thesis, notion_synced)
         VALUES ($1, $2, FALSE)
-        RETURNING id, name, core_thesis, conviction, status,
-                  evidence_for, evidence_against, key_questions,
+        RETURNING id, thread_name, core_thesis, conviction, status,
+                  evidence_for, evidence_against, key_question_summary,
                   notion_page_id, notion_synced, created_at, updated_at
         """,
-        name,
+        thread_name,
         core_thesis,
     )
     return dict(row)
 
 
-async def update_thread(thesis_name: str, evidence: str, direction: str = "for") -> dict:
+async def update_thread(thesis_thread_name: str, evidence: str, direction: str = "for") -> dict:
     """Append evidence to a thesis thread.
 
     Args:
-        thesis_name: Name of the thesis thread to update.
+        thesis_thread_name: Name of the thesis thread to update.
         evidence: New evidence text to append.
         direction: One of 'for', 'against', or 'mixed'.
             - 'for' appends to evidence_for
@@ -65,12 +65,12 @@ async def update_thread(thesis_name: str, evidence: str, direction: str = "for")
                 END,
                 notion_synced = FALSE,
                 updated_at = CURRENT_TIMESTAMP
-            WHERE name = $1
-            RETURNING id, name, core_thesis, conviction, status,
-                      evidence_for, evidence_against, key_questions,
+            WHERE thread_name = $1
+            RETURNING id, thread_name, core_thesis, conviction, status,
+                      evidence_for, evidence_against, key_question_summary,
                       notion_page_id, notion_synced, created_at, updated_at
             """,
-            thesis_name,
+            thesis_thread_name,
             evidence,
         )
     elif direction == "against":
@@ -83,12 +83,12 @@ async def update_thread(thesis_name: str, evidence: str, direction: str = "for")
                 END,
                 notion_synced = FALSE,
                 updated_at = CURRENT_TIMESTAMP
-            WHERE name = $1
-            RETURNING id, name, core_thesis, conviction, status,
-                      evidence_for, evidence_against, key_questions,
+            WHERE thread_name = $1
+            RETURNING id, thread_name, core_thesis, conviction, status,
+                      evidence_for, evidence_against, key_question_summary,
                       notion_page_id, notion_synced, created_at, updated_at
             """,
-            thesis_name,
+            thesis_thread_name,
             evidence,
         )
     elif direction == "mixed":
@@ -105,18 +105,18 @@ async def update_thread(thesis_name: str, evidence: str, direction: str = "for")
                 END,
                 notion_synced = FALSE,
                 updated_at = CURRENT_TIMESTAMP
-            WHERE name = $1
-            RETURNING id, name, core_thesis, conviction, status,
-                      evidence_for, evidence_against, key_questions,
+            WHERE thread_name = $1
+            RETURNING id, thread_name, core_thesis, conviction, status,
+                      evidence_for, evidence_against, key_question_summary,
                       notion_page_id, notion_synced, created_at, updated_at
             """,
-            thesis_name,
+            thesis_thread_name,
             evidence,
         )
     else:
         raise ValueError(f"Invalid direction '{direction}'. Must be 'for', 'against', or 'mixed'.")
 
     if row is None:
-        raise ValueError(f"Thesis thread '{thesis_name}' not found.")
+        raise ValueError(f"Thesis thread '{thesis_thread_name}' not found.")
 
     return dict(row)

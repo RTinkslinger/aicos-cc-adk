@@ -143,4 +143,21 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - Build log tracks upstream/downstream dependencies + testing checklist per chunk
 **Next:** Deploy to droplet, run migrations, E2E testing. Bug fix session to follow.
 
+### Iteration 8 - 2026-03-16
+**Phase:** Architecture v2.2 — Deploy + E2E Verification
+**Focus:** Deploy v2.2 to droplet, run migrations, fix ThinkingConfig bug, verify all services
+
+**Changes:** `content/runner.py` (ThinkingConfig → ThinkingConfigEnabled), `sync/runner.py` (same fix)
+**Infrastructure:**
+- Stopped old v1 services (web-agent disabled, content-agent + sync-agent replaced)
+- Deployed 49-file commit to droplet via deploy.sh (4 services, skills, subagents)
+- Ran v2.2 SQL migrations: 3 new tables (cai_inbox, notifications, sync_metadata) + notion_synced columns on 3 tables
+- Fixed action_outcomes table ownership (postgres → aicos) via superuser
+- All 4 v2.2 services running: State MCP (:8000), Web Tools MCP (:8001), Content Agent, Sync Agent
+- Cloudflare tunnels verified: mcp.3niac.com → 8000, web.3niac.com → 8001
+**Decisions:**
+- ThinkingConfig is a UnionType in Agent SDK (not a class). Must use ThinkingConfigEnabled constructor.
+- action_outcomes table owned by postgres role — ALTER TABLE requires superuser, not aicos role
+**Next:** Functional E2E testing (cai_inbox → Content Agent processing, notion_synced=FALSE → Sync Agent push)
+
 ---

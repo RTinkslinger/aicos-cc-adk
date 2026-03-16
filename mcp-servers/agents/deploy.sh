@@ -1,20 +1,20 @@
 #!/bin/bash
-# Deploy v2.2 agents monorepo to droplet via Tailscale
-# Active services: state-mcp, web-tools-mcp, content-agent
-# Disabled: sync-agent (re-add when ready)
+# Deploy v3 agents monorepo to droplet via Tailscale
+# Active services: state-mcp, web-tools-mcp, orchestrator (manages content agent)
+# Disabled: sync-agent, content-agent (now managed by orchestrator lifecycle.py)
 set -e
 
 DROPLET="aicos-droplet"
 REMOTE_DIR="/opt/agents"
 PROJECT_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 
-echo "=== Deploying v2.2 agents to $DROPLET:$REMOTE_DIR ==="
+echo "=== Deploying v3 agents to $DROPLET:$REMOTE_DIR ==="
 
-# 1. Rsync code (exclude runtime data and sql migrations)
+# 1. Rsync code (exclude runtime data, state, traces, sql)
 echo "[1/9] Syncing code..."
 rsync -avz --exclude='.env' --exclude='.venv' --exclude='__pycache__' \
   --exclude='data/' --exclude='logs/' --exclude='cookies/' --exclude='.git' \
-  --exclude='sql/' \
+  --exclude='sql/' --exclude='traces/' --exclude='*/state/' \
   ./ root@${DROPLET}:${REMOTE_DIR}/
 
 # 2. Install/update deps
@@ -39,19 +39,22 @@ echo "[5/9] Syncing .claude/agents/..."
 ssh root@${DROPLET} "mkdir -p ${REMOTE_DIR}/.claude/agents"
 rsync -avz --delete .claude/agents/ root@${DROPLET}:${REMOTE_DIR}/.claude/agents/
 
-# 6. Create runtime directories
+# 6. Create runtime directories (survive deploys via rsync excludes)
 echo "[6/9] Creating runtime directories..."
-ssh root@${DROPLET} "mkdir -p ${REMOTE_DIR}/{data/queue/processed,data/sessions,logs,cookies}"
+ssh root@${DROPLET} "mkdir -p ${REMOTE_DIR}/{data/queue/processed,data/sessions,logs,cookies} ${REMOTE_DIR}/traces/archive ${REMOTE_DIR}/orchestrator/state ${REMOTE_DIR}/content/state"
 
 # 7. Install systemd units from infra/
 echo "[7/9] Installing systemd units..."
 ssh root@${DROPLET} "
   cp ${REMOTE_DIR}/infra/state-mcp.service /etc/systemd/system/
   cp ${REMOTE_DIR}/infra/web-tools-mcp.service /etc/systemd/system/
-  cp ${REMOTE_DIR}/infra/content-agent.service /etc/systemd/system/
-  # sync-agent: disabled — re-add when ready
+  cp ${REMOTE_DIR}/infra/orchestrator.service /etc/systemd/system/
+  # content-agent: no longer a separate service — managed by orchestrator lifecycle.py
+  # sync-agent: disabled
   systemctl daemon-reload
-  systemctl enable state-mcp web-tools-mcp content-agent
+  systemctl disable content-agent 2>/dev/null || true
+  systemctl stop content-agent 2>/dev/null || true
+  systemctl enable state-mcp web-tools-mcp orchestrator
 "
 
 # 8. Restart services in dependency order
@@ -85,13 +88,12 @@ ssh root@${DROPLET} '
     sleep 1
   done
 
-  # Agents last (no ports to check — they start and connect to MCP servers)
-  systemctl restart content-agent
-  # sync-agent: disabled — re-add when ready
-  sleep 3
+  # Orchestrator last — manages content agent internally
+  systemctl restart orchestrator
+  sleep 5
 '
 
-# 9. Health check all 4 services
+# 9. Health check
 echo "[9/9] Health checks..."
 
 # MCP servers — check via port
@@ -103,8 +105,8 @@ for svc in "state-mcp:8000" "web-tools-mcp:8001"; do
     || echo "  ${name} (port ${port}): FAILED"
 done
 
-# Agents — check via systemctl
-for svc in content-agent; do
+# Orchestrator — check via systemctl (manages both orc + content agent)
+for svc in orchestrator; do
   ssh root@${DROPLET} "systemctl is-active --quiet ${svc}" \
     && echo "  ${svc} (systemctl): OK" \
     || echo "  ${svc} (systemctl): FAILED"

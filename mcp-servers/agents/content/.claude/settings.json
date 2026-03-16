@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-iteration-log.sh"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/prompt-manifest-check.sh"
+      }
+    ],
+    "PreCompact": [
+      {
+        "type": "command",
+        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/pre-compact-flush.sh"
+      }
+    ]
+  }
+}

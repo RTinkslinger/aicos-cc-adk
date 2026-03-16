@@ -178,4 +178,33 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 **Research:** `docs/research/persistent-agent-architecture-research.md` (27 sources), ultra research on OpenClaw in progress
 **Next:** Absorb ultra research results, write v3 architecture plan for persistent orchestrator + content agent
 
+### Iteration 10 - 2026-03-16
+**Phase:** v3 Persistent Agent Architecture — Plans + Full Build
+**Focus:** Design + implement persistent orchestrator + content agent on ClaudeSDKClient, managed by lifecycle.py with @tool bridge
+
+**Changes:**
+- `orchestrator/lifecycle.py` (new — 280 lines: manages both ClaudeSDKClients, @tool bridge `send_to_content_agent`, token tracking, compaction restart)
+- `orchestrator/CLAUDE.md` (new — 8 sections: identity, heartbeat protocol, DB access, iteration logging, compaction)
+- `orchestrator/HEARTBEAT.md` (new — 5-step checklist: checkpoint, inbox, pipeline, traces compaction, log)
+- `orchestrator/.claude/hooks/` (new — 3 filesystem hooks: stop-iteration-log, prompt-manifest-check, pre-compact-flush)
+- `orchestrator/.claude/settings.json` (new — hook registration)
+- `orchestrator/state/` (new — session/iteration counters, COMPACTION_PROTOCOL.md, CHECKPOINT_FORMAT.md)
+- `content/CLAUDE.md` (rewrite from system_prompt.md — 18 sections, added: persistent identity, ACK protocol, state tracking, lifecycle/compaction, 4 new anti-patterns)
+- `content/.claude/hooks/` (new — 3 hooks cloned from orchestrator with AGENT="content")
+- `content/.claude/settings.json` (new — hook registration)
+- `content/state/` (new — session/iteration counters, last_pipeline_run.txt, CHECKPOINT_FORMAT.md)
+- `traces/` (new — manifest.json for both agents, active.txt pointer, initial traces file)
+- `infra/orchestrator.service` (new — systemd unit, depends on state-mcp + web-tools-mcp)
+- `deploy.sh` (rewritten for v3: orchestrator replaces content-agent service, protects state/traces from rsync)
+- Deleted: `content/runner.py`, `content/system_prompt.md`, `infra/content-agent.service`
+**Plans:** `docs/superpowers/plans/2026-03-16-agent-lifecycle-management.md` (12 tasks, 5 chunks), `docs/superpowers/plans/2026-03-16-orchestrator-content-agent.md` (9 tasks, 4 chunks)
+**Decisions:**
+- Agent SDK reads CLAUDE.md from cwd via setting_sources=["project"] — same as CC. No system_prompt= parameter needed.
+- bypassPermissions for both agents (full tool access, simplify now, restrict later)
+- @tool bridge via create_sdk_mcp_server: orchestrator calls mcp__bridge__send_to_content_agent, Python forwards to content_client.query() in-process
+- Content agent is persistent ClaudeSDKClient (replaces ephemeral query() runner). Same analysis/scoring/publishing logic, new ACK protocol + state tracking.
+- Single Python process (lifecycle.py) manages both agents. Content agent restart independent of orchestrator.
+- Traces compaction (file rotation at 20K chars) separate from session compaction (context restart at 100K tokens)
+**Next:** Commit, deploy to droplet, E2E test heartbeat → inbox relay → content pipeline flow
+
 ---

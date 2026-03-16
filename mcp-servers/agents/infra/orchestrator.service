@@ -1,0 +1,22 @@
+[Unit]
+Description=AI CoS Orchestrator (lifecycle manager for orc + content agents)
+After=network.target state-mcp.service web-tools-mcp.service
+Wants=state-mcp.service web-tools-mcp.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/agents/orchestrator
+ExecStart=/opt/agents/.venv/bin/python3 lifecycle.py
+EnvironmentFile=-/opt/agents/.env
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=orchestrator
+
+# Resource limits
+MemoryHigh=768M
+MemoryMax=1G
+
+[Install]
+WantedBy=multi-user.target

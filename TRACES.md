@@ -91,6 +91,56 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - Key audit fixes: idempotency keys (C2), circuit breaker (C3), structured JSON logging with trace IDs (C4), token bucket rate limiter (H4), session pool semaphore (H1)
 - Rejected: feature flags (clean cutover), formal cutover runbook, direct CAI→Web Agent access
 **Implementation:** 14/15 tasks complete via subagent-driven development (8 subagents, 17 commits, 63 files, 9,358 lines Python). Sync Agent (23 tools, 7 libs), Web Agent (20 tools, 10 libs, 6 hooks), Content Agent (7 tools, 3 libs, pipeline orchestrator). Shared foundation (types, logging with trace IDs, MCP client with circuit breaker). Deploy infra (deploy.sh, 3 systemd units, health_check.sh, install.sh, acceptance.sh).
-**Next:** Task 4.3 — Deploy to droplet and cutover. Requires SSH session.
+**Deployed:** All 3 agents running on droplet (sync:8000, web:8001, content:8002). Old ai-cos-mcp stopped. Cloudflare tunnel unchanged (port 8000). Memory: 719MB/3.8GB.
+**Post-deploy fixes:** FastMCP 3.x lifespan API (on_startup→lifespan context manager), 10 broken imports (from runners./lib. → from sync.lib./content.lib.).
+**Code audit:** 3-vantage review (SDK expert, code quality, DevOps) found 25 issues. 2/25 resolved: C1 (query+hooks verified working), C5 (imports fixed+deployed). 23 remaining (4 critical, 7 high, 6 medium, 2 low). Tracker: `docs/superpowers/specs/2026-03-15-code-audit-tracker.md`.
+**Next:** Continue code audit fixes C2→C6→H1-H7, then remaining medium/low items.
+
+### Iteration 6 - 2026-03-16
+**Phase:** Architecture v2.2 — Complete Redesign from CC-Parallel Principles
+**Focus:** Deep brainstorming (10+ rounds), fundamental architecture rethink, spec + plan
+
+**Changes:** `docs/superpowers/specs/2026-03-15-architecture-v2.2-design.md` (new — full v2.2 spec, APPROVED), `docs/superpowers/plans/2026-03-16-v2.2-implementation.md` (new — 20 tasks, 7 phases), `docs/superpowers/specs/2026-03-15-three-agent-architecture-v2-stub.md` (intermediate stub), `CHECKPOINT.md` (updated for v2.2)
+**Decisions:**
+- Agent SDK = same harness as CC. Agents have Bash, Read, Write, Skills — CC-like capabilities.
+- Agents use Bash + psql for Postgres access (not custom @tools). Skills teach DB schema.
+- Web = MCP (tools) + Skills (intelligence), NOT an agent. Web Tools MCP is a stateful tool server.
+- CAI is a relay: inbox pattern (post_message → cai_inbox table → agent reads via psql).
+- CAI ↔ agent communication is async via shared Postgres state (inbox + notifications tables).
+- State MCP (5 tools) replaces Sync Agent gateway (was 23 tools). Lightweight CAI window.
+- web_task is exclusively for CAI (async submit/poll/retrieve pattern, like Parallel MCP).
+- Content Agent three classes of work: (1) direct tools+skills, (2) background Agent delegation with full web toolkit, (3) parallel batch subagents.
+- Content Agent NEVER calls web_task. Uses Agent tool → web-researcher subagent (has EVERYTHING web_task has).
+- Flag-based sync: notion_synced=false column, Sync Agent picks up unsynced rows. No sync_queue.
+- Freshness = sync_metadata table + agent reasoning. Not an MCP tool.
+- Extensibility triad: tools + MCPs + skills.
+- Fully agentic first. Token costs not a design constraint.
+- Four processes: State MCP (8000), Web Tools MCP (8001), Content Agent (internal), Sync Agent (internal).
+- 14 skills to extract from existing code (5 web, 5 content, 3 sync, 1 data).
+**Next:** Execute v2.2 implementation plan Phase 1→7.
+
+### Iteration 7 - 2026-03-16
+**Phase:** Architecture v2.2 — Full Parallel Build (All 7 Chunks)
+**Focus:** Build entire v2.2 codebase via 5 parallel subagents. 41 files created/modified, ~5,000 lines.
+
+**Changes:**
+- `sql/v2.2-migrations.sql` (new — 3 tables, 3 ALTER, 2 indexes)
+- `state/` (new — 9 files: server.py + db/{connection,thesis,inbox,notifications}.py + tests)
+- `skills/` (new — 14 markdown skills: 5 web, 5 content, 3 sync, 1 data = 3,010 lines)
+- `.claude/agents/` (new — web-researcher.md + content-worker.md subagent defs)
+- `infra/` (new — 4 systemd units + health_check.sh)
+- `web/task_store.py` (new), `web/server.py` (restructured: async task pattern), `web/tools.py` (new external wrappers), `web/agent.py` (setting_sources)
+- `content/runner.py` (new — asyncio timer + query()), `content/system_prompt.md` (v2.2 rewrite, 532 lines)
+- `sync/runner.py` (new — asyncio timer + query()), `sync/system_prompt.md` (v2.2 rewrite, 388 lines)
+- `deploy.sh` (rewritten for v2.2: 4 services, skills sync, subagent sync)
+- `pyproject.toml` (added asyncpg, state/tests)
+- `docs/v2.2-build-log.md` (new — testing reference for all chunks)
+**Decisions:**
+- permission_mode="dontAsk" confirmed correct for autonomous headless agents (auto-denies unlisted tools)
+- 5 parallel subagents with zero file write overlap (infra, state-mcp, skills, web-mcp, content+sync)
+- v1 content/system_prompt.md inlined in skills agent prompt to avoid read/write race with content agent rewrite
+- State MCP tests run in-process with mocked asyncpg (23 tests)
+- Build log tracks upstream/downstream dependencies + testing checklist per chunk
+**Next:** Deploy to droplet, run migrations, E2E testing. Bug fix session to follow.
 
 ---

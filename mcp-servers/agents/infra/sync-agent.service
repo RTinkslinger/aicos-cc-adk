@@ -1,0 +1,15 @@
+[Unit]
+Description=AI CoS Sync Agent
+After=state-mcp.service postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/agents
+ExecStart=/opt/agents/.venv/bin/python3 -m sync.runner
+EnvironmentFile=-/opt/agents/.env
+Restart=always
+RestartSec=10
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

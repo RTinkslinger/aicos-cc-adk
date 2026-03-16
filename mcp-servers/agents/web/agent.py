@@ -48,6 +48,7 @@ async def run_agent_task(
             model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
             fallback_model=os.environ.get("AGENT_FALLBACK_MODEL", "claude-opus-4-6"),
             permission_mode="dontAsk",
+            setting_sources=["project"],
             system_prompt=_load_system_prompt(),
             mcp_servers={"web": web_sdk_server},
             allowed_tools=[

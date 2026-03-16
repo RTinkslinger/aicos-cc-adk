@@ -1,7 +1,7 @@
-"""Web Agent tools — dual layer: 11 FastMCP tools (external callers) + 9 SDK @tool functions (agent reasoning).
+"""Web Tools — dual layer: 12 FastMCP tools (external callers) + 9 SDK @tool functions (agent reasoning).
 
 FastMCP tools: registered by server.py, exposed to Content Agent, CC, CAI via proxy.
-SDK @tool functions: registered via create_sdk_mcp_server(), used by ClaudeSDKClient during web_task.
+SDK @tool functions: registered via create_sdk_mcp_server(), used by ClaudeSDKClient during web_task_submit.
 """
 
 from __future__ import annotations
@@ -12,34 +12,9 @@ import os
 from claude_agent_sdk import create_sdk_mcp_server, tool
 
 # -----------------------------------------------------------------------
-# Category 1: FastMCP tool functions (11 tools — NOT decorated here)
+# Category 1: FastMCP tool functions (12 tools — NOT decorated here)
 # server.py registers these with @mcp.tool()
 # -----------------------------------------------------------------------
-
-
-async def web_task(
-    task: str,
-    url: str = "",
-    output_schema: dict | None = None,
-    timeout_s: int = 120,
-    effort: str = "high",
-) -> dict:
-    """Execute a web task with full agent intelligence.
-
-    The agent reasons about what to do: which tool to use, how to handle
-    errors, whether to retry, how to validate content. Use this for
-    complex or ambiguous tasks. For simple scrape/browse/search, use
-    the direct tools instead (cheaper, faster).
-
-    Args:
-        task: Natural language description of what to do
-        url: Optional target URL
-        output_schema: Optional JSON schema for structured output
-        timeout_s: Wall-clock timeout in seconds (default 120)
-        effort: Reasoning effort level — "high", "medium", "low" (default "high")
-    """
-    # agent.py will be implemented in a future iteration
-    return {"status": "not_implemented", "message": "Agent mode requires agent.py"}
 
 
 async def web_scrape(url: str, use_firecrawl: bool = False) -> dict:
@@ -82,16 +57,6 @@ async def web_search(query: str, limit: int = 5) -> dict:
     from web.lib.search import search
 
     return await search(query, limit=limit)
-
-
-async def web_screenshot(url: str) -> dict:
-    """Capture a screenshot of the URL using Playwright.
-
-    Returns screenshot as base64-encoded PNG in the result dict.
-    """
-    from web.lib.browser import browse
-
-    return await browse(url=url, action="screenshot")
 
 
 async def extract_youtube(
@@ -184,13 +149,95 @@ async def watch_url(
 
 
 async def health_check() -> dict:
-    """Check web agent health."""
-    return {"status": "ok", "agent": "web-agent"}
+    """Check web-tools-mcp health."""
+    return {"status": "ok", "agent": "web-tools-mcp"}
+
+
+# -----------------------------------------------------------------------
+# External utility wrappers (registered by server.py as FastMCP tools)
+# These expose functionality that was previously only available to the SDK agent brain.
+# -----------------------------------------------------------------------
+
+
+async def check_strategy(origin: str) -> dict:
+    """Get best-known strategy for a site origin from UCB bandit cache.
+
+    Returns the highest-scoring strategy if one exists, or a note if none cached.
+
+    Args:
+        origin: Site origin, e.g. "https://example.com"
+    """
+    from web.lib.strategy import get_strategy
+
+    result = get_strategy(origin)
+    if result is None:
+        return {"strategy": None, "note": "No strategies cached for this origin"}
+    return result
+
+
+async def manage_session(
+    action: str,
+    domain: str,
+    state_json: str = "{}",
+) -> dict:
+    """Save, load, check, or list Playwright storageState for a domain.
+
+    Args:
+        action: "save" | "load" | "check" | "list"
+        domain: Target domain, e.g. "linkedin.com"
+        state_json: JSON string of storageState dict (required for action="save")
+    """
+    from web.lib.sessions import (
+        check_storage_state_valid,
+        list_storage_states,
+        load_storage_state,
+        save_storage_state,
+    )
+
+    if action == "save":
+        try:
+            state = json.loads(state_json)
+        except json.JSONDecodeError as e:
+            return {"error": f"Invalid state_json: {e}"}
+        save_storage_state(domain, state)
+        return {"status": "saved", "domain": domain}
+
+    elif action == "load":
+        state = load_storage_state(domain)
+        if state is None:
+            return {"status": "not_found", "domain": domain}
+        return {"status": "loaded", "domain": domain, "state": state}
+
+    elif action == "check":
+        fresh = check_storage_state_valid(domain)
+        return {"domain": domain, "fresh": fresh}
+
+    elif action == "list":
+        return {"states": list_storage_states()}
+
+    return {"error": f"Unknown action: {action}"}
+
+
+async def validate(
+    content: str,
+    url: str = "",
+    expected_type: str = "",
+) -> dict:
+    """Score content quality — detect login walls, empty content, error pages.
+
+    Args:
+        content: The extracted content to validate
+        url: Source URL (optional, used for context)
+        expected_type: Expected content type hint (optional)
+    """
+    from web.lib.quality import validate_content
+
+    return validate_content(content=content, url=url, expected_type=expected_type)
 
 
 # -----------------------------------------------------------------------
 # Category 2: Internal @tool functions (9 tools for Agent SDK reasoning)
-# Registered via create_sdk_mcp_server() — used by ClaudeSDKClient in web_task
+# Registered via create_sdk_mcp_server() — used by ClaudeSDKClient in web_task_submit
 # -----------------------------------------------------------------------
 
 

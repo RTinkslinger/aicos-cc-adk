@@ -1,0 +1,15 @@
+[Unit]
+Description=AI CoS Content Agent
+After=state-mcp.service web-tools-mcp.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/agents
+ExecStart=/opt/agents/.venv/bin/python3 -m content.runner
+EnvironmentFile=-/opt/agents/.env
+Restart=always
+RestartSec=10
+MemoryMax=1G
+
+[Install]
+WantedBy=multi-user.target

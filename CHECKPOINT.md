@@ -1,80 +1,56 @@
 # Checkpoint
-*Written: 2026-03-15 23:45 IST*
+*Written: 2026-03-16 04:00 IST*
 
 ## Current Task
-Architecture revision: shift from "Sync Agent as DB gatekeeper" to "agents have direct Postgres access, Sync Agent handles external sync + conflict resolution." Then implement the revised architecture.
+Architecture v2.2: Full build complete. All 7 chunks implemented. Ready for deploy + testing.
 
 ## Progress
-- [x] Three-agent build complete (63 files, 9,358 lines, deployed)
-- [x] Code audit complete (25/25 items resolved)
-- [x] Architecture rethink discussed and clarified (see Key Decisions below)
-- [ ] Revise design spec with new architecture
-- [ ] Implement: move DB tools to shared/db/, give agents direct Postgres access
-- [ ] Implement: asyncpg migration (urgent — sync DB calls block event loop)
-- [ ] Implement: convert batch tools to singular
-- [ ] Implement: revised Sync Agent (Notion sync + freshness + conflict resolution only)
+- [x] Three-agent v1 build (63 files, deployed — will be replaced)
+- [x] Code audit v1 (25/25 resolved — superseded by v2.2)
+- [x] Architecture v2.2 brainstorming (deep, 10+ rounds of clarification)
+- [x] v2.2 design spec written: `docs/superpowers/specs/2026-03-15-architecture-v2.2-design.md`
+- [x] Phase 1: Infrastructure (SQL migrations, subagent defs, systemd units, deploy.sh)
+- [x] Phase 2: State MCP (5 tools, asyncpg, 9 files, 23 tests)
+- [x] Phase 3: Web Tools MCP (async task pattern, 3 new external tools, restructured)
+- [x] Phase 4: Skills (14 skills extracted, 3,010 lines of agent intelligence)
+- [x] Phase 5: Content Agent (runner.py + 532-line system prompt)
+- [x] Phase 6: Sync Agent (runner.py + 388-line system prompt)
+- [ ] Phase 7: Integration (deploy to droplet, run migrations, E2E testing)
 
-## Key Decisions (from this conversation, NOT yet in spec)
+## What Was Built (41 files)
 
-### 1. Agents get direct Postgres access
-- All agents import from `shared/db/` (in-process tools, like CC's built-in file tools)
-- No more Sync Agent as DB gatekeeper (Decision #15 from old spec is REVISED)
-- Postgres is a local resource → in-process access (no MCP overhead)
-- Future: if agents run on different machines, THEN add Postgres MCP server (YAGNI)
+### New files (34)
+- `sql/v2.2-migrations.sql` — 3 new tables + notion_synced columns
+- `state/` — 9 files (server.py, db/{connection,thesis,inbox,notifications}.py, tests)
+- `skills/` — 14 markdown files (5 web, 5 content, 3 sync, 1 data)
+- `.claude/agents/` — 2 subagent definitions (web-researcher, content-worker)
+- `infra/` — 4 systemd units + health_check.sh
+- `web/task_store.py` — async task state management
+- `content/runner.py` — asyncio timer + query() launcher
+- `sync/runner.py` — asyncio timer + query() launcher
 
-### 2. Sync Agent's revised role
-- **Notion sync:** Reads Postgres for new/changed records → pushes to Notion
-- **Notion→Postgres sync:** Pulls human-owned field changes (Status, Outcome) from Notion to Postgres
-- **Freshness guarantee:** Provides `is_synced(table?)` tool — tells other agents "Postgres reflects latest Notion state"
-- **Conflict resolution:** If multiple agents write conflicting data, Sync Agent resolves
-- **Gateway for CAI:** Still serves mcp.3niac.com, provides state query tools
-- **NO LONGER:** Write-receiver tools (write_digest, write_actions, etc.) — agents write directly
+### Modified files (7)
+- `web/server.py` — async task tools, external wrappers, renamed to web-tools-mcp
+- `web/tools.py` — removed old web_task, added check_strategy/manage_session/validate
+- `web/agent.py` — added setting_sources=["project"]
+- `content/system_prompt.md` — complete v2.2 rewrite (532 lines)
+- `sync/system_prompt.md` — complete v2.2 rewrite (388 lines)
+- `deploy.sh` — rewritten for 4 v2.2 services
+- `pyproject.toml` — added asyncpg, state/tests
 
-### 3. DB tools location: shared/db/ (domain-split)
-```
-shared/db/
-├── __init__.py        # re-exports
-├── connection.py      # asyncpg pool (shared by all agents)
-├── thesis_db.py       # thesis CRUD
-├── actions_db.py      # actions CRUD
-├── preferences.py     # preference store
-├── digests_db.py      # digest entries
-└── change_events.py   # change tracking
-```
-
-### 4. Timers are internal to each agent
-- Content Agent: 5-min pipeline timer is part of agent's own logic
-- Sync Agent: 10-min sync timer is part of agent's own logic
-- NOT external cron. NOT Python scripts. Agent's own scheduling.
-
-### 5. Agentic-first thinking (user mandate)
-- Stop mixing Python/cron patterns with agentic architecture
-- Agents have skills, tools, MCPs, and Agent SDK capabilities
-- Build with agentic lens, not script lens
-- Reference: `docs/superpowers/specs/2026-03-15-agentic-pipeline-reference.md`
-
-### 6. Rule: Never act without AskUserQuestion
-- Added to top of ~/.claude/CLAUDE.md
-- Memory: `feedback_never_act_without_askuserquestion.md`
-- For ANY code fix: research → analyse → present → AskUserQuestion → act → log
-
-## Next Steps (for new session)
+## Next Steps (for new/continued session)
 1. Read this CHECKPOINT.md
-2. Read the current spec: `docs/superpowers/specs/2026-03-15-three-agent-architecture-design.md`
-3. Read the agentic pipeline reference: `docs/superpowers/specs/2026-03-15-agentic-pipeline-reference.md`
-4. Revise the spec with decisions 1-5 above (use superpowers:brainstorming skill)
-5. Write implementation plan for the revision (move DB to shared/db/, asyncpg, revise Sync Agent)
-6. Execute via subagent-driven development
+2. Read `docs/v2.2-build-log.md` for testing checklists
+3. Deploy to droplet: `cd mcp-servers/agents && ./deploy.sh`
+4. Run SQL migrations: `ssh root@aicos-droplet "psql $DATABASE_URL < /opt/agents/sql/v2.2-migrations.sql"`
+5. Verify all 4 services: `systemctl status state-mcp web-tools-mcp content-agent sync-agent`
+6. Run E2E tests per build log checklists
+7. Bug fix any issues found during testing
 
-## Context
-- Branch: `feat/three-agent-architecture` (pushed, 30+ commits)
-- Droplet: 3 agents running (sync:8000, web:8001, content:8002), old services stopped
-- Droplet tier: 2 vCPU, 4GB RAM ($24/mo)
-- Agent SDK: claude-agent-sdk 0.1.48, FastMCP 3.1.1
-- Key learnings from this session:
-  - FastMCP 3.x uses `lifespan` context manager, not `on_startup`
-  - FastMCP 3.x uses `custom_route("/health", methods=["GET"])` for ops endpoints
-  - query() DOES support hooks in SDK 0.1.48 (tested live)
-  - cron.d drop-in files > crontab manipulation
-  - systemd cgroup kill handles Chrome cleanup (no ExecStopPost needed)
-  - WatchdogSec without sd_notify is worse than useless
+## Key Notes for Testing
+- `permission_mode="dontAsk"` is correct for autonomous agents
+- State MCP replaces old sync-agent on port 8000 — Cloudflare tunnel stays
+- Web Tools MCP keeps port 8001 — Cloudflare tunnel stays
+- Content Agent + Sync Agent have no ports (internal only, timer-driven)
+- Old v1 services (sync-agent, web-agent, content-agent) need to be stopped first
+- See `docs/v2.2-build-log.md` for full testing checklists per chunk

@@ -1,0 +1,18 @@
+[Unit]
+Description=AI CoS Web Tools MCP
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/agents
+ExecStart=/opt/agents/.venv/bin/python3 -m web.server
+EnvironmentFile=-/opt/agents/.env
+Restart=always
+RestartSec=5
+MemoryHigh=768M
+MemoryMax=1G
+OOMScoreAdjust=500
+ExecStopPost=/bin/bash -c 'pkill -f "chrome" || true'
+
+[Install]
+WantedBy=multi-user.target

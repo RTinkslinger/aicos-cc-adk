@@ -1,0 +1,16 @@
+[Unit]
+Description=AI CoS State MCP
+After=postgresql.service network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/agents
+ExecStart=/opt/agents/.venv/bin/python3 -m state.server
+EnvironmentFile=-/opt/agents/.env
+Restart=always
+RestartSec=5
+MemoryHigh=384M
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

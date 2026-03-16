@@ -181,7 +181,7 @@ def build_orc_options(bridge_server):
     # bypassPermissions — full tool access, no restrictions.
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
-        permission_mode="bypassPermissions",
+        permission_mode="acceptEdits",
         mcp_servers={"bridge": bridge_server},
         setting_sources=["project"],
         effort="medium",
@@ -202,7 +202,7 @@ def build_content_options():
     # bypassPermissions — full tool access, no restrictions.
     return ClaudeAgentOptions(
         model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
-        permission_mode="bypassPermissions",
+        permission_mode="acceptEdits",
         mcp_servers={"web": {"type": "http", "url": "http://localhost:8001/mcp"}},
         agents={
             "web-researcher": AgentDefinition(

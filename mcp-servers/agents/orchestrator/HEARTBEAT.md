@@ -33,17 +33,21 @@ If no messages: skip.
 
 ---
 
-## Step 3: Content Pipeline Check
+## Step 3: Content Pipeline Check (scheduled — every 12 hours)
+
+**Skip this step entirely if `send_to_content_agent` returned "busy" in Step 2.**
 
 ```bash
 cat /opt/agents/content/state/last_pipeline_run.txt 2>/dev/null
 ```
 
-If file missing OR timestamp >5 minutes old:
+If file missing OR timestamp >12 hours old:
 - Call `send_to_content_agent`: "Run your content pipeline cycle. Check watch list for new content, analyze, score, and publish."
 - If tool returned "busy", skip — content agent is still working.
 
-If <5 minutes: skip.
+If <12 hours: skip.
+
+**Note:** On-demand processing happens via inbox relay (Step 2). This scheduled check is just a catch-up for the watch list.
 
 ---
 

@@ -138,8 +138,12 @@ When told "Run your content pipeline cycle":
    g. Write notifications for high-signal findings (score >= 7)
    h. If any step fails: `UPDATE content_digests SET status = 'failed' WHERE id = {id};` and continue to next item
 
-**Phase 3 — Wrap Up**
-6. Write current timestamp: `date -u +"%Y-%m-%dT%H:%M:%SZ" > state/last_pipeline_run.txt`
+**Phase 3 — Wrap Up (MANDATORY — never skip)**
+6. **ALWAYS write timestamp after pipeline cycle, even if no new content was found:**
+   ```bash
+   date -u +"%Y-%m-%dT%H:%M:%SZ" > state/last_pipeline_run.txt
+   ```
+   This tells the Orchestrator when you last ran. Without it, the Orchestrator will re-trigger every heartbeat.
 
 ### Inbox Message Relay
 When the Orchestrator relays inbox messages:

@@ -205,9 +205,9 @@ def build_orc_options(bridge_server):
         ],
         mcp_servers={"bridge": bridge_server},
         setting_sources=["project"],
-        effort="medium",
-        max_turns=30,
-        max_budget_usd=2.0,
+        effort="low",
+        max_turns=15,
+        max_budget_usd=0.50,
         cwd=str(ORC_WORKSPACE),
         env={
             "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),

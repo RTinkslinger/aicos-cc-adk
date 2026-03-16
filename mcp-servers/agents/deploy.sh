@@ -1,5 +1,7 @@
 #!/bin/bash
 # Deploy v2.2 agents monorepo to droplet via Tailscale
+# Active services: state-mcp, web-tools-mcp, content-agent
+# Disabled: sync-agent (re-add when ready)
 set -e
 
 DROPLET="aicos-droplet"
@@ -47,9 +49,9 @@ ssh root@${DROPLET} "
   cp ${REMOTE_DIR}/infra/state-mcp.service /etc/systemd/system/
   cp ${REMOTE_DIR}/infra/web-tools-mcp.service /etc/systemd/system/
   cp ${REMOTE_DIR}/infra/content-agent.service /etc/systemd/system/
-  cp ${REMOTE_DIR}/infra/sync-agent.service /etc/systemd/system/
+  # sync-agent: disabled — re-add when ready
   systemctl daemon-reload
-  systemctl enable state-mcp web-tools-mcp content-agent sync-agent
+  systemctl enable state-mcp web-tools-mcp content-agent
 "
 
 # 8. Restart services in dependency order
@@ -85,7 +87,7 @@ ssh root@${DROPLET} '
 
   # Agents last (no ports to check — they start and connect to MCP servers)
   systemctl restart content-agent
-  systemctl restart sync-agent
+  # sync-agent: disabled — re-add when ready
   sleep 3
 '
 
@@ -102,7 +104,7 @@ for svc in "state-mcp:8000" "web-tools-mcp:8001"; do
 done
 
 # Agents — check via systemctl
-for svc in content-agent sync-agent; do
+for svc in content-agent; do
   ssh root@${DROPLET} "systemctl is-active --quiet ${svc}" \
     && echo "  ${svc} (systemctl): OK" \
     || echo "  ${svc} (systemctl): FAILED"

@@ -160,4 +160,22 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - action_outcomes table owned by postgres role — ALTER TABLE requires superuser, not aicos role
 **Next:** Functional E2E testing (cai_inbox → Content Agent processing, notion_synced=FALSE → Sync Agent push)
 
+### Iteration 9 - 2026-03-16
+**Phase:** E2E Testing + Architecture v3 Research
+**Focus:** CAI↔State MCP E2E, thesis column fix, sync agent disabled, deep research on persistent agent patterns
+
+**Changes:** `state/db/thesis.py` (name→thread_name, key_questions→key_question_summary), `state/server.py` (dict key fixes), `deploy.sh` (removed sync-agent from deploy/enable/restart/health)
+**E2E Results:**
+- State MCP: health_check ✅, get_state(notifications) ✅, get_state(thesis) ✅ after column fix
+- Content Agent: post_message→cai_inbox ✅, agent picks up and creates watch_list.json ✅, but processed flag not set (prompt ordering bug)
+- Sync Agent: first cycle completed (4min, $0.00) but disabled — not needed for now
+**Decisions:**
+- Sync agent stopped+disabled on droplet, removed from deploy.sh. Code stays in repo.
+- query() is wrong pattern for agents — spawns ephemeral CLI subprocess every cycle, no memory
+- ClaudeSDKClient is correct — persistent session, context retention, like CC terminal
+- Deep research: OpenClaw heartbeat pattern (HEARTBEAT.md, main session, skip-if-busy)
+- Architecture direction: Orchestrator agent (persistent, smart) + Content Agent (persistent, thick) connected via custom @tool. Python is just lifecycle plumbing.
+**Research:** `docs/research/persistent-agent-architecture-research.md` (27 sources), ultra research on OpenClaw in progress
+**Next:** Absorb ultra research results, write v3 architecture plan for persistent orchestrator + content agent
+
 ---

@@ -380,6 +380,48 @@ async def restart_content_client():
     clients.content_needs_restart = False
 
 
+# --- Pre-check: skip LLM if no work ---
+
+PIPELINE_INTERVAL_SECONDS = 12 * 3600  # 12 hours
+
+
+async def has_work() -> str | None:
+    """Check inbox + pipeline schedule WITHOUT calling the LLM. Returns reason string if work found, None if idle."""
+    import subprocess
+
+    # Check inbox
+    try:
+        db_url = os.environ.get("DATABASE_URL", "")
+        if db_url:
+            result = subprocess.run(
+                ["psql", db_url, "-t", "-A", "-c", "SELECT count(*) FROM cai_inbox WHERE processed = FALSE"],
+                capture_output=True, text=True, timeout=5,
+            )
+            count = int(result.stdout.strip()) if result.stdout.strip() else 0
+            if count > 0:
+                return f"inbox has {count} unprocessed messages"
+    except Exception as e:
+        logger.warning("Pre-check inbox failed: %s", e)
+        return "inbox check failed, waking agent to be safe"
+
+    # Check pipeline schedule
+    try:
+        ts_file = CONTENT_WORKSPACE / "state" / "last_pipeline_run.txt"
+        if not ts_file.exists() or not ts_file.read_text().strip():
+            return "pipeline never ran (no timestamp)"
+        from datetime import datetime, timezone
+        last_run_str = ts_file.read_text().strip()
+        last_run = datetime.fromisoformat(last_run_str.replace("Z", "+00:00"))
+        elapsed = (datetime.now(timezone.utc) - last_run).total_seconds()
+        if elapsed > PIPELINE_INTERVAL_SECONDS:
+            return f"pipeline overdue ({elapsed/3600:.1f}h since last run)"
+    except Exception as e:
+        logger.warning("Pre-check pipeline failed: %s", e)
+        return "pipeline check failed, waking agent to be safe"
+
+    return None  # No work
+
+
 # --- Main loop ---
 
 
@@ -411,7 +453,15 @@ async def run_agent() -> None:
                     if clients.content_needs_restart:
                         await restart_content_client()
 
-                    _live_log(ORC_LIVE_LOG, ">>> heartbeat")
+                    # Pre-check: skip LLM call if no work (free)
+                    work_reason = await has_work()
+                    if work_reason is None:
+                        _live_log(ORC_LIVE_LOG, "--- idle (no work) ---")
+                        await asyncio.sleep(HEARTBEAT_INTERVAL)
+                        continue
+
+                    _live_log(ORC_LIVE_LOG, f">>> heartbeat ({work_reason})")
+                    logger.info("Work detected: %s", work_reason)
                     await orc_client.query("heartbeat")
                     async for msg in orc_client.receive_response():
                         if isinstance(msg, AssistantMessage):

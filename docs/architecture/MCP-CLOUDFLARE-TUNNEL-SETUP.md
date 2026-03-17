@@ -228,6 +228,7 @@ Each cert authorizes tunnels for one domain. To use a different domain, re-run `
 | Tunnel domain | `3niac.com` (Cloudflare Registrar) |
 | Public endpoint | `https://mcp.3niac.com/mcp` |
 | Tunnel ID | `a381fcd4-b7fa-4226-8615-a77cfa498d09` |
-| Systemd services | `ai-cos-mcp.service` (MCP server) + `cloudflared.service` (tunnel) |
-| Claude.ai | Connected as remote connector |
-| Claude Code | Tailscale direct (planned) |
+| Systemd services | `state-mcp.service` (port 8000) + `web-tools-mcp.service` (port 8001) + `orchestrator.service` + `cloudflared.service` (tunnel) |
+| Tunnel routes | `mcp.3niac.com` → localhost:8000 (State MCP), `web.3niac.com` → localhost:8001 (Web Tools MCP) |
+| Claude.ai | Connected as remote connectors (both endpoints) |
+| Claude Code | Connected via `.mcp.json` using tunnel URLs (`type: "http"`) |

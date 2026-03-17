@@ -27,18 +27,34 @@ This is the **Aakash AI Chief of Staff (AI CoS)** project — an action optimize
 | Directory | Purpose |
 |-----------|---------|
 | `CONTEXT.md` | Master context — read this first |
-| `scripts/` | Operational scripts (YouTube extractor, content pipeline, action scorer, branch lifecycle CLI) |
-| `[Archive] Cowork Skills/` | Archived Cowork-era skill files (v2-v6). Reference only — not used in CC. |
-| `docs/` | All documentation by type (see `docs/README.md` for index) |
-| `docs/architecture/` | Historical architecture narratives — deeper detail, may have drifted. See `docs/source-of-truth/` for canonical reference. |
-| `docs/notion/` | Notion operations guide + database schemas — read before any Notion tool call |
-| `aicos-digests/` | **Separate git repo** (gitignored). Next.js 16 digest site, deployed at https://digest.wiki |
+| `scripts/` | Operational scripts (YouTube extractor, branch lifecycle CLI) |
+| `docs/source-of-truth/` | 9 canonical reference files — read before building anything |
+| `docs/superpowers/plans/` | Implementation plans |
+| `docs/superpowers/specs/` | Design specs and architecture docs |
+| `docs/superpowers/brainstorms/` | Think-throughs, assessments, brainstorming sessions |
+| `docs/research/` | Deep research reports and reference docs |
+| `docs/audits/` | System audits, health checks, analysis outputs |
+| `docs/notion/` | Notion operations guide + database schemas |
+| `docs/architecture/` | Droplet runbook, repo guide, MCP setup |
 | `mcp-servers/agents/` | v3 agents monorepo: orchestrator, content agent, state MCP, web tools MCP. Deploy via `deploy.sh`. |
-| `Archives/` | Superseded code (v1 mcp-servers, old Cowork Skills) — reference only |
+| `aicos-digests/` | **Separate git repo** (gitignored). Next.js 16 digest site at https://digest.wiki |
 | `portfolio-research/` | Per-company deep research files (20 companies) |
-| `queue/` | Content Pipeline queue — YouTube extraction JSONs |
-| `digests/` | PDF digest outputs |
-| `Training Data/` | IDS methodology training samples (emails, docs) |
+| `Archives/` | Superseded code + old docs — reference only |
+
+## Artefact Routing (MANDATORY)
+
+All generated artefacts MUST go to the correct folder. No exceptions. Skills that have default save paths are overridden by these rules.
+
+| Artefact Type | Save To | Naming | Source/Trigger |
+|---------------|---------|--------|----------------|
+| Implementation plans | `docs/superpowers/plans/` | `YYYY-MM-DD-<slug>.md` | writing-plans skill, any build/migration plan |
+| Design specs | `docs/superpowers/specs/` | `YYYY-MM-DD-<slug>.md` | Architecture specs, API specs, design docs |
+| Brainstorms | `docs/superpowers/brainstorms/` | `YYYY-MM-DD-<slug>.md` | think-through skill, assessments, brainstorming |
+| Research | `docs/research/` | `YYYY-MM-DD-<slug>.md` | Deep research, ultra reports, reference docs |
+| Audits/Analysis | `docs/audits/` | `YYYY-MM-DD-<slug>.md` | Health checks, system audits, code reviews, file audits |
+| Pending items | `docs/` | `PENDING-ITEMS-YYYY-MM-DD.md` | Extracted from plan compaction |
+
+**Never save artefacts to:** project root, random subdirectories, `.claude/plans/`, or temp locations.
 
 ## Key Commands
 

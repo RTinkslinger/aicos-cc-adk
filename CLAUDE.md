@@ -33,7 +33,8 @@ This is the **Aakash AI Chief of Staff (AI CoS)** project — an action optimize
 | `docs/architecture/` | Historical architecture narratives — deeper detail, may have drifted. See `docs/source-of-truth/` for canonical reference. |
 | `docs/notion/` | Notion operations guide + database schemas — read before any Notion tool call |
 | `aicos-digests/` | **Separate git repo** (gitignored). Next.js 16 digest site, deployed at https://digest.wiki |
-| `mcp-servers/` | Live: ai-cos-mcp server (FastMCP Python on droplet) |
+| `mcp-servers/agents/` | v3 agents monorepo: orchestrator, content agent, state MCP, web tools MCP. Deploy via `deploy.sh`. |
+| `Archives/` | Superseded code (v1 mcp-servers, old Cowork Skills) — reference only |
 | `portfolio-research/` | Per-company deep research files (20 companies) |
 | `queue/` | Content Pipeline queue — YouTube extraction JSONs |
 | `digests/` | PDF digest outputs |
@@ -77,14 +78,13 @@ cd aicos-digests && npm run build  # verify build
 Deploy: Pipeline on droplet auto-publishes → git push → Vercel deploy hook (~30s). Live at https://digest.wiki.
 Manual deploy from Mac: `cd aicos-digests && npx vercel deploy --prod`
 
-### MCP Server (live)
+### Agents Monorepo (live)
 ```bash
-cd mcp-servers/ai-cos-mcp && uv run server.py   # local dev
-cd mcp-servers/ai-cos-mcp && bash deploy.sh      # deploy to droplet
+cd mcp-servers/agents && bash deploy.sh           # deploy to droplet (3-phase: sync, bootstrap, cleanup)
 ```
-**Public endpoint:** `https://mcp.3niac.com/mcp` (Cloudflare Tunnel, auto-TLS)
-**Claude Code:** Connected via `.mcp.json` — cos_* tools available directly
-**17 tools** — see `docs/source-of-truth/MCP-TOOLS-INVENTORY.md` for full signatures and routing rules.
+**Public endpoints:** `https://mcp.3niac.com/mcp` (State MCP), `https://web.3niac.com/mcp` (Web Tools MCP)
+**Services:** Orchestrator (lifecycle.py manages both agents), State MCP (:8000), Web Tools MCP (:8001)
+**Live monitoring:** `ssh -t root@aicos-droplet /opt/agents/live-orc.sh` (also live-content.sh, live-traces.sh)
 
 ### Agent SDK Runners (planned)
 ```bash
@@ -200,7 +200,7 @@ Publishing: digest.wiki → git push → Vercel auto-deploy (~15s)
 SyncAgent (10-min cron): Notion ↔ Postgres bidirectional sync, change detection, action generation
 ```
 
-Key scripts (on droplet `/opt/ai-cos-mcp/`): `runners/pipeline.py` (orchestrator), `runners/extraction.py` (yt-dlp extraction), `runners/content_agent.py` (analysis + Notion writes), `runners/publishing.py` (digest site publish), `lib/scoring.py` (scoring model), `scripts/action_scorer.py` (standalone scorer).
+Key services (on droplet `/opt/agents/`): `orchestrator/lifecycle.py` (manages both agents), State MCP (`state/server.py`), Web Tools MCP (`web/server.py`). Content pipeline runs via persistent ClaudeSDKClient content agent, triggered by orchestrator heartbeat or CAI inbox messages.
 
 **ContentAgent + SyncAgent are live** — running autonomously on the droplet. See `docs/source-of-truth/ARCHITECTURE.md` for runner specs.
 
@@ -213,7 +213,7 @@ See `docs/source-of-truth/` for full current state. Key files:
 - **DATA-ARCHITECTURE.md** — 8 Notion DBs + 7 Postgres tables: schemas, field ownership, sync patterns
 - **VISION-AND-DIRECTION.md** — Build phases, gaps, design principles
 
-**Quick status:** ContentAgent (5-min cron) + SyncAgent (10-min cron) live on droplet. 17 MCP tools via ai-cos-mcp server. Thesis Tracker as AI-managed conviction engine. Preference Store active. digest.wiki live. Cross-surface alignment via `claude-ai-sync/`.
+**Quick status:** Orchestrator + Content Agent (persistent ClaudeSDKClient, managed by lifecycle.py) live on droplet. State MCP (:8000) + Web Tools MCP (:8001). Postgres-as-queue for content pipeline. digest.wiki live. Sync Agent disabled (code in repo, not running).
 
 ---
 

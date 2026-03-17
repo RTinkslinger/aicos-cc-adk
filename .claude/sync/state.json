@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-17T02:15:12Z",
+      "timestamp": "2026-03-17T02:16:46Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -45,7 +45,8 @@
     "key_files_changed_last_session": [
       "CHECKPOINT.md",
       "TRACES.md",
-      "docs/README.md"
+      "docs/README.md",
+      "docs/audits/2026-03-17-system-audit.md"
     ],
     "pending_inbox": []
   },
@@ -68,6 +69,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-17T02:15:12Z",
+  "updated_at": "2026-03-17T02:16:46Z",
   "updated_by": "cc"
 }

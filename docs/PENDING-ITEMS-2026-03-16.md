@@ -6,11 +6,11 @@ Extracted 2026-03-16 from plans archive. Items still relevant to current running
 
 ## Critical
 
-- [ ] **COMPACTION_PROTOCOL.md + CHECKPOINT_FORMAT.md not on disk** (from Plan 2, Tasks 9-10)
-  **Why still needed:** Orchestrator CLAUDE.md references `state/COMPACTION_PROTOCOL.md` (Section 7: "Read COMPACTION_PROTOCOL.md") and `state/CHECKPOINT_FORMAT.md`. Content CLAUDE.md references `state/CHECKPOINT_FORMAT.md`. These files don't exist on disk -- compaction instructions are currently only in the CLAUDE.md prose, but agents are told to read these files. When context compaction fires, the agent will try to Read a nonexistent file.
+- [x] **COMPACTION_PROTOCOL.md + CHECKPOINT_FORMAT.md not on disk** (from Plan 2, Tasks 9-10)
+  **Resolved 2026-03-18:** Files exist on disk at `orchestrator/COMPACTION_PROTOCOL.md`, `orchestrator/CHECKPOINT_FORMAT.md`, and `content/CHECKPOINT_FORMAT.md`. Created before 2026-03-16 but pending items doc was never updated.
 
-- [ ] **Content agent `last_pipeline_run.txt` never written** (from Plan 3, Bug 8 in iteration 11)
-  **Why still needed:** Identified as a bug in iteration 11 but not confirmed fixed. The orchestrator's `has_work()` pre-check reads this file to decide if pipeline is overdue. If the content agent never writes it, the orchestrator triggers pipeline every heartbeat cycle (12hr guard helps, but the file should be written).
+- [x] **Content agent `last_pipeline_run.txt` never written** (from Plan 3, Bug 8 in iteration 11)
+  **Fixed 2026-03-18:** Hook-based deterministic fix. UserPromptSubmit detects "pipeline cycle" → sets flag. Stop hook checks flag + ACK contains "Pipeline" → writes timestamp. Stale flags from crash/compaction cleaned without false timestamps. 13/13 tests pass. See `docs/reference/content-agent-hook-lifecycle-2026-03-18.md`.
 
 - [ ] **Content agent dedup guard on first run** (from Plan 3, Bug 9 in iteration 11)
   **Why still needed:** On fresh start, content agent processes all historical content from watch list sources (no since-date guard). The Postgres-as-queue `ON CONFLICT (url) DO NOTHING` prevents duplicate digests, but the agent still wastes time fetching and attempting to insert URLs that already exist. A since-date guard (e.g., only fetch content from last 48h on first run) would prevent wasted cycles.

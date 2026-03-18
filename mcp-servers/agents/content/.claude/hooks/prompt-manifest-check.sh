@@ -1,6 +1,7 @@
 #!/bin/bash
-# UserPromptSubmit hook: check manifest for context limits.
-# If agent's token count exceeds threshold, inject compaction instructions.
+# UserPromptSubmit hook: two responsibilities.
+# 1. Pipeline detection — if prompt contains "pipeline cycle", set flag for Stop hook.
+# 2. Context limits — if token count exceeds threshold, inject compaction instructions.
 # Exit 0 = proceed normally. Exit 2 = continue with stderr as context.
 
 set -euo pipefail
@@ -13,6 +14,15 @@ if [ -z "$CWD" ]; then
 fi
 
 AGENT="content"
+STATE_DIR="${CWD}/state"
+
+# --- Pipeline detection: set flag for Stop hook ---
+PROMPT_TEXT=$(echo "$INPUT" | jq -r '.prompt // .message // ""' 2>/dev/null || echo "")
+if echo "$PROMPT_TEXT" | grep -q "pipeline cycle"; then
+  touch "${STATE_DIR}/pipeline_requested.txt"
+fi
+
+# --- Context limit check ---
 THRESHOLD=100000
 AGENTS_ROOT="$(dirname "$CWD")"
 MANIFEST="${AGENTS_ROOT}/traces/manifest.json"

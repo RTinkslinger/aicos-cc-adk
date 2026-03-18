@@ -305,4 +305,44 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - shared/ eliminated — logging moved to web/lib/ where its only consumer lives
 **Next:** Milestone 3 compaction (iterations 1-3), then merge branch to main
 
+### Iteration 15 - 2026-03-18
+**Phase:** Critical Bug Fix — Pipeline Timestamp Enforcement via Hooks
+**Focus:** Fix `last_pipeline_run.txt` never written (Critical #2 from PENDING-ITEMS), verify Critical #1 already resolved, create agent hook lifecycle reference docs
+
+**Analysis:**
+- Critical #1 (COMPACTION_PROTOCOL.md missing): FALSE — files exist on disk, pending items doc was stale
+- Critical #2 (last_pipeline_run.txt never written): CONFIRMED — LLM instruction in Phase 3 not reliably executed. `has_work()` returns "pipeline never ran" every 60s heartbeat, causing ~1,440 unnecessary wakeups/day
+- 5 parallel simulation agents traced all scenarios: happy path, inbox-only, busy, crash, compaction, first-run, mixed work
+- Discovered: Stop hook fires per-query (not per-session) — proven by 84 iterations in session #1
+
+**Fix (two-condition hook approach):**
+- `content/.claude/hooks/prompt-manifest-check.sh`: Added pipeline detection — extracts prompt text, sets `state/pipeline_requested.txt` flag when prompt contains "pipeline cycle"
+- `content/.claude/hooks/stop-iteration-log.sh`: Added two-condition timestamp write — if flag exists AND ACK contains "Pipeline" (case-insensitive) → write ISO timestamp to `last_pipeline_run.txt`. Always cleans stale flags (crash/compaction safety).
+
+**Tests:** 13/13 pass — pipeline happy path, inbox isolation, empty prompt, flag+ACK, stale flag cleanup, compaction mid-pipeline, crash recovery (inbox-first and pipeline-retry), stop_hook_active guard, case-insensitive match, iteration logging regression
+
+**Documentation:**
+- `docs/reference/droplet-lifecycle-2026-03-18.md` (updated — added hooks section, early-return semantics, state cleanup gaps, pipeline timestamp enforcement)
+- `docs/reference/content-agent-hook-lifecycle-2026-03-18.md` (new — full event flows for pipeline/inbox/compaction/crash, state files, anti-patterns)
+- `docs/reference/orchestrator-agent-hook-lifecycle-2026-03-18.md` (new — full event flows for heartbeat/idle/compaction/dead-session/crash, orc vs content comparison)
+- `docs/PENDING-ITEMS-2026-03-16.md` (Critical #1 and #2 marked resolved)
+
+**Changes:** `prompt-manifest-check.sh` (pipeline flag), `stop-iteration-log.sh` (two-condition timestamp), 3 lifecycle docs (new+updated), `PENDING-ITEMS-2026-03-16.md`
+**Decisions:**
+- Hook-based enforcement over LLM instruction reliance — deterministic, testable, crash-safe
+- Two-condition pattern (flag = intent, ACK = proof) prevents false timestamps from crash/compaction
+- `bump_session()` state cleanup gap documented but not fixed — hooks handle it via flag cleanup on next Stop
+
+### Iteration 16 - 2026-03-18
+**Phase:** Pipeline Analysis + QMD Integration Planning
+**Focus:** Full lifecycle.py behaviour map, QMD CC integration audit, upgrade plan
+
+**Changes:** `docs/reference/droplet-lifecycle-2026-03-18.md` (updated by user with hook details, early-return semantics, state gaps), `docs/superpowers/plans/2026-03-18-qmd-cc-integration-upgrade.md` (new — 6-task plan for hook-based QMD)
+**Analysis:**
+- QMD is global infrastructure (plugin + global settings.json + global CLAUDE.md), NOT part of CASH Build System
+- CLAUDE.md soft-triggers for proactive QMD usage have ~0% reliability — LLM never follows them
+- Current QMD hooks: SessionStart `qmd update` (indexing only, no query injection)
+- 334 docs need embedding (vec/hyde search degraded)
+- Fix: 3 new hooks (SessionStart context query, UserPromptSubmit prompt analysis, PostToolUseFailure counter)
+**Next:** Execute QMD integration upgrade plan, run `qmd embed` to clear backlog
 ---

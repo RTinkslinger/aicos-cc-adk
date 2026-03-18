@@ -1,7 +1,13 @@
 #!/bin/bash
-# Stop hook: log iteration to active traces file
+# Stop hook: log iteration + pipeline timestamp management.
 # Fires after every completed query (heartbeat or task).
 # Reads agent's self-reported summary from state/{AGENT}_last_log.txt.
+#
+# Pipeline timestamp logic (two conditions, both required):
+#   1. state/pipeline_requested.txt exists (set by UserPromptSubmit when prompt contains "pipeline cycle")
+#   2. Agent's ACK summary contains "Pipeline" (proof the pipeline actually completed)
+# If flag exists without ACK match, flag is cleaned up (stale from crash/compaction).
+#
 # Exit 0 = agent stops normally.
 
 set -euo pipefail
@@ -24,6 +30,8 @@ STATE_DIR="${CWD}/state"
 ITER_FILE="${STATE_DIR}/${AGENT}_iteration.txt"
 SESS_FILE="${STATE_DIR}/${AGENT}_session.txt"
 LOG_FILE="${STATE_DIR}/${AGENT}_last_log.txt"
+PIPELINE_FLAG="${STATE_DIR}/pipeline_requested.txt"
+PIPELINE_TS="${STATE_DIR}/last_pipeline_run.txt"
 
 AGENTS_ROOT="$(dirname "$CWD")"
 ACTIVE_TRACES_PTR="${AGENTS_ROOT}/traces/active.txt"
@@ -47,5 +55,15 @@ fi
 TIMESTAMP=$(date -u +"%H:%M UTC")
 
 echo "\$${AGENT} | sess #${SESS} | it ${ITER} | ${TIMESTAMP} :: '${SUMMARY}'" >> "$ACTIVE_TRACES"
+
+# --- Pipeline timestamp: write only if flag exists AND ACK confirms pipeline ran ---
+if [ -f "$PIPELINE_FLAG" ]; then
+  if echo "$SUMMARY" | grep -qi "pipeline"; then
+    # Both conditions met: pipeline was requested AND completed
+    date -u +"%Y-%m-%dT%H:%M:%SZ" > "$PIPELINE_TS"
+  fi
+  # Always clean up flag (prevents stale flags from crash/compaction)
+  rm -f "$PIPELINE_FLAG"
+fi
 
 exit 0

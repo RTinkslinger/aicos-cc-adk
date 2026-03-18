@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-18T17:08:54Z",
+      "timestamp": "2026-03-18T17:12:48Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -43,6 +43,12 @@
       "Review Agent SDK ContentAgent plan"
     ],
     "key_files_changed_last_session": [
+      "docs/source-of-truth/ARCHITECTURE.md",
+      "docs/source-of-truth/CAPABILITY-MAP.md",
+      "docs/source-of-truth/DATA-ARCHITECTURE.md",
+      "docs/source-of-truth/DROPLET-RUNBOOK.md",
+      "docs/source-of-truth/README.md",
+      "docs/source-of-truth/VISION-AND-DIRECTION.md",
       "docs/source-of-truth/WEBFRONT.md",
       "docs/superpowers/brainstorms/2026-03-18-webfront-architecture-decisions.md",
       "docs/superpowers/plans/2026-03-18-qmd-cc-integration-upgrade.md"
@@ -68,6 +74,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-18T17:08:54Z",
+  "updated_at": "2026-03-18T17:12:48Z",
   "updated_by": "cc"
 }

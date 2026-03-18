@@ -25,5 +25,5 @@ target-version = "py311"
 select = ["E", "F", "I", "W"]
 
 [tool.pytest.ini_options]
-testpaths = ["web/tests", "content/tests", "sync/tests", "state/tests", "tests"]
+testpaths = ["web/tests", "state/tests", "tests"]
 asyncio_mode = "auto"

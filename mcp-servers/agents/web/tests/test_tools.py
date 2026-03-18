@@ -18,8 +18,6 @@ from web.tools import (
     web_browse,
     web_scrape,
     web_search,
-    web_screenshot,
-    web_task,
     watch_url,
     web_sdk_server,
 )

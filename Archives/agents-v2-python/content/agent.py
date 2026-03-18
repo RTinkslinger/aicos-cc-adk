@@ -26,6 +26,7 @@ _session_semaphore = asyncio.Semaphore(2)
 
 
 def _load_system_prompt() -> str:
+    # STALE: system_prompt.md was deleted in v3 — replaced by CLAUDE.md (loaded via setting_sources)
     path = Path(__file__).parent / "system_prompt.md"
     return path.read_text(encoding="utf-8")
 

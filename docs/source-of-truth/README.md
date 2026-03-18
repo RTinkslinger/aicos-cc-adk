@@ -1,6 +1,6 @@
 # Source of Truth — Index & Update Protocol
 
-Exhaustive reference for the AI CoS current build state. Each file is self-contained and shareable with external AI without codebase access.
+Exhaustive reference for the AI CoS system. Each file is self-contained and shareable with external AI without codebase access.
 
 ---
 
@@ -8,14 +8,16 @@ Exhaustive reference for the AI CoS current build state. Each file is self-conta
 
 | File | What It Covers | When to Read |
 |------|---------------|--------------|
-| **SYSTEM-STATE.md** | Infrastructure: droplet, Postgres, Cloudflare, Tailscale, Vercel, crons, endpoints, services | Debugging infra, adding services, onboarding a new AI surface |
-| **MCP-TOOLS-INVENTORY.md** | All 17 MCP tools: signatures, params, purpose, surfaces, routing rules | Before calling or building MCP tools, understanding what the system can do |
-| **DATA-ARCHITECTURE.md** | 8 Notion DBs + 7 Postgres tables: schemas, field ownership, sync patterns | Before any data operation, understanding where data lives and who owns it |
-| **ARCHITECTURE.md** | 3-layer architecture, runners, integrations, live vs planned components | Understanding system design, planning new capabilities |
-| **VISION-AND-DIRECTION.md** | Vision, build phases, current state vs ideal, gaps, design principles | Strategic planning, contextualizing work, understanding the "why" |
+| **VISION-AND-DIRECTION.md** | Vision, optimization problem, design principles, north star | Strategic planning, contextualizing work, understanding the "why" |
+| **METHODOLOGY.md** | 15 build principles, technology evaluation framework | Making technology choices, understanding why we build the way we do |
+| **ARCHITECTURE.md** | 3-layer architecture, agent pattern, MCP tools, scoring, learning loop, conviction engine | Understanding system design, planning new capabilities |
+| **MCP-TOOLS-INVENTORY.md** | All MCP tools: signatures, params, purpose, surfaces, routing rules | Before calling or building MCP tools |
+| **DATA-ARCHITECTURE.md** | Notion DBs + Postgres tables: schemas, field ownership, sync patterns | Before any data operation, understanding where data lives |
 | **CAPABILITY-MAP.md** | 8 capabilities at IDS levels (+/++/+++), dependency graph, growth model | Planning what to build next, understanding capability dependencies |
-| **METHODOLOGY.md** | 15 build principles, technology evaluation framework, open decision spikes | Making technology choices, understanding why we build the way we do |
-| **ENTITY-SCHEMAS.md** | Vision-state entity schemas, runner pattern template, IDS trail spec, 3-actor sovereignty model | Designing new entities/fields, building new runners, extending data model |
+| **ENTITY-SCHEMAS.md** | Vision-state entity schemas, runner pattern template, IDS trail spec, 3-actor sovereignty model | Designing new entities/fields, extending data model |
+| **PRIOR-ART.md** | Full chronological build history (35+ entries, 4 eras). Append-only. | Before building anything — check what's been tried, what worked, what didn't |
+| **DROPLET-RUNBOOK.md** | Operational guide: services, directory layout, credentials, deploy, monitoring, failure recovery, scaling | Debugging infra, deploying, adding services |
+| **MCP-CLOUDFLARE-TUNNEL-SETUP.md** | Cloudflare Tunnel setup and configuration guide | Setting up or debugging MCP tunnel endpoints |
 
 ---
 
@@ -29,17 +31,16 @@ Update these docs when:
 - **After major deploys** — New services, infrastructure changes, tool additions
 - **After milestone compaction** — TRACES.md milestone archive = good checkpoint for docs update
 - **After schema changes** — New Postgres tables, Notion DB modifications, field ownership changes
-- **After new infrastructure** — New crons, endpoints, tunnels, services
 
 ### What to Update
 
 | Trigger | Files to Update |
 |---------|----------------|
-| New infra (droplet, tunnel, cron) | SYSTEM-STATE.md |
+| New infra (droplet, tunnel, services) | DROPLET-RUNBOOK.md |
 | New MCP tool or tool signature change | MCP-TOOLS-INVENTORY.md |
 | New Postgres table or Notion DB schema change | DATA-ARCHITECTURE.md |
-| New runner, integration, or component | ARCHITECTURE.md |
-| Direction shift, phase completion, new gaps identified | VISION-AND-DIRECTION.md |
+| New component, integration, or architectural pattern | ARCHITECTURE.md |
+| Direction shift, design principle change | VISION-AND-DIRECTION.md |
 
 ### How to Update
 
@@ -57,6 +58,4 @@ Update these docs when:
 | CLAUDE.md | Coding context, commands, protocols | Project root |
 | CONTEXT.md | Domain context (Aakash's world, priorities, methodology) | Project root |
 | TRACES.md | Recent build history (rolling window) | Project root |
-| `docs/architecture/DROPLET-RUNBOOK.md` | Operational runbook for droplet (how-to, not architecture) | `docs/architecture/` |
 | `docs/notion/README.md` | Notion operations guide, recipes, gotchas | `docs/notion/` |
-| `docs/architecture/*.md` | Historical architecture narratives (deeper detail, may have drifted) | `docs/architecture/` |

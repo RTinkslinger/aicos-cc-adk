@@ -284,6 +284,34 @@ print(r.content[0].text)
 psql postgresql://aicos:XPa10EuFJgfyUb5mnBr6laxEJLvAYIW@localhost:5432/aicos_db -c "SELECT 1"
 ```
 
+## Scaling Roadmap
+
+How to scale the droplet as infrastructure grows. Budget is unconstrained; operational simplicity is the constraint.
+
+### Tier 1: Current ($24/mo)
+
+s-2vcpu-4gb. Running 3 services + persistent agents. Comfortable for current workload.
+
+### Tier 2: Multi-Runner + Embeddings ($48/mo)
+
+**Trigger:** Running 3+ autonomous agents, generating embeddings locally, or Postgres DB exceeds 20 GB.
+
+General Purpose (2 dedicated vCPUs, 8 GB RAM, 160 GB SSD). Dedicated CPUs critical when agents do sustained work.
+
+### Tier 3: Full Infrastructure ($96/mo)
+
+**Trigger:** Graph store added, processing 10+ signal sources, embedding corpus exceeds 1M vectors.
+
+General Purpose (4 dedicated vCPUs, 16 GB RAM, 320 GB SSD).
+
+### Scaling Principles
+
+- **Prefer vertical scaling** (bigger droplet) until a service needs isolation or zero-downtime deploys.
+- **Prefer Postgres extensions** over new services: pgvector over Qdrant, TimescaleDB over separate time-series DB, CTEs over Neo4j.
+- **Resize process:** Power off (1-2 min), resize via DO console, power on — ~5 min downtime. Disk can never shrink (irreversible).
+
+---
+
 ## Installed Software
 
 | Package | Purpose | Install |

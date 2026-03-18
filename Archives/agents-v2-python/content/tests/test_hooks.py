@@ -2,7 +2,7 @@
 
 Hooks are stateless (log + return {}). No state tracking.
 The agent tracks its own completeness via conversation context.
-See: docs/superpowers/specs/2026-03-15-agentic-pipeline-reference.md
+See: docs/archives/old-specs/2026-03-15-agentic-pipeline-reference.md (ARCHIVED — v2 era, resolved by v3)
 """
 from __future__ import annotations
 

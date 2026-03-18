@@ -18,7 +18,7 @@ This is the **Aakash AI Chief of Staff (AI CoS)** project — an action optimize
 
 **Skip CONTEXT.md when:** pure code edits, repo tooling, frontend styling, git operations, or anything that doesn't touch AI CoS domain logic.
 
-**`docs/source-of-truth/` is the single canonical reference folder** — 8 files covering system state, architecture, data, MCP tools, vision, capabilities, methodology, and entity schemas. See `docs/source-of-truth/README.md` for the index. Read these before building anything that touches infrastructure, data, or system design. For the trust hierarchy and prior art checklist, see `docs/architecture/REPO-GUIDE.md`.
+**`docs/source-of-truth/` is the single canonical reference folder** — 9 files covering vision, methodology, architecture, data, MCP tools, capabilities, entity schemas, droplet operations, and tunnel setup. See `docs/source-of-truth/README.md` for the index. Read these before building anything that touches infrastructure, data, or system design.
 
 ## Repository Structure
 
@@ -28,14 +28,13 @@ This is the **Aakash AI Chief of Staff (AI CoS)** project — an action optimize
 |-----------|---------|
 | `CONTEXT.md` | Master context — read this first |
 | `scripts/` | Operational scripts (YouTube extractor, branch lifecycle CLI) |
-| `docs/source-of-truth/` | 9 canonical reference files — read before building anything |
+| `docs/source-of-truth/` | All canonical reference files — read before building anything |
 | `docs/superpowers/plans/` | Implementation plans |
 | `docs/superpowers/specs/` | Design specs and architecture docs |
 | `docs/superpowers/brainstorms/` | Think-throughs, assessments, brainstorming sessions |
 | `docs/research/` | Deep research reports and reference docs |
 | `docs/audits/` | System audits, health checks, analysis outputs |
 | `docs/notion/` | Notion operations guide + database schemas |
-| `docs/architecture/` | Droplet runbook, repo guide, MCP setup |
 | `mcp-servers/agents/` | v3 agents monorepo: orchestrator, content agent, state MCP, web tools MCP. Deploy via `deploy.sh`. |
 | `aicos-digests/` | **Separate git repo** (gitignored). Next.js 16 digest site at https://digest.wiki |
 | `portfolio-research/` | Per-company deep research files (20 companies) |
@@ -239,7 +238,7 @@ See `docs/source-of-truth/` for full current state. Key files:
 
 Track implementation decisions with minimal context overhead using a rolling window + compaction pattern.
 
-**IMPORTANT:** Enforced by a Stop hook — if you modify code files but don't update TRACES.md, you will receive a reminder.
+**IMPORTANT:** Enforced by a Stop hook — if you modify tracked files but don't update TRACES.md, the hook will prevent you from stopping and require you to update TRACES.md first.
 
 #### Quick Reference
 
@@ -250,30 +249,24 @@ Track implementation decisions with minimal context overhead using a rolling win
 
 #### What Counts as an Iteration
 
-An iteration is a work session where you:
-- Write or modify code files (not specs/docs)
-- Complete tasks from the phase plan
-- Make architectural or implementation decisions
+An iteration is any work session where tracked files were modified.
+Every session that changes something should leave a trace — what was done, why, and any decisions worth preserving.
 
-NOT an iteration: Pure research, Q&A, planning, or documentation-only changes.
+NOT an iteration: Pure read-only sessions (research, Q&A, reviewing code without changes).
 
-#### After Each Coding Session (or before Session Close)
+#### After Each Session (or before Session Close)
 
 1. **Read `TRACES.md`** - find the last iteration number in "Current Work"
-2. **Add iteration entry** to "Current Work" section (template below)
+2. **Add iteration entry** to "Current Work" section (template above)
 3. **If iteration 3, 6, 9...** -> run compaction process (see below)
 
-#### Iteration Entry Template (Concise ~15 lines)
+#### Iteration Entry Template
 
 ```
 ### Iteration N - YYYY-MM-DD
-**Phase:** Phase X: Name
-**Focus:** Brief description
-
-**Changes:** `file.py` (what), `other.py` (what)
-**Decisions:** Key decision -> rationale
-**Next:** What's next
-
+**What:** One-sentence summary of what was done and why
+**Changes:** `file1.md` (what changed), `file2.py` (what changed)
+**Context:** Decisions made, discoveries, or reasoning worth preserving for future sessions
 ---
 ```
 

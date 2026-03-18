@@ -1,6 +1,6 @@
 """Notion field formatting utilities for Content Agent.
 
-Extracted from runners/content_agent.py. Converts DigestData dicts into
+Extracted from runners/content_agent.py (STALE — old v1 path, now content/). Converts DigestData dicts into
 Notion rich_text field strings.
 """
 from __future__ import annotations

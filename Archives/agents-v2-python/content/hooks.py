@@ -5,7 +5,7 @@ Hook types used:
   Stop:         emit_metrics        (stateless — log session end)
 
 No stateful tracking. The agent tracks its own completeness via conversation
-context and system prompt instructions. See: agentic-pipeline-reference.md.
+context and system prompt instructions. See: docs/archives/old-specs/2026-03-15-agentic-pipeline-reference.md (ARCHIVED — v2 era, resolved by v3 architecture).
 
 Registration (in agent.py):
     from claude_agent_sdk import ClaudeAgentOptions, HookMatcher

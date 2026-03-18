@@ -279,7 +279,7 @@ async def write_actions(actions: list[dict[str, Any]], request_id: str) -> dict[
         except Exception:
             pass
 
-    from sync.lib.actions_db import create_action
+    from sync.lib.actions_db import create_action  # STALE: function may not exist in actions_db.py
     from sync.lib.notion_client import create_action_entry
     from sync.lib.rate_limiter import notion_limiter
 
@@ -322,7 +322,7 @@ async def write_actions(actions: list[dict[str, Any]], request_id: str) -> dict[
 
             # Link Postgres row to Notion page
             if notion_page_id and pg_row.get("id"):
-                from sync.lib.actions_db import set_notion_page_id as set_action_notion_id
+                from sync.lib.actions_db import set_notion_page_id as set_action_notion_id  # STALE: function may not exist
                 set_action_notion_id(pg_row["id"], notion_page_id)
 
             written.append({"pg_id": pg_row.get("id"), "notion_page_id": notion_page_id})
@@ -647,7 +647,7 @@ async def cos_sync_actions() -> dict[str, Any]:
     Pulls status changes from Notion (accept/dismiss), pushes locally-created
     actions to Notion. Detects field-level changes.
     """
-    from sync.lib.actions_db import get_unsynced_actions, set_notion_page_id
+    from sync.lib.actions_db import get_unsynced_actions, set_notion_page_id  # STALE: functions may not exist in actions_db.py
     from sync.lib.change_detection import detect_action_changes
     from sync.lib.notion_client import fetch_actions, push_action_to_notion, sync_actions_from_notion
 

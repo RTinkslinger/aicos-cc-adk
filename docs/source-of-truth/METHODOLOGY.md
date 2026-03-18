@@ -1,5 +1,5 @@
 # Methodology & Technology Decisions
-*Last Updated: 2026-03-07*
+*Last Updated: 2026-03-17*
 
 Build principles, technology evaluation framework, and open decision spikes for the AI CoS system.
 
@@ -66,34 +66,3 @@ For each store in the vision topology, assessed against Principle #4 (migration 
 
 All start as Postgres. Graduate individually when triggers fire.
 
----
-
-## Open Evaluations
-
-Technology decisions that need a spike/prototype before committing.
-
-### Graph Store Evaluation
-
-**Question:** Do the relationship queries we actually need justify Neo4j, or can Postgres recursive CTEs handle them?
-
-**Spike:** Define 5 concrete queries from the Relationship Intelligence capability (CAPABILITY-MAP.md cap. 6). Implement in both Postgres and Neo4j. Compare complexity, performance, maintainability.
-
-**Test queries:**
-1. "Who connects me to Person X?" (shortest path)
-2. "Who are the most connected people in my thesis-relevant network?" (centrality)
-3. "Which communities exist in my network?" (community detection)
-4. "Who should I know but don't, based on my thesis threads?" (gap analysis)
-5. "Show me all relationships between Company X's team and my existing network" (subgraph)
-
-If queries 1-2 are the main use case: Postgres is fine.
-If queries 3-5 are frequent: Neo4j is worth the operational cost.
-
-### Embedding Model Selection
-
-**Question:** Which embedding model for pgvector / vector search?
-
-**Considerations:** Cost per embed, dimension count (affects storage), quality for investor/startup domain content, API availability.
-
-**Candidates:** OpenAI text-embedding-3-small, Claude embeddings (if available), open-source models via local inference.
-
-**Spike:** Embed 100 existing digests. Test retrieval quality for known-relevant queries.

@@ -1,5 +1,5 @@
 # Capability Map
-*Last Updated: 2026-03-07*
+*Last Updated: 2026-03-17*
 
 Forward-looking capability map for the AI CoS knowledge infrastructure. Each capability is expressed at IDS levels (+, ++, +++) — build + when friction demands it, graduate when + hits its limits.
 
@@ -65,16 +65,16 @@ This is NOT a project plan with timelines. It's a dependency graph and a capabil
 4. **Action Generator** — Produce proposed actions from extracted signals
 5. **Writer** — Persist results (Notion + Postgres via MCP tools)
 
-| Source | Current Status | Ingestion Tier |
-|--------|---------------|----------------|
-| YouTube (playlist) | **Live** via ContentAgent | Active |
-| YouTube (subscriptions) | Not built | Passive |
-| Granola (meetings) | Not built — MCP tools exist | Active (highest signal density: 7-8 meetings/day) |
-| Gmail | Not built — MCP tools exist | Passive |
-| Calendar | Not built — MCP tools exist | Passive |
-| LinkedIn | Not built | Passive |
-| X (Twitter) | Not built | Passive |
-| WhatsApp | Not built | Ambient |
+| Source | Ingestion Tier | Notes |
+|--------|---------------|-------|
+| YouTube (playlist) | Active | Content Agent processes autonomously |
+| YouTube (subscriptions) | Passive | Broader content monitoring |
+| Granola (meetings) | Active | Highest signal density: 7-8 meetings/day |
+| Gmail | Passive | MCP tools connected |
+| Calendar | Passive | MCP tools connected |
+| LinkedIn | Passive | No clean API |
+| X (Twitter) | Passive | No clean API |
+| WhatsApp | Ambient | Primary communication channel |
 
 **Ingestion tiers** (IDS applied to signal capture):
 
@@ -126,7 +126,7 @@ This is NOT a project plan with timelines. It's a dependency graph and a capabil
 
 | Level | Description | Technology |
 |-------|-------------|------------|
-| **+ Ad-hoc** | Current state: each runner assembles its own context via MCP calls. Works but duplicates logic. | MCP tools (existing) |
+| **+ Ad-hoc** | Each agent assembles its own context via psql + skills. Works but duplicates logic. | Postgres + skills (existing) |
 | **++ Standardized** | Context Assembly MCP tool: given an entity, return a standardized bundle. Shared across all runners. | New MCP tool + Postgres queries |
 | **+++ Intelligent** | Context level adaptation. Caching. Predictive pre-assembly. | Same + caching layer |
 
@@ -141,12 +141,12 @@ This is NOT a project plan with timelines. It's a dependency graph and a capabil
 
 | Level | Description | Technology |
 |-------|-------------|------------|
-| **+ Current** | SyncAgent's change detection and action generation. Reactive. | SyncAgent (existing) |
-| **++ Proactive** | Scheduled scans: stale profiles, missing fields, entity conflicts, orphaned records. Gap reports surfaced as actions. | SyncAgent evolution |
+| **+ Current** | Change detection and action generation infrastructure. Reactive. | Postgres change_events table (built, ready for activation) |
+| **++ Proactive** | Scheduled scans: stale profiles, missing fields, entity conflicts, orphaned records. Gap reports surfaced as actions. | Agent-driven scans |
 | **+++ Intelligent** | Pattern detection across accumulated data. Schema gap detection. | ML/heuristic analysis |
 
 **Dependencies:** Entity Resolution (cap. 1 +) for conflict detection. Multiple signal sources (cap. 4) for pattern detection at +++.
-**Infra pulled:** Extends SyncAgent. No new infrastructure at + or ++.
+**Infra pulled:** Uses existing Postgres change_events infrastructure. No new infrastructure at + or ++.
 
 ---
 

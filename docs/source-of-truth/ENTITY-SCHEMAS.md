@@ -1,5 +1,5 @@
 # Entity Schemas & Patterns
-*Last Updated: 2026-03-07*
+*Last Updated: 2026-03-17*
 
 Vision-state entity schemas and reusable patterns for the AI CoS system. These represent the target data model — not all fields exist today. See DATA-ARCHITECTURE.md for current implemented schemas.
 
@@ -111,20 +111,19 @@ Every runner follows this contract:
 |              RUNNER                        |
 |                                            |
 |  Input:   Signal(s) from source            |
-|  Context: Assembled via MCP tools          |
+|  Context: Assembled via psql + skills       |
 |  Logic:   Domain-specific analysis         |
 |  Output:  Actions + Entity updates         |
 |                                            |
-|  Reads:   cos_get_preferences()            |
-|           cos_get_thesis_threads()          |
-|           Entity context (Company/Person)  |
+|  Reads:   Postgres (preferences, thesis,   |
+|           entity context) via psql         |
 |                                            |
 |  Writes:  Actions Queue (scored)           |
 |           Thesis updates (evidence)        |
 |           Entity updates (new data)        |
 |           Content records (if applicable)  |
 |                                            |
-|  Schedule: Cron (interval varies)          |
+|  Runtime: Persistent ClaudeSDKClient       |
 |  Trust:   Starts at Suggest, earns up      |
 |  Logs:    Structured output for audit      |
 +-------------------------------------------+
@@ -138,16 +137,16 @@ Every runner follows this contract:
 5. Start at Suggest trust level — human approves all actions
 6. Graduate trust level based on accuracy rate over N actions
 
-**ContentAgent as reference implementation:**
+**Content Agent as reference implementation:**
 
 ```
 Signal:     YouTube videos from playlist / subscriptions
 Extractor:  yt-dlp + youtube-transcript-api -> JSON
 Resolver:   Company/person matching in transcript content
-Analyzer:   Claude API call with structured prompt
+Analyzer:   Persistent ClaudeSDKClient with CLAUDE.md + skills
 Output:     Content Digest record, thesis evidence, proposed actions
-Writer:     Notion (Content Digest DB) + Postgres (actions_queue) + digest.wiki
-Schedule:   Every 5 minutes
+Writer:     Postgres (content_digests, actions_queue) + Notion + digest.wiki
+Runtime:    Persistent session managed by lifecycle.py
 Trust:      Auto-act for thesis evidence, Suggest for new thesis threads
 ```
 
@@ -173,7 +172,7 @@ Actor 3: CRM Layer (Notion now, Attio later)
     Role: Shared surface -- both human and agent write here
     Rules: Human fields take precedence on conflict.
            Agent writes to agent-owned fields only.
-           Sync layer reconciles on schedule (SyncAgent).
+           Write-ahead pattern: Postgres first, push to Notion.
 ```
 
 **For every new field added to any entity schema, declare:**

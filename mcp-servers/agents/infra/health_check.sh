@@ -57,6 +57,5 @@ restart_with_cooldown() {
 check_port_service "state-mcp" 8000
 check_port_service "web-tools-mcp" 8001
 
-# Agents — no HTTP port, check via systemctl is-active
-check_systemd_service "content-agent"
-check_systemd_service "sync-agent"
+# Orchestrator — manages both persistent agent sessions (no HTTP port)
+check_systemd_service "orchestrator"

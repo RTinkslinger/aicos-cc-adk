@@ -15,7 +15,7 @@ from fastmcp import FastMCP
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from shared.logging import setup_logger
+from web.lib.logger import setup_logger
 from web.task_store import complete_task, create_task, fail_task, get_task
 from web.tools import (
     check_strategy,

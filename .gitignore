@@ -60,3 +60,4 @@ Thumbs.db
 
 # Build Roadmap — ephemeral working copy (Notion is source of truth)
 ROADMAP.md
+.claude/worktrees/

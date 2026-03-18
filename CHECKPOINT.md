@@ -1,56 +1,37 @@
 # Checkpoint
-*Written: 2026-03-16 04:00 IST*
+*Written: 2026-03-17 03:30 UTC*
 
 ## Current Task
-Architecture v2.2: Full build complete. All 7 chunks implemented. Ready for deploy + testing.
+Run exhaustive code review on the repo — user requested this as the next step after source-of-truth update + dead code cleanup.
 
 ## Progress
-- [x] Three-agent v1 build (63 files, deployed — will be replaced)
-- [x] Code audit v1 (25/25 resolved — superseded by v2.2)
-- [x] Architecture v2.2 brainstorming (deep, 10+ rounds of clarification)
-- [x] v2.2 design spec written: `docs/superpowers/specs/2026-03-15-architecture-v2.2-design.md`
-- [x] Phase 1: Infrastructure (SQL migrations, subagent defs, systemd units, deploy.sh)
-- [x] Phase 2: State MCP (5 tools, asyncpg, 9 files, 23 tests)
-- [x] Phase 3: Web Tools MCP (async task pattern, 3 new external tools, restructured)
-- [x] Phase 4: Skills (14 skills extracted, 3,010 lines of agent intelligence)
-- [x] Phase 5: Content Agent (runner.py + 532-line system prompt)
-- [x] Phase 6: Sync Agent (runner.py + 388-line system prompt)
-- [ ] Phase 7: Integration (deploy to droplet, run migrations, E2E testing)
+- [x] Source-of-truth update (9 files, section by section with user approval)
+- [x] Folder consolidation (docs/architecture/ → docs/source-of-truth/, PRIOR-ART.md moved in)
+- [x] SYSTEM-STATE.md deleted, FOLDER-INDEX.md deleted, ROADMAP.md restored for hook
+- [x] Dead reference audit (10 parallel agents × 202 files → 8 actionable dead refs fixed)
+- [x] Dead code cleanup (25+ v2 Python files → Archives/agents-v2-python/)
+- [x] shared/logging.py → web/lib/logger.py (+ 2 import updates)
+- [x] infra/health_check.sh fixed (orchestrator instead of content-agent/sync-agent)
+- [x] pyproject.toml testpaths cleaned, web/tests/test_tools.py imports fixed
+- [x] TRACES.md iteration 14 written
+- [ ] **Exhaustive code review — NOT STARTED**
+- [ ] Milestone 3 compaction (iterations 1-3 → archive)
+- [ ] Merge feat/three-agent-architecture → main
 
-## What Was Built (41 files)
+## Key Decisions (not yet persisted)
+All decisions already persisted to TRACES.md (Iteration 14) and memory.
 
-### New files (34)
-- `sql/v2.2-migrations.sql` — 3 new tables + notion_synced columns
-- `state/` — 9 files (server.py, db/{connection,thesis,inbox,notifications}.py, tests)
-- `skills/` — 14 markdown files (5 web, 5 content, 3 sync, 1 data)
-- `.claude/agents/` — 2 subagent definitions (web-researcher, content-worker)
-- `infra/` — 4 systemd units + health_check.sh
-- `web/task_store.py` — async task state management
-- `content/runner.py` — asyncio timer + query() launcher
-- `sync/runner.py` — asyncio timer + query() launcher
+## Next Steps
+1. Run exhaustive code review on the repo (user's request)
+2. After review: address findings
+3. Milestone 3 compaction (every 3 iterations)
+4. Merge branch to main
 
-### Modified files (7)
-- `web/server.py` — async task tools, external wrappers, renamed to web-tools-mcp
-- `web/tools.py` — removed old web_task, added check_strategy/manage_session/validate
-- `web/agent.py` — added setting_sources=["project"]
-- `content/system_prompt.md` — complete v2.2 rewrite (532 lines)
-- `sync/system_prompt.md` — complete v2.2 rewrite (388 lines)
-- `deploy.sh` — rewritten for 4 v2.2 services
-- `pyproject.toml` — added asyncpg, state/tests
-
-## Next Steps (for new/continued session)
-1. Read this CHECKPOINT.md
-2. Read `docs/v2.2-build-log.md` for testing checklists
-3. Deploy to droplet: `cd mcp-servers/agents && ./deploy.sh`
-4. Run SQL migrations: `ssh root@aicos-droplet "psql $DATABASE_URL < /opt/agents/sql/v2.2-migrations.sql"`
-5. Verify all 4 services: `systemctl status state-mcp web-tools-mcp content-agent sync-agent`
-6. Run E2E tests per build log checklists
-7. Bug fix any issues found during testing
-
-## Key Notes for Testing
-- `permission_mode="dontAsk"` is correct for autonomous agents
-- State MCP replaces old sync-agent on port 8000 — Cloudflare tunnel stays
-- Web Tools MCP keeps port 8001 — Cloudflare tunnel stays
-- Content Agent + Sync Agent have no ports (internal only, timer-driven)
-- Old v1 services (sync-agent, web-agent, content-agent) need to be stopped first
-- See `docs/v2.2-build-log.md` for full testing checklists per chunk
+## Context
+- Branch: `feat/three-agent-architecture` (many commits ahead of main)
+- This session: massive documentation + cleanup session. No new features — all docs/architecture/dead-code work.
+- Active services on droplet: orchestrator (lifecycle.py), state-mcp (:8000), web-tools-mcp (:8001)
+- content/ is now a pure Claude agent workspace (CLAUDE.md + hooks + state, zero Python)
+- sync/ directory deleted entirely from agents monorepo
+- Source-of-truth folder now has 11 files (was 9, added PRIOR-ART + DROPLET-RUNBOOK + MCP-CLOUDFLARE-TUNNEL-SETUP, removed SYSTEM-STATE)
+- Key design principle established: stable concepts in source-of-truth, volatile state in Build Roadmap/TRACES/PENDING-ITEMS

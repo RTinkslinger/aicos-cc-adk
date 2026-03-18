@@ -250,6 +250,59 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 **Droplet fixes:** watch_list.json reverted to curated playlist, cai_inbox cleared, view-logs.py deployed
 **Next:** E2E test — CAI inbox → orchestrator relay → content agent digest pipeline
 
----
+### Iteration 13 - 2026-03-16
+**Phase:** Cost Optimization + Deploy SOP + Repo Cleanup + Documentation Overhaul
+**Focus:** Fix remaining bugs, implement cost optimization, clean repo, build PRIOR-ART.md, artefact routing
+
+**Bug Fixes Applied:**
+- Filesystem hooks schema (matcher group nesting — SDK silently loads 0 matchers without it)
+- Dead session auto-restart (2 consecutive zero-turn heartbeats → bump session)
+- Python pre-check cost optimization (has_work() checks inbox + pipeline via psql/filesystem, skip LLM if idle = $0)
+- Orchestrator effort=low, max_turns=15, max_budget=$0.50, pipeline schedule 12hr
+- Mandatory last_pipeline_run.txt write (bold instruction in content CLAUDE.md Phase 3)
+**Deploy SOP Overhaul:**
+- Static docs (COMPACTION_PROTOCOL.md, CHECKPOINT_FORMAT.md) moved out of state/ to agent root
+- Runtime counters removed from git (.gitignore), created by bootstrap
+- deploy/ directory: bootstrap.sh, cleanup.sh, tools/ (view-logs.py, live-*.sh), DROPLET-MANIFEST.md
+- deploy.sh rewritten: 3-phase SYNC → BOOTSTRAP → CLEANUP+RESTART
+**Live Logging:** PostToolUse programmatic hooks + AssistantMessage ThinkingBlock/TextBlock extraction → live.log per agent
+**Repo Cleanup:** 213 stale files → Archives/ (code) + docs/archives/ (docs). FOLDER-INDEX.md rebuilt. queue/, Training Data/ archived.
+**Artefact Routing:** CLAUDE.md routing table — plans/specs/brainstorms/research/audits with YYYY-MM-DD naming
+**Documentation:** PRIOR-ART.md (35 entries, 4 eras from 4 parallel subagents), DROPLET-RUNBOOK.md rewritten, PENDING-ITEMS-2026-03-16.md, plans compacted, MCP-CLOUDFLARE-TUNNEL-SETUP.md renamed+updated
+**Cost Research:** docs/research/2026-03-16-agent-cost-optimization.md — Python pre-check biggest win ($173/day → $0 idle)
+**Health Check:** "run a health check" catchphrase → 10-min monitoring audit
+**Next:** Update docs/source-of-truth/ (9 files, section by section)
+
+### Iteration 14 - 2026-03-17
+**Phase:** Source of Truth v3 Update + Dead Code Cleanup
+**Focus:** Update all docs/source-of-truth/ files for v3, dead reference audit (10 agents × 202 files), archive v2 dead Python code
+
+**Source-of-Truth Changes:**
+- `VISION-AND-DIRECTION.md` (stripped to 4 stable sections, dropped build phases/gaps/current-vs-ideal)
+- `METHODOLOGY.md` (dropped Open Evaluations, kept 15 principles + tech eval framework)
+- `ARCHITECTURE.md` (full rewrite — stable patterns only, no status labels)
+- `MCP-TOOLS-INVENTORY.md` (full rewrite — State MCP 5 + Web Tools MCP 11, routing rules + guardrails)
+- `DATA-ARCHITECTURE.md` (full update — 10 Postgres tables, Postgres-as-queue, field ownership summary)
+- `CAPABILITY-MAP.md` (light touch — removed status labels, updated agent refs)
+- `ENTITY-SCHEMAS.md` (light touch — runner pattern to ClaudeSDKClient/psql/skills)
+- `README.md` (updated index), `PRIOR-ART.md` (moved in from docs/)
+- `DROPLET-RUNBOOK.md` + `MCP-CLOUDFLARE-TUNNEL-SETUP.md` (moved from docs/architecture/)
+- `SYSTEM-STATE.md` DELETED (DROPLET-RUNBOOK covers everything)
+- `FOLDER-INDEX.md` DELETED (repo itself is the index)
+**Dead Reference Audit:** 10 parallel agents scanned 202 files. Found 8 actionable dead refs → all addressed.
+**Dead Code Cleanup:**
+- 25+ v2 Python files archived to `Archives/agents-v2-python/` (content/*.py, sync/*.py, shared/mcp_client+types)
+- `shared/logging.py` → `web/lib/logger.py` (only active consumer is web/)
+- `sync/` directory removed entirely (disabled agent, all Python dead)
+- `content/` reduced to pure Claude agent workspace (CLAUDE.md + hooks + state only)
+- `infra/health_check.sh` fixed (content-agent/sync-agent → orchestrator)
+- `pyproject.toml` testpaths cleaned (removed content/tests, sync/tests)
+- `web/tests/test_tools.py` fixed (removed 2 broken imports)
+**Decisions:**
+- Point-in-time state stripped from stable docs → Build Roadmap/TRACES/PENDING-ITEMS
+- Infrastructure docs consolidated into source-of-truth/ (eliminated docs/architecture/)
+- v2 Python code is dead — v3 agents are ClaudeSDKClients that don't import Python. Archive, don't maintain.
+- shared/ eliminated — logging moved to web/lib/ where its only consumer lives
+**Next:** Milestone 3 compaction (iterations 1-3), then merge branch to main
 
 ---

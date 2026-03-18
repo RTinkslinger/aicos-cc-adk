@@ -1,7 +1,7 @@
 # Architecture
-*Last Updated: 2026-03-07*
+*Last Updated: 2026-03-17*
 
-Three-layer architecture, runners, integrations, and component status for the AI CoS system.
+The system design: layers, components, how they connect, and the core architectural patterns.
 
 ---
 
@@ -9,9 +9,9 @@ Three-layer architecture, runners, integrations, and component status for the AI
 
 The AI CoS is a persistent, autonomous system that answers **"What's Next?"** for Aakash Kumar (MD at Z47 / $550M fund + MD at DeVC / $60M fund). It optimizes across his full stakeholder and action space: meetings, content consumption, research, thesis building, and portfolio management.
 
-**Core architecture:** Three layers — Observation (signal sources), Intelligence (runners + tools), Interface (how Aakash interacts). All layers read/write from a shared State layer (hybrid Notion + Postgres).
+**Core architecture:** Three layers — Observation (signal sources), Intelligence (agents + tools), Interface (how Aakash interacts). All layers read/write from a shared State layer (hybrid Notion + Postgres).
 
-**Core principle:** Claude mobile is the primary conversational interface. Agent SDK runners enrich underlying state continuously so that when Aakash asks "what's next?", Claude reasons over rich, current, preference-calibrated data.
+**Core principle:** Claude mobile is the primary conversational interface. Persistent agents enrich underlying state continuously so that when Aakash asks "what's next?", Claude reasons over rich, current, preference-calibrated data.
 
 ---
 
@@ -19,32 +19,26 @@ The AI CoS is a persistent, autonomous system that answers **"What's Next?"** fo
 
 ```
 OBSERVATION LAYER (Signal Sources)
-  YouTube/RSS [LIVE]     Granola MCP [CONNECTED]    Calendar MCP [CONNECTED]
-  Gmail MCP [CONNECTED]  digest.wiki [LIVE]         X/LinkedIn [MANUAL]
-  Screenshots [MANUAL]   WhatsApp [FUTURE]
+  YouTube/RSS          Granola           Calendar
+  Gmail                digest.wiki       X/LinkedIn
+  Screenshots          WhatsApp
                  | normalized Signals
                  v
-INTELLIGENCE LAYER (Runners + Tools)
-  ContentAgent [LIVE]         SyncAgent [LIVE]
-  PostMeetingAgent [PLANNED]  OptimiserAgent [PLANNED]
-  IngestAgent [PLANNED]
+INTELLIGENCE LAYER (Agents + Tools)
+  Orchestrator → Content Agent (persistent ClaudeSDKClients, managed by lifecycle.py)
+  State MCP (CAI window)    Web Tools MCP (browser/scrape/search)
        | reads preference store before every reasoning session
-       v
-TOOL LAYER (ai-cos-mcp + existing MCPs)
-  17 custom MCP tools [LIVE]
-  Notion MCP, Granola MCP, Calendar MCP, Gmail MCP [CONNECTED]
-       | reads/writes
        v
 STATE LAYER
   Notion (8 DBs — human interface, SoT for human fields)
-  Postgres (7 tables — preference store, sync state, enrichments)
+  Postgres (pipeline state, preferences, sync, inbox, notifications)
   Thesis Tracker (AI-managed conviction engine)
        | surfaces to
        v
 INTERFACE LAYER
-  Claude mobile [LIVE]      Claude desktop [LIVE]
-  digest.wiki [LIVE]        Notion [LIVE]
-  Claude Code [LIVE]        WhatsApp [FUTURE]
+  Claude mobile         Claude desktop
+  digest.wiki           Notion
+  Claude Code           WhatsApp
 
          LEARNING LOOP
     accept/reject -> action_outcomes
@@ -56,65 +50,36 @@ INTERFACE LAYER
 
 ## Layer 1: Observation (Signal Sources)
 
-| Source | Signal Type | Status | Integration Details |
-|--------|------------|--------|-------------------|
-| **YouTube/RSS** | Content → thesis signals | LIVE (autonomous) | Droplet cron every 5 min. yt-dlp extraction → ContentAgent → publish. Cookies from Safari, expire every 1-2 weeks. |
-| **Granola** | Meeting signals, IDS updates | CONNECTED (not automated) | Granola MCP: `query_granola_meetings`, `get_meeting_transcript`. 7-8 meetings/day. Processing pipeline not yet built. |
-| **Google Calendar** | Location + schedule context | CONNECTED (not automated) | Google Calendar MCP. Powers geographic overlap factor in People Scoring Model. |
-| **Gmail** | Founder updates, investor comms | CONNECTED (not automated) | Gmail MCP. Raw access only, not processed by agents. |
-| **digest.wiki** | Revealed preferences (accept/reject) | LIVE (partial) | Currently surfaces content digests. Action accept/dismiss UX planned. |
-| **Notion** | Action outcomes, manual edits | LIVE | Enhanced Connector MCP + Raw API. Source of truth for human-managed structured data. |
-| **X / LinkedIn** | Thesis signals, network signals | MANUAL | No clean API. Screenshots/URLs via IngestAgent (future). |
-| **WhatsApp** | Response signals, async comms | FUTURE | Primary communication channel, no API integration yet. |
+Signal sources feed the Intelligence Layer. Each source type produces normalized signals that flow through the same analysis pipeline: match → retrieve context → analyze → score → generate actions → present.
 
-**Key principle: Same Brain, Different Eyes.** The Intelligence Engine runs the same flow for all sources: match → retrieve context → analyze → score → generate actions → present.
+**Signal categories:**
+- **Content** — YouTube, RSS, podcasts, articles. Autonomous processing via Content Agent.
+- **Meetings** — Granola transcripts. 7-8 meetings/day, each generates IDS signals.
+- **Schedule** — Google Calendar. Location + time context for scoring.
+- **Communications** — Gmail, WhatsApp. Founder updates, investor comms, async signals.
+- **Manual captures** — Screenshots, URLs, bookmarks. Zero-friction capture → structured extraction.
+- **Revealed preferences** — digest.wiki accept/reject, Notion action outcomes. Feeds learning loop.
+
+**Key principle: Same Brain, Different Eyes.** The Intelligence Engine runs the same flow for all sources.
 
 ---
 
-## Layer 2: Intelligence (Runners + Tools)
+## Layer 2: Intelligence (Agents + Tools)
 
-### Runners
+### Agent Pattern
 
-| Runner | Status | Trigger | What It Does |
-|--------|--------|---------|-------------|
-| **ContentAgent** | LIVE | New content in `queue/` (YouTube JSON). Cron every 5 min. | Calls Claude API with structured prompt. Produces DigestData JSON: thesis connections with conviction assessments, portfolio connections with actions, contra signals, rabbit holes, scored actions. Creates new thesis threads autonomously. |
-| **SyncAgent** | LIVE | Cron every 10 min. | Orchestrates: thesis status sync (Notion → Postgres), actions bidirectional sync, retry queue drain, change detection, action generation from changes. |
-| **PostMeetingAgent** | PLANNED | New Granola transcript detected | Extracts IDS signals (+, ++, ?, ??, +?, -), updates conviction trail, detects open commitments, identifies new people for Network DB, scores follow-up actions. |
-| **OptimiserAgent** | PLANNED | Nightly cron + on-demand ("what's next?") | Re-scores full action queue, surfaces dormant connections, "best person to meet today" reasoning, gap analysis ("you're underweighting bucket 2"). |
-| **IngestAgent** | PLANNED | Manual (screenshot drop, URL) | Profile screenshot → structured Network DB entry. Post URL → thesis signal extraction. |
+Agents are persistent ClaudeSDKClient sessions — same harness as Claude Code. Each agent has its own CLAUDE.md, hooks, Bash access, and tool permissions. Python (lifecycle.py) is lifecycle plumbing: process management, @tool bridge for inter-agent communication, token tracking, session restart on compaction.
 
-**Runner design principle:** Narrow specialists, not general agents. Runners execute what has been designed in Claude Code. They never design. The ContentAgent pattern is proven: extraction → Claude API analysis → Notion writes → digest.wiki publish → git push → Vercel deploy, every 5 min, no human in the loop.
-
-### ContentAgent Pipeline Detail
-
-```
-YouTube Playlist (polled every 5 min)
-  → yt-dlp extraction (with cookies)
-  → Dedup check (processed_videos.json)
-  → Relevance classification
-  → Transcript fetch (youtube-transcript-api + yt-dlp fallback)
-  → Claude Analysis (claude-sonnet-4, content_analysis.md prompt)
-    - Reads: thesis threads, portfolio context, preferences, CONTEXT.md
-    - Produces: DigestData JSON per video
-  → Three parallel output tracks:
-    A) digest.wiki: JSON → git push → Vercel auto-deploy (~15s)
-    B) Notion: Content Digest DB + Actions Queue + Thesis Tracker updates
-    C) Preference Store: action_outcomes logging
-```
+Agents access Postgres via Bash + psql (not custom @tools). Skills teach DB schema and workflow patterns. This mirrors CC's extensibility triad: tools + MCPs + skills.
 
 ### MCP Tool Layer
 
-The `ai-cos-mcp` server provides 17 tools (see MCP-TOOLS-INVENTORY.md). It complements existing MCPs:
+MCP servers provide tool access to both agents and Claude.ai:
 
-| MCP | Tools Used | Status |
-|-----|-----------|--------|
-| **ai-cos-mcp** | 17 custom tools (health, context, scoring, thesis CRUD, data access, sync, observability) | LIVE |
-| **Notion Enhanced Connector** | notion-fetch, notion-search, notion-create-pages, notion-update-page, notion-query-database-view | LIVE |
-| **Notion Raw API** | API-get-block-children, API-patch-block-children (block-level ops) | LIVE |
-| **Granola** | query_granola_meetings, get_meeting_transcript, list_meetings | CONNECTED |
-| **Google Calendar** | Calendar events, scheduling, free time | CONNECTED |
-| **Gmail** | Read, search, draft emails | CONNECTED |
-| **Vercel** | Deploy, logs, project management | CONNECTED |
+- **State MCP** — Lightweight CAI window. Thesis state, inbox relay, notifications. See MCP-TOOLS-INVENTORY.md.
+- **Web Tools MCP** — Browser automation, scraping, search, cookies, fingerprinting, URL monitoring. See MCP-TOOLS-INVENTORY.md.
+- **Notion MCP** — Enhanced Connector + Raw API. Human-managed structured data.
+- **External MCPs** — Granola, Calendar, Gmail, Vercel. Connected via Claude.ai.
 
 ### Scoring Models
 
@@ -124,7 +89,6 @@ Action Score = f(bucket_impact, conviction_change_potential, key_question_releva
                  time_sensitivity, action_novelty, stakeholder_priority, effort_vs_impact)
 ```
 Thresholds: >=7 surface, 4-6 low-confidence, <4 context enrichment only.
-Implementation: `scripts/action_scorer.py` (172 lines). NOT yet wired into Content Pipeline.
 
 **People Scoring Model (9 factors, subset for meeting-type actions):**
 ```
@@ -135,20 +99,19 @@ Person Score = f(bucket_relevance, current_ids_state, time_sensitivity,
 
 ### Learning Loop (Preference Store)
 
-`action_outcomes` table in Postgres. Every accept/reject with scoring factor snapshots. Injected into reasoning sessions via `cos_get_preferences()` before proposals. No ML training — structured history in context. After 6 months the system is measurably better at predicting what Aakash will act on.
+`action_outcomes` table in Postgres. Every accept/reject with scoring factor snapshots. Injected into reasoning sessions before proposals. No ML training — structured history in context. The compound effect: after 6 months the system is measurably better at predicting what Aakash will act on.
 
 ---
 
 ## Layer 3: Interface
 
-| Surface | Use Case | Powered By | Proactive? | Status |
-|---------|---------|------------|-----------|--------|
-| **Claude mobile** | "What's next?", action review, thesis discussion | MCP over Notion/Postgres state | No (Aakash initiates) | LIVE |
-| **Claude desktop** | Same as mobile, larger context | MCP over Notion/Postgres state | No | LIVE |
-| **digest.wiki** | Content digests, future: accept/reject actions | Vercel SSG → JSON data | No | LIVE |
-| **Notion** | Action triage, thesis notes, build roadmap | Direct Notion + runner syncs | No | LIVE |
-| **Claude Code** | Primary build surface, hooks, CLAUDE.md | CLI + hooks + Tailscale | No | LIVE |
-| **WhatsApp** | Proactive push: pre-meeting briefs, signal alerts | Agent SDK runner → WA API | YES | FUTURE |
+Surfaces through which Aakash interacts with the system:
+
+- **Claude mobile/desktop** — Primary conversational interface. "What's next?", action review, thesis discussion. Powered by MCP over Notion/Postgres state.
+- **digest.wiki** — Content digests. Vercel SSG from JSON data.
+- **Notion** — Action triage, thesis notes, build roadmap. Human-managed structured data.
+- **Claude Code** — Primary build surface. CLI + hooks + CLAUDE.md.
+- **WhatsApp** — Proactive push channel: pre-meeting briefs, signal alerts, follow-up reminders.
 
 ---
 
@@ -160,18 +123,6 @@ The Thesis Tracker is not a passive database — it's an AI-managed conviction e
 - Maturity axis: New → Evolving → Evolving Fast (thesis still forming)
 - Strength axis: Low → Medium → High (well-formed thesis, assessed on evidence)
 
-**Key Questions lifecycle:** Stored as `[OPEN]` page content blocks. When evidence answers a question, marked `[ANSWERED]` with citation. Automated by ContentAgent.
+**Key Questions lifecycle:** Stored as `[OPEN]` page content blocks. When evidence answers a question, marked `[ANSWERED]` with citation. Automated by Content Agent.
 
-**Autonomous thread creation:** When content analysis reveals a genuinely new investment thesis, ContentAgent creates a new thread at Conviction="New".
-
-**Active threads (6+):** Agentic AI Infrastructure, Cybersecurity/Pen Testing, USTOL/Aviation, SaaS Death/Agentic Replacement (High conviction), CLAW Stack, Healthcare AI Agents.
-
----
-
-## Detailed Reference
-
-- **Full architecture spec:** `docs/architecture/architecture-v0.3.md` (historical narrative — deeper detail, may have drifted)
-- **Full vision narrative:** `docs/architecture/vision-v5.md` (historical narrative)
-- **Data sovereignty:** `docs/source-of-truth/ENTITY-SCHEMAS.md` (canonical 3-actor model)
-- **Droplet runbook:** `docs/architecture/DROPLET-RUNBOOK.md` (operational how-to, not architecture)
-- **Repo navigation:** `docs/architecture/REPO-GUIDE.md`
+**Autonomous thread creation:** When content analysis reveals a genuinely new investment thesis, Content Agent creates a new thread at Conviction="New".

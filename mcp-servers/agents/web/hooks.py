@@ -24,7 +24,7 @@ import asyncio
 import time
 from urllib.parse import urlparse
 
-from shared.logging import get_trace_id, setup_logger
+from web.lib.logger import get_trace_id, setup_logger
 
 logger = setup_logger("web-agent")
 

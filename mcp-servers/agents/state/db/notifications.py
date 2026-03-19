@@ -74,4 +74,5 @@ async def mark_read(notification_ids: list[int]) -> int:
         notification_ids,
     )
     # asyncpg returns 'UPDATE N' — extract the count
-    return int(result.split()[-1])
+    parts = result.split()
+    return int(parts[-1]) if parts and parts[-1].isdigit() else 0

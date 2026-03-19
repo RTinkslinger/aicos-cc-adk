@@ -39,6 +39,9 @@ restart_with_cooldown() {
   local cooldown_file="${RESTART_COOLDOWN_FILE}-${service}"
   if [ -f "$cooldown_file" ]; then
     local last_restart=$(cat "$cooldown_file")
+    if ! [[ "$last_restart" =~ ^[0-9]+$ ]]; then
+      last_restart=0
+    fi
     local now=$(date +%s)
     local elapsed=$((now - last_restart))
     if [ $elapsed -lt $COOLDOWN_SECONDS ]; then

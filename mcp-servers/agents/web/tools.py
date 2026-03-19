@@ -44,9 +44,15 @@ async def web_browse(
 
     Args:
         url: Target URL
-        action: "snapshot" (default), "screenshot", "click", "fill", "evaluate"
+        action: "snapshot" (default), "screenshot", "click", "fill"
         readiness_mode: "auto", "selector:<css>", "time:<ms>", "none"
     """
+    if action == "evaluate":
+        return {
+            "status": "error",
+            "error": "evaluate action not available via direct tools. Use web_task_submit for agent-mediated JS execution.",
+        }
+
     from web.lib.browser import browse
 
     return await browse(url=url, action=action, readiness=readiness_mode)
@@ -206,7 +212,13 @@ async def manage_session(
         state = load_storage_state(domain)
         if state is None:
             return {"status": "not_found", "domain": domain}
-        return {"status": "loaded", "domain": domain, "state": state}
+        return {
+            "status": "loaded",
+            "domain": domain,
+            "has_cookies": bool(state.get("cookies")),
+            "cookie_count": len(state.get("cookies", [])),
+            "origins_count": len(state.get("origins", [])),
+        }
 
     elif action == "check":
         fresh = check_storage_state_valid(domain)

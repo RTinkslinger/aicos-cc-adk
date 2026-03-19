@@ -23,9 +23,23 @@ class WebTask:
 
 _tasks: dict[str, WebTask] = {}
 
+_TASK_TTL_SECONDS = 3600  # 1 hour
+
+
+def _evict_stale_tasks() -> None:
+    """Remove completed tasks older than TTL."""
+    now = datetime.utcnow()
+    stale = [
+        tid for tid, t in _tasks.items()
+        if t.completed_at and (now - t.completed_at).total_seconds() > _TASK_TTL_SECONDS
+    ]
+    for tid in stale:
+        del _tasks[tid]
+
 
 def create_task(task: str, url: str = "") -> WebTask:
     """Create a new task entry and store it. Returns the WebTask."""
+    _evict_stale_tasks()
     t = WebTask(task_id=f"wt_{uuid.uuid4().hex[:12]}", task=task, url=url)
     _tasks[t.task_id] = t
     return t

@@ -37,11 +37,14 @@ def cookie_status(cookie_dir: str = COOKIE_DIR) -> dict:
     cookies = []
     for f in sorted(cookie_path.glob("*.txt")):
         age_days = (time.time() - f.stat().st_mtime) / 86400
-        line_count = sum(
-            1
-            for line in f.read_text().splitlines()
-            if line.strip() and not line.startswith("#")
-        )
+        if f.stat().st_size > 1_000_000:  # 1MB guard
+            line_count = -1
+        else:
+            line_count = sum(
+                1
+                for line in f.read_text().splitlines()
+                if line.strip() and not line.startswith("#")
+            )
         entry: dict = {
             "domain": f.stem,
             "cookie_count": line_count,

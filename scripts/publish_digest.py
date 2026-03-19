@@ -33,8 +33,7 @@ from pathlib import Path
 # ─── Configuration ───────────────────────────────────────
 # Works from both Mac and Cowork VM
 POSSIBLE_REPO_PATHS = [
-    Path.home() / "Claude Projects" / "Aakash AI CoS" / "aicos-digests",
-    Path("/sessions") / "lucid-happy-maxwell" / "mnt" / "Aakash AI CoS" / "aicos-digests",
+    Path.home() / "Claude Projects" / "Aakash AI CoS CC ADK" / "aicos-digests",
 ]
 
 DATA_DIR = "src/data"
@@ -43,10 +42,6 @@ DATA_DIR = "src/data"
 def find_repo() -> Path:
     """Find the aicos-digests repo on whichever machine we're running."""
     for p in POSSIBLE_REPO_PATHS:
-        if (p / "package.json").exists():
-            return p
-    # Also check parent dir patterns
-    for p in Path("/sessions").glob("*/mnt/Aakash AI CoS/aicos-digests"):
         if (p / "package.json").exists():
             return p
     raise FileNotFoundError(

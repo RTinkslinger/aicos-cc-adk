@@ -28,6 +28,7 @@ import subprocess
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Optional
 
 from dedup_utils import DedupTracker
 
@@ -72,7 +73,7 @@ def extract_video_id(url_or_id: str) -> str:
     return url_or_id
 
 
-def get_playlist_videos(playlist_url: str, limit: int = None, since_date: str = None) -> list:
+def get_playlist_videos(playlist_url: str, limit: Optional[int] = None, since_date: Optional[str] = None) -> list:
     """Use yt-dlp to get video metadata from a playlist."""
     cmd = [
         find_yt_dlp(), '--flat-playlist',
@@ -85,7 +86,11 @@ def get_playlist_videos(playlist_url: str, limit: int = None, since_date: str = 
     cmd.append(playlist_url)
 
     print(f"Fetching playlist metadata...")
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    except subprocess.TimeoutExpired:
+        print(f"WARNING: yt-dlp timed out for playlist {playlist_url}")
+        return []
 
     if result.returncode != 0:
         print(f"yt-dlp error: {result.stderr[:500]}")

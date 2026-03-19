@@ -66,7 +66,7 @@ Use `send_to_content_agent`. It returns **immediately** — the content agent wo
 > 1. [id=42, type=track_source] Add YouTube playlist https://youtube.com/playlist?list=PLxyz to watch list
 > 2. [id=43, type=research_request] Research Composio competitive landscape
 
-**Important:** After sending work, mark inbox messages as processed immediately (the content agent has received the prompt). If `send_to_content_agent` returns "busy", skip and retry next heartbeat.
+**Important:** After `send_to_content_agent` returns "Prompt sent", mark the relayed inbox messages as processed. If it returns "busy" or an error, do NOT mark them — retry next heartbeat.
 
 ---
 

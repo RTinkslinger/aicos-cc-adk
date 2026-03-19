@@ -18,7 +18,7 @@ Run:
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import Any, Literal
 
 from fastmcp import FastMCP
 
@@ -51,6 +51,11 @@ async def get_state(include: list[str] | None = None) -> dict:
     Default (None): returns both.
     """
     sections = set(include) if include else {"thesis", "notifications"}
+    VALID_SECTIONS = {"thesis", "notifications"}
+    if include:
+        unknown = set(include) - VALID_SECTIONS
+        if unknown:
+            return {"status": "error", "message": f"Unknown sections: {sorted(unknown)}. Valid: {sorted(VALID_SECTIONS)}"}
     result: dict[str, Any] = {}
 
     if "thesis" in sections:
@@ -102,7 +107,10 @@ async def create_thesis_thread(name: str, core_thesis: str) -> dict:
     Returns:
         The newly created thesis thread record.
     """
-    row = await create_thread(name, core_thesis)
+    try:
+        row = await create_thread(name, core_thesis)
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
     return {
         "status": "created",
         "thread": {
@@ -119,7 +127,7 @@ async def create_thesis_thread(name: str, core_thesis: str) -> dict:
 # Tool 3: update_thesis
 # ---------------------------------------------------------------------------
 @mcp.tool()
-async def update_thesis(thesis_name: str, evidence: str, direction: str = "for") -> dict:
+async def update_thesis(thesis_name: str, evidence: str, direction: Literal["for", "against", "mixed"] = "for") -> dict:
     """Add evidence to a thesis thread.
 
     Direction: 'for', 'against', or 'mixed'.
@@ -133,7 +141,10 @@ async def update_thesis(thesis_name: str, evidence: str, direction: str = "for")
     Returns:
         The updated thesis thread record.
     """
-    row = await update_thread(thesis_name, evidence, direction)
+    try:
+        row = await update_thread(thesis_name, evidence, direction)
+    except ValueError as e:
+        return {"status": "error", "message": str(e)}
     return {
         "status": "updated",
         "thread": {
@@ -207,11 +218,19 @@ async def health_check() -> dict:
 # GET /health — ops endpoint (non-MCP)
 # ---------------------------------------------------------------------------
 @mcp.custom_route("/health", methods=["GET"])
-async def health_get(request):
+async def health_get(request) -> "JSONResponse":
     """HTTP GET /health for ops monitoring and load balancer probes."""
     from starlette.responses import JSONResponse
 
-    return JSONResponse({"status": "ok", "service": "state-mcp", "port": 8000})
+    try:
+        pool = await get_pool()
+        await pool.fetchval("SELECT 1")
+        return JSONResponse({"status": "ok", "service": "state-mcp", "port": 8000, "db": "connected"})
+    except Exception as e:
+        return JSONResponse(
+            {"status": "degraded", "service": "state-mcp", "port": 8000, "db_error": str(e)},
+            status_code=503,
+        )
 
 
 # ---------------------------------------------------------------------------

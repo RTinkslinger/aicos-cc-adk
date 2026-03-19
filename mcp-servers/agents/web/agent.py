@@ -67,7 +67,6 @@ async def run_agent_task(
             effort=effort,
             max_turns=20,
             max_budget_usd=2.00,
-            env={"ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", "")},
             cwd="/opt/agents",
             hooks={
                 "PreToolUse": [

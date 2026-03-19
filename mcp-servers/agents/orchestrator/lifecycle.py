@@ -57,8 +57,8 @@ def _live_log(path: Path, line: str) -> None:
         with open(path, "a") as f:
             f.write(f"{ts} {line}\n")
             f.flush()
-    except Exception:
-        pass
+    except Exception as e:
+        logger.warning("_live_log write failed (%s): %s", path, e)
 
 
 def _log_assistant_message(path: Path, msg: Any) -> None:
@@ -121,7 +121,11 @@ def _make_tool_hook(log_path: Path):
 
 def read_manifest() -> dict:
     if MANIFEST_PATH.exists():
-        return json.loads(MANIFEST_PATH.read_text())
+        try:
+            return json.loads(MANIFEST_PATH.read_text())
+        except (json.JSONDecodeError, OSError):
+            logger.warning("Corrupt manifest.json — starting fresh")
+            return {}
     return {}
 
 
@@ -179,7 +183,9 @@ def write_session_num(agent: str, n: int) -> None:
 
 
 def reset_iteration(agent: str) -> None:
-    (_state_dir(agent) / f"{agent}_iteration.txt").write_text("0")
+    path = _state_dir(agent) / f"{agent}_iteration.txt"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("0")
 
 
 def bump_session(agent: str) -> None:
@@ -398,7 +404,10 @@ async def has_work() -> str | None:
                 ["psql", db_url, "-t", "-A", "-c", "SELECT count(*) FROM cai_inbox WHERE processed = FALSE"],
                 capture_output=True, text=True, timeout=5,
             )
-            count = int(result.stdout.strip()) if result.stdout.strip() else 0
+            count_str = result.stdout.strip()
+            if not count_str or not count_str.isdigit():
+                return "inbox check returned unexpected output, waking agent to be safe"
+            count = int(count_str)
             if count > 0:
                 return f"inbox has {count} unprocessed messages"
     except Exception as e:
@@ -430,6 +439,7 @@ async def run_agent() -> None:
     from claude_agent_sdk import AssistantMessage, ClaudeSDKClient, ResultMessage
 
     bridge_server = create_bridge_server()
+    logger.info("Model: %s", os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"))
 
     while True:
         # Start content agent
@@ -498,10 +508,8 @@ async def run_agent() -> None:
         finally:
             await stop_content_client()
 
-        if orc_needs_restart:
-            bump_session("orc")
-        else:
-            await asyncio.sleep(5)
+        # Always bump session on re-entry (exception or compaction)
+        bump_session("orc")
 
 
 async def main() -> None:

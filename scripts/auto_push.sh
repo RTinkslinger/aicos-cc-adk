@@ -10,8 +10,8 @@
 # Uninstall:
 #   launchctl unload ~/Library/LaunchAgents/com.aicos.autopush.plist
 
-REPO="$HOME/Claude Projects/Aakash AI CoS/aicos-digests"
-LOG="$HOME/Claude Projects/Aakash AI CoS/logs/auto_push.log"
+REPO="$HOME/Claude Projects/Aakash AI CoS CC ADK/aicos-digests"
+LOG="$HOME/Claude Projects/Aakash AI CoS CC ADK/logs/auto_push.log"
 
 mkdir -p "$(dirname "$LOG")"
 

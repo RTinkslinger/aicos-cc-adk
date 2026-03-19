@@ -32,6 +32,11 @@ def _get_db() -> sqlite3.Connection:
     different threads via run_in_executor.
     """
     global _db
+    if _db is not None:
+        try:
+            _db.execute("SELECT 1")
+        except (sqlite3.ProgrammingError, sqlite3.OperationalError):
+            _db = None
     if _db is None:
         Path(DB_PATH).parent.mkdir(parents=True, exist_ok=True)
         _db = sqlite3.connect(DB_PATH, timeout=10, check_same_thread=False)

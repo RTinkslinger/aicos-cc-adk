@@ -46,7 +46,7 @@ ${RECENT_TRACES}
 \`\`\`
 
 ## Recovery Instructions
-1. Read HEARTBEAT.md for your task checklist
+1. Read CLAUDE.md for your task checklist
 2. Read traces/ for recent history
 3. Check state/ for any pending work
 4. Resume normal heartbeat operation

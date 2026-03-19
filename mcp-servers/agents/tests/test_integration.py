@@ -246,9 +246,8 @@ class TestSyncAgent:
         result = await _call_tool(SYNC_URL, "web_scrape", {"url": "https://example.com"})
         payload = result.get("result", result)
 
-        assert "error" not in payload or "circuit_open" not in payload, (
-            f"Proxy call failed — circuit open or Web Agent down: {payload}"
-        )
+        if not payload.get("circuit_open", False):
+            assert "error" not in payload, f"Proxy call failed: {payload}"
         # If Web Agent is up and Sync proxy works, content_length > 0
         if "content_length" in payload:
             assert payload["content_length"] > 0, f"Proxy returned empty content: {payload}"

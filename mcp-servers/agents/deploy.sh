@@ -4,7 +4,10 @@
 #
 # Active services: state-mcp, web-tools-mcp, orchestrator
 # Orchestrator manages content agent internally via lifecycle.py
-set -e
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR" || exit 1
 
 DROPLET="aicos-droplet"
 REMOTE_DIR="/opt/agents"
@@ -86,7 +89,8 @@ ssh root@${DROPLET} '
       break
     fi
     if [ "$i" -eq 30 ]; then
-      echo "  state-mcp: FAILED after 30s — continuing anyway"
+      echo "  state-mcp: FAILED after 30s"
+      exit 1
     fi
     sleep 1
   done
@@ -99,7 +103,8 @@ ssh root@${DROPLET} '
       break
     fi
     if [ "$i" -eq 30 ]; then
-      echo "  web-tools-mcp: FAILED after 30s — continuing anyway"
+      echo "  web-tools-mcp: FAILED after 30s"
+      exit 1
     fi
     sleep 1
   done

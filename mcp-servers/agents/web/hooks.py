@@ -62,6 +62,9 @@ async def rate_limit_check(input_data: dict, tool_use_id: str | None, context: o
         now = time.time()
         _domain_counts.setdefault(domain, [])
         _domain_counts[domain] = [t for t in _domain_counts[domain] if now - t < 60]
+        if not _domain_counts[domain]:
+            del _domain_counts[domain]
+            return {}
 
         if len(_domain_counts[domain]) >= _RATE_LIMIT:
             logger.warning(

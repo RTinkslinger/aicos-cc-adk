@@ -218,7 +218,7 @@ If `state/content_checkpoint.md` exists:
 
 ## 7. Watch List
 
-The watch list lives at `/opt/agents/data/watch_list.json`. You own this file.
+The watch list lives at `/opt/agents/data/watch_list.json`. This file is managed by Aakash. Read it for your pipeline sources but never modify it.
 
 **Schema:**
 ```json
@@ -240,8 +240,6 @@ The watch list lives at `/opt/agents/data/watch_list.json`. You own this file.
   ]
 }
 ```
-
-If the file doesn't exist, create it with an empty sources array. When adding sources from inbox messages, validate the URL format and set appropriate defaults.
 
 ---
 

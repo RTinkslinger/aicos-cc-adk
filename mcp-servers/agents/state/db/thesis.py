@@ -61,7 +61,7 @@ async def update_thread(thesis_thread_name: str, evidence: str, direction: str =
             UPDATE thesis_threads
             SET evidence_for = CASE
                     WHEN COALESCE(evidence_for, '') = '' THEN $2
-                    ELSE evidence_for || E'\\n' || $2
+                    ELSE COALESCE(evidence_for, '') || E'\\n' || $2
                 END,
                 notion_synced = FALSE,
                 updated_at = CURRENT_TIMESTAMP
@@ -79,7 +79,7 @@ async def update_thread(thesis_thread_name: str, evidence: str, direction: str =
             UPDATE thesis_threads
             SET evidence_against = CASE
                     WHEN COALESCE(evidence_against, '') = '' THEN $2
-                    ELSE evidence_against || E'\\n' || $2
+                    ELSE COALESCE(evidence_against, '') || E'\\n' || $2
                 END,
                 notion_synced = FALSE,
                 updated_at = CURRENT_TIMESTAMP
@@ -97,11 +97,11 @@ async def update_thread(thesis_thread_name: str, evidence: str, direction: str =
             UPDATE thesis_threads
             SET evidence_for = CASE
                     WHEN COALESCE(evidence_for, '') = '' THEN $2
-                    ELSE evidence_for || E'\\n' || $2
+                    ELSE COALESCE(evidence_for, '') || E'\\n' || $2
                 END,
                 evidence_against = CASE
                     WHEN COALESCE(evidence_against, '') = '' THEN $2
-                    ELSE evidence_against || E'\\n' || $2
+                    ELSE COALESCE(evidence_against, '') || E'\\n' || $2
                 END,
                 notion_synced = FALSE,
                 updated_at = CURRENT_TIMESTAMP

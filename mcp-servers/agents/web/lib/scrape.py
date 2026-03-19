@@ -18,6 +18,12 @@ def _get_firecrawl_key() -> str:
 
 async def scrape(url: str, use_firecrawl: bool = False) -> dict:
     """Extract content from URL as clean markdown."""
+    from web.lib.url_validation import validate_url
+
+    error = validate_url(url)
+    if error:
+        return {"source": "blocked", "url": url, "error": error, "content": ""}
+
     firecrawl_key = _get_firecrawl_key()
     if use_firecrawl and firecrawl_key:
         return await _scrape_firecrawl(url, firecrawl_key)

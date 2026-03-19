@@ -1,5 +1,5 @@
 # Vision & Direction
-*Last Updated: 2026-03-17*
+*Last Updated: 2026-03-18*
 
 The strategic foundation: what the AI CoS is, what it optimizes, how it thinks, and where it's going.
 
@@ -35,7 +35,7 @@ What v5 adds to the question: the reality of an autonomous system processing sig
 
 ## Design Principles
 
-1. **WhatsApp-first, mobile-native.** Desktop as primary = failure.
+1. **WebFront + CAI are the primary surfaces.** These two carry the AI CoS vision. WebFront (digest.wiki) for rich visual interaction; CAI (Claude mobile/desktop) for conversational interaction. WhatsApp and Notion are secondary.
 2. **Capture must be zero-friction.** Screengrab-as-memory, WhatsApp-self-as-bookmark. AI CoS must be even lower friction.
 3. **IDS is the core methodology.** Every signal compounds into the IDS graph.
 4. **Judgment stays with Aakash.** AI CoS never makes investment decisions — it makes Aakash's judgment more effective.

@@ -12,11 +12,10 @@ set -euo pipefail
 
 SYNC_URL="http://localhost:8000/mcp"
 WEB_URL="http://localhost:8001/mcp"
-CONTENT_URL="http://localhost:8002/mcp"
 
 PASS=0
 FAIL=0
-TOTAL=20
+TOTAL=18
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -82,8 +81,8 @@ mcp_health_fast() {
 # ---------------------------------------------------------------------------
 
 echo ""
-echo "=== Three-Agent System — Acceptance Tests ==="
-echo "    Spec §9 — 20 success criteria"
+echo "=== v3 Agent System — Acceptance Tests ==="
+echo "    Spec §9 — 18 success criteria (v3: State MCP + Web Tools MCP + Orchestrator)"
 echo "    $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo ""
 
@@ -126,29 +125,17 @@ check 5 "Strategy cache accessible (web_scrape triggers strategy recording)" \
 echo ""
 
 # ---------------------------------------------------------------------------
-# Per-Agent: Content Agent (port 8002) — criteria #6–#9
+# Thesis/Preferences tools (State MCP, port 8000) — criteria #8–#9
 # ---------------------------------------------------------------------------
 
-echo "Content Agent (port 8002):"
+echo "State MCP tools (port 8000):"
 
-# #6 — analyze_content produces valid DigestData JSON
-check 6 "analyze_content returns valid response (no crash)" \
-    "
-    stub='{\"extraction_data\":{\"title\":\"Test Video\",\"channel\":\"Test\",\"url\":\"https://youtube.com/watch?v=test\",\"transcript\":\"AI and venture capital\",\"duration_seconds\":60,\"published_at\":\"2026-03-15\"},\"content_type\":\"youtube\"}'
-    mcp_call '${CONTENT_URL}' 'analyze_content' \"\$stub\" | python3 -c 'import sys,json; d=json.load(sys.stdin); exit(0 if \"error\" not in d else 1)' 2>/dev/null || true
-    # analyze_content may run the full SDK — just verify it responds
-    mcp_call '${CONTENT_URL}' 'pipeline_status' | grep -q 'status'
-    "
-
-# #7 — Pipeline processes extraction end-to-end: digest published + Sync Agent called
-check_manual 7 "Full pipeline end-to-end: digest published + Sync Agent called (requires live YouTube video)"
-
-# #8 — Agent uses thesis tools during analysis (cos_get_thesis_threads called)
-check 8 "Sync Agent cos_get_thesis_threads callable (used by Content Agent during analysis)" \
+# #8 — Thesis tools accessible via State MCP
+check 8 "State MCP cos_get_thesis_threads callable" \
     "mcp_call '${SYNC_URL}' 'cos_get_thesis_threads' '{\"include_key_questions\":false}' | python3 -c 'import sys,json; d=json.load(sys.stdin).get(\"result\",{}); exit(0 if \"threads\" in d else 1)'"
 
-# #9 — Agent uses preference tools during analysis (cos_get_preferences callable)
-check 9 "Sync Agent cos_get_preferences callable (used by Content Agent during analysis)" \
+# #9 — Preference tools accessible via State MCP
+check 9 "State MCP cos_get_preferences callable" \
     "mcp_call '${SYNC_URL}' 'cos_get_preferences' '{\"limit\":5}' | python3 -c 'import sys,json; d=json.load(sys.stdin).get(\"result\",{}); exit(0 if \"recent_outcomes\" in d else 1)'"
 
 echo ""
@@ -238,15 +225,13 @@ exit(0 if \"result\" in d or \"error\" in d else 1)
 '
     "
 
-# #18 — All 3 services survive simultaneous restart (back up in <30s)
-# We check that all 3 are currently running; actual restart test is manual
-check 18 "All 3 agents responding (health checks pass simultaneously)" \
+# #18 — Both v3 services responding (health checks pass simultaneously)
+check 18 "Both services responding (State MCP + Web Tools MCP health checks)" \
     "
-    sync_ok=false; web_ok=false; content_ok=false
+    sync_ok=false; web_ok=false
     mcp_call '${SYNC_URL}' 'health_check' | grep -q '\"ok\"' && sync_ok=true
     mcp_call '${WEB_URL}' 'health_check' | grep -q '\"ok\"' && web_ok=true
-    mcp_call '${CONTENT_URL}' 'health_check' | grep -q '\"ok\"' && content_ok=true
-    \$sync_ok && \$web_ok && \$content_ok
+    \$sync_ok && \$web_ok
     "
 
 # #19 — Memory: all 3 agents + Postgres + Chrome < 3.5GB total

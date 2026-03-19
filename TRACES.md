@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-Milestone 1 established the Claude Code era foundation: fixed Content Digest/Actions Queue data completeness (20+ params), implemented the AI-managed Thesis Tracker conviction engine (6-level spectrum, key questions lifecycle, autonomous thread creation), completed Cowork→CC migration (cleanup, archiving, architecture/vision docs evolved to v0.3/v5). Milestone 2 implemented full Data Sovereignty: public MCP endpoint (Cloudflare Tunnel, 17 tools), Postgres write-ahead for thesis + actions, bidirectional sync with field-level ownership, change detection with auto-action generation, SyncAgent on cron. Key decisions: write-ahead pattern, Actions field ownership (Status=droplet, Outcome=Notion), `date:` shorthand incompatible with some data_source_id DBs, Companies/Network/Portfolio sync deferred.
+Milestone 1 established the Claude Code era foundation: fixed Content Digest/Actions Queue data completeness (20+ params), implemented the AI-managed Thesis Tracker conviction engine (6-level spectrum, key questions lifecycle, autonomous thread creation), completed Cowork→CC migration (cleanup, archiving, architecture/vision docs evolved to v0.3/v5). Milestone 2 implemented full Data Sovereignty: public MCP endpoint (Cloudflare Tunnel, 17 tools), Postgres write-ahead for thesis + actions, bidirectional sync with field-level ownership, change detection with auto-action generation, SyncAgent on cron. Milestone 3 built Web Tools MCP (5 tools, port 8001, Cloudflare Tunnel), cookie sync infrastructure, and deep research on Agent SDK production patterns. Key decisions: Jina Reader primary/Firecrawl fallback, SPA readiness ladder, ClaudeSDKClient for persistent agents, UCB bandit strategy cache.
 
 ## Milestone Index
 
@@ -10,6 +10,7 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 |---|------------|-------|---------------|
 | 1 | 1-3 | Infrastructure Hardening + Thesis Tracker + Cowork→CC Migration | AI-managed conviction engine, conviction spectrum, key questions as page blocks, claude-ai-sync/ folder, architecture doc versioning strategy |
 | 2 | 1-3 | Data Sovereignty — Public MCP + Postgres Backing + Sync + QA | Write-ahead pattern, field-level ownership, Cloudflare Tunnel endpoint, action generation from changes, 17 MCP tools QA'd |
+| 3 | 1-3 | Web Tools MCP + Research + Three-Agent Foundation | Jina/Firecrawl scraping, cookie sync, SPA readiness ladder, ClaudeSDKClient for persistent agents, UCB bandit strategy |
 
 *Full details: `traces/archive/milestone-N.md`*
 
@@ -17,43 +18,7 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 
 ---
 
-## Current Work (Milestone 3 in progress)
-
-### Iteration 1 - 2026-03-15
-**Phase:** Web Tools MCP Server — Build & Deploy
-**Focus:** Scaffold, build, and deploy web-tools-mcp with 5 tools
-
-**Changes:** `mcp-servers/web-tools-mcp/server.py` (new — 5 tools), `pyproject.toml`, `deploy.sh`, `tests/test_tools.py`, `.mcp.json` (added endpoint), `LEARNINGS.md` (3 patterns)
-**Infrastructure:** systemd service on port 8001, Cloudflare Tunnel at web.3niac.com, Google Chrome 146 installed, dpkg /etc/environment fix
-**Decisions:**
-- Jina search (s.jina.ai) requires API key → removed, Firecrawl-only search
-- cloudflared reads /etc/cloudflared/config.yml (not ~/.cloudflared/) when running as systemd service
-- /etc/environment had stale `PATH=/root/.deno/bin` breaking all dpkg — fixed
-**Next:** Cookie sync infra (Chunk 6), integration test with auth URLs (Chunk 7), reference docs deploy (Chunk 8)
-
-### Iteration 2 - 2026-03-15
-**Phase:** Web Tools MCP Server — Cookie Sync + SPA Fix
-**Focus:** Cookie pipeline Mac→droplet, fix empty content on JS-heavy SPAs
-
-**Changes:** `server.py` (added `wait_after_ms` param to web_browse), `~/.ai-cos/scripts/cookie-sync.sh` (deployed + fixed rsync flag + root@ prefix + added x.com/substack.com domains), `.mcp.json` (already done iter 1), `LEARNINGS.md` (2 new patterns)
-**Infrastructure:** Firecrawl .env configured, browser_cookie3 installed on Mac, daily cron at 6am, /opt/ai-cos/cookies/ on droplet with 5 domain cookie files
-**Decisions:**
-- SPA empty content root cause: `networkidle` fires before React hydration → added `wait_after_ms=3000` default delay
-- macOS rsync lacks `--chmod` flag → removed from cookie-sync.sh
-- Tailscale SSH requires explicit `root@` in rsync target
-**Next:** Reference docs deploy (Chunk 8), commit all work, update plan
-
-### Iteration 3 - 2026-03-15
-**Phase:** Research — Agent SDK + Web Intelligence Mastery
-**Focus:** Deep research (6 ultra reports) on Agent SDK production patterns, multi-agent orchestration, MCP integration, SPA/PWA extraction, agent adaptation, and anti-detection
-
-**Changes:** `docs/research/2026-03-15-agent-web-mastery/` (7 new files — index + 6 report summaries)
-**Decisions:**
-- Architecture clarified: web-tools-mcp = Layer 3 (hands), WebAgent (Agent SDK) = Layer 4 (brain). Agent-as-MCP-tool pattern for cross-surface access.
-- ClaudeSDKClient (not query()) for long-lived agents. SDK MCP for in-process tools, external MCP for remote.
-- Kill static waits → readiness ladder: deterministic selector > MutationObserver > LCP > framework markers > time fallback
-- Strategy cache + UCB bandit for adaptive site learning. MCP Strategy Registry for cross-agent knowledge sharing.
-**Next:** WebAgent build plan (Agent SDK), then commit all web-tools-mcp work
+## Current Work (Milestone 4 in progress)
 
 ### Iteration 4 - 2026-03-15
 **Phase:** WebAgent — Full Build & Deploy
@@ -345,4 +310,55 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - 334 docs need embedding (vec/hyde search degraded)
 - Fix: 3 new hooks (SessionStart context query, UserPromptSubmit prompt analysis, PostToolUseFailure counter)
 **Next:** Execute QMD integration upgrade plan, run `qmd embed` to clear backlog
+
+### Iteration 17 - 2026-03-18
+**Phase:** WebFront Architecture — Think-Through + Documentation + DB Selection
+**Focus:** Map full data flow, evolve digest.wiki into interactive "WebFront", select managed Postgres provider, validate against IRGI requirements
+
+**Analysis:**
+- Mapped complete connection flow: Content Agent → Postgres (pipeline queue) → JSON files → git push → Vercel SSG → digest.wiki
+- digest.wiki has NO runtime DB connection — pure SSG from flat JSON files
+- Fundamental constraint: Postgres on droplet unreachable from Vercel serverless (no Tailscale)
+- Apache AGE NOT supported on ANY managed Postgres (Neon, Supabase, RDS) — graph must be separate service
+- Agent heartbeat (60s psql query) NEGATES Neon's scale-to-zero — compute never suspends
+- IRGI compatibility verified: all 5 phases work with Supabase (pgvector + FTS supported, graph is separate)
+
+**Decisions:**
+- **"WebFront"** = new name for the web frontend (digest.wiki). "Interface Layer" = all surfaces
+- **WebFront + CAI** designated as primary interaction surfaces for AI CoS vision
+- **Managed Postgres** chosen over self-hosted (Vercel can't reach droplet) and dual-DB (unnecessary replication complexity)
+- **Supabase** chosen over Neon — heartbeat negates scale-to-zero, $6/mo more for real-time + PostgREST + MCP + dashboard. Real-time needed for WebFront Phases 3-4.
+- **Graph = separate service** (Neo4j/Zep/Graphiti) — Apache AGE dead on all managed Postgres
+- **Feature roadmap:** Action triage → Thesis interaction → Pipeline status → Agent messaging
+- **Rendering strategy:** Hybrid SSG (digest pages) + dynamic server components (interactive features)
+
+**Changes:**
+- `docs/source-of-truth/WEBFRONT.md` (new — current state, Supabase migration plan, feature roadmap, connection map)
+- `docs/superpowers/brainstorms/2026-03-18-webfront-architecture-decisions.md` (new — WebFront decision trail)
+- `docs/superpowers/brainstorms/2026-03-18-managed-postgres-and-irgi-decisions.md` (new — Neon vs Supabase, IRGI compat)
+- 6 source-of-truth docs updated (README, ARCHITECTURE, DATA-ARCHITECTURE, CAPABILITY-MAP, DROPLET-RUNBOOK, VISION-AND-DIRECTION)
+**Next:** Supabase migration (create project → pg_dump → import → update env vars → verify agent pipeline → WebFront Phase 1)
+
+### Iteration 18 - 2026-03-18
+**Phase:** Exhaustive Code Review + Critical Fixes
+**Focus:** 5-domain parallel code review (92 findings), fix all 13 critical issues, milestone 3 compaction
+
+**Review:** 68 files, ~8,800 lines across orchestrator, State MCP, Web MCP, deploy/infra, digest site. 13 Critical, 25 High, 33 Medium, 21 Low. Full report: `docs/audits/2026-03-18-exhaustive-code-review.md`
+
+**Critical Fixes Applied:**
+- C6: SSRF guard — `url_validation.py` blocks internal IPs on `scrape()`, `browse()`, `fingerprint()`
+- C1: `content_busy` deadlock — try/except around `query()` in lifecycle.py bridge
+- C2+C3: COMPACT_NOW detection — consistent `msg.result` check for both agents
+- C4: FALSE POSITIVE — Python 3.8+ auto-detects async targets in `patch()`
+- C5: Test fixture field names — `thread_name`/`key_question_summary` (23/23 pass)
+- C7-C9: Deleted ghost v1 infra (cron/health_check.sh, systemd/, scripts/preflight.sh)
+- C10-C11: Removed stale port 8002 tests from test_integration.py + acceptance.sh
+- C12+C13: Digest site path traversal + JSON.parse guard in digests.ts
+
+**Changes:** +1 new (`url_validation.py`), 6 deleted (v1 ghost files), 10 edited. Net -209 lines.
+**Decisions:**
+- SSRF guard at lib layer (not hooks) so ALL callers are protected
+- DNS rebinding gap noted but deferred (requires socket.getaddrinfo resolution check)
+- C4 dismissed after running tests — Python 3.8+ mock auto-detection works correctly
+**Next:** Merge to main, deploy to droplet, push digest site fix
 ---

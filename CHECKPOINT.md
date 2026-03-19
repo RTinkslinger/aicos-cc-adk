@@ -1,37 +1,56 @@
 # Checkpoint
-*Written: 2026-03-17 03:30 UTC*
+*Written: 2026-03-18 ~afternoon*
 
 ## Current Task
-Run exhaustive code review on the repo — user requested this as the next step after source-of-truth update + dead code cleanup.
+Evolving digest.wiki into "WebFront" — the primary web interaction layer for AI CoS. Architecture decisions complete, documentation done, ready to begin Supabase migration and Phase 1 (action triage) build.
 
 ## Progress
-- [x] Source-of-truth update (9 files, section by section with user approval)
-- [x] Folder consolidation (docs/architecture/ → docs/source-of-truth/, PRIOR-ART.md moved in)
-- [x] SYSTEM-STATE.md deleted, FOLDER-INDEX.md deleted, ROADMAP.md restored for hook
-- [x] Dead reference audit (10 parallel agents × 202 files → 8 actionable dead refs fixed)
-- [x] Dead code cleanup (25+ v2 Python files → Archives/agents-v2-python/)
-- [x] shared/logging.py → web/lib/logger.py (+ 2 import updates)
-- [x] infra/health_check.sh fixed (orchestrator instead of content-agent/sync-agent)
-- [x] pyproject.toml testpaths cleaned, web/tests/test_tools.py imports fixed
-- [x] TRACES.md iteration 14 written
-- [ ] **Exhaustive code review — NOT STARTED**
-- [ ] Milestone 3 compaction (iterations 1-3 → archive)
+- [x] Mapped full content agent → Postgres → digest.wiki data flow
+- [x] Named the web frontend "WebFront", defined terminology (WebFront + CAI = primary surfaces)
+- [x] Decided: managed Postgres (not self-hosted, not dual-DB)
+- [x] Researched Apache AGE — dead on all managed Postgres. Graph = separate service (Neo4j/Graphiti).
+- [x] Deep comparison: Neon vs Supabase, scoped to AI CoS use case
+- [x] Key finding: agent heartbeat (60s) negates Neon scale-to-zero
+- [x] Decision: **Supabase** confirmed as managed Postgres provider
+- [x] Feature roadmap: Action triage → Thesis interaction → Pipeline status → Agent messaging
+- [x] Rendering strategy: Hybrid SSG (digest pages) + dynamic server components (interactive features)
+- [x] Created `docs/source-of-truth/WEBFRONT.md` (new canonical reference)
+- [x] Created `docs/superpowers/brainstorms/2026-03-18-webfront-architecture-decisions.md`
+- [x] Created `docs/superpowers/brainstorms/2026-03-18-managed-postgres-and-irgi-decisions.md`
+- [x] Updated 6 source-of-truth docs — all reflect Supabase, all dated 2026-03-18
+- [x] TRACES.md updated with Iteration 17 (needs Neon→Supabase fix)
+- [x] Fix TRACES.md Iteration 17 to say Supabase not Neon
+- [ ] Exhaustive code review on the repo (carried from prior checkpoint)
+- [ ] Address code review findings
+- [ ] Milestone 3 compaction (iterations 1-3 → archive, overdue)
 - [ ] Merge feat/three-agent-architecture → main
+- [ ] Supabase project creation + Postgres migration
+- [ ] Update DATABASE_URL on droplet + Vercel
+- [ ] Verify agent pipeline works against Supabase
+- [ ] WebFront Phase 1: Action triage build
 
 ## Key Decisions (not yet persisted)
-All decisions already persisted to TRACES.md (Iteration 14) and memory.
+- TRACES.md Iteration 17 still says "Neon" — needs updating to "Supabase" (decision changed mid-session after deeper research)
+- Design principle #1 changed from "WhatsApp-first" to "WebFront + CAI are the primary surfaces" (already in VISION-AND-DIRECTION.md)
+- IRGI compatibility verified: no phase blocked by Supabase. Already documented in brainstorm doc.
 
 ## Next Steps
-1. Run exhaustive code review on the repo (user's request)
-2. After review: address findings
-3. Milestone 3 compaction (every 3 iterations)
-4. Merge branch to main
+1. **Exhaustive code review** on the repo (carried from prior session, not started)
+2. **Milestone 3 compaction** — iterations 1-3 → `traces/archive/milestone-3.md` (overdue since iteration 3)
+3. **Merge branch** — `feat/three-agent-architecture` → `main` (after review + compaction)
+4. **Create Supabase project** — sign up, provision Postgres
+5. **Migrate Postgres**: `pg_dump` from droplet → import to Supabase. Enable pgvector.
+6. **Update DATABASE_URL**: droplet `.env` + Vercel env vars
+7. **Verify agent pipeline**: restart orchestrator, confirm pipeline works against Supabase
+8. **Connect WebFront**: install `@supabase/ssr`, configure server component queries
+9. **Build Phase 1**: Action triage on WebFront
 
 ## Context
-- Branch: `feat/three-agent-architecture` (many commits ahead of main)
-- This session: massive documentation + cleanup session. No new features — all docs/architecture/dead-code work.
-- Active services on droplet: orchestrator (lifecycle.py), state-mcp (:8000), web-tools-mcp (:8001)
-- content/ is now a pure Claude agent workspace (CLAUDE.md + hooks + state, zero Python)
-- sync/ directory deleted entirely from agents monorepo
-- Source-of-truth folder now has 11 files (was 9, added PRIOR-ART + DROPLET-RUNBOOK + MCP-CLOUDFLARE-TUNNEL-SETUP, removed SYSTEM-STATE)
-- Key design principle established: stable concepts in source-of-truth, volatile state in Build Roadmap/TRACES/PENDING-ITEMS
+- Session name: "webfront build out start"
+- Branch: `feat/three-agent-architecture`
+- IRGI docs: `/Users/Aakash/Claude Projects/Documents/Intelligent Retrieval and Graphing Infrastructure/docs/` (4 files, brainstorming not finality)
+- aicos-digests: separate git repo at `aicos-digests/`, 17 digest JSONs in `src/data/`
+- Droplet Postgres: 10 tables (see DATA-ARCHITECTURE.md), agents use `psql $DATABASE_URL`
+- Digest site: Next.js SSG, no runtime DB, JSON files baked at build time
+- Cross-sync inbox: 1 unread about droplet RAM upgrade (1GB→4GB for Chrome/Playwright) — not acted on
+- Source-of-truth now has 11 files (WEBFRONT.md added this session)

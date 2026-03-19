@@ -1,5 +1,5 @@
 # Data Architecture
-*Last Updated: 2026-03-17*
+*Last Updated: 2026-03-18*
 
 All data stores, schemas, field ownership, and sync patterns for the AI CoS system.
 
@@ -10,9 +10,11 @@ All data stores, schemas, field ownership, and sync patterns for the AI CoS syst
 Data lives in two systems with field-level ownership (see ENTITY-SCHEMAS.md for the full 3-actor sovereignty model):
 
 - **Notion** — Human interface. 8 databases. Aakash interacts here. Source of truth for human-managed fields (company names, deal status, person contacts, action status changes).
-- **Postgres (droplet)** — Machine brain. 10 tables. Agents reason here. Source of truth for enriched fields, preference history, pipeline state, inbox relay, and change events.
+- **Postgres** — Machine brain. 10 tables. Agents reason here. Source of truth for enriched fields, preference history, pipeline state, inbox relay, and change events.
 
-**Core principle:** The droplet's data is always equal or richer than Notion's. It has everything Notion has (synced periodically) plus agent-generated analysis, computed fields, and historical enrichments.
+**Planned migration:** Postgres moves from droplet to **Supabase** (managed Postgres with real-time, PostgREST, MCP). WebFront server components query Supabase directly via `@supabase/ssr`. Agents on the droplet connect via standard `DATABASE_URL` (psql). Supabase Realtime enables live pipeline status on WebFront. Single source of truth, no replication layer needed. See `WEBFRONT.md` for migration steps.
+
+**Core principle:** Postgres data is always equal or richer than Notion's. It has everything Notion has (synced periodically) plus agent-generated analysis, computed fields, and historical enrichments.
 
 ---
 

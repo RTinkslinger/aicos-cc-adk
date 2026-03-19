@@ -1,11 +1,12 @@
-"""Integration tests for the 3-agent system.
+"""Integration tests for the v3 agent system.
 
-These tests require all 3 agents to be running:
-  - Sync Agent on port 8000
-  - Web Agent on port 8001
-  - Content Agent on port 8002
+These tests require the following services to be running:
+  - State MCP on port 8000
+  - Web Tools MCP on port 8001
 
-Skip if agents aren't available (for CI/local dev without agents).
+Content Agent runs internally via lifecycle.py (no HTTP surface).
+
+Skip if services aren't available (for CI/local dev without agents).
 Usage:
     pytest tests/test_integration.py -v
     pytest tests/test_integration.py -v -m "not live"  # mock-only tests
@@ -21,7 +22,6 @@ import pytest
 
 SYNC_URL = "http://localhost:8000/mcp"
 WEB_URL = "http://localhost:8001/mcp"
-CONTENT_URL = "http://localhost:8002/mcp"
 
 # Public test URLs for web_scrape — criterion #2 (5/6 must succeed)
 TEST_URLS = [
@@ -84,7 +84,7 @@ async def _agent_available(url: str) -> bool:
 
 
 def _all_agents_available() -> bool:
-    """Synchronously check that all 3 agents are reachable."""
+    """Synchronously check that v3 services are reachable."""
     try:
         loop = asyncio.get_event_loop()
     except RuntimeError:
@@ -95,7 +95,6 @@ def _all_agents_available() -> bool:
             asyncio.gather(
                 _agent_available(SYNC_URL),
                 _agent_available(WEB_URL),
-                _agent_available(CONTENT_URL),
                 return_exceptions=True,
             )
         )
@@ -104,12 +103,11 @@ def _all_agents_available() -> bool:
         return False
 
 
-# Mark that skips all live tests when agents aren't running.
-# Individual mock-based tests opt out via @pytest.mark.no_skip_agents.
+# Mark that skips all live tests when services aren't running.
 _agents_up = _all_agents_available()
 requires_agents = pytest.mark.skipif(
     not _agents_up,
-    reason="Live agents not running (start Sync/Web/Content agents on ports 8000-8002)",
+    reason="Live services not running (start State MCP on 8000 + Web Tools MCP on 8001)",
 )
 
 
@@ -198,63 +196,6 @@ class TestWebAgent:
         )
 
 
-class TestContentAgent:
-    """Criteria: #6 health_check, #7 pipeline, #8 thesis tools, #9 preferences."""
-
-    @requires_agents
-    @pytest.mark.asyncio
-    async def test_health_check_returns_ok(self) -> None:
-        """Criterion #6 — Content Agent health_check returns 200."""
-        start = time.monotonic()
-        result = await _call_tool(CONTENT_URL, "health_check")
-        elapsed = time.monotonic() - start
-
-        assert elapsed < 2.0, f"health_check took {elapsed:.2f}s (>2s limit)"
-        assert "error" not in result, f"health_check returned error: {result.get('error')}"
-        payload = result.get("result", result)
-        assert payload.get("status") == "ok", f"Unexpected status: {payload}"
-
-    @requires_agents
-    @pytest.mark.asyncio
-    async def test_pipeline_status_returns_state(self) -> None:
-        """Criterion #7 — pipeline_status returns valid state dict."""
-        result = await _call_tool(CONTENT_URL, "pipeline_status")
-        payload = result.get("result", result)
-
-        assert "error" not in payload, f"pipeline_status returned error: {payload}"
-        assert "status" in payload, f"Missing 'status' field: {payload}"
-        assert payload["status"] in ("idle", "running", "complete", "error"), (
-            f"Unexpected pipeline status: {payload['status']}"
-        )
-
-    @requires_agents
-    @pytest.mark.asyncio
-    async def test_analyze_content_produces_valid_json(self) -> None:
-        """Criterion #7 — analyze_content produces valid DigestData JSON.
-
-        Uses a minimal extraction_data stub to verify the tool responds without crashing.
-        """
-        stub_extraction = {
-            "title": "Integration Test Video",
-            "channel": "Test Channel",
-            "url": "https://youtube.com/watch?v=test",
-            "transcript": "This is a test transcript about AI and venture capital.",
-            "duration_seconds": 60,
-            "published_at": "2026-03-15",
-        }
-        result = await _call_tool(
-            CONTENT_URL,
-            "analyze_content",
-            {"extraction_data": stub_extraction, "content_type": "youtube"},
-        )
-        payload = result.get("result", result)
-
-        # Should not be an unhandled crash
-        assert "error" not in payload or isinstance(payload.get("error"), str), (
-            f"analyze_content crashed: {payload}"
-        )
-
-
 class TestSyncAgent:
     """Criteria: #10 health_check, #11 write_digest, #12 write_actions, #13 sync, #14 queue, #15 proxy."""
 
@@ -322,8 +263,8 @@ class TestSystemLevel:
 
     @requires_agents
     @pytest.mark.asyncio
-    async def test_all_three_health_checks_pass_simultaneously(self) -> None:
-        """Criterion #18 partial — all 3 health checks pass at the same time."""
+    async def test_all_health_checks_pass_simultaneously(self) -> None:
+        """Criterion #18 partial — both v3 service health checks pass at the same time."""
         import httpx
 
         async def health(url: str) -> tuple[str, bool]:
@@ -346,7 +287,6 @@ class TestSystemLevel:
         results = await asyncio.gather(
             health(SYNC_URL),
             health(WEB_URL),
-            health(CONTENT_URL),
         )
         failures = [url for url, ok in results if not ok]
         assert not failures, f"Health checks failed for: {failures}"

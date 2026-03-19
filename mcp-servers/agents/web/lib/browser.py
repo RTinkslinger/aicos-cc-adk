@@ -130,6 +130,12 @@ async def browse(
       - "time:<ms>": async wait (e.g. "time:5000")
       - "none": no extra wait (for static pages)
     """
+    from web.lib.url_validation import validate_url
+
+    error = validate_url(url)
+    if error:
+        return {"status": "error", "error": error, "url": url}
+
     result: dict = {"url": url, "action": action}
     context = None
 

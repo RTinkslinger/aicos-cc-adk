@@ -1,5 +1,5 @@
 # Capability Map
-*Last Updated: 2026-03-17*
+*Last Updated: 2026-03-18*
 
 Forward-looking capability map for the AI CoS knowledge infrastructure. Each capability is expressed at IDS levels (+, ++, +++) — build + when friction demands it, graduate when + hits its limits.
 
@@ -39,18 +39,18 @@ This is NOT a project plan with timelines. It's a dependency graph and a capabil
 
 ---
 
-## 3. Action Frontend
+## 3. Action Frontend (WebFront)
 
-**What:** Human-layer surface for triaging, accepting/dismissing, and providing feedback on proposed actions. This is INFRASTRUCTURE, not a feature — it closes the RL feedback loop.
+**What:** Human-layer surface for triaging, accepting/dismissing, and providing feedback on proposed actions. This is INFRASTRUCTURE, not a feature — it closes the RL feedback loop. Part of the broader WebFront evolution (see `WEBFRONT.md`).
 
 | Level | Description | Technology |
 |-------|-------------|------------|
-| **+ MVP** | /actions route on digest.wiki. List view with accept/dismiss buttons. Writes to Actions Queue (Notion) + action_outcomes (Postgres). | Next.js + shadcn/ui + API routes via MCP server |
+| **+ MVP** | /actions route on WebFront (digest.wiki). List view with accept/dismiss buttons. Server Actions write to Supabase (actions_queue + action_outcomes). | Next.js server components + Supabase (@supabase/ssr) + Server Actions |
 | **++ Rich** | Sortable/filterable by score, thesis, source. Bulk actions. Detail panel with evidence/context. Score breakdown visualization. | Same stack, more components |
 | **+++ Intelligent** | Personalized ordering based on preference history. "Why this action?" explanations. Suggested groupings. | Same + preference-driven ranking API |
 
-**Dependencies:** None for +. Scoring (cap. 2 ++) for score display. Preferences (cap. 2 ++) for +++.
-**Infra pulled:** API routes on digest.wiki at +.
+**Dependencies:** Supabase migration (Postgres → Supabase) for +. Scoring (cap. 2 ++) for score display. Preferences (cap. 2 ++) for +++.
+**Infra pulled:** Supabase connection from Vercel at +. Server Actions for writes at +. Supabase Realtime for Phases 3-4.
 
 ---
 
@@ -216,9 +216,11 @@ Since the CRM backend should be swappable (Notion now, Attio later):
 
 **No dependencies (can start anytime):**
 - Entity Resolution + (Company/Person Index)
-- Action Frontend + (MVP accept/dismiss)
 - Scoring model completion (add 2 missing factors)
 - New signal source connectors (following the pattern)
+
+**Prerequisite: Supabase migration**
+- Action Frontend / WebFront + (MVP accept/dismiss) requires Supabase — WebFront server components need direct DB access
 
 ---
 

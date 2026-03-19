@@ -16,6 +16,7 @@ Exhaustive reference for the AI CoS system. Each file is self-contained and shar
 | **CAPABILITY-MAP.md** | 8 capabilities at IDS levels (+/++/+++), dependency graph, growth model | Planning what to build next, understanding capability dependencies |
 | **ENTITY-SCHEMAS.md** | Vision-state entity schemas, runner pattern template, IDS trail spec, 3-actor sovereignty model | Designing new entities/fields, extending data model |
 | **PRIOR-ART.md** | Full chronological build history (35+ entries, 4 eras). Append-only. | Before building anything — check what's been tried, what worked, what didn't |
+| **WEBFRONT.md** | Web frontend (digest.wiki): current SSG state, Supabase migration plan, feature roadmap, connection map | Planning frontend features, understanding data flow to/from WebFront |
 | **DROPLET-RUNBOOK.md** | Operational guide: services, directory layout, credentials, deploy, monitoring, failure recovery, scaling | Debugging infra, deploying, adding services |
 | **MCP-CLOUDFLARE-TUNNEL-SETUP.md** | Cloudflare Tunnel setup and configuration guide | Setting up or debugging MCP tunnel endpoints |
 
@@ -40,6 +41,7 @@ Update these docs when:
 | New MCP tool or tool signature change | MCP-TOOLS-INVENTORY.md |
 | New Postgres table or Notion DB schema change | DATA-ARCHITECTURE.md |
 | New component, integration, or architectural pattern | ARCHITECTURE.md |
+| Frontend feature, data flow, or rendering strategy change | WEBFRONT.md |
 | Direction shift, design principle change | VISION-AND-DIRECTION.md |
 
 ### How to Update

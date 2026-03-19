@@ -17,6 +17,12 @@ async def fingerprint(url: str) -> dict:
 
     Returns: framework, cms, page_type, is_spa, auth_required, signals
     """
+    from web.lib.url_validation import validate_url
+
+    error = validate_url(url)
+    if error:
+        return {"error": error, "url": url}
+
     result: dict = {
         "url": url,
         "framework": "unknown",

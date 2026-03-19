@@ -66,6 +66,10 @@ systemctl status web-tools-mcp
 curl -sf http://localhost:8001/health
 ```
 
+### Postgres (migrating to Supabase)
+
+Currently runs on the droplet. **Planned migration to Supabase** (managed Postgres with real-time, PostgREST, MCP). After migration, droplet becomes pure compute — agents connect to Supabase via `DATABASE_URL`, same as WebFront on Vercel. See `WEBFRONT.md` for migration steps.
+
 ### 4. Digest Site (`aicos-digests`)
 
 Next.js 16 static site at https://digest.wiki. Content agent publishes JSON files and git pushes. Vercel auto-deploys.
@@ -132,7 +136,7 @@ All in `/opt/agents/.env`. NOT synced by deploy.sh.
 | Variable | Purpose | Rotation |
 |----------|---------|----------|
 | `ANTHROPIC_API_KEY` | Claude API for agents | Anthropic console |
-| `DATABASE_URL` | Postgres connection string | DO dashboard |
+| `DATABASE_URL` | Postgres connection string (currently local, migrating to Supabase) | DO dashboard → Supabase dashboard |
 | `FIRECRAWL_API_KEY` | Web search/scrape | Firecrawl dashboard |
 
 **GitHub token** embedded in aicos-digests git remote URL. To rotate:

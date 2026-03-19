@@ -204,13 +204,9 @@ def create_bridge_server():
     async def _read_content_response():
         """Background task: read content agent response, track tokens, detect compaction."""
         try:
-            result_text = ""
             async for msg in clients.content_client.receive_response():
                 if isinstance(msg, AssistantMessage):
                     _log_assistant_message(CONTENT_LIVE_LOG, msg)
-                    for block in msg.content:
-                        if isinstance(block, TextBlock):
-                            result_text += block.text
                 elif isinstance(msg, ResultMessage):
                     update_manifest_tokens("content", msg.usage)
                     _log_result_message(CONTENT_LIVE_LOG, msg)
@@ -219,10 +215,9 @@ def create_bridge_server():
                         msg.num_turns,
                         msg.total_cost_usd or 0,
                     )
-
-            if "COMPACT_NOW" in result_text:
-                clients.content_needs_restart = True
-                logger.info("Bridge: content agent signaled COMPACT_NOW")
+                    if msg.result and "COMPACT_NOW" in msg.result:
+                        clients.content_needs_restart = True
+                        logger.info("Bridge: content agent signaled COMPACT_NOW")
         except Exception as e:
             logger.error("Bridge: error reading content response: %s", e)
         finally:
@@ -251,10 +246,16 @@ def create_bridge_server():
         logger.info("Bridge: forwarding to content agent (%d chars)", len(prompt))
         _live_log(CONTENT_LIVE_LOG, f">>> PROMPT: {prompt[:200]}")
         clients.content_busy = True
-        await clients.content_client.query(prompt)
-
-        # Fire-and-forget: spawn background reader, return immediately
-        asyncio.create_task(_read_content_response())
+        try:
+            await clients.content_client.query(prompt)
+            asyncio.create_task(_read_content_response())
+        except Exception as e:
+            clients.content_busy = False
+            logger.error("Bridge: failed to send to content agent: %s", e)
+            return {
+                "content": [{"type": "text", "text": f"Error sending to content agent: {e}"}],
+                "is_error": True,
+            }
 
         return {
             "content": [{"type": "text", "text": "Prompt sent to content agent. Working in background."}],

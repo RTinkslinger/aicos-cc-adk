@@ -34,13 +34,13 @@ def _thesis_row(**overrides) -> dict:
     """Default thesis thread row for testing."""
     base = {
         "id": 1,
-        "name": "AI Agents in SaaS",
+        "thread_name": "AI Agents in SaaS",
         "core_thesis": "AI agents will replace SaaS dashboards",
         "conviction": "New",
         "status": "Active",
         "evidence_for": "",
         "evidence_against": "",
-        "key_questions": "",
+        "key_question_summary": "",
         "notion_page_id": None,
         "notion_synced": False,
         "created_at": datetime(2026, 3, 15, 10, 0, 0),
@@ -122,7 +122,7 @@ class TestThesisGetThreads:
         result = await get_threads()
         assert isinstance(result, list)
         assert len(result) == 1
-        assert result[0]["name"] == "AI Agents in SaaS"
+        assert result[0]["thread_name"] == "AI Agents in SaaS"
 
     async def test_returns_empty_list_when_no_threads(self, mock_pool):
         mock_pool.fetch.return_value = []
@@ -147,7 +147,7 @@ class TestThesisCreateThread:
         result = await create_thread("AI Agents in SaaS", "AI agents will replace SaaS dashboards")
 
         assert result["notion_synced"] is False
-        assert result["name"] == "AI Agents in SaaS"
+        assert result["thread_name"] == "AI Agents in SaaS"
 
         # Verify the SQL was called with notion_synced=FALSE
         call_args = mock_pool.fetchrow.call_args

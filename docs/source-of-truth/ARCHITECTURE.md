@@ -1,5 +1,5 @@
 # Architecture
-*Last Updated: 2026-03-17*
+*Last Updated: 2026-03-18*
 
 The system design: layers, components, how they connect, and the core architectural patterns.
 
@@ -105,13 +105,15 @@ Person Score = f(bucket_relevance, current_ids_state, time_sensitivity,
 
 ## Layer 3: Interface
 
-Surfaces through which Aakash interacts with the system:
+Surfaces through which Aakash interacts with the system. **Primary surfaces: WebFront + CAI.**
 
-- **Claude mobile/desktop** — Primary conversational interface. "What's next?", action review, thesis discussion. Powered by MCP over Notion/Postgres state.
-- **digest.wiki** — Content digests. Vercel SSG from JSON data.
-- **Notion** — Action triage, thesis notes, build roadmap. Human-managed structured data.
+- **WebFront (digest.wiki)** — Web frontend. Currently SSG content digests; evolving into a persistent, real-time interaction layer (action triage, thesis dashboard, pipeline status, agent messaging). Vercel-hosted Next.js. See `WEBFRONT.md` for full architecture.
+- **CAI (Claude mobile/desktop)** — Primary conversational interface. "What's next?", action review, thesis discussion. Powered by MCP over Postgres state (migrating to Supabase).
+- **Notion** — Structured data management. Build roadmap, manual edits. Human-managed.
 - **Claude Code** — Primary build surface. CLI + hooks + CLAUDE.md.
 - **WhatsApp** — Proactive push channel: pre-meeting briefs, signal alerts, follow-up reminders.
+
+**Planned: Supabase migration.** Postgres moves from droplet to Supabase (managed Postgres with real-time, PostgREST, MCP). Enables WebFront server components to query directly, plus real-time subscriptions for live pipeline status. Single `DATABASE_URL` for agents + frontend. See `WEBFRONT.md` and `DATA-ARCHITECTURE.md`.
 
 ---
 

@@ -455,4 +455,83 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - pg_dump version must match server version (PG17 tools needed for PG17 server)
 - Password reset for new Supabase project: Dashboard → Project Settings → Database → Reset database password
 **Next:** Fix 3 audit findings (skill doc schema drift, connection.py hardening, NULL sequences). Delete Oregon project. WebFront Phase 1.
+
+### Iteration 23 - 2026-03-19
+**Phase:** Audit Fixes + Decommission + Cleanup + Revised Build Plan
+**Focus:** Fix all audit findings, decommission old Postgres, clean droplet+repo of dead refs, deep research Supabase capabilities, revised near-term execution plan
+
+**Audit Fixes (3):**
+- `connection.py`: Added `statement_cache_size=0` + `command_timeout=30` to asyncpg pool
+- 3 skill files: Fixed schema drift in postgres-schema.md (Tables 4,6,7,8), inbox-handling.md, change-interpretation.md — wrong column names for cai_inbox, notifications, action_outcomes, sync_metadata
+- NULL sequences: Reset `companies_id_seq` and `network_id_seq` via `setval()` on Supabase
+
+**Decommission + Cleanup:**
+- Old PostgreSQL 16 on droplet: `systemctl stop postgresql && systemctl disable postgresql`
+- Deleted 5 dead directories: /opt/ai-cos-mcp/ (125MB), /opt/web-agent/ (386MB), /opt/web-tools-mcp/ (19MB), /opt/ai-cos/ (44KB), /opt/aicos-digests/ (2MB). Total: 530MB recovered.
+- Removed 3 stale cron jobs (old pipeline, sync agent, web-agent health)
+- Removed 5 dead systemd units (ai-cos-mcp, content-agent, sync-agent, web-agent, postgresql.service.d/)
+- Fixed state-mcp.service: removed `After=postgresql.service` dependency
+- Updated 15 files: all old localhost:5432 / "droplet Postgres" refs → Supabase Mumbai
+
+**Supabase Capabilities Research:**
+- Deep research (ultra-fast, 8 min): 12 capabilities assessed across Realtime, Edge Functions, pgvector, pgmq, pg_cron, RLS, Auth, PostgREST, Storage, webhooks, Branching, AI features
+- 3 unlocks identified: Auto Embeddings (invisible infra), PostgREST+Realtime (WebFront pattern), Storage (deferred)
+- Key constraint established: Supabase extensions (pgmq, pg_cron, pg_net) ONLY for invisible Auto Embeddings — agents never interact, they are pure consumers
+- Anthropic has NO native embedding model → Voyage AI `voyage-3.5` (1024 dims) selected
+- IRGI Phase A piggybacked onto WebFront Phase 1 (no separate sprint)
+
+**Build Plan:**
+- `docs/superpowers/plans/2026-03-19-webfront-phase1-execution.md` (new — 4 weeks: foundation → action triage → semantic search → polish)
+- `docs/superpowers/brainstorms/2026-03-19-supabase-unlocks-and-build-sequence.md` (new — capability analysis + revised sequence)
+- Source-of-truth docs updated: ARCHITECTURE, DATA-ARCHITECTURE, WEBFRONT, DROPLET-RUNBOOK
+
+**Changes:** 19 files committed (db0256d), 4 new + 15 modified. Pushed to origin/main. Deployed to droplet.
+**Decisions:**
+- Agents = orchestration layer. DB extensions = invisible infrastructure only. No competing control planes.
+- Voyage AI for embeddings (Anthropic has none). Auto Embeddings: trigger→pgmq→cron→Edge Function→Voyage AI→vector column.
+- PostgREST+Realtime is HOW WebFront gets built (not a separate feature to schedule).
+- Supabase Storage deferred to Phase 2.5 (current git push flow works).
+**Next:** Delete Oregon Supabase project (user action). Execute WebFront Phase 1: RLS policies → Vercel env vars → @supabase/ssr → action triage UI → IRGI Phase A.
+---
+
+### Iteration 24 - 2026-03-19
+**Phase:** WebFront Phase 1 — Foundation Setup (Phase 0)
+**Focus:** RLS policies, Supabase SDK setup in aicos-digests, new 2026 key patterns integrated
+
+**Changes:**
+- `aicos-digests/package.json` (added @supabase/ssr + @supabase/supabase-js)
+- `aicos-digests/src/lib/supabase/server.ts` (new — createAdminClient() using secret key, bypasses RLS)
+- `aicos-digests/.env.local.example` (new — env var template with correct 2026 key names)
+- `aicos-digests/.gitignore` (added !.env.local.example exception)
+- Supabase SQL: GRANT SELECT/INSERT/UPDATE/DELETE on all public tables + sequences to service_role
+
+**Context:**
+- Absorbed deep research on Supabase 2026 key system: publishable (`sb_publishable_...`) replaces anon, secret (`sb_secret_...`) replaces service_role. Opaque tokens, not JWTs — gateway swaps for short-lived JWTs.
+- Env var names reconciled: plan said `SUPABASE_SERVICE_ROLE_KEY` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`, actual is `SUPABASE_SECRET_KEY` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`
+- User to rename `SUPABASE_URL` → `NEXT_PUBLIC_SUPABASE_URL` on Vercel dashboard (manual step)
+- Build verified: 24/24 static pages pass with new dependencies
+- RLS grants verified via information_schema query — service_role has full CRUD on all tables
+**Next:** Phase 0 verification (Server Component reading actions_queue), then Phase 1A action triage UI
+
+### Iteration 25 - 2026-03-19
+**Phase:** WebFront Phase 0 — Verification + Vercel CLI Setup
+**Focus:** Install Vercel CLI, link project, pull env vars, verify Supabase connection end-to-end
+
+**Changes:**
+- Vercel CLI v50.33.1 installed globally, authenticated as hi-1231, linked to aicos-digests
+- `aicos-digests/.vercel/` created (project link)
+- `aicos-digests/.env.local` pulled from Vercel (3 env vars: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY, SUPABASE_SECRET_KEY)
+- `aicos-digests/src/app/test-db/page.tsx` (new — temporary verification page, delete after)
+
+**Verification Results:**
+- Server Component → createAdminClient() → Supabase Mumbai: **PASS**
+- actions_queue: 115 rows readable (id, action_type, action, status, priority, created_at)
+- content_digests: 22 rows readable (id, title, channel, status, created_at)
+- Env var naming confirmed correct: `NEXT_PUBLIC_SUPABASE_URL` was already set (not `SUPABASE_URL` as CHECKPOINT implied)
+
+**Context:**
+- Vercel CLI was not installed — user correctly flagged this as a gap. Now available for all future env/deploy operations.
+- actions_queue column is `action` not `title` — schema queried via Supabase MCP to fix test page
+- Phase 0 foundation fully verified: RLS grants + SDK + env vars + connection all working
+**Next:** Phase 1A — Action Triage UI (/actions page with filters, Server Actions, Realtime)
 ---

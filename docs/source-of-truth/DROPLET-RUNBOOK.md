@@ -1,5 +1,7 @@
 # AI CoS Droplet Runbook
 
+*Last updated: 2026-03-19*
+
 Operational guide for the DO droplet running the v3 persistent agent system.
 
 ## Infrastructure
@@ -66,9 +68,9 @@ systemctl status web-tools-mcp
 curl -sf http://localhost:8001/health
 ```
 
-### Postgres (migrating to Supabase)
+### Postgres (Supabase Mumbai)
 
-Currently runs on the droplet. **Planned migration to Supabase** (managed Postgres with real-time, PostgREST, MCP). After migration, droplet becomes pure compute — agents connect to Supabase via `DATABASE_URL`, same as WebFront on Vercel. See `WEBFRONT.md` for migration steps.
+Database is on **Supabase** (ap-south-1 Mumbai). Droplet is pure compute — agents connect to Supabase via `DATABASE_URL` in `.env`, same as WebFront on Vercel. Only `psql` client is installed locally for ad-hoc queries.
 
 ### 4. Digest Site (`aicos-digests`)
 
@@ -136,7 +138,7 @@ All in `/opt/agents/.env`. NOT synced by deploy.sh.
 | Variable | Purpose | Rotation |
 |----------|---------|----------|
 | `ANTHROPIC_API_KEY` | Claude API for agents | Anthropic console |
-| `DATABASE_URL` | Postgres connection string (currently local, migrating to Supabase) | DO dashboard → Supabase dashboard |
+| `DATABASE_URL` | Supabase Postgres session pooler (ap-south-1 Mumbai) | Supabase Dashboard → Project Settings → Database → Reset password |
 | `FIRECRAWL_API_KEY` | Web search/scrape | Firecrawl dashboard |
 
 **GitHub token** embedded in aicos-digests git remote URL. To rotate:
@@ -223,10 +225,10 @@ ssh root@aicos-droplet 'free -h | head -2'
 ssh root@aicos-droplet 'df -h /opt'
 
 # Inbox status
-ssh root@aicos-droplet 'psql postgresql://aicos:XPa10EuFJgfyUb5mnBr6laxEJLvAYIW@localhost:5432/aicos_db -t -c "SELECT count(*) FROM cai_inbox WHERE processed = FALSE"'
+ssh root@aicos-droplet 'psql $DATABASE_URL -t -c "SELECT count(*) FROM cai_inbox WHERE processed = FALSE"'
 
 # Content digests
-ssh root@aicos-droplet 'psql postgresql://aicos:XPa10EuFJgfyUb5mnBr6laxEJLvAYIW@localhost:5432/aicos_db -t -c "SELECT count(*), status FROM content_digests GROUP BY status"'
+ssh root@aicos-droplet 'psql $DATABASE_URL -t -c "SELECT count(*), status FROM content_digests GROUP BY status"'
 
 # Recent digest commits
 ssh root@aicos-droplet 'cd /opt/aicos-digests && git log --oneline -5'
@@ -283,9 +285,13 @@ print(r.content[0].text)
 "
 ```
 
-### Postgres connection failing
+### Postgres connection failing (Supabase)
 ```bash
-psql postgresql://aicos:XPa10EuFJgfyUb5mnBr6laxEJLvAYIW@localhost:5432/aicos_db -c "SELECT 1"
+# Test Supabase connectivity
+psql $DATABASE_URL -c "SELECT 1"
+
+# If failing: check .env has correct DATABASE_URL, check Supabase project status,
+# check network (Supabase ap-south-1 must be reachable from droplet)
 ```
 
 ## Scaling Roadmap
@@ -298,7 +304,7 @@ s-2vcpu-4gb. Running 3 services + persistent agents. Comfortable for current wor
 
 ### Tier 2: Multi-Runner + Embeddings ($48/mo)
 
-**Trigger:** Running 3+ autonomous agents, generating embeddings locally, or Postgres DB exceeds 20 GB.
+**Trigger:** Running 3+ autonomous agents or generating embeddings locally.
 
 General Purpose (2 dedicated vCPUs, 8 GB RAM, 160 GB SSD). Dedicated CPUs critical when agents do sustained work.
 
@@ -324,6 +330,6 @@ General Purpose (4 dedicated vCPUs, 16 GB RAM, 320 GB SSD).
 | uv | Package manager | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 | Google Chrome 146 | Playwright browser | `apt install google-chrome-stable` |
 | Playwright | Browser automation | Via uv (in .venv) |
-| PostgreSQL 16 | Database | System |
+| PostgreSQL 17 client | psql for Supabase queries | apt (pgdg repo) |
 | cloudflared | Tunnel to Cloudflare edge | `.deb` from GitHub releases |
 | Tailscale | Mesh VPN | `curl -fsSL https://tailscale.com/install.sh \| sh` |

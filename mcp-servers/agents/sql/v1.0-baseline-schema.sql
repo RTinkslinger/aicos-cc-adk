@@ -5,6 +5,7 @@
 --
 -- This is the complete schema as it exists on the droplet.
 -- Use this as the authoritative reference for Supabase migration.
+-- NOTE: This schema is now live on Supabase Mumbai (PG17). Migration completed 2026-03-19.
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;

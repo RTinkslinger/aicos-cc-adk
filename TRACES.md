@@ -389,4 +389,70 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - DB4 conviction constraint safe to add (zero invalid rows) but deferred until code adds explicit `conviction='New'` to INSERT
 - Supabase migration SOP: inventory → setup → canary test (user-approved approach)
 **Next:** Execute Supabase migration with dual-audit plan
+
+### Iteration 20 - 2026-03-19
+**Phase:** Supabase Migration — Project Setup + Session Handoff
+**Focus:** User created Supabase project, authenticated MCP plugin, updated CHECKPOINT.md for next session
+
+**Changes:** `CHECKPOINT.md` (updated — Supabase project details added, pgvector + connection string as pre-migration steps, password URL-encoding note)
+**Context:**
+- Supabase project created: Org "Aacash", Project "AI COS", MEDIUM compute (4GB/2-core ARM), us-east-1
+- Supabase MCP plugin authenticated in Claude Code (was showing "Needs authentication", fixed by user via remove+re-add)
+- `claude mcp auth` and `claude mcp reset` commands don't exist — only add/remove/list
+- Prepared handoff prompt for next session to execute 6-phase migration
+- Password contains `@` → must be `%40` in connection string URLs
+**Next:** New CC session executes migration phases 1-6 from the plan
+
+### Iteration 21 - 2026-03-19
+**Phase:** Supabase Migration — Full Execution (Phases 1-5)
+**Focus:** Execute all 6 migration phases from the dual-audited plan. pgvector enabled, canary tests passed, single-phase cutover with ~2 min downtime.
+
+**Changes:** `CHECKPOINT.md` (updated — migration complete, Supabase project details finalized), `/opt/agents/.env` on droplet (DATABASE_URL switched to Supabase pooler)
+**Infrastructure:**
+- pgvector v0.8.0 enabled on Supabase via `CREATE EXTENSION vector`
+- TIMESTAMPTZ fix: 7 columns across 4 tables (cai_inbox, notifications, sync_metadata, content_digests)
+- Pre-migration backup: pg_dump + baseline row counts (934 rows) + sequences to /opt/backups/
+- Canary tests: psql connectivity, asyncpg pool (min=1, max=3), orchestrator query pattern — all pass
+- Pool config deployed via deploy.sh (all 3 services healthy)
+- Cutover: stop services → fresh dump → pg_restore --clean to Supabase → verify 934 rows + 37 indexes + pgvector → update .env → restart
+- Downtime: 04:50:05 → 04:52:17 UTC (~2 min 12s)
+- Post-cutover: all 3 services healthy, orchestrator detected pipeline work and processed heartbeat ($0.09)
+**Decisions:**
+- Region is us-west-2 (not us-east-1 as originally noted in CHECKPOINT) — minor latency difference, not a blocker
+- Session pooler URL: `postgres://postgres.bkxjvymaiknokybtupfm:supabase%401987@aws-0-us-west-2.pooler.supabase.com:5432/postgres?sslmode=require`
+- Old Postgres left running on droplet for rollback insurance (Phase 6 decommission in 1-2 weeks)
+- Supabase MCP verified: row counts match, data queryable
+**Next:** Monitor 24-48h, then Phase 6 (decommission old Postgres). WebFront Phase 1 can start immediately.
+
+### Iteration 22 - 2026-03-19
+**Phase:** Supabase Region Migration — Oregon → Mumbai
+**Focus:** 4-agent post-migration audit found CRITICAL latency (BLR1→us-west-2 = 490ms/query). Created new Supabase project in ap-south-1 (Mumbai), migrated data, achieved 16x latency improvement.
+
+**Audit (4 parallel agents):**
+- Schema: 10/10 PASS (all constraints, indexes, sequences, TIMESTAMPTZ intact)
+- Security: Secure by default (RLS on, no API grants, SSL enforced)
+- Performance: CRITICAL — 490ms/query due to BLR1→us-west-2 geographic distance
+- Code: 3 FAIL (skill doc schema drift), 3 WARN (connection.py hardening)
+- Full report: `docs/audits/2026-03-19-supabase-migration-audit.md`
+
+**Mumbai Migration:**
+- Created new project `llfkxnsfczludgigknbs` in ap-south-1 via Supabase MCP
+- Pooler hostname is `aws-1-ap-south-1` (not `aws-0` — varies by region!)
+- Installed PG17 client tools on droplet (pg_dump 16 can't dump PG17 server)
+- pg_dump Oregon → pg_restore Mumbai → verify 934 rows + 37 indexes → switch env → restart
+- All 3 services healthy on Mumbai
+
+**Latency Results:**
+| Metric | Oregon | Mumbai | Improvement |
+|--------|--------|--------|-------------|
+| avg | 511ms | 31ms | 16x |
+| p50 | 488ms | 30ms | 16x |
+| p99 | 731ms | 46ms | 16x |
+
+**Changes:** `CHECKPOINT.md` (updated), `/opt/agents/.env` on droplet (DATABASE_URL → Mumbai pooler), `docs/audits/2026-03-19-supabase-migration-audit.md` (new), PG17 client installed on droplet
+**Decisions:**
+- Supabase pooler hostnames vary by region: `aws-0` for us-west-2, `aws-1` for ap-south-1. Always get from dashboard.
+- pg_dump version must match server version (PG17 tools needed for PG17 server)
+- Password reset for new Supabase project: Dashboard → Project Settings → Database → Reset database password
+**Next:** Fix 3 audit findings (skill doc schema drift, connection.py hardening, NULL sequences). Delete Oregon project. WebFront Phase 1.
 ---

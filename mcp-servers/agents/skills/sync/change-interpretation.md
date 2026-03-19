@@ -131,12 +131,11 @@ Some changes should also generate notifications (written to `notifications` tabl
 | Sync failure (3+ consecutive) | Yes | Infrastructure issue needs attention |
 
 ```bash
-psql $DATABASE_URL -c "INSERT INTO notifications (notification_type, title, body, source_agent, created_at) VALUES (
-  'thesis_milestone',
-  'Thesis conviction reached High: {thread_name}',
-  'Thesis \"{thread_name}\" conviction moved from {old} to High based on accumulated evidence. Generated action: review portfolio for investment opportunities.',
+psql $DATABASE_URL -c "INSERT INTO notifications (source, type, content, metadata) VALUES (
   'SyncAgent',
-  NOW()
+  'thesis_milestone',
+  'Thesis \"{thread_name}\" conviction moved from {old} to High based on accumulated evidence. Generated action: review portfolio for investment opportunities.',
+  '{\"thread_name\": \"{thread_name}\", \"old_conviction\": \"{old}\", \"new_conviction\": \"High\"}'
 );"
 ```
 

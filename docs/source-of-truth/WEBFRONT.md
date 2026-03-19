@@ -1,5 +1,5 @@
 # WebFront Architecture
-*Last Updated: 2026-03-18*
+*Last Updated: 2026-03-19*
 
 The web frontend for the AI CoS system. Currently `digest.wiki` — evolving into a persistent, real-time interaction layer.
 
@@ -53,25 +53,20 @@ Content Agent (droplet)
 
 ## Target Architecture (Supabase + dynamic)
 
-### Decision: Postgres → Supabase
-Postgres moves from the droplet to **Supabase** (managed Postgres with real-time, PostgREST, MCP).
+### Supabase (LIVE)
+Postgres is on **Supabase** (ap-south-1 Mumbai, project `llfkxnsfczludgigknbs`, 31ms from droplet).
 
-**Why Supabase over Neon:**
-- Agent heartbeat (60s) prevents Neon scale-to-zero — negates its biggest advantage
-- For $6/mo more ($25 vs $19), Supabase adds: real-time subscriptions, PostgREST, MCP server, dashboard
-- Real-time subscriptions are needed for WebFront Phases 3-4 (pipeline status, agent messaging)
-- MCP server (20+ tools) accelerates development from Claude Code
-- PostgREST gives instant API for rapid prototyping
-- Both support pgvector + FTS equally (IRGI hybrid search)
-- Full decision trail: `docs/superpowers/brainstorms/2026-03-18-managed-postgres-and-irgi-decisions.md`
+**What Supabase provides beyond managed Postgres:**
+- **PostgREST** — Auto-generated REST API from tables. WebFront reads data without custom API routes.
+- **Realtime** — Streams DB changes over WebSocket. Live action updates, pipeline status, thesis changes.
+- **pgvector** (v0.8.0) — Semantic search. Combined with FTS for hybrid search (IRGI Phase A).
+- **Auto Embeddings** — Invisible pipeline: DB trigger → pgmq → pg_cron → Edge Function → Voyage AI → vector column. Agents write content, embeddings appear automatically.
+- **RLS** — Row Level Security for WebFront access control.
+- **MCP server** — Schema management and debugging from Claude Code.
 
-**Migration path:**
-1. Create Supabase project
-2. `pg_dump` droplet Postgres → import to Supabase
-3. Enable pgvector extension
-4. Update `DATABASE_URL` on droplet (.env) and Vercel (env vars)
-5. Verify agent pipeline works against Supabase
-6. Decommission droplet Postgres
+**Key architectural constraint:** Supabase extensions (pgmq, pg_cron, pg_net) are ONLY used as invisible infrastructure for Auto Embeddings. Agents never interact with them. Agents remain the orchestration layer; the database is storage + search.
+
+Decision trail: `docs/superpowers/brainstorms/2026-03-18-managed-postgres-and-irgi-decisions.md`
 
 ### Data Flow (target)
 ```
@@ -102,54 +97,56 @@ WebFront (Vercel)
 
 ## Feature Roadmap
 
-### Phase 1: Action Triage
-Accept/dismiss/defer proposed actions directly from digest pages and a dedicated actions view.
-- Read `actions_queue` from Supabase via server components
-- Server Actions to update status (Proposed → Accepted/Dismissed)
-- Filter by priority, thesis connection, status
-- Outcome feedback (Unknown/Helpful/Gold)
+### Phase 1: Action Triage + Semantic Search Foundation
+Accept/dismiss/defer proposed actions. Build IRGI Phase A (embeddings + FTS) as invisible infrastructure.
+- `/actions` page: read `actions_queue` via `@supabase/ssr` (PostgREST)
+- Server Actions: triage (Accept/Dismiss/Defer), rate outcome (Unknown/Helpful/Gold)
+- Realtime subscription: new actions appear live without page refresh
+- Related actions on digest detail pages
+- **IRGI Phase A:** pgvector embedding columns (1024-dim Voyage AI `voyage-3.5`) + FTS indexes on content_digests and thesis_threads
+- **Auto Embeddings pipeline:** DB trigger → pgmq → pg_cron → Edge Function → Voyage AI (invisible to agents)
+- Hybrid search SQL function (vector similarity + FTS BM25)
+- Full plan: `docs/superpowers/plans/2026-03-19-webfront-phase1-execution.md`
 
 ### Phase 2: Thesis Interaction
-View thesis threads, evidence trail, conviction levels. Light editing.
+View thesis threads, evidence trail, conviction levels. Semantic search in action.
 - Read `thesis_threads` from Supabase
 - Evidence timeline view (for/against with timestamps)
 - Key questions with OPEN/ANSWERED status
 - Conviction visualization across threads
+- **Semantic search:** "Find digests related to this thesis" powered by Phase 1 embeddings
 
 ### Phase 3: Pipeline Status
-Live operational dashboard replacing the manual postgres-to-notion dump.
+Live operational dashboard.
 - `content_digests` status distribution (queued/processing/published/failed)
 - Recent pipeline runs with timing
 - Watch list overview
-- Agent session status (from `traces/manifest.json` or Supabase)
+- Supabase Realtime for live status streaming
 
 ### Phase 4: Agent Messaging
 Web UI alternative to CAI messaging relay.
 - Post messages to `cai_inbox` via Server Actions
 - Read `notifications` table for agent responses
-- Streaming responses (if agent architecture supports it)
 
 ---
 
 ## Connection Map
 
 ```
-              ┌───────────────────────┐
-              │      SUPABASE          │
-              │  (managed Postgres)    │
-              │                       │
-              │  content_digests      │
-              │  thesis_threads       │
-              │  actions_queue        │
-              │  cai_inbox            │
-              │  notifications        │
-              │  action_outcomes      │
-              │  + 4 more tables      │
-              │  + pgvector (future)  │
-              │                       │
-              │  PostgREST (auto API) │
-              │  Realtime (WebSocket) │
-              └──────┬──────┬─────────┘
+              ┌────────────────────────────────┐
+              │         SUPABASE (Mumbai)       │
+              │     (managed Postgres 17)       │
+              │                                │
+              │  11 tables (934 rows)          │
+              │  pgvector 0.8.0 (semantic)     │
+              │  FTS tsvector (keyword)        │
+              │                                │
+              │  PostgREST (auto REST API)     │
+              │  Realtime (WebSocket streams)  │
+              │  Auto Embeddings (invisible):  │
+              │    trigger→pgmq→cron→Edge Fn   │
+              │    →Voyage AI→vector column    │
+              └──────┬──────┬──────────────────┘
                      │      │
           ┌──────────┘      └──────────┐
           │                            │
@@ -164,9 +161,11 @@ Web UI alternative to CAI messaging relay.
 │  Web Tools MCP   │          │    → Supabase SDK │
 │                  │          │  Realtime client  │
 │  psql $DB_URL    │          │    → live updates │
-└─────────────────┘          │  SSG digests      │
-          │                  │    → JSON files    │
-          │  git push        └──────────────────┘
+│  (session pooler │          │  SSG digests      │
+│   31ms latency)  │          │    → JSON files   │
+└─────────────────┘          └──────────────────┘
+          │                            │
+          │  git push (digest JSONs)   │
           └────────────────────────────┘
 ```
 

@@ -224,7 +224,7 @@ Key services (on droplet `/opt/agents/`): `orchestrator/lifecycle.py` (manages b
 See `docs/source-of-truth/` for full current state. Key files:
 - **ARCHITECTURE.md** — Three-layer system, runners (ContentAgent + SyncAgent live), integrations, component status
 - **MCP-TOOLS-INVENTORY.md** — All 17 MCP tools with signatures, routing rules, and categories
-- **SYSTEM-STATE.md** — Infrastructure: droplet, Postgres (7 tables), Cloudflare Tunnel, Tailscale, crons, endpoints
+- **DROPLET-RUNBOOK.md** — Operational guide for droplet infrastructure
 - **DATA-ARCHITECTURE.md** — 8 Notion DBs + 7 Postgres tables: schemas, field ownership, sync patterns
 - **VISION-AND-DIRECTION.md** — Build phases, gaps, design principles
 

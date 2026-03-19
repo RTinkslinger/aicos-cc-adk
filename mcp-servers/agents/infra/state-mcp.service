@@ -1,6 +1,6 @@
 [Unit]
 Description=AI CoS State MCP
-After=postgresql.service network.target
+After=network.target
 
 [Service]
 Type=simple

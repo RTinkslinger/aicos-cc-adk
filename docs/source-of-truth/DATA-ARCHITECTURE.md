@@ -1,5 +1,5 @@
 # Data Architecture
-*Last Updated: 2026-03-18*
+*Last Updated: 2026-03-19*
 
 All data stores, schemas, field ownership, and sync patterns for the AI CoS system.
 
@@ -12,7 +12,9 @@ Data lives in two systems with field-level ownership (see ENTITY-SCHEMAS.md for 
 - **Notion** — Human interface. 8 databases. Aakash interacts here. Source of truth for human-managed fields (company names, deal status, person contacts, action status changes).
 - **Postgres** — Machine brain. 10 tables. Agents reason here. Source of truth for enriched fields, preference history, pipeline state, inbox relay, and change events.
 
-**Planned migration:** Postgres moves from droplet to **Supabase** (managed Postgres with real-time, PostgREST, MCP). WebFront server components query Supabase directly via `@supabase/ssr`. Agents on the droplet connect via standard `DATABASE_URL` (psql). Supabase Realtime enables live pipeline status on WebFront. Single source of truth, no replication layer needed. See `WEBFRONT.md` for migration steps.
+**Supabase (managed Postgres, ap-south-1 Mumbai).** Agents on the droplet connect via session pooler (`DATABASE_URL`, psql). WebFront server components query via `@supabase/ssr` (PostgREST). Supabase Realtime enables live WebFront updates. Single source of truth, no replication layer.
+
+**Semantic search layer:** pgvector (v0.8.0) + Postgres FTS. Embedding columns on `content_digests` and `thesis_threads` populated automatically by Supabase Auto Embeddings pipeline (DB trigger → pgmq → pg_cron → Edge Function → Voyage AI `voyage-3.5` → 1024-dim vectors). Agents are pure consumers — write content normally, search with `ORDER BY embedding <=> query_vector`. Hybrid search combines vector similarity (semantic) + FTS BM25 (keyword).
 
 **Core principle:** Postgres data is always equal or richer than Notion's. It has everything Notion has (synced periodically) plus agent-generated analysis, computed fields, and historical enrichments.
 
@@ -319,4 +321,4 @@ Sync detects field change
 - **Notion operations guide:** `docs/notion/README.md`
 - **State MCP DB layer:** `mcp-servers/agents/state/db/` (thesis.py, inbox.py, notifications.py)
 - **Database schemas (Notion):** See CONTEXT.md for full field lists
-- **Postgres schemas (live):** `psql \d <tablename>` on droplet
+- **Postgres schemas (live):** `psql $DATABASE_URL -c '\d <tablename>'` (connects to Supabase)

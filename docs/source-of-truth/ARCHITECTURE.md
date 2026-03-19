@@ -1,5 +1,5 @@
 # Architecture
-*Last Updated: 2026-03-18*
+*Last Updated: 2026-03-19*
 
 The system design: layers, components, how they connect, and the core architectural patterns.
 
@@ -108,12 +108,12 @@ Person Score = f(bucket_relevance, current_ids_state, time_sensitivity,
 Surfaces through which Aakash interacts with the system. **Primary surfaces: WebFront + CAI.**
 
 - **WebFront (digest.wiki)** — Web frontend. Currently SSG content digests; evolving into a persistent, real-time interaction layer (action triage, thesis dashboard, pipeline status, agent messaging). Vercel-hosted Next.js. See `WEBFRONT.md` for full architecture.
-- **CAI (Claude mobile/desktop)** — Primary conversational interface. "What's next?", action review, thesis discussion. Powered by MCP over Postgres state (migrating to Supabase).
+- **CAI (Claude mobile/desktop)** — Primary conversational interface. "What's next?", action review, thesis discussion. Powered by MCP over Supabase Postgres state.
 - **Notion** — Structured data management. Build roadmap, manual edits. Human-managed.
 - **Claude Code** — Primary build surface. CLI + hooks + CLAUDE.md.
 - **WhatsApp** — Proactive push channel: pre-meeting briefs, signal alerts, follow-up reminders.
 
-**Planned: Supabase migration.** Postgres moves from droplet to Supabase (managed Postgres with real-time, PostgREST, MCP). Enables WebFront server components to query directly, plus real-time subscriptions for live pipeline status. Single `DATABASE_URL` for agents + frontend. See `WEBFRONT.md` and `DATA-ARCHITECTURE.md`.
+**Supabase (managed Postgres).** Postgres is on Supabase (ap-south-1 Mumbai, 31ms from droplet). Agents connect via session pooler (`DATABASE_URL`). WebFront connects via `@supabase/ssr` (PostgREST under the hood). Supabase provides: pgvector (semantic search), Realtime (live WebFront updates), PostgREST (auto-generated API), and Auto Embeddings (invisible pipeline: DB trigger → pgmq → pg_cron → Edge Function → Voyage AI → vector column). Agents are pure consumers of embeddings — they write content, vectors appear automatically. See `WEBFRONT.md` and `DATA-ARCHITECTURE.md`.
 
 ---
 

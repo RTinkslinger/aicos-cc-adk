@@ -222,24 +222,21 @@ psql $DATABASE_URL -c "SELECT slug, title, net_newness FROM content_digests WHER
 
 ## Table 4: action_outcomes
 
-Preference store. Records scoring factor snapshots for every proposed action. Used for model calibration.
+Records action outcomes with scoring metadata. Used for model calibration and preference tracking.
 
 ```sql
 CREATE TABLE action_outcomes (
     id SERIAL PRIMARY KEY,
-    action_id INTEGER REFERENCES actions_queue(id),
+    action_text TEXT,
     action_type TEXT,
     outcome TEXT,
-        -- Unknown, Helpful, Gold
-    bucket_impact REAL,
-    conviction_change REAL,
-    time_sensitivity REAL,
-    action_novelty REAL,
-    effort_vs_impact REAL,
-    total_score REAL,
-    notion_synced BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
+    score REAL,
+    scoring_factors JSONB,
+    source_digest_slug TEXT,
+    company TEXT,
+    thesis_thread TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    notion_synced BOOLEAN DEFAULT FALSE
 );
 ```
 
@@ -249,14 +246,17 @@ CREATE TABLE action_outcomes (
 ### Common queries
 
 ```bash
-# Gold-rated actions with scoring factors
-psql $DATABASE_URL -c "SELECT action_type, outcome, bucket_impact, conviction_change, time_sensitivity, action_novelty, effort_vs_impact, total_score FROM action_outcomes WHERE outcome IN ('Helpful', 'Gold') ORDER BY created_at DESC LIMIT 20;"
+# Actions with outcomes and scores
+psql $DATABASE_URL -c "SELECT action_type, outcome, score, company, thesis_thread FROM action_outcomes WHERE outcome IN ('Helpful', 'Gold') ORDER BY created_at DESC LIMIT 20;"
 
 # Average scores by outcome
-psql $DATABASE_URL -c "SELECT outcome, AVG(total_score), COUNT(*) FROM action_outcomes GROUP BY outcome;"
+psql $DATABASE_URL -c "SELECT outcome, AVG(score), COUNT(*) FROM action_outcomes GROUP BY outcome;"
 
-# Scoring factor distribution for Gold actions
-psql $DATABASE_URL -c "SELECT AVG(bucket_impact) as avg_bucket, AVG(conviction_change) as avg_conviction, AVG(time_sensitivity) as avg_time, AVG(action_novelty) as avg_novelty, AVG(effort_vs_impact) as avg_effort FROM action_outcomes WHERE outcome = 'Gold';"
+# Actions by thesis thread
+psql $DATABASE_URL -c "SELECT action_text, outcome, score, scoring_factors FROM action_outcomes WHERE thesis_thread = 'Agentic AI Infrastructure' ORDER BY created_at DESC;"
+
+# Unsynced action outcomes
+psql $DATABASE_URL -c "SELECT id, action_text FROM action_outcomes WHERE notion_synced = FALSE;"
 ```
 
 ---
@@ -301,27 +301,19 @@ psql $DATABASE_URL -c "UPDATE change_events SET processed = TRUE WHERE id IN (1,
 
 ---
 
-## Table 6: sync_metadata (NEW)
+## Table 6: sync_metadata
 
-Tracks sync cycle metadata. One row per sync cycle.
+Tracks per-table sync state. One row per table (UNIQUE on table_name).
 
 ```sql
 CREATE TABLE sync_metadata (
     id SERIAL PRIMARY KEY,
-    sync_type TEXT NOT NULL,
-        -- 'full', 'incremental', 'thesis_only', 'actions_only'
-    started_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    completed_at TIMESTAMP,
-    rows_pushed INTEGER DEFAULT 0,
-        -- Rows pushed Postgres -> Notion
-    rows_pulled INTEGER DEFAULT 0,
-        -- Rows pulled Notion -> Postgres
-    changes_detected INTEGER DEFAULT 0,
-    actions_generated INTEGER DEFAULT 0,
-    errors TEXT[],
-        -- Array of error messages (if any)
-    status TEXT DEFAULT 'running'
-        -- running, completed, failed
+    table_name VARCHAR(100) UNIQUE,
+    last_sync_at TIMESTAMPTZ,
+    sync_status VARCHAR(50) DEFAULT 'never',
+        -- 'never', 'syncing', 'completed', 'failed'
+    rows_synced INTEGER DEFAULT 0,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
@@ -331,43 +323,38 @@ CREATE TABLE sync_metadata (
 ### Common queries
 
 ```bash
-# Last sync status
-psql $DATABASE_URL -c "SELECT * FROM sync_metadata ORDER BY started_at DESC LIMIT 1;"
+# All table sync statuses
+psql $DATABASE_URL -c "SELECT table_name, sync_status, last_sync_at, rows_synced, updated_at FROM sync_metadata ORDER BY table_name;"
+
+# Tables that have never synced
+psql $DATABASE_URL -c "SELECT table_name FROM sync_metadata WHERE sync_status = 'never';"
+
+# Update sync status for a table
+psql $DATABASE_URL -c "INSERT INTO sync_metadata (table_name, last_sync_at, sync_status, rows_synced, updated_at) VALUES ('thesis_threads', NOW(), 'completed', {n}, NOW()) ON CONFLICT (table_name) DO UPDATE SET last_sync_at = NOW(), sync_status = 'completed', rows_synced = {n}, updated_at = NOW();"
 
 # Failed syncs
-psql $DATABASE_URL -c "SELECT * FROM sync_metadata WHERE status = 'failed' ORDER BY started_at DESC LIMIT 5;"
-
-# Sync history (last 24 hours)
-psql $DATABASE_URL -c "SELECT sync_type, started_at, completed_at, rows_pushed, rows_pulled, changes_detected, status FROM sync_metadata WHERE started_at > NOW() - INTERVAL '24 hours' ORDER BY started_at DESC;"
-
-# Record sync completion
-psql $DATABASE_URL -c "UPDATE sync_metadata SET completed_at = NOW(), rows_pushed = {n}, rows_pulled = {m}, changes_detected = {c}, actions_generated = {a}, status = 'completed' WHERE id = {sync_id};"
+psql $DATABASE_URL -c "SELECT table_name, last_sync_at, updated_at FROM sync_metadata WHERE sync_status = 'failed';"
 ```
 
 ---
 
-## Table 7: cai_inbox (NEW)
+## Table 7: cai_inbox
 
 Inbox for messages from Claude.ai (CAI) to agents. CAI writes via State MCP `post_message` tool. Content Agent reads and processes.
 
 ```sql
 CREATE TABLE cai_inbox (
     id SERIAL PRIMARY KEY,
-    message_type TEXT NOT NULL,
+    type VARCHAR(100) NOT NULL,
         -- track_source, research_request, thesis_update,
         -- watch_list_add, watch_list_remove, general
     content TEXT NOT NULL,
         -- The message text
     metadata JSONB DEFAULT '{}',
         -- Structured metadata (varies by type)
-    priority TEXT DEFAULT 'normal',
-        -- urgent, normal, low
     processed BOOLEAN DEFAULT FALSE,
-    processed_at TIMESTAMP,
-    error TEXT,
-        -- Error message if processing failed
-    retry_count INTEGER DEFAULT 0,
-    created_at TIMESTAMP DEFAULT NOW()
+    processed_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
@@ -377,40 +364,36 @@ CREATE TABLE cai_inbox (
 ### Common queries
 
 ```bash
-# Unprocessed messages (priority-ordered)
-psql $DATABASE_URL -c "SELECT id, message_type, content, priority, created_at FROM cai_inbox WHERE NOT processed ORDER BY CASE priority WHEN 'urgent' THEN 1 WHEN 'normal' THEN 2 WHEN 'low' THEN 3 END, created_at ASC;"
+# Unprocessed messages (oldest first)
+psql $DATABASE_URL -c "SELECT id, type, content, metadata, created_at FROM cai_inbox WHERE NOT processed ORDER BY created_at ASC;"
 
 # Mark as processed
 psql $DATABASE_URL -c "UPDATE cai_inbox SET processed = TRUE, processed_at = NOW() WHERE id = {id};"
 
-# Failed messages (retry_count >= 3)
-psql $DATABASE_URL -c "SELECT * FROM cai_inbox WHERE NOT processed AND retry_count >= 3;"
-
-# Increment retry count
-psql $DATABASE_URL -c "UPDATE cai_inbox SET retry_count = retry_count + 1 WHERE id = {id};"
+# Recent messages by type
+psql $DATABASE_URL -c "SELECT type, COUNT(*), MAX(created_at) as latest FROM cai_inbox GROUP BY type ORDER BY latest DESC;"
 ```
 
 ---
 
-## Table 8: notifications (NEW)
+## Table 8: notifications
 
 Outbound notifications from agents to CAI. Agents write, CAI reads via State MCP `get_state` tool.
 
 ```sql
 CREATE TABLE notifications (
     id SERIAL PRIMARY KEY,
-    notification_type TEXT NOT NULL,
+    source VARCHAR(100) NOT NULL,
+        -- ContentAgent, SyncAgent
+    type VARCHAR(100) NOT NULL,
         -- thesis_milestone, sync_event, content_processed,
         -- inbox_processed, error, research_complete
-    title TEXT NOT NULL,
-        -- Short summary for display
-    body TEXT,
-        -- Detailed notification content
-    source_agent TEXT NOT NULL,
-        -- ContentAgent, SyncAgent
+    content TEXT NOT NULL,
+        -- Notification message content
+    metadata JSONB DEFAULT '{}',
+        -- Structured metadata (varies by type)
     read BOOLEAN DEFAULT FALSE,
-    read_at TIMESTAMP,
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
@@ -421,63 +404,70 @@ CREATE TABLE notifications (
 
 ```bash
 # Unread notifications
-psql $DATABASE_URL -c "SELECT id, notification_type, title, source_agent, created_at FROM notifications WHERE NOT read ORDER BY created_at DESC;"
+psql $DATABASE_URL -c "SELECT id, source, type, content, created_at FROM notifications WHERE NOT read ORDER BY created_at DESC;"
 
 # Mark as read
-psql $DATABASE_URL -c "UPDATE notifications SET read = TRUE, read_at = NOW() WHERE id = {id};"
+psql $DATABASE_URL -c "UPDATE notifications SET read = TRUE WHERE id = {id};"
 
 # Write a notification
-psql $DATABASE_URL -c "INSERT INTO notifications (notification_type, title, body, source_agent) VALUES ('content_processed', 'Analyzed 3 new videos', 'Found 2 thesis-relevant items. 1 action proposed (P1).', 'ContentAgent');"
+psql $DATABASE_URL -c "INSERT INTO notifications (source, type, content, metadata) VALUES ('ContentAgent', 'content_processed', 'Analyzed 3 new videos. Found 2 thesis-relevant items. 1 action proposed (P1).', '{}');"
 
 # Recent notifications by type
-psql $DATABASE_URL -c "SELECT notification_type, COUNT(*), MAX(created_at) as latest FROM notifications GROUP BY notification_type ORDER BY latest DESC;"
+psql $DATABASE_URL -c "SELECT type, COUNT(*), MAX(created_at) as latest FROM notifications GROUP BY type ORDER BY latest DESC;"
 ```
 
 ---
 
 ## Schema Migration Reference
 
-For creating the NEW tables (6, 7, 8) and adding `notion_synced` columns to existing tables:
+For creating tables 4, 6, 7, 8 and adding `notion_synced` columns to existing tables:
 
 ```sql
+-- Table 4: action_outcomes
+CREATE TABLE IF NOT EXISTS action_outcomes (
+    id SERIAL PRIMARY KEY,
+    action_text TEXT,
+    action_type TEXT,
+    outcome TEXT,
+    score REAL,
+    scoring_factors JSONB,
+    source_digest_slug TEXT,
+    company TEXT,
+    thesis_thread TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    notion_synced BOOLEAN DEFAULT FALSE
+);
+
 -- Table 6: sync_metadata
 CREATE TABLE IF NOT EXISTS sync_metadata (
     id SERIAL PRIMARY KEY,
-    sync_type TEXT NOT NULL,
-    started_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    completed_at TIMESTAMP,
-    rows_pushed INTEGER DEFAULT 0,
-    rows_pulled INTEGER DEFAULT 0,
-    changes_detected INTEGER DEFAULT 0,
-    actions_generated INTEGER DEFAULT 0,
-    errors TEXT[],
-    status TEXT DEFAULT 'running'
+    table_name VARCHAR(100) UNIQUE,
+    last_sync_at TIMESTAMPTZ,
+    sync_status VARCHAR(50) DEFAULT 'never',
+    rows_synced INTEGER DEFAULT 0,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Table 7: cai_inbox
 CREATE TABLE IF NOT EXISTS cai_inbox (
     id SERIAL PRIMARY KEY,
-    message_type TEXT NOT NULL,
+    type VARCHAR(100) NOT NULL,
     content TEXT NOT NULL,
     metadata JSONB DEFAULT '{}',
-    priority TEXT DEFAULT 'normal',
     processed BOOLEAN DEFAULT FALSE,
-    processed_at TIMESTAMP,
-    error TEXT,
-    retry_count INTEGER DEFAULT 0,
-    created_at TIMESTAMP DEFAULT NOW()
+    processed_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Table 8: notifications
 CREATE TABLE IF NOT EXISTS notifications (
     id SERIAL PRIMARY KEY,
-    notification_type TEXT NOT NULL,
-    title TEXT NOT NULL,
-    body TEXT,
-    source_agent TEXT NOT NULL,
+    source VARCHAR(100) NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    content TEXT NOT NULL,
+    metadata JSONB DEFAULT '{}',
     read BOOLEAN DEFAULT FALSE,
-    read_at TIMESTAMP,
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Add notion_synced to existing tables (if not already present)
@@ -487,7 +477,6 @@ ALTER TABLE actions_queue ADD COLUMN IF NOT EXISTS notion_synced BOOLEAN DEFAULT
 ALTER TABLE actions_queue ADD COLUMN IF NOT EXISTS last_synced_at TIMESTAMP;
 ALTER TABLE content_digests ADD COLUMN IF NOT EXISTS notion_synced BOOLEAN DEFAULT FALSE;
 ALTER TABLE content_digests ADD COLUMN IF NOT EXISTS last_synced_at TIMESTAMP;
-ALTER TABLE action_outcomes ADD COLUMN IF NOT EXISTS notion_synced BOOLEAN DEFAULT FALSE;
 ```
 
 ---

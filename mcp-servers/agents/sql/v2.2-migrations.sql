@@ -1,5 +1,6 @@
 -- v2.2 Schema Migrations
 -- Run against the AI CoS Postgres database on aicos-droplet
+-- NOTE: Now running on Supabase Mumbai. Originally applied to droplet PG16, migrated 2026-03-19.
 -- Idempotent: safe to run multiple times
 
 -- ============================================================================

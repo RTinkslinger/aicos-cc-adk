@@ -408,7 +408,7 @@ YouTube Playlists
 | Droplet | `aicos-droplet` via Tailscale | Ubuntu 24.04, DO $12/mo |
 | MCP Server | `systemd ai-cos-mcp.service` | FastMCP Python, always-on |
 | Pipeline | `cron every 5 min` | `pipeline.sh` → extraction + analysis + publish |
-| Postgres | Droplet local | 7 tables: thesis_threads, actions_queue, action_outcomes, companies, network, sync_queue, change_events |
+| Postgres | Supabase Mumbai (ap-south-1) | 11 tables: thesis_threads, actions_queue, action_outcomes, content_digests, companies, network, sync_queue, change_events, cai_inbox, notifications, sync_metadata |
 | Deploy | `deploy.sh` from Mac | rsync → droplet → uv sync → systemctl restart |
 | Digest site | `aicos-digests/` on droplet | git push → Vercel auto-deploy |
 

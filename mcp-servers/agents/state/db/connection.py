@@ -21,7 +21,13 @@ async def get_pool() -> asyncpg.Pool:
             db_url = os.environ.get("DATABASE_URL")
             if not db_url:
                 raise RuntimeError("DATABASE_URL not set. Check /opt/agents/.env")
-            _pool = await asyncpg.create_pool(db_url, min_size=1, max_size=3)
+            _pool = await asyncpg.create_pool(
+                db_url,
+                min_size=1,
+                max_size=3,
+                statement_cache_size=0,
+                command_timeout=30,
+            )
     return _pool
 
 

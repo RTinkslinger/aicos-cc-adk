@@ -9,7 +9,7 @@ Instructions for processing messages from the CAI Inbox. Aakash sends instructio
 Check the inbox every 1-minute cycle:
 
 ```bash
-psql $DATABASE_URL -c "SELECT id, message_type, content, metadata, priority, created_at FROM cai_inbox WHERE NOT processed ORDER BY CASE priority WHEN 'urgent' THEN 1 WHEN 'normal' THEN 2 WHEN 'low' THEN 3 END, created_at ASC;"
+psql $DATABASE_URL -c "SELECT id, type, content, metadata, created_at FROM cai_inbox WHERE NOT processed ORDER BY created_at ASC;"
 ```
 
 If no unprocessed messages, do nothing. Move to the next scheduled task.
@@ -209,7 +209,7 @@ with open('/opt/agents/data/watch_list.json', 'w') as f:
 For every unprocessed inbox message:
 
 1. **Read** the message from cai_inbox.
-2. **Route** based on `message_type` (see routing table above).
+2. **Route** based on `type` (see routing table above).
 3. **Execute** the appropriate processing steps.
 4. **Mark processed:**
    ```bash
@@ -217,35 +217,26 @@ For every unprocessed inbox message:
    ```
 5. **Notify** (write to notifications table for significant outcomes):
    ```bash
-   psql $DATABASE_URL -c "INSERT INTO notifications (notification_type, title, body, source_agent, created_at) VALUES ('inbox_processed', 'Processed: {summary}', '{detailed result}', 'ContentAgent', NOW());"
+   psql $DATABASE_URL -c "INSERT INTO notifications (source, type, content, metadata) VALUES ('ContentAgent', 'inbox_processed', 'Processed: {summary}. {detailed result}', '{}');"
    ```
 
 ---
 
-## Priority Handling
+## Processing Order
 
-Messages have a priority field: `urgent`, `normal`, `low`.
-
-- **urgent:** Process immediately, before any scheduled content cycle work.
-- **normal:** Process in FIFO order during inbox check cycle.
-- **low:** Process only after all normal messages and scheduled work.
-
-The query in "Inbox Check Protocol" already sorts by priority.
+Messages are processed in FIFO order (oldest `created_at` first). The `metadata` JSONB field can carry optional priority hints from CAI, but the table itself has no priority column -- all messages are processed in creation order.
 
 ---
 
 ## Error Handling
 
 If processing a message fails:
-1. Do NOT mark it as processed.
-2. Log the error to the notifications table.
-3. It will be retried on the next 1-minute cycle.
-4. After 3 consecutive failures on the same message, mark it as processed and write an error notification:
+1. Do NOT mark it as processed -- it will be retried on the next 1-minute cycle.
+2. Log the error to the notifications table:
    ```bash
-   psql $DATABASE_URL -c "UPDATE cai_inbox SET processed = TRUE, processed_at = NOW(), error = 'Failed after 3 attempts: {error details}' WHERE id = {message_id};"
+   psql $DATABASE_URL -c "INSERT INTO notifications (source, type, content, metadata) VALUES ('ContentAgent', 'error', 'Failed to process inbox message #{message_id}: {error details}', '{\"inbox_message_id\": {message_id}}');"
    ```
-
-Track retry count:
-```bash
-psql $DATABASE_URL -c "SELECT id, content, COALESCE(retry_count, 0) as retries FROM cai_inbox WHERE NOT processed AND COALESCE(retry_count, 0) >= 3;"
-```
+3. If the message keeps failing, mark it as processed to prevent infinite retries and note the failure in metadata:
+   ```bash
+   psql $DATABASE_URL -c "UPDATE cai_inbox SET processed = TRUE, processed_at = NOW() WHERE id = {message_id};"
+   ```

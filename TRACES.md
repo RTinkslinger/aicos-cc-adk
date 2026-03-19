@@ -361,4 +361,32 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - DNS rebinding gap noted but deferred (requires socket.getaddrinfo resolution check)
 - C4 dismissed after running tests — Python 3.8+ mock auto-detection works correctly
 **Next:** Merge to main, deploy to droplet, push digest site fix
+
+### Iteration 19 - 2026-03-18
+**Phase:** High/Medium Fixes + Database Architecture Audit + Migration Prep
+**Focus:** Implement 38 high/medium findings, 3-dimension DB audit, baseline schema export, Supabase migration planning
+
+**High/Medium Fixes (38 items in 9 batches):**
+- Lifecycle.py: corrupt manifest guard, DATABASE_URL validation, always bump session, mkdir, logging
+- Prompt fixes: watch_list.json contradiction, inbox processed semantics, HEARTBEAT.md reference
+- State MCP: asyncio.Lock on pool, structured errors, NULL COALESCE, health DB check, Literal type
+- Web MCP: evaluate blocked on FastMCP, session state redacted, task eviction, SQLite reconnect
+- Deploy: cwd enforcement, abort on failure, pipefail
+- Scripts: path fixes, timeout handling, type annotations
+- Digest: DATA_DIR guard, UTC timestamps, v5 footer, watch_sections guard
+
+**Database Audit (3 parallel agents):**
+- Schema audit: 6 Critical, 5 High — missing schema versioning, constraints, TIMESTAMP inconsistency
+- Query audit: subprocess psql concerns, pool sizing, unbounded queries
+- Data flow audit: inbox message loss risk, queue race condition, concurrent evidence append
+- DB7 (missing indexes) was FALSE POSITIVE — live schema has 20+ indexes already
+- DB1: Baseline schema exported → `sql/v1.0-baseline-schema.sql` (11 tables, 20+ indexes)
+- DB5: Evidence append NULL-safe (COALESCE in ELSE branches)
+
+**Changes:** 23 files edited, 3 audit reports created, baseline schema exported. Merged to main, branch deleted.
+**Decisions:**
+- `any` type correct for JSON.parse in digest normalisation (Record<string, unknown> broke TypeScript build)
+- DB4 conviction constraint safe to add (zero invalid rows) but deferred until code adds explicit `conviction='New'` to INSERT
+- Supabase migration SOP: inventory → setup → canary test (user-approved approach)
+**Next:** Execute Supabase migration with dual-audit plan
 ---

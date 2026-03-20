@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-20T11:04:26Z",
+      "timestamp": "2026-03-20T11:09:15Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -42,18 +42,7 @@
       "Complete CC-CAI sync pilot (validate format, push to GitHub)",
       "Review Agent SDK ContentAgent plan"
     ],
-    "key_files_changed_last_session": [
-      "companies-pages/nomado.md",
-      "companies-pages/nooks.md",
-      "companies-pages/north-hollywood-high-school-highly-gifted-magnet.md",
-      "companies-pages/nuport-robotics.md",
-      "companies-pages/nus-high-school-of-mathematics-science.md",
-      "companies-pages/nuveb-exchange.md",
-      "portfolio-pages/vyomic-fka-aerodome.md",
-      "portfolio-pages/workatoms.md",
-      "companies-pages/terractive.md",
-      "companies-pages/terrado.md"
-    ],
+    "key_files_changed_last_session": [],
     "pending_inbox": []
   },
   "architecture": {
@@ -75,6 +64,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T11:04:26Z",
+  "updated_at": "2026-03-20T11:09:15Z",
   "updated_by": "cc"
 }

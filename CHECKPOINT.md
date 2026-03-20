@@ -1,68 +1,85 @@
 # Checkpoint
-*Written: 2026-03-19 07:00*
+*Written: 2026-03-20 09:00*
 
-## Current Task
-Supabase migration fully complete. Old PG decommissioned. Build sequence revised. Ready for WebFront Phase 1.
+## Current State
+WebFront v3 live at digest.wiki. 3 iterations shipped (v1→v2→v3). Companies/Network schema audit done, migration SQL drafted. Two workstreams ready for next session.
 
-## Progress
-- [x] Supabase migration: PG16 droplet → PG17 Supabase Oregon → PG17 Supabase Mumbai (31ms, 16x faster)
-- [x] 17/17 query+response tests passed (3 parallel test agents: reads, writes, endpoints)
-- [x] 4-agent post-migration audit: schema 10/10, security secure-by-default, performance CRITICAL (fixed via Mumbai), code 3 FAIL + 3 WARN (all fixed)
-- [x] Audit fixes: connection.py (statement_cache_size=0, command_timeout=30), 3 skill files (schema drift), NULL sequences reset
-- [x] Old PostgreSQL decommissioned: stopped+disabled, 530MB recovered, 5 dead dirs + 3 crons + 5 systemd units removed
-- [x] All docs updated: 15 files cleaned of old localhost PG refs
-- [x] Deep research: 12 Supabase AI/agent capabilities, 3 unlocks identified
-- [x] Supabase unlocks analysis: Auto Embeddings (invisible infra, Voyage AI), PostgREST+Realtime (WebFront pattern), Storage (deferred)
-- [x] WebFront Phase 1 execution plan written (4 weeks, includes IRGI Phase A)
-- [x] Committed (db0256d), pushed to origin/main, deployed to droplet
-- [x] Delete Oregon Supabase project (bkxjvymaiknokybtupfm) — DONE
-- [x] Vercel env vars set on aicos-digests (SUPABASE_URL, publishable key, secret key)
-- [ ] Execute WebFront Phase 1
+## Workstream 1: WebFront — CONTINUE ITERATING
+
+### What's Live (digest.wiki)
+- `/` — Home with stats grid, recent actions, active thesis
+- `/actions` — 115 actions, filters (status/priority/type/assigned_to), batch select, inline reasoning
+- `/actions/[id]` — Detail with AI reasoning, scoring bars, adversarial perspective, triage controls
+- `/thesis` — 8 threads with mini conviction gauges, evidence dots
+- `/thesis/[id]` — Detail with stepped conviction gauge, adversarial framework, key questions timeline, evidence trail (FOR/AGAINST with IDS notation), connected content
+- `/d/[slug]` — SSG digests (22) with related actions section
+- Navigation bar across all pages
+
+### Bugs to Fix (from QA + UX audit)
+1. **Nav touch targets** — 38px, needs 44px min. Fix: `min-h-[44px]` on nav links in `Nav.tsx`
+2. **Content→Action linkage gap** — DigestActions query returns empty despite actions existing. The `fetchDigestActions` uses ilike on `source_content` but the data linkage between digests and actions may not match. Investigate `source_content` field values.
+3. **Triage controls buried** on action detail page — need sticky footer so Accept/Dismiss visible without scrolling
+4. **No undo** on triage actions — add undo toast
+5. **3 touch target failures** — nav links, "Show more" toggle, back links
+6. **Thesis names not clickable** in digest or action list views — should link to `/thesis/[id]`
+7. **Evidence sections too long** without collapsing — add `<details>` for sections with 5+ entries
+
+### Reports
+- QA: `aicos-digests/docs/iterations/003-qa-report.md` (12/13 pass)
+- UX: `aicos-digests/docs/iterations/003-ux-audit.md` (7.2/10)
+- Plans: `aicos-digests/docs/iterations/001-webfront-v1.md`, `003-webfront-v3.md`
+
+### Still TODO from Phase 1 Plan
+- [ ] IRGI Phase A: vector columns, Auto Embeddings pipeline, FTS indexes, hybrid search function
+- [ ] Realtime subscriptions (new actions appear live)
+- [ ] Mobile-responsive polish (v3 improved but UX audit flagged issues)
+
+## Workstream 2: Companies + Network DB Schema Migration
+
+### What's Done
+- Schema audit: `docs/audits/2026-03-20-companies-network-schema-audit.md`
+- Companies: 49 Notion fields vs 32 Postgres columns → 24 gaps (6 HIGH)
+- Network: 44 Notion fields vs 34 Postgres columns → 18 gaps (5 HIGH)
+- Draft ALTER TABLE SQL in the audit doc
+
+### What's Needed Next Session
+1. **Notion MCP now configured** — query LIVE Notion schemas for Companies DB (`1edda9cc-df8b-41e1-9c08-22971495aa43`) and Network DB (`6462102f-112b-40e9-8984-7cb1e8fe5e8b`) to verify completeness
+2. **Cross-reference** live Notion fields vs audit doc — fill any gaps
+3. **Execute migration SQL** via Supabase MCP after verification
+4. **Populate data** — sync Notion rows into Postgres (need to figure out the sync mechanism)
+
+### Rule (from user, MANDATORY)
+Final Postgres schema = MAX(current Postgres + full Notion). No field from either side gets dropped. Deduplicate exact matches, keep both where they serve different purposes.
 
 ## Supabase (LIVE)
 - Project: **AI COS Mumbai** (`llfkxnsfczludgigknbs`), ap-south-1
 - Pooler: `aws-1-ap-south-1.pooler.supabase.com:5432` (session mode)
-- PG17, pgvector 0.8.0, 934 rows, 11 tables, 37 indexes
-- Password: `supabase@1987` (`%40` URL-encoded)
-- Old Oregon project `bkxjvymaiknokybtupfm` still exists — delete from Supabase dashboard
+- PG17, pgvector 0.8.0, 11 tables
+- Keys: stored in Vercel env vars only (`vercel env pull` to get locally)
 
-## Supabase Keys (new 2026 format)
-- Publishable: stored in Vercel env `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` (client-safe, enforces RLS)
-- Secret: stored in Vercel env `SUPABASE_SECRET_KEY` (server-only, bypasses RLS)
-- Use `vercel env pull` to get values locally
-- NOT using legacy anon/service_role JWT keys — deprecated
-- Research: `docs/research/2026-03-19-supabase-new-keys-and-agent-mastery.md`
+## New Artifacts This Session
+- `docs/product/eniac-apm-brief.md` — ENIAC APM reference for team-of-agents builds
+- `docs/source-of-truth/TLDR.md` — Concise project picture (agent system, build pattern, 3 pillars)
+- `mcp-servers/agents/skills/reasoning/adversarial-analysis.md` — 7 investment lenses, 4 polarity pairs, 3-round protocol
+- `docs/research/2026-03-20-council-adversarial-reasoning-source.md` — Source article
+- `docs/audits/2026-03-20-companies-network-schema-audit.md` — Full schema gap analysis
 
-## Key Decisions (not yet persisted)
-All decisions persisted to:
-- `docs/superpowers/brainstorms/2026-03-19-supabase-unlocks-and-build-sequence.md` — architectural constraint (agents = orchestration, extensions = invisible infra only)
-- `docs/superpowers/plans/2026-03-19-webfront-phase1-execution.md` — full Phase 1 plan
-- Source-of-truth docs updated (ARCHITECTURE, DATA-ARCHITECTURE, WEBFRONT, DROPLET-RUNBOOK)
-- TRACES.md iterations 21-22 logged
+## Infrastructure
+- Vercel CLI v50.33.1 installed, authenticated as hi-1231, linked to aicos-digests
+- Droplet: 2 agents (Orchestrator + ENIAC) + 2 MCPs (State :8000, Web Tools :8001) — untouched this session
+- Orchestrator still detecting "pipeline overdue" every heartbeat (known, burns $0.25-0.51/cycle)
 
-Key decisions summary:
-- Supabase extensions (pgmq, pg_cron, pg_net) ONLY for invisible Auto Embeddings infra — agents never interact
-- Embedding provider: Voyage AI `voyage-3.5` (1024 dims) — Anthropic has no native embedding model
-- IRGI Phase A piggybacked onto WebFront Phase 1 (no separate sprint)
-- PostgREST + Realtime = the WebFront implementation pattern
-- Supabase Storage deferred to Phase 2.5
-- Pooler hostnames vary by region: aws-0 for us-west-2, aws-1 for ap-south-1 (always get from dashboard)
+## Team-of-Agents Pattern (established this session)
+When user says "use a team of agents" for building:
+- Load APM brief from `docs/product/` for domain context
+- Product Agent writes iteration plan to `aicos-digests/docs/iterations/`
+- Backend Agent: queries, Server Actions, data utilities (src/lib/)
+- Frontend Agent: pages, components, UI (src/app/, src/components/)
+- QA Agent: functional verification
+- UX Expert Agent: consumer experience audit
+- Zero file overlap between Backend and Frontend agents
+- Use feature branches (feat/webfront-vN), merge to main, push to deploy
+- Use frontend-design + design-system-enforcer skills for Frontend Agent prompts
 
-## Next Steps
-1. **User action:** Delete Oregon Supabase project from dashboard (bkxjvymaiknokybtupfm)
-2. **WebFront Phase 1 — Week 1 Foundation:**
-   - RLS policies: `GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO service_role;`
-   - Vercel env vars: SUPABASE_URL + keys on aicos-digests project
-   - Install `@supabase/ssr` + `@supabase/supabase-js` in `aicos-digests/`
-   - Create server-side Supabase client utility
-3. **WebFront Phase 1 — Week 2:** /actions page, Server Actions, Realtime
-4. **WebFront Phase 1 — Week 3:** IRGI Phase A (vector columns, Auto Embeddings, FTS, hybrid search)
-5. Full plan: `docs/superpowers/plans/2026-03-19-webfront-phase1-execution.md`
-
-## Context
-- Droplet services: state-mcp:8000, web-tools-mcp:8001, orchestrator — all healthy on Mumbai Supabase
-- Old PG on droplet: stopped+disabled (data files still on disk at /var/lib/postgresql/ for emergency)
-- Backups at /opt/backups/ on droplet (pre-migration dumps, Oregon dump, etc.)
-- Orchestrator detecting "pipeline overdue" every heartbeat — known issue (separate from migration), burns $0.25-0.51/cycle
-- PG17 client tools installed on droplet (needed because pg_dump 16 can't dump PG17)
-- Milestone 4 in progress (iterations 4-22 logged in TRACES.md)
+## TRACES.md
+Iteration 27 logged. This is iteration 3 of current milestone window — **compaction due at iteration 28**.

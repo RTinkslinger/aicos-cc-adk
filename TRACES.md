@@ -557,4 +557,36 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - No code changes — pure product thinking session
 - GitHub push protection caught secret key in CHECKPOINT.md earlier in session — soft reset + recommit fixed it. Key values now only in .env.local and Vercel env vars.
 **Next:** Phase 1A — /actions page build with team-of-agents pattern using ENIAC APM context
+
+### Iteration 27 - 2026-03-20
+**Phase:** WebFront v1→v3 (3 iterations) + Adversarial Analysis Skill + Schema Audit
+**Focus:** Team-of-agents build pattern: 3 full iterations of digest.wiki, adversarial reasoning skill, Companies+Network schema gap analysis
+
+**WebFront (3 iterations, all deployed to digest.wiki):**
+- v1: `/actions` page (filters, accept/dismiss, outcome rating), `/thesis` page, navigation, digest related actions. Backend: Supabase queries + Server Actions. 1853 lines added.
+- v2: Thesis detail `/thesis/[id]` (conviction gauge, evidence trail, key questions, adversarial lenses), Action detail `/actions/[id]` (reasoning, scoring bars, triage), assigned_to filter, clickable cards. 1827 lines added.
+- v3: Design overhaul (atmospheric backgrounds, glass-morphism, dramatic typography), evidence parser (IDS notation extraction), adversarial lenses framework, batch triage, inline reasoning, stats by thesis, mini conviction gauges. 2685 lines added, 1399 deleted.
+- QA: 12/13 pass (nav touch targets 38px, needs 44px)
+- UX: 7.2/10. Top issues: Content→Action linkage gap (5.5/10), triage controls buried, no undo, 3 touch target failures
+
+**Adversarial Analysis Skill:**
+- `mcp-servers/agents/skills/reasoning/adversarial-analysis.md` — 7 investment lenses, 4 polarity pairs, 3-round protocol, 8 domain triads
+- Adapted from Nyk's Council of High Intelligence for VC/investing decisions
+- Source: `docs/research/2026-03-20-council-adversarial-reasoning-source.md`
+
+**Schema Audit:**
+- `docs/audits/2026-03-20-companies-network-schema-audit.md`
+- Companies: 49 Notion fields vs 32 Postgres columns, 24 gaps (6 HIGH)
+- Network: 44 Notion fields vs 34 Postgres columns, 18 gaps (5 HIGH)
+- Draft ALTER TABLE SQL ready, needs live Notion verification before executing
+- Notion MCP not connected this session — user configured it for next session
+
+**Infrastructure:**
+- Vercel CLI v50.33.1 installed, authenticated, linked to aicos-digests project
+- `.env.local` pulled from Vercel (3 env vars)
+- GitHub push protection caught secret key in CHECKPOINT.md — soft reset fixed it
+- Feature branches used for all work: feat/webfront-v1, v2, v3 (all merged to main)
+
+**Changes:** ~50 files across both repos. All committed and pushed.
+**Next:** See CHECKPOINT.md for full handoff state.
 ---

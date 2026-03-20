@@ -534,4 +534,27 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - actions_queue column is `action` not `title` — schema queried via Supabase MCP to fix test page
 - Phase 0 foundation fully verified: RLS grants + SDK + env vars + connection all working
 **Next:** Phase 1A — Action Triage UI (/actions page with filters, Server Actions, Realtime)
+
+### Iteration 26 - 2026-03-19
+**Phase:** Product Thinking — ENIAC APM Brief + Source of Truth TL;DR
+**Focus:** Deep product review with user, capture corrections to priority buckets, agent hierarchy, build philosophy. Create APM reference doc and system-level TL;DR.
+
+**Changes:**
+- `docs/product/eniac-apm-brief.md` (new — ENIAC APM reference: product vision, buckets, scoring heuristic, thesis architecture direction, WebFront scope, build priorities, anti-patterns, open questions)
+- `docs/source-of-truth/TLDR.md` (new — concise project picture: agent system, team-of-agents build pattern, 3 evolving pillars)
+- `docs/source-of-truth/README.md` (updated — added TLDR.md to index)
+
+**Key Corrections from User:**
+- Bucket 2 (Deepen Existing) was fine as described
+- Bucket 3 is specifically **DeVC Collective** funnel (Comm → Ext → Core), fueled by Network DB (not yet built)
+- Bucket 1 fueled by Companies DB (not yet built) — these data model gaps are critical context
+- Action scoring model is a starting heuristic, not fixed — APM should iterate as outcome data accumulates
+- Thesis architecture direction: each thesis gets a `.md` file for evidence trail, DB becomes quick-reference index
+- AI CoS is a **system of agents** (ENIAC, Meetings Agent, Action Strategist, maybe CRM Specialist)
+- APM briefs live in `docs/product/` and are loaded as context for CC subagent teams (backend/frontend/QA specialists)
+
+**Context:**
+- No code changes — pure product thinking session
+- GitHub push protection caught secret key in CHECKPOINT.md earlier in session — soft reset + recommit fixed it. Key values now only in .env.local and Vercel env vars.
+**Next:** Phase 1A — /actions page build with team-of-agents pattern using ENIAC APM context
 ---

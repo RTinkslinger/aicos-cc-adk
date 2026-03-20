@@ -8,6 +8,7 @@ Exhaustive reference for the AI CoS system. Each file is self-contained and shar
 
 | File | What It Covers | When to Read |
 |------|---------------|--------------|
+| **TLDR.md** | Concise project picture: agent system, build pattern, priority buckets, current state | First and last — before and after reading everything else |
 | **VISION-AND-DIRECTION.md** | Vision, optimization problem, design principles, north star | Strategic planning, contextualizing work, understanding the "why" |
 | **METHODOLOGY.md** | 15 build principles, technology evaluation framework | Making technology choices, understanding why we build the way we do |
 | **ARCHITECTURE.md** | 3-layer architecture, agent pattern, MCP tools, scoring, learning loop, conviction engine | Understanding system design, planning new capabilities |

@@ -224,3 +224,51 @@ These columns match Notion exactly. Fixing requires enriching Notion first, then
 | **network** | 4/10 (40%) | 100% integrity | 25.7% | **C-** |
 
 **Overall:** Referential integrity is perfect (0 orphans on 3/4 checks). Data completeness is strong for portfolio but weak for companies/network due to upstream Notion gaps. The #1 actionable improvement is running the embedding pipeline.
+
+---
+
+## ITERATION 4: EXTERNAL FILL (EXECUTED)
+
+### Fix 4A: Portfolio Company Website Enrichment via Parallel Task
+- **Method:** `createTaskGroup` with 30 portfolio companies missing websites
+- **Task Group:** `tgrp_cad5e59772b04ef6a2276897df802c2b`
+- **Result:** 27/30 companies found, 26 matched to DB notion_page_ids, all 26 UPDATE statements executed
+- **Companies enriched:** Grvt, Tractor Factory, Insta Astro, Spybird, Supernova, Grexa, Terafac, Stance Health, ZuAI, Kintsugi, PowerEdge, Seeds Finance, PowerUp, Gameramp, Revenoid, UGX AI, Orbit Farming, Kilrr, Atica, AskMyGuru, Lucio AI, Skydda, Manufacture AI, Stupa Sports Analytics, AeroDome Technologies, RapidClaims
+- **Not found:** Crest (ambiguous name), ReplyAll PRBT (niche), Riverline/Recontact (name change)
+- **Companies website before:** 128 -> **after: ~154** (pending verification)
+- **Note:** Verification query blocked by Supabase connection pool exhaustion
+
+### Connection Pool Issue
+Supabase free-tier connection pool (6 slots) became permanently saturated during this session.
+Root cause: initial 8 parallel queries + cumulative sequential queries exceeded pool recovery rate.
+All write operations completed successfully before pool saturation. Read verification pending.
+
+---
+
+## ITERATION 5: REMAINING GAPS ANALYSIS
+
+### What Was Fixed This Session
+| Fix | Before | After | Delta |
+|-----|--------|-------|-------|
+| Network LinkedIn (founder data) | 3,126 (83.9%) | 3,245 (87.1%) | +119 |
+| Companies website (Parallel Task) | 128 (2.8%) | ~154 (3.3%) | +26 |
+
+### What Cannot Be Fixed From Existing Data
+These gaps match Notion exactly. They require upstream Notion enrichment or external data sourcing:
+
+1. **Companies sector** (58.7% missing) -- LLM batch classification needed
+2. **Companies type** (85.2% missing) -- LLM batch classification needed
+3. **Companies venture_funding** (85.7% missing) -- external data (Crunchbase/PitchBook)
+4. **Companies founding_timeline** (91.9% missing) -- external data
+5. **Network ryg** (99% missing) -- manual tagging (subjective field)
+6. **Network e_e_priority** (99.7% missing) -- manual tagging (subjective field)
+7. **Network last_interaction** (100% missing) -- meeting notes/Granola integration
+8. **Network LinkedIn** (12.9% missing) -- 73 null-notion-id founder inserts + 410 with Notion IDs but Notion has no LinkedIn either
+9. **Portfolio follow_on_decision** (86.6% missing) -- manual tagging in Notion
+
+### Recommended Next Session Actions
+1. **Terminate idle Supabase connections** -- check Supabase dashboard for leaked connections
+2. **Run embedding pipeline** -- generates embeddings for 4,813 rows (2,769 network + 2,044 companies)
+3. **Batch company website search** -- remaining ~108 portfolio companies without websites
+4. **LLM sector classification** -- use company name + any context to classify 2,722 companies missing sector
+5. **Complete Notion LinkedIn SQL** -- 28 remaining batches at `/tmp/notion-li-v*.sql` (these won't fill gaps since Notion also lacks LinkedIn for those people, confirmed by cross-reference)

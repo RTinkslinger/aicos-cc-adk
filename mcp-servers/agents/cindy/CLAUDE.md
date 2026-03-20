@@ -72,6 +72,7 @@ Cindy-specific domain knowledge.
 | `notifications` | Write | Alerts and context gap notifications to CAI |
 | `cai_inbox` | Write | Outbound signals (datum_person, cindy_signal) + gap fill messages |
 | `actions_queue` | Write | Extracted action items from interactions |
+| `obligations` | Read + Write | Obligation detection, auto-fulfillment, priority computation |
 
 ### Tables You Read Only
 
@@ -545,6 +546,81 @@ Only route high-value signals to Megamind. Not every interaction generates a str
 | Meeting cluster | 3+ meetings with same company in 7 days | `cindy_signal` to Megamind |
 | Action item | Any explicit commitment | `actions_queue` directly |
 | New person | Unmatched participant | `datum_person` to Datum Agent |
+
+---
+
+## 7.5 Obligation Detection (MANDATORY processing step)
+
+After extracting standard signals from every interaction, scan for OBLIGATIONS.
+Load `skills/cindy/obligation-detection.md` for full detection patterns, priority
+formula, deduplication logic, and auto-fulfillment rules.
+
+### What Is an Obligation
+A commitment between Aakash and another person. Two types:
+- **I_OWE_THEM**: Aakash committed to do something for someone
+- **THEY_OWE_ME**: Someone committed to do something for Aakash
+
+### Detection Process (every interaction)
+
+1. Scan interaction text for commitment patterns:
+   - Explicit: "I'll send...", "Will follow up...", "Let me get back to you..."
+   - Implied: Unanswered emails (48h+), meeting without follow-up (48h+)
+   - For Granola: `source: "microphone"` = Aakash (I_OWE), `source: "system"` = other (THEY_OWE)
+2. For each detected obligation, extract:
+   - type (I_OWE_THEM / THEY_OWE_ME)
+   - person_id (resolve via people linking — Section 5)
+   - description (concise, action-oriented)
+   - category (send_document/reply/schedule/follow_up/introduce/review/deliver/connect/provide_info/other)
+   - due_date (if mentioned — explicit date or relative like "next week")
+   - source_quote (exact words creating the obligation)
+   - confidence (0.0-1.0, only create if >= 0.7)
+3. Dedup: check obligations table for existing obligations with same person + similar description
+4. Create obligation record via psql INSERT to `obligations` table
+5. Compute cindy_priority using the 5-factor formula:
+   `cindy_priority = relationship_tier(0.30) + staleness(0.25) + obligation_type(0.20) + source_reliability(0.15) + recency(0.10)`
+6. If person is portfolio founder, active deal, or thesis-connected: route to Megamind via cindy_signal
+
+### Auto-Fulfillment Check
+When processing a NEW interaction, also check whether it resolves any EXISTING obligations
+with the same person. Examples:
+- Aakash sent email -> resolves I_OWE reply/send_document obligations to that person
+- Person sent document -> resolves THEY_OWE send_document obligations from that person
+- Calendar event created with person -> resolves I_OWE schedule obligations
+
+```sql
+-- Auto-fulfill matching obligation
+UPDATE obligations SET
+    status = 'fulfilled',
+    fulfilled_at = NOW(),
+    fulfilled_method = 'auto_detected',
+    fulfilled_evidence = 'Resolved by interaction #' || $new_interaction_id,
+    status_changed_at = NOW(),
+    updated_at = NOW()
+WHERE id = $obligation_id;
+```
+
+### Obligation Categories
+send_document | reply | schedule | follow_up | introduce | review | deliver | connect | provide_info | other
+
+### Tables You Now Write (additional)
+
+| Table | Access | Purpose |
+|-------|--------|---------|
+| `obligations` | Read + Write | Track all detected obligations |
+
+### ACK Addition
+Add to every ACK:
+```
+- [count] obligations detected ([I-owe], [they-owe])
+- [count] obligations auto-fulfilled
+```
+
+### Do NOT Create Obligations For
+- Generic pleasantries ("Let's catch up sometime")
+- Vague intentions without specifics ("We should do something together")
+- Internal team operations (Z47/DeVC team coordination)
+- Obligations already tracked (dedup check first)
+- Confidence < 0.7
 
 ---
 

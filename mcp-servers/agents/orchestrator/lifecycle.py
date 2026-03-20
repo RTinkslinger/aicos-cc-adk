@@ -1,10 +1,10 @@
-"""Lifecycle manager — orchestrator + content agent + datum agent.
+"""Lifecycle manager — orchestrator + content agent + datum agent + megamind agent.
 
-Manages three persistent ClaudeSDKClient sessions connected via @tool bridge.
+Manages four persistent ClaudeSDKClient sessions connected via @tool bridge.
 Thin wrapper — ALL intelligence in CLAUDE.md files, ALL logging in hooks.
 
 Does 6 things:
-  1. Creates persistent ClaudeSDKClient for content agent + datum agent
+  1. Creates persistent ClaudeSDKClient for content agent + datum agent + megamind agent
   2. Creates persistent ClaudeSDKClient for orchestrator (with @tool bridge)
   3. Sends "heartbeat" to orchestrator every 60s
   4. Tracks token usage for all agents -> traces/manifest.json
@@ -29,9 +29,11 @@ MANIFEST_PATH = AGENTS_ROOT / "traces" / "manifest.json"
 ORC_WORKSPACE = Path(__file__).parent
 CONTENT_WORKSPACE = AGENTS_ROOT / "content"
 DATUM_WORKSPACE = AGENTS_ROOT / "datum"
+MEGAMIND_WORKSPACE = AGENTS_ROOT / "megamind"
 ORC_LIVE_LOG = ORC_WORKSPACE / "live.log"
 CONTENT_LIVE_LOG = CONTENT_WORKSPACE / "live.log"
 DATUM_LIVE_LOG = DATUM_WORKSPACE / "live.log"
+MEGAMIND_LIVE_LOG = MEGAMIND_WORKSPACE / "live.log"
 
 logger = logging.getLogger("lifecycle")
 logging.basicConfig(
@@ -48,6 +50,10 @@ class ClientState:
     datum_client: Any = None
     datum_needs_restart: bool = False
     datum_busy: bool = False
+
+    megamind_client: Any = None
+    megamind_needs_restart: bool = False
+    megamind_busy: bool = False
 
 
 clients = ClientState()
@@ -180,6 +186,8 @@ def _state_dir(agent: str) -> Path:
         return CONTENT_WORKSPACE / "state"
     elif agent == "datum":
         return DATUM_WORKSPACE / "state"
+    elif agent == "megamind":
+        return MEGAMIND_WORKSPACE / "state"
     else:
         raise ValueError(f"Unknown agent: {agent}")
 
@@ -341,7 +349,68 @@ def create_bridge_server():
             "content": [{"type": "text", "text": "Prompt sent to datum agent. Working in background."}],
         }
 
-    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent, send_to_datum_agent])
+    async def _read_megamind_response():
+        """Background task: read megamind agent response, track tokens, detect compaction."""
+        try:
+            async for msg in clients.megamind_client.receive_response():
+                if isinstance(msg, AssistantMessage):
+                    _log_assistant_message(MEGAMIND_LIVE_LOG, msg)
+                elif isinstance(msg, ResultMessage):
+                    update_manifest_tokens("megamind", msg.usage)
+                    _log_result_message(MEGAMIND_LIVE_LOG, msg)
+                    logger.info(
+                        "Bridge: megamind done — turns=%d, cost=$%.4f",
+                        msg.num_turns,
+                        msg.total_cost_usd or 0,
+                    )
+                    if msg.result and "COMPACT_NOW" in msg.result:
+                        clients.megamind_needs_restart = True
+                        logger.info("Bridge: megamind agent signaled COMPACT_NOW")
+        except Exception as e:
+            logger.error("Bridge: error reading megamind response: %s", e)
+        finally:
+            clients.megamind_busy = False
+            _live_log(MEGAMIND_LIVE_LOG, "--- idle (ready for next prompt) ---")
+
+    @tool(
+        "send_to_megamind_agent",
+        "Send strategic work to the persistent Megamind Agent for depth grading, cascade processing, "
+        "or strategic assessment. Returns immediately — megamind agent works in background. "
+        "If megamind agent is busy, returns a busy message.",
+        {"prompt": str},
+    )
+    async def send_to_megamind_agent(args: dict[str, Any]) -> dict[str, Any]:
+        if clients.megamind_client is None:
+            return {
+                "content": [{"type": "text", "text": "Error: Megamind agent not connected"}],
+                "is_error": True,
+            }
+
+        if clients.megamind_busy:
+            return {
+                "content": [{"type": "text", "text": "Megamind agent is still processing previous work. Will check again next heartbeat."}],
+            }
+
+        prompt = args["prompt"]
+        logger.info("Bridge: forwarding to megamind agent (%d chars)", len(prompt))
+        _live_log(MEGAMIND_LIVE_LOG, f">>> PROMPT: {prompt[:200]}")
+        clients.megamind_busy = True
+        try:
+            await clients.megamind_client.query(prompt)
+            asyncio.create_task(_read_megamind_response())
+        except Exception as e:
+            clients.megamind_busy = False
+            logger.error("Bridge: failed to send to megamind agent: %s", e)
+            return {
+                "content": [{"type": "text", "text": f"Error sending to megamind agent: {e}"}],
+                "is_error": True,
+            }
+
+        return {
+            "content": [{"type": "text", "text": "Prompt sent to megamind agent. Working in background."}],
+        }
+
+    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent, send_to_datum_agent, send_to_megamind_agent])
 
 
 # --- Agent option builders ---
@@ -359,6 +428,7 @@ def build_orc_options(bridge_server):
             "Bash", "Read", "Write", "Edit", "Glob", "Grep",
             "mcp__bridge__send_to_content_agent",
             "mcp__bridge__send_to_datum_agent",
+            "mcp__bridge__send_to_megamind_agent",
         ],
         mcp_servers={"bridge": bridge_server},
         hooks={"PostToolUse": [HookMatcher(hooks=[orc_tool_hook])]},
@@ -462,6 +532,31 @@ def build_datum_options():
     )
 
 
+def build_megamind_options():
+    from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, ThinkingConfigEnabled
+
+    megamind_tool_hook = _make_tool_hook(MEGAMIND_LIVE_LOG)
+
+    return ClaudeAgentOptions(
+        model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
+        permission_mode="dontAsk",
+        allowed_tools=[
+            "Bash", "Read", "Write", "Edit", "Grep", "Glob", "Skill",
+        ],
+        hooks={"PostToolUse": [HookMatcher(hooks=[megamind_tool_hook])]},
+        setting_sources=["project"],
+        thinking=ThinkingConfigEnabled(type="enabled", budget_tokens=10000),
+        effort="high",
+        max_turns=25,
+        max_budget_usd=3.0,
+        cwd=str(MEGAMIND_WORKSPACE),
+        env={
+            "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),
+            "DATABASE_URL": os.environ.get("DATABASE_URL", ""),
+        },
+    )
+
+
 # --- Content client lifecycle ---
 
 
@@ -518,6 +613,35 @@ async def restart_datum_client():
     reset_manifest_tokens("datum", read_session_num("datum"))
     clients.datum_client = await start_datum_client()
     clients.datum_needs_restart = False
+
+
+# --- Megamind client lifecycle ---
+
+
+async def start_megamind_client():
+    from claude_agent_sdk import ClaudeSDKClient
+
+    client = ClaudeSDKClient(options=build_megamind_options())
+    await client.__aenter__()
+    return client
+
+
+async def stop_megamind_client():
+    if clients.megamind_client:
+        try:
+            await clients.megamind_client.__aexit__(None, None, None)
+        except Exception as e:
+            logger.warning("Error stopping megamind client: %s", e)
+        clients.megamind_client = None
+
+
+async def restart_megamind_client():
+    logger.info("Restarting megamind agent session")
+    await stop_megamind_client()
+    bump_session("megamind")
+    reset_manifest_tokens("megamind", read_session_num("megamind"))
+    clients.megamind_client = await start_megamind_client()
+    clients.megamind_needs_restart = False
 
 
 # --- Pre-check: skip LLM if no work ---

@@ -670,3 +670,77 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - **83 complete, 11 running, 87 total.**
 **Next:** Sheet/Drawer lands → fix build → I2 review round (target 8+/10) → merge+deploy. WS20 search army building.
 ---
+
+### Iteration 29 - 2026-03-20
+**Phase:** 6-Machine Parallel Machinery — Loop 1-2 across all workstreams
+**Focus:** Resume all 6 machineries from CHECKPOINT.md. 15 agents spawned across 6 machines, running BUILD→REVIEW→FIX loops.
+
+**Machines Running:**
+- M1 WebFront: L1 BUILD (5 P0 features) ✅ → L1 REVIEW x3 (QA ✅ pass, UX ✅ 7.1/10, Aakash ✅ 6.8/10) → L2 FIX (design elevation) 🔄
+- M2 Data: L1 AUDIT ✅ (8,650 rows, 99.99% embedded, 57 dupe groups, 26 cross-ref failures) → L2 FILL 🔄
+- M4 Datum Agent: L1 DESIGN ✅ (11-section spec) → L2 BUILD (CLAUDE.md 24KB, migrations, skills) 🔄
+- M5 Scoring: L1 AUDIT ✅ (5 CRITICAL: 80% unscored, scale bug, inverted priorities, no user/agent split) → L2 FIX (8 SQL improvements) 🔄
+- M6 Content: L1 ASSESS ✅ (44% agent-delegable, score compression, bucket misrouting) → L2 FIX (IRGI rewrites) 🔄
+- UX Research: ✅ (753-line elevation study — 10 gaps vs Linear/Superhuman/Bloomberg)
+
+**Key User Feedback (routed to all agents):**
+- Action priorities wrong: portfolio+network should dominate, thesis→agent-delegated
+- UI/UX density, colors, fonts not best-in-class → "restraint over decoration"
+- Saved as memory: feedback_action_priority_hierarchy.md, feedback_ux_best_in_class.md
+
+**Changes:**
+- `aicos-digests/` on `feat/m1-loop1`: 5 P0 features (+460/-62 lines), design elevation pass in progress
+- `docs/research/2026-03-20-ux-elevation-study.md` (new — 753 lines, 10 design gaps, ready-to-paste CSS)
+- `docs/superpowers/specs/2026-03-20-datum-agent-design.md` (new — full agent spec, 11 sections)
+- `docs/audits/` — 5 new audit reports (data quality, scoring, reprocessing, QA, UX reviews)
+- `mcp-servers/agents/datum/` (new — CLAUDE.md 24KB, hooks, state, skills)
+- `sql/datum-agent-migrations.sql` (new), `sql/scoring-improvements.sql` (pending), `sql/irgi-scoring-fixes.sql` (pending)
+- `aicos-digests/docs/iterations/005-*.md` — 3 review reports (QA, UX, Aakash)
+
+**Decisions:**
+- UX elevation via restraint: fewer colors (5→1-2 accent), tighter spacing (40%), neutral backgrounds
+- User/agent queue split: thesis actions→agent_work_queue, portfolio/network→user_triage_queue
+- Datum Agent: third ClaudeSDKClient managed by lifecycle.py, on-demand (not heartbeat), dedup+enrich+ask-user
+- Score function: compute_user_priority_score() with portfolio +3, network +2, thesis -3 weighting
+
+**Latest completions (mid-session):**
+- M5 L2 FIX ✅: ALL 8 scoring SQL fixes executed. Queue inversion corrected: Thesis 55%→2%, Portfolio 14%→47%. `user_triage_queue` + `agent_work_queue` views live. `compute_user_priority_score()` deployed. 100% score coverage (was 20%).
+- M2 L1 AUDIT ✅: 8,650 rows, 99.99% embedded. 57 company dupe groups, 26 cross-ref failures (whitespace), page_content_path 0% for companies.
+- M1 UX ✅ (7.1), Aakash ✅ (6.8): Path to 8.5 = CSS swap + density + restraint. No new features needed.
+- M5 now in L3 VERIFY. M1-fix alerted to use new `user_triage_queue` view.
+
+- M6 L2 FIX ✅: Score compression eliminated (flat 0.90→spread 0.40-0.89). Bucket routing fixed (Thesis 55%→2.2%, Portfolio 47.3%). 77 latent thesis connections created. Bias detection function deployed.
+- M5+M6 converged: Both independently fixed queue inversion. Scoring system production-ready.
+- M5 L3 VERIFY 🔄, M6 L3 VERIFY 🔄: Both validating fixes.
+
+- M4 L2 BUILD ✅: Datum Agent fully built — CLAUDE.md 639 lines, SQL migrations executed on Supabase (datum_requests table, enrichment columns, embedding triggers), 2 skills, 3 hooks, lifecycle integration plan. Committed 705c191.
+- M7 Megamind launched: New strategist agent — diverge/converge reasoning, depth grading (skip/1-deep/2-deep/ultra), ROI optimization, cascade re-ranking. Design spec in progress.
+- Agent fleet: Orchestrator (live) + ENIAC (scoring, live in Supabase) + Datum (built, pending deploy) + Megamind (designing) + Cindy (future comms agent)
+- User feedback: depth grading approval flow, agent work re-ranks but converges (diminishing returns), ROI of Aakash's time is the optimization function.
+
+- M5 L3 VERIFY ✅: 6/8 checks passed, 2 blockers found — ceiling compression (53% at 10.00) + portfolio research misclassified as agent-delegable.
+- M5 L4 FIX 🔄: Sigmoid soft-cap (no more hard ceiling), reduced boost magnitudes, portfolio research override in views.
+- M4 L3 REVIEW 🔄: Verifying Datum build against design spec + Supabase schema.
+
+- M6 L3 VERIFY ✅: 7/7 pass. Critical: relevance_score holds M5 scores not IRGI. thesis_connection format inconsistent (23 entries).
+- M5 L4 FIX2 🔄: Sigmoid soft-cap, reduced boosts, portfolio research override.
+- M6 L4 FIX2 🔄: IRGI writeback to new irgi_relevance_score column, thesis_connection normalization.
+- M7 L1 DESIGN 🔄: Megamind strategist spec — diverge/converge, depth grading, ROI optimization.
+
+- M4 L3 REVIEW ✅: PASS all 6 sections. Datum Agent production-ready. 3 minor cosmetic issues noted.
+- M4 L4 BUILD 🔄: lifecycle.py integration — adding Datum as third managed ClaudeSDKClient.
+
+- M7 L1 DESIGN ✅: Megamind spec complete (12 sections + 4 appendices). Strategic ROI function, diverge/converge 5-step, depth grading (Skip/Scan/Investigate/Ultra), convergence guarantee (resolved >= generated), trust ramp, ~$6-10/mo.
+- M7 L2 BUILD 🔄: CLAUDE.md 500+ lines, 4 SQL tables (depth_grades, cascade_events, strategic_assessments, strategic_config), 3 skills, lifecycle plan.
+- Production fleet: Orchestrator (live) + ENIAC (live in Supabase) + Datum (L4 lifecycle integration) + Megamind (L2 building) + Cindy (future).
+
+- M5 L5 FINAL ✅: **PRODUCTION READY** — 8/8 checks pass. 23 distinct scores, 6.9ms query, portfolio 47.3%, 0 ceiling, 83 user/8 agent queue.
+- M6 L5 FINAL ✅: **PRODUCTION READY** — 7/7 checks pass. 100% IRGI coverage, score independence confirmed (r=-0.323), 8/8 functions live.
+- M4 L5 VERIFY ✅: **DEPLOY READY** — 5/5 checks pass. Perfect symmetry with Content Agent. lifecycle.py AST verified.
+- M1 L2 FIX ✅: Design elevation complete (27 files, 40% tighter, neutral colors, accent restraint, portfolio first). L2 REVIEW running.
+- M2 L3 VERIFY ✅: All fixes held. 100% embeddings. L4 quick fixes running.
+- Backend LOCKED: M4+M5+M6 all at 5 loops, production verified. Awaiting M1 review for WebFront deploy decision.
+
+**Context:** 31 agents spawned (28 complete, 3 running). 7 machines. M4/M5/M6 COMPLETE (5 loops each). M1 at critical review. Compaction at iteration 30.
+**Next:** Complete Loop 2 across all machines → L2 REVIEW → L3 BUILD/FIX → iterate toward 10 loops each.
+---

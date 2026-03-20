@@ -1,10 +1,10 @@
-"""Lifecycle manager — orchestrator + content agent + datum agent + megamind agent.
+"""Lifecycle manager — orchestrator + content agent + datum agent + megamind agent + cindy agent.
 
-Manages four persistent ClaudeSDKClient sessions connected via @tool bridge.
+Manages five persistent ClaudeSDKClient sessions connected via @tool bridge.
 Thin wrapper — ALL intelligence in CLAUDE.md files, ALL logging in hooks.
 
 Does 6 things:
-  1. Creates persistent ClaudeSDKClient for content agent + datum agent + megamind agent
+  1. Creates persistent ClaudeSDKClient for content agent + datum agent + megamind agent + cindy agent
   2. Creates persistent ClaudeSDKClient for orchestrator (with @tool bridge)
   3. Sends "heartbeat" to orchestrator every 60s
   4. Tracks token usage for all agents -> traces/manifest.json
@@ -30,10 +30,12 @@ ORC_WORKSPACE = Path(__file__).parent
 CONTENT_WORKSPACE = AGENTS_ROOT / "content"
 DATUM_WORKSPACE = AGENTS_ROOT / "datum"
 MEGAMIND_WORKSPACE = AGENTS_ROOT / "megamind"
+CINDY_WORKSPACE = AGENTS_ROOT / "cindy"
 ORC_LIVE_LOG = ORC_WORKSPACE / "live.log"
 CONTENT_LIVE_LOG = CONTENT_WORKSPACE / "live.log"
 DATUM_LIVE_LOG = DATUM_WORKSPACE / "live.log"
 MEGAMIND_LIVE_LOG = MEGAMIND_WORKSPACE / "live.log"
+CINDY_LIVE_LOG = CINDY_WORKSPACE / "live.log"
 
 logger = logging.getLogger("lifecycle")
 logging.basicConfig(
@@ -54,6 +56,10 @@ class ClientState:
     megamind_client: Any = None
     megamind_needs_restart: bool = False
     megamind_busy: bool = False
+
+    cindy_client: Any = None
+    cindy_needs_restart: bool = False
+    cindy_busy: bool = False
 
 
 clients = ClientState()
@@ -188,6 +194,8 @@ def _state_dir(agent: str) -> Path:
         return DATUM_WORKSPACE / "state"
     elif agent == "megamind":
         return MEGAMIND_WORKSPACE / "state"
+    elif agent == "cindy":
+        return CINDY_WORKSPACE / "state"
     else:
         raise ValueError(f"Unknown agent: {agent}")
 
@@ -410,7 +418,69 @@ def create_bridge_server():
             "content": [{"type": "text", "text": "Prompt sent to megamind agent. Working in background."}],
         }
 
-    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent, send_to_datum_agent, send_to_megamind_agent])
+    async def _read_cindy_response():
+        """Background task: read cindy agent response, track tokens, detect compaction."""
+        try:
+            async for msg in clients.cindy_client.receive_response():
+                if isinstance(msg, AssistantMessage):
+                    _log_assistant_message(CINDY_LIVE_LOG, msg)
+                elif isinstance(msg, ResultMessage):
+                    update_manifest_tokens("cindy", msg.usage)
+                    _log_result_message(CINDY_LIVE_LOG, msg)
+                    logger.info(
+                        "Bridge: cindy done — turns=%d, cost=$%.4f",
+                        msg.num_turns,
+                        msg.total_cost_usd or 0,
+                    )
+                    if msg.result and "COMPACT_NOW" in msg.result:
+                        clients.cindy_needs_restart = True
+                        logger.info("Bridge: cindy agent signaled COMPACT_NOW")
+        except Exception as e:
+            logger.error("Bridge: error reading cindy response: %s", e)
+        finally:
+            clients.cindy_busy = False
+            _live_log(CINDY_LIVE_LOG, "--- idle (ready for next prompt) ---")
+
+    @tool(
+        "send_to_cindy_agent",
+        "Send communication data to the persistent Cindy Agent for processing. "
+        "Handles email, WhatsApp, Granola, and Calendar signals. "
+        "Returns immediately — Cindy works in background. "
+        "If Cindy is busy, returns a busy message.",
+        {"prompt": str},
+    )
+    async def send_to_cindy_agent(args: dict[str, Any]) -> dict[str, Any]:
+        if clients.cindy_client is None:
+            return {
+                "content": [{"type": "text", "text": "Error: Cindy agent not connected"}],
+                "is_error": True,
+            }
+
+        if clients.cindy_busy:
+            return {
+                "content": [{"type": "text", "text": "Cindy agent is still processing previous work. Will check again next heartbeat."}],
+            }
+
+        prompt = args["prompt"]
+        logger.info("Bridge: forwarding to cindy agent (%d chars)", len(prompt))
+        _live_log(CINDY_LIVE_LOG, f">>> PROMPT: {prompt[:200]}")
+        clients.cindy_busy = True
+        try:
+            await clients.cindy_client.query(prompt)
+            asyncio.create_task(_read_cindy_response())
+        except Exception as e:
+            clients.cindy_busy = False
+            logger.error("Bridge: failed to send to cindy agent: %s", e)
+            return {
+                "content": [{"type": "text", "text": f"Error sending to cindy agent: {e}"}],
+                "is_error": True,
+            }
+
+        return {
+            "content": [{"type": "text", "text": "Prompt sent to cindy agent. Working in background."}],
+        }
+
+    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent, send_to_datum_agent, send_to_megamind_agent, send_to_cindy_agent])
 
 
 # --- Agent option builders ---
@@ -429,6 +499,7 @@ def build_orc_options(bridge_server):
             "mcp__bridge__send_to_content_agent",
             "mcp__bridge__send_to_datum_agent",
             "mcp__bridge__send_to_megamind_agent",
+            "mcp__bridge__send_to_cindy_agent",
         ],
         mcp_servers={"bridge": bridge_server},
         hooks={"PostToolUse": [HookMatcher(hooks=[orc_tool_hook])]},
@@ -557,6 +628,31 @@ def build_megamind_options():
     )
 
 
+def build_cindy_options():
+    from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, ThinkingConfigEnabled
+
+    cindy_tool_hook = _make_tool_hook(CINDY_LIVE_LOG)
+
+    return ClaudeAgentOptions(
+        model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
+        permission_mode="dontAsk",
+        allowed_tools=[
+            "Bash", "Read", "Write", "Edit", "Grep", "Glob", "Skill",
+        ],
+        hooks={"PostToolUse": [HookMatcher(hooks=[cindy_tool_hook])]},
+        setting_sources=["project"],
+        thinking=ThinkingConfigEnabled(type="enabled", budget_tokens=8000),
+        effort="high",
+        max_turns=35,
+        max_budget_usd=3.0,
+        cwd=str(CINDY_WORKSPACE),
+        env={
+            "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),
+            "DATABASE_URL": os.environ.get("DATABASE_URL", ""),
+        },
+    )
+
+
 # --- Content client lifecycle ---
 
 
@@ -644,6 +740,35 @@ async def restart_megamind_client():
     clients.megamind_needs_restart = False
 
 
+# --- Cindy client lifecycle ---
+
+
+async def start_cindy_client():
+    from claude_agent_sdk import ClaudeSDKClient
+
+    client = ClaudeSDKClient(options=build_cindy_options())
+    await client.__aenter__()
+    return client
+
+
+async def stop_cindy_client():
+    if clients.cindy_client:
+        try:
+            await clients.cindy_client.__aexit__(None, None, None)
+        except Exception as e:
+            logger.warning("Error stopping cindy client: %s", e)
+        clients.cindy_client = None
+
+
+async def restart_cindy_client():
+    logger.info("Restarting cindy agent session")
+    await stop_cindy_client()
+    bump_session("cindy")
+    reset_manifest_tokens("cindy", read_session_num("cindy"))
+    clients.cindy_client = await start_cindy_client()
+    clients.cindy_needs_restart = False
+
+
 # --- Pre-check: skip LLM if no work ---
 
 PIPELINE_INTERVAL_SECONDS = 12 * 3600  # 12 hours
@@ -720,6 +845,13 @@ async def run_agent() -> None:
         _live_log(MEGAMIND_LIVE_LOG, f"=== Megamind started — session #{read_session_num('megamind')} ===")
         logger.info("Megamind started — session #%d", read_session_num("megamind"))
 
+        # Start cindy agent
+        reset_manifest_tokens("cindy", read_session_num("cindy"))
+        clients.cindy_client = await start_cindy_client()
+        clients.cindy_needs_restart = False
+        _live_log(CINDY_LIVE_LOG, f"=== Cindy started — session #{read_session_num('cindy')} ===")
+        logger.info("Cindy started — session #%d", read_session_num("cindy"))
+
         # Start orchestrator
         orc_session = read_session_num("orc")
         reset_manifest_tokens("orc", orc_session)
@@ -738,6 +870,8 @@ async def run_agent() -> None:
                         await restart_datum_client()
                     if clients.megamind_needs_restart:
                         await restart_megamind_client()
+                    if clients.cindy_needs_restart:
+                        await restart_cindy_client()
 
                     # Pre-check: skip LLM call if no work (free)
                     work_reason = await has_work()
@@ -784,6 +918,7 @@ async def run_agent() -> None:
             await stop_content_client()
             await stop_datum_client()
             await stop_megamind_client()
+            await stop_cindy_client()
 
         # Always bump session on re-entry (exception or compaction)
         bump_session("orc")
@@ -810,6 +945,7 @@ async def main() -> None:
     await stop_content_client()
     await stop_datum_client()
     await stop_megamind_client()
+    await stop_cindy_client()
     logger.info("Lifecycle manager stopped")
 
 

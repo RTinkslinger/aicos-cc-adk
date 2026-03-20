@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-20T11:28:32Z",
+      "timestamp": "2026-03-20T12:46:15Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -43,16 +43,8 @@
       "Review Agent SDK ContentAgent plan"
     ],
     "key_files_changed_last_session": [
-      "companies-pages/wingy.md",
-      "companies-pages/wisely.md",
-      "companies-pages/wizly.md",
-      "companies-pages/world-science-university.md",
-      "companies-pages/xavier-college-preparatory-high-school.md",
-      "companies-pages/xavier-school.md",
-      "companies-pages/xenova-dynamics.md",
-      "companies-pages/xookai.md",
-      "companies-pages/xpay.md",
-      "companies-pages/yaary.md"
+      "docs/audits/2026-03-20-network-role-fix-m9.md",
+      "docs/superpowers/specs/2026-03-20-living-system-architecture.md"
     ],
     "pending_inbox": []
   },
@@ -75,6 +67,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T11:28:32Z",
+  "updated_at": "2026-03-20T12:46:15Z",
   "updated_by": "cc"
 }

@@ -213,6 +213,29 @@ ALL 3,722 rows have `current_role = 'postgres'`. This is a PostgreSQL reserved i
 
 ---
 
+### Machine 12: Data Enrichment — Continuous Entity Enrichment + Connections
+**Loop count:** 0 (NEW)
+**Current state:** Not started. Companies 88.5% empty shells, Network 85.4% empty + roles corrupted, entity_connections EMPTY.
+**The gap:**
+- Companies: 4,039/4,565 have NO page content in embeddings. Website 94.7% NULL. Thin embeddings (30% accuracy).
+- Network: current_role='postgres' (needs column RENAME to role_title). Zero enrichment. 276 duplicate groups.
+- Portfolio: 27-32% missing stage/outcome/revenue. Page content (avg 499 lines) NOT feeding embeddings.
+- Entity connections: table EMPTY. Need to seed from vector similarity across all 8,400+ entities.
+- Portfolio↔Thesis: only 6/142 connected.
+**Next loops:**
+- Loop 1: Rename network.current_role → role_title. Restore 3,225 roles. Fix all SQL/skills that reference it.
+- Loop 2: Feed page_content MD files into embeddings for portfolio (142) + companies (526) + network (545).
+- Loop 3: Re-embed after enrichment. Verify similarity accuracy improves.
+- Loop 4: Seed entity_connections table from vector similarity (all pairs above threshold).
+- Loop 5: Build portfolio↔thesis connections from research files + action connections.
+- Loop 6: Web enrichment for companies (websites, LinkedIn via Parallel search).
+- Loop 7: Network dedup (276 groups) + enrichment (LinkedIn scrape for roles).
+- Loop 8: Extract remaining Notion page content (4,039 companies + 3,177 network).
+- Loop 10+: Continuous enrichment as new entities enter via Datum.
+**Key files:** `sql/data-quality-fixes.sql`, `docs/audits/2026-03-20-data-*`, `companies-pages/`, `network-pages/`, `portfolio-pages/`, `portfolio-research/`
+
+---
+
 ## Non-Permanent Machines (concluded or at milestone)
 
 ### Machine 2: Data Quality — CONCLUDED (Datum takes over)
@@ -262,7 +285,8 @@ To restart all permanent machineries:
 
 **No sync gates. No blocking.** All machines run in parallel. Cindy setup (AgentMail, calendar API) happens as part of M8's loops — user provides creds when ready, M8 plugs them in. Other machines never wait.
 
-## User Actions (do whenever convenient, not blocking)
-1. **AgentMail**: Create account at agentmail.to ($20/mo), set up domain, create cindy inbox → provide API key + inbox address
-2. **Calendar**: Just add Cindy's email as guest on calendar invites. She receives .ics via AgentMail inbox — no API needed. Works with Google, M365, Calendly, anything.
-3. Both can happen async while all machines keep running
+## User Actions
+1. **AgentMail**: ✅ DONE — `cindy.aacash@agentmail.to` (creds in .env.local + droplet .env)
+2. **Calendar**: Just add `cindy.aacash@agentmail.to` as guest on calendar invites. She receives .ics via AgentMail — no API needed.
+3. **WhatsApp**: Backup dir exists. Extraction script needed (M12 will build).
+4. **Granola**: MCP tools connected. Verify droplet access (M8 will test).

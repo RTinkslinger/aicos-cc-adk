@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-20T13:25:51Z",
+      "timestamp": "2026-03-20T13:26:28Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -46,6 +46,7 @@
       "docs/audits/2026-03-20-cindy-setup-assessment-m8-loop4.md",
       "docs/audits/2026-03-20-cir-build-m10-loop2.md",
       "docs/audits/2026-03-20-intelligence-reaudit-m9-loop3.md",
+      "sql/actions-intelligence-fixes.sql",
       "sql/cir-build.sql"
     ],
     "pending_inbox": []
@@ -69,6 +70,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T13:25:51Z",
+  "updated_at": "2026-03-20T13:26:28Z",
   "updated_by": "cc"
 }

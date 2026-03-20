@@ -17,37 +17,39 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-20T14:54:06Z",
-      "summary": "68-agent factory session. Built Datum+Megamind+Cindy agents, all deployed. WebFront UX 8.5, Aakash 8.2. CIR live (7 triggers). Obligations built. 8 permanent machineries established. Intelligence: Actions 7.0, Thesis 7.8, Search 78.",
-      "key_commit": "78621fb"
+      "summary": "Iteration 30: 61 agents across 8 machines. All past 10-loop minimum. M7+M8 deployed to droplet, M1 deployed to digest.wiki, CIR queue fixed, 13K entity connections, scoring iterated 3x, FTS rebuild in progress.",
+      "timestamp": "2026-03-20T19:18:18Z"
     },
     "current_tasks": [
-      "8 permanent machineries: M1 WebFront, M5 Scoring, M6 IRGI, M7 Megamind, M8 Cindy, M9 Intel QA, M10 CIR, M11 Obligations",
-      "M8 Cindy: needs AgentMail setup ($20/mo), calendar API creds, WhatsApp extraction script",
-      "M7 Megamind: 3 column blockers (action_text→action, thesis_connection not ARRAY, missing strategic_score)",
-      "Network role_title='postgres' column rename needed"
+      "M5 L11: Combined scoring fix (normalization+decay+acceptance) — agent running",
+      "M6 L11: FTS column rebuild with page_content — agent running",
+      "M12 L2+L5: Embedding enrichment + portfolio-thesis connections — agents running"
     ],
     "recent_decisions": [
       {
-        "decision": "Agent fleet: ENIAC(research analyst) + Datum(data+ops) + Cindy(intelligent EA) + Megamind(co-strategist, equal partner)",
-        "rationale": "Definitive framing from user. Megamind is NOT a slave — co-orchestrates with Aakash. Each agent self-improves.",
+        "decision": "Army pattern: specialized single-task agents per loop step",
+        "rationale": "Matches successful iteration 28-29 approach",
         "date": "2026-03-20"
       },
       {
-        "decision": "8 permanent machineries that run every session (M1,M5,M6,M7,M8,M9,M10,M11)",
-        "rationale": "Living system, not task engine. No machine is ever done. Continuous intelligence refresh.",
+        "decision": "CIR triggers made column-specific to exclude embedding updates",
+        "rationale": "Embedding updates were flooding CIR queue (3,495 messages)",
         "date": "2026-03-20"
       },
       {
-        "decision": "CIR two-tier: mechanical (Supabase triggers+pgmq) for 90% + strategic (Megamind) for 10%",
-        "rationale": "$0 incremental cost. Preference learning via running average, glide path to ML at 500+ outcomes.",
+        "decision": "Score compression fix: multiplicative boosts + percentile stretching",
+        "rationale": "73.9% in buckets 8-9 made triage impossible",
         "date": "2026-03-20"
       }
     ],
     "blocked_on": [],
     "next_session_priorities": [
-      "Complete CC-CAI sync pilot (validate format, push to GitHub)",
-      "Review Agent SDK ContentAgent plan"
+      "Check if M5/M6/M12 agents completed — verify their results",
+      "M5: Verify scoring stddev >1.0 after combined fix",
+      "M6: Verify FTS search works after rebuild, test hybrid_search",
+      "M12: Continue L7-10 (Notion page content extraction, web enrichment)",
+      "M9: L13 re-audit after all fixes land",
+      "All machines: Continue looping past current state"
     ],
     "key_files_changed_last_session": [
       "CHECKPOINT.md",
@@ -82,6 +84,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T14:54:06Z",
+  "updated_at": "2026-03-20T19:18:18Z",
   "updated_by": "cc"
 }

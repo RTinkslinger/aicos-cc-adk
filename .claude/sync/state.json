@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 61 agents across 8 machines. All past 10-loop minimum. M7+M8 deployed to droplet, M1 deployed to digest.wiki, CIR queue fixed, 13K entity connections, scoring iterated 3x, FTS rebuild in progress.",
-      "timestamp": "2026-03-20T19:30:32Z"
+      "timestamp": "2026-03-20T19:31:26Z"
     },
     "current_tasks": [
       "M5 L11: Combined scoring fix (normalization+decay+acceptance) — agent running",
@@ -84,6 +84,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T19:30:32Z",
+  "updated_at": "2026-03-20T19:31:26Z",
   "updated_by": "cc"
 }

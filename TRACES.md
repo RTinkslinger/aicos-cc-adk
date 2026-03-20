@@ -758,6 +758,26 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - M10 launched: Living System Architecture (continuous intelligence refresh).
 - Session: 52 agents spawned, 46 complete. 10 machines. Both repos deployed. Keep looping to 10+ per machine.
 
-**Context:** 52 agents (46 done, 6 running). 10 machines. M1 L4 review pending (8+ target). M8/M9/M10 active. Compaction overdue at iteration 30.
+- M11 L1 DESIGN ✅: Obligations Intelligence — I-owe/they-owe detection, Cindy+Megamind 60/40 priority blend, 3 WebFront views, 12 sections + 4 appendices.
+- M1 L4 REVIEW ✅: **Aakash 8.2/10 — TARGET MET.** Pre-meeting prep 5.5→8.5 via PREP buttons + portfolio above fold.
+- ALL 58 AGENTS COMPLETE. Full fleet deployed to droplet (5 agents, 3 services). WebFront live at digest.wiki.
+
+**Definitive agent fleet framing (user input):**
+- ENIAC = best-in-class research analyst (content + thesis → action suggestions)
+- Datum = data & ops team (keeps everything fresh, feeds all other agents)
+- Cindy = most intelligent EA (tracks comms, obligations, who-owes-what)
+- Megamind = co-strategist (NOT slave — equal partner, co-orchestrates with Aakash, seeks what's RIGHT for optimization function)
+- Each agent self-improves via preference stores. Megamind learns from triage interactions as soft signals.
+
+**Permanent machineries (run forever, 30+ loops):**
+1. M1 WebFront — continuous UX/feature evolution
+2. M5/M6 Scoring+IRGI — continuous intelligence optimization
+3. M8 Cindy — continuous comms capability building
+4. M9 Intelligence QA — continuous accuracy auditing
+5. M10 CIR — continuous intelligence refresh
+6. M11 Obligations — continuous EA capability building
+7. M7 Megamind — continuous strategic capability building
+
+**Context:** 58 agents spawned, ALL complete. 11 machines. Session at natural sync point. Compaction overdue (iteration 30 — do at session start next time).
 **Next:** Complete Loop 2 across all machines → L2 REVIEW → L3 BUILD/FIX → iterate toward 10 loops each.
 ---

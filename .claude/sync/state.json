@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-20T09:38:24Z",
+      "timestamp": "2026-03-20T09:39:15Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -45,14 +45,14 @@
     "key_files_changed_last_session": [
       "TRACES.md",
       "docs/audits/2026-03-20-companies-network-schema-audit.md",
-      "docs/audits/2026-03-20-cross-db-relations-map.md",
-      "docs/audits/2026-03-20-irgi-intelligence-functions.md",
-      "docs/audits/2026-03-20-irgi-phase-a-execution.md",
-      "docs/audits/2026-03-20-parallel-dashboard-findings.md",
-      "docs/audits/2026-03-20-parallel-results-disk-scan.md",
-      "docs/audits/2026-03-20-parallel-results-qmd-search.md",
-      "docs/audits/2026-03-20-portfolio-schema-audit.md",
-      "docs/audits/2026-03-20-research-files-catalog-global.md"
+      "portfolio-research/atica.md",
+      "portfolio-research/ballisto-agritech.md",
+      "portfolio-research/boba-bhai.md",
+      "portfolio-research/codeant-ai.md",
+      "portfolio-research/confido-health.md",
+      "portfolio-research/cybrilla.md",
+      "portfolio-research/dodo-payments.md",
+      "portfolio-research/gameramp.md"
     ],
     "pending_inbox": []
   },
@@ -75,6 +75,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T09:38:24Z",
+  "updated_at": "2026-03-20T09:39:15Z",
   "updated_by": "cc"
 }

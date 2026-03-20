@@ -31,6 +31,9 @@ If messages exist, **route by type**:
 | `datum_entity` | Datum Agent | `send_to_datum_agent` |
 | `datum_image` | Datum Agent | `send_to_datum_agent` |
 | `datum_meeting_entities` | Datum Agent | `send_to_datum_agent` |
+| `strategy_assessment` | Megamind Agent | `send_to_megamind_agent` |
+| `strategy_review` | Megamind Agent | `send_to_megamind_agent` |
+| `strategy_*` (any strategy prefix) | Megamind Agent | `send_to_megamind_agent` |
 | Everything else (track_source, research_request, general, ...) | Content Agent | `send_to_content_agent` |
 
 ### Datum Batching Rule
@@ -72,6 +75,82 @@ If file missing OR timestamp >12 hours old:
 If <12 hours: skip.
 
 **Note:** On-demand processing happens via inbox relay (Step 2). This scheduled check is just a catch-up for the watch list.
+
+---
+
+## Step 3b: Agent Action Depth Grading Check
+
+```bash
+psql $DATABASE_URL -t -A -c "
+  SELECT id, action_text, relevance_score, thesis_connection, action_type
+  FROM actions_queue
+  WHERE assigned_to = 'Agent'
+    AND status = 'Proposed'
+    AND id NOT IN (SELECT action_id FROM depth_grades)
+  ORDER BY relevance_score DESC
+  LIMIT 5"
+```
+
+If results: compose depth grading prompt listing each action (id, text, ENIAC score, thesis), call `send_to_megamind_agent`. If Megamind busy, skip — retry next heartbeat.
+
+If no results: skip.
+
+---
+
+## Step 3c: Approved Depth Execution Check
+
+```bash
+psql $DATABASE_URL -t -A -c "
+  SELECT dg.id, dg.action_id, dg.approved_depth, dg.execution_prompt, dg.execution_agent
+  FROM depth_grades dg
+  WHERE dg.execution_status = 'approved'
+  ORDER BY dg.created_at
+  LIMIT 3"
+```
+
+If results: for each approved grade, route the `execution_prompt` to the specified agent (`execution_agent` = 'content' -> `send_to_content_agent`, 'datum' -> `send_to_datum_agent`). Then update the grade:
+
+```bash
+psql $DATABASE_URL -c "UPDATE depth_grades SET execution_status = 'executing', updated_at = NOW() WHERE id = $GRADE_ID"
+```
+
+If target agent is busy, skip that grade — retry next heartbeat.
+
+If no results: skip.
+
+---
+
+## Step 3d: Cascade Trigger Check
+
+```bash
+psql $DATABASE_URL -t -A -c "
+  SELECT dg.id, dg.action_id, aq.action_text, aq.thesis_connection
+  FROM depth_grades dg
+  JOIN actions_queue aq ON dg.action_id = aq.id
+  WHERE dg.execution_status = 'completed'
+    AND dg.id NOT IN (SELECT trigger_source_id FROM cascade_events WHERE trigger_type = 'depth_completed')
+  LIMIT 1"
+```
+
+If results: compose cascade trigger prompt with the completed action details, call `send_to_megamind_agent`. If Megamind busy, skip — retry next heartbeat.
+
+If no results: skip.
+
+---
+
+## Step 3e: Strategic Assessment Check (daily)
+
+```bash
+psql $DATABASE_URL -t -A -c "
+  SELECT created_at FROM strategic_assessments
+  ORDER BY created_at DESC LIMIT 1"
+```
+
+If no results (never assessed) OR last assessment > 24 hours old:
+- Call `send_to_megamind_agent`: "Run daily strategic assessment."
+- If Megamind busy, skip — retry next heartbeat.
+
+If < 24 hours: skip.
 
 ---
 

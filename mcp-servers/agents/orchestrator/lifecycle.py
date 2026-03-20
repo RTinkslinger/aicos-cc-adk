@@ -713,6 +713,13 @@ async def run_agent() -> None:
         _live_log(DATUM_LIVE_LOG, f"=== Datum agent started — session #{read_session_num('datum')} ===")
         logger.info("Datum agent started — session #%d", read_session_num("datum"))
 
+        # Start megamind agent
+        reset_manifest_tokens("megamind", read_session_num("megamind"))
+        clients.megamind_client = await start_megamind_client()
+        clients.megamind_needs_restart = False
+        _live_log(MEGAMIND_LIVE_LOG, f"=== Megamind started — session #{read_session_num('megamind')} ===")
+        logger.info("Megamind started — session #%d", read_session_num("megamind"))
+
         # Start orchestrator
         orc_session = read_session_num("orc")
         reset_manifest_tokens("orc", orc_session)
@@ -729,6 +736,8 @@ async def run_agent() -> None:
                         await restart_content_client()
                     if clients.datum_needs_restart:
                         await restart_datum_client()
+                    if clients.megamind_needs_restart:
+                        await restart_megamind_client()
 
                     # Pre-check: skip LLM call if no work (free)
                     work_reason = await has_work()
@@ -774,6 +783,7 @@ async def run_agent() -> None:
         finally:
             await stop_content_client()
             await stop_datum_client()
+            await stop_megamind_client()
 
         # Always bump session on re-entry (exception or compaction)
         bump_session("orc")
@@ -799,6 +809,7 @@ async def main() -> None:
         pass
     await stop_content_client()
     await stop_datum_client()
+    await stop_megamind_client()
     logger.info("Lifecycle manager stopped")
 
 

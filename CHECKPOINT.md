@@ -213,9 +213,9 @@ ALL 3,722 rows have `current_role = 'postgres'`. This is a PostgreSQL reserved i
 
 ---
 
-### Machine 12: Data Enrichment — Continuous Entity Enrichment + Connections
-**Loop count:** 0 (NEW)
-**Current state:** Not started. Companies 88.5% empty shells, Network 85.4% empty + roles corrupted, entity_connections EMPTY.
+### Machine 12: Data Quality + Enrichment — Continuous (absorbs M2)
+**Loop count:** 4 (inherited from M2) + 0 new = 4
+**Current state:** M2 baseline done (0 dupes, 100% embeddings, 99.3% cross-ref). But Companies 88.5% empty shells, Network 85.4% empty + roles corrupted, entity_connections EMPTY. CC drives this until Datum is processing real data.
 **The gap:**
 - Companies: 4,039/4,565 have NO page content in embeddings. Website 94.7% NULL. Thin embeddings (30% accuracy).
 - Network: current_role='postgres' (needs column RENAME to role_title). Zero enrichment. 276 duplicate groups.
@@ -238,8 +238,8 @@ ALL 3,722 rows have `current_role = 'postgres'`. This is a PostgreSQL reserved i
 
 ## Non-Permanent Machines (concluded or at milestone)
 
-### Machine 2: Data Quality — CONCLUDED (Datum takes over)
-4 loops. 100% embeddings, 0 duplicates, 99.3% cross-ref. Datum Agent handles ongoing data quality.
+### Machine 2: Data Quality — MERGED INTO M12
+M2's 4 loops (AUDIT→FILL→VERIFY→FIX) established the baseline. M12 now carries ALL data quality + enrichment work forward as a permanent machine. M2's audit/fix patterns are M12's starting methodology.
 
 ### Machine 3: Search + Entity — MERGED into M1
 Search pages built as part of WebFront. Cmd+K, /companies, /network, /search all deployed.

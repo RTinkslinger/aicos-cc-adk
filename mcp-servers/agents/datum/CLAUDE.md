@@ -231,8 +231,8 @@ If one exists, skip creating a duplicate.
 ```
 ACK: Processed 1 entity.
 - Created person: Rahul Sharma (Composio, CTO). ID=42.
-- Filled: name, company, role, linkedin_url, city (5/13 fields).
-- Web enriched: linkedin_url, city (2 fields via LinkedIn scrape).
+- Filled: person_name, current_role, linkedin, home_base, e_e_priority (5/13 fields).
+- Web enriched: linkedin, home_base (2 fields via LinkedIn scrape).
 - Datum requests: email, phone, archetype (3 pending).
 ```
 

@@ -1,13 +1,13 @@
-"""Lifecycle manager — orchestrator + content agent.
+"""Lifecycle manager — orchestrator + content agent + datum agent.
 
-Manages two persistent ClaudeSDKClient sessions connected via @tool bridge.
+Manages three persistent ClaudeSDKClient sessions connected via @tool bridge.
 Thin wrapper — ALL intelligence in CLAUDE.md files, ALL logging in hooks.
 
 Does 6 things:
-  1. Creates persistent ClaudeSDKClient for content agent
+  1. Creates persistent ClaudeSDKClient for content agent + datum agent
   2. Creates persistent ClaudeSDKClient for orchestrator (with @tool bridge)
   3. Sends "heartbeat" to orchestrator every 60s
-  4. Tracks token usage for both agents -> traces/manifest.json
+  4. Tracks token usage for all agents -> traces/manifest.json
   5. Detects COMPACT_NOW -> restarts the appropriate agent session
   6. Writes real-time live logs (PostToolUse hooks + AssistantMessage extraction)
 """
@@ -28,8 +28,10 @@ AGENTS_ROOT = Path(__file__).parent.parent
 MANIFEST_PATH = AGENTS_ROOT / "traces" / "manifest.json"
 ORC_WORKSPACE = Path(__file__).parent
 CONTENT_WORKSPACE = AGENTS_ROOT / "content"
+DATUM_WORKSPACE = AGENTS_ROOT / "datum"
 ORC_LIVE_LOG = ORC_WORKSPACE / "live.log"
 CONTENT_LIVE_LOG = CONTENT_WORKSPACE / "live.log"
+DATUM_LIVE_LOG = DATUM_WORKSPACE / "live.log"
 
 logger = logging.getLogger("lifecycle")
 logging.basicConfig(
@@ -42,6 +44,10 @@ class ClientState:
     content_client: Any = None
     content_needs_restart: bool = False
     content_busy: bool = False
+
+    datum_client: Any = None
+    datum_needs_restart: bool = False
+    datum_busy: bool = False
 
 
 clients = ClientState()
@@ -168,7 +174,14 @@ def reset_manifest_tokens(agent: str, session_num: int) -> None:
 
 
 def _state_dir(agent: str) -> Path:
-    return (ORC_WORKSPACE if agent == "orc" else CONTENT_WORKSPACE) / "state"
+    if agent == "orc":
+        return ORC_WORKSPACE / "state"
+    elif agent == "content":
+        return CONTENT_WORKSPACE / "state"
+    elif agent == "datum":
+        return DATUM_WORKSPACE / "state"
+    else:
+        raise ValueError(f"Unknown agent: {agent}")
 
 
 def read_session_num(agent: str) -> int:
@@ -267,7 +280,68 @@ def create_bridge_server():
             "content": [{"type": "text", "text": "Prompt sent to content agent. Working in background."}],
         }
 
-    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent])
+    async def _read_datum_response():
+        """Background task: read datum agent response, track tokens, detect compaction."""
+        try:
+            async for msg in clients.datum_client.receive_response():
+                if isinstance(msg, AssistantMessage):
+                    _log_assistant_message(DATUM_LIVE_LOG, msg)
+                elif isinstance(msg, ResultMessage):
+                    update_manifest_tokens("datum", msg.usage)
+                    _log_result_message(DATUM_LIVE_LOG, msg)
+                    logger.info(
+                        "Bridge: datum done — turns=%d, cost=$%.4f",
+                        msg.num_turns,
+                        msg.total_cost_usd or 0,
+                    )
+                    if msg.result and "COMPACT_NOW" in msg.result:
+                        clients.datum_needs_restart = True
+                        logger.info("Bridge: datum agent signaled COMPACT_NOW")
+        except Exception as e:
+            logger.error("Bridge: error reading datum response: %s", e)
+        finally:
+            clients.datum_busy = False
+            _live_log(DATUM_LIVE_LOG, "--- idle (ready for next prompt) ---")
+
+    @tool(
+        "send_to_datum_agent",
+        "Send entity data to the persistent Datum Agent for dedup, enrichment, and storage. "
+        "Returns immediately — datum agent works in background. "
+        "If datum agent is busy, returns a busy message.",
+        {"prompt": str},
+    )
+    async def send_to_datum_agent(args: dict[str, Any]) -> dict[str, Any]:
+        if clients.datum_client is None:
+            return {
+                "content": [{"type": "text", "text": "Error: Datum agent not connected"}],
+                "is_error": True,
+            }
+
+        if clients.datum_busy:
+            return {
+                "content": [{"type": "text", "text": "Datum agent is still processing previous work. Will check again next heartbeat."}],
+            }
+
+        prompt = args["prompt"]
+        logger.info("Bridge: forwarding to datum agent (%d chars)", len(prompt))
+        _live_log(DATUM_LIVE_LOG, f">>> PROMPT: {prompt[:200]}")
+        clients.datum_busy = True
+        try:
+            await clients.datum_client.query(prompt)
+            asyncio.create_task(_read_datum_response())
+        except Exception as e:
+            clients.datum_busy = False
+            logger.error("Bridge: failed to send to datum agent: %s", e)
+            return {
+                "content": [{"type": "text", "text": f"Error sending to datum agent: {e}"}],
+                "is_error": True,
+            }
+
+        return {
+            "content": [{"type": "text", "text": "Prompt sent to datum agent. Working in background."}],
+        }
+
+    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent, send_to_datum_agent])
 
 
 # --- Agent option builders ---
@@ -284,6 +358,7 @@ def build_orc_options(bridge_server):
         allowed_tools=[
             "Bash", "Read", "Write", "Edit", "Glob", "Grep",
             "mcp__bridge__send_to_content_agent",
+            "mcp__bridge__send_to_datum_agent",
         ],
         mcp_servers={"bridge": bridge_server},
         hooks={"PostToolUse": [HookMatcher(hooks=[orc_tool_hook])]},
@@ -358,6 +433,35 @@ def build_content_options():
     )
 
 
+def build_datum_options():
+    from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, ThinkingConfigEnabled
+
+    datum_tool_hook = _make_tool_hook(DATUM_LIVE_LOG)
+
+    return ClaudeAgentOptions(
+        model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
+        permission_mode="dontAsk",
+        allowed_tools=[
+            "Bash", "Read", "Write", "Edit", "Grep", "Glob", "Skill",
+            "mcp__web__web_browse", "mcp__web__web_scrape", "mcp__web__web_search",
+            "mcp__web__fingerprint", "mcp__web__check_strategy",
+            "mcp__web__manage_session", "mcp__web__validate",
+        ],
+        mcp_servers={"web": {"type": "http", "url": "http://localhost:8001/mcp"}},
+        hooks={"PostToolUse": [HookMatcher(hooks=[datum_tool_hook])]},
+        setting_sources=["project"],
+        thinking=ThinkingConfigEnabled(type="enabled", budget_tokens=5000),
+        effort="high",
+        max_turns=30,
+        max_budget_usd=2.0,
+        cwd=str(DATUM_WORKSPACE),
+        env={
+            "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),
+            "DATABASE_URL": os.environ.get("DATABASE_URL", ""),
+        },
+    )
+
+
 # --- Content client lifecycle ---
 
 
@@ -385,6 +489,35 @@ async def restart_content_client():
     reset_manifest_tokens("content", read_session_num("content"))
     clients.content_client = await start_content_client()
     clients.content_needs_restart = False
+
+
+# --- Datum client lifecycle ---
+
+
+async def start_datum_client():
+    from claude_agent_sdk import ClaudeSDKClient
+
+    client = ClaudeSDKClient(options=build_datum_options())
+    await client.__aenter__()
+    return client
+
+
+async def stop_datum_client():
+    if clients.datum_client:
+        try:
+            await clients.datum_client.__aexit__(None, None, None)
+        except Exception as e:
+            logger.warning("Error stopping datum client: %s", e)
+        clients.datum_client = None
+
+
+async def restart_datum_client():
+    logger.info("Restarting datum agent session")
+    await stop_datum_client()
+    bump_session("datum")
+    reset_manifest_tokens("datum", read_session_num("datum"))
+    clients.datum_client = await start_datum_client()
+    clients.datum_needs_restart = False
 
 
 # --- Pre-check: skip LLM if no work ---
@@ -449,6 +582,13 @@ async def run_agent() -> None:
         _live_log(CONTENT_LIVE_LOG, f"=== Content agent started — session #{read_session_num('content')} ===")
         logger.info("Content agent started — session #%d", read_session_num("content"))
 
+        # Start datum agent
+        reset_manifest_tokens("datum", read_session_num("datum"))
+        clients.datum_client = await start_datum_client()
+        clients.datum_needs_restart = False
+        _live_log(DATUM_LIVE_LOG, f"=== Datum agent started — session #{read_session_num('datum')} ===")
+        logger.info("Datum agent started — session #%d", read_session_num("datum"))
+
         # Start orchestrator
         orc_session = read_session_num("orc")
         reset_manifest_tokens("orc", orc_session)
@@ -463,6 +603,8 @@ async def run_agent() -> None:
                 while not orc_needs_restart:
                     if clients.content_needs_restart:
                         await restart_content_client()
+                    if clients.datum_needs_restart:
+                        await restart_datum_client()
 
                     # Pre-check: skip LLM call if no work (free)
                     work_reason = await has_work()
@@ -507,6 +649,7 @@ async def run_agent() -> None:
             await asyncio.sleep(5)
         finally:
             await stop_content_client()
+            await stop_datum_client()
 
         # Always bump session on re-entry (exception or compaction)
         bump_session("orc")
@@ -531,6 +674,7 @@ async def main() -> None:
     except asyncio.CancelledError:
         pass
     await stop_content_client()
+    await stop_datum_client()
     logger.info("Lifecycle manager stopped")
 
 

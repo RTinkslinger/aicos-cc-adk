@@ -3,7 +3,7 @@
 # 3-phase idempotent deploy: SYNC → BOOTSTRAP → CLEANUP+RESTART
 #
 # Active services: state-mcp, web-tools-mcp, orchestrator
-# Orchestrator manages content agent internally via lifecycle.py
+# Orchestrator manages content agent + datum agent internally via lifecycle.py
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -134,5 +134,6 @@ echo ""
 echo "=== Deploy complete ==="
 echo "  Live logs: ssh -t root@${DROPLET} /opt/agents/live-orc.sh"
 echo "             ssh -t root@${DROPLET} /opt/agents/live-content.sh"
+echo "             ssh -t root@${DROPLET} /opt/agents/live-datum.sh"
 echo "             ssh -t root@${DROPLET} /opt/agents/live-traces.sh"
 echo "             ssh -t root@${DROPLET} journalctl -u orchestrator -f"

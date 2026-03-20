@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-20T10:25:49Z",
+      "timestamp": "2026-03-20T11:04:26Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -43,16 +43,16 @@
       "Review Agent SDK ContentAgent plan"
     ],
     "key_files_changed_last_session": [
-      "TRACES.md",
-      "docs/audits/2026-03-20-companies-network-schema-audit.md",
-      "portfolio-research/atica.md",
-      "portfolio-research/ballisto-agritech.md",
-      "portfolio-research/boba-bhai.md",
-      "portfolio-research/codeant-ai.md",
-      "portfolio-research/confido-health.md",
-      "portfolio-research/cybrilla.md",
-      "portfolio-research/dodo-payments.md",
-      "portfolio-research/gameramp.md"
+      "companies-pages/nomado.md",
+      "companies-pages/nooks.md",
+      "companies-pages/north-hollywood-high-school-highly-gifted-magnet.md",
+      "companies-pages/nuport-robotics.md",
+      "companies-pages/nus-high-school-of-mathematics-science.md",
+      "companies-pages/nuveb-exchange.md",
+      "portfolio-pages/vyomic-fka-aerodome.md",
+      "portfolio-pages/workatoms.md",
+      "companies-pages/terractive.md",
+      "companies-pages/terrado.md"
     ],
     "pending_inbox": []
   },
@@ -75,6 +75,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T10:25:49Z",
+  "updated_at": "2026-03-20T11:04:26Z",
   "updated_by": "cc"
 }

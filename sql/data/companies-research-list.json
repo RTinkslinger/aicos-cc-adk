@@ -1,0 +1,3040 @@
+[
+  {
+    "name": "10Medz",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Slow | Early | Med",
+    "website": "",
+    "notion_page_id": "13f29bcc-b6fc-809b-bcec-f939557b8d68"
+  },
+  {
+    "name": "10x Science",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "https://10xscience.com/",
+    "notion_page_id": "32629bcc-b6fc-813b-a4c8-ca4ee92136c2"
+  },
+  {
+    "name": "10x Science (YC W26)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81ff-980e-f6e82eab9ac4"
+  },
+  {
+    "name": "Abhinav Sharma\u2019s new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8044-a8ae-f36b9fe8cf82"
+  },
+  {
+    "name": "Abhishek Kona\u2019s company",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-80a0-95c0-d04342c3d647"
+  },
+  {
+    "name": "AbleCredit",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ed29bcc-b6fc-8026-939f-c8fdb5ad5afb"
+  },
+  {
+    "name": "AeroDome Technologies Private Limited",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e929bcc-b6fc-81e6-88fd-cd56a3b2366f"
+  },
+  {
+    "name": "Agara",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2b329bcc-b6fc-813b-b406-f58f53b80ccb"
+  },
+  {
+    "name": "Akrid",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1d529bcc-b6fc-80d9-ad2a-f6847c1d0a96"
+  },
+  {
+    "name": "Alben D Souza\u2019s company",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10429bcc-b6fc-806a-a4c2-c8843700b151"
+  },
+  {
+    "name": "Allter",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c329bcc-b6fc-81f8-9d78-eeed426b40b5"
+  },
+  {
+    "name": "Alphonse Daudet highschool",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-816d-9997-c459953abe09"
+  },
+  {
+    "name": "Alteon Energy",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2f53a1c0-a9b3-4388-9e34-dc2a9bed50b0"
+  },
+  {
+    "name": "Alter AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "Likely Fast | Late | Low",
+    "website": "",
+    "notion_page_id": "22529bcc-b6fc-8190-b4d5-e1fb8a87239f"
+  },
+  {
+    "name": "Ambak",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "f27e7385-d27e-45af-be18-c0a03fe5d412"
+  },
+  {
+    "name": "Annamalaiyar Matriculation Higher Secondary School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81fc-b1e0-fa4e2dbb8f23"
+  },
+  {
+    "name": "Answers AI",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "5d6323e0-7846-48cd-8360-55ac1641358f"
+  },
+  {
+    "name": "Arjun Juneja\u2019s company",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10529bcc-b6fc-8004-ae96-fde5f1e3870c"
+  },
+  {
+    "name": "Arrakis",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-808c-aa20-fa68f1024f9c"
+  },
+  {
+    "name": "Arya Pathak\u2019s company (NA)",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2b829bcc-b6fc-8031-8799-e0ec91d6eb5e"
+  },
+  {
+    "name": "Ashr",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://ashr.io",
+    "notion_page_id": "32629bcc-b6fc-8107-bf11-ef85570e6a6a"
+  },
+  {
+    "name": "AskMyGuru",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1bb29bcc-b6fc-80b8-9d97-ddaece11e372"
+  },
+  {
+    "name": "AskVideos",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-808d-8c1d-d0dfdffa83e5"
+  },
+  {
+    "name": "Augment Code",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81b3-bdac-f7701da0d2f5"
+  },
+  {
+    "name": "Aurva",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "9d84360e-5475-44de-a0c7-99d5902e97db"
+  },
+  {
+    "name": "Autobot Energy",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e929bcc-b6fc-807d-b173-ea794f020298"
+  },
+  {
+    "name": "Automorphic",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81fb-860a-fd20a3f89e66"
+  },
+  {
+    "name": "Autosana",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22529bcc-b6fc-81e4-8701-cdd9b7370768"
+  },
+  {
+    "name": "Autumn",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "25529bcc-b6fc-80f8-ad84-c85184fcb190"
+  },
+  {
+    "name": "Autumn AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://autumnai.com/",
+    "notion_page_id": "32629bcc-b6fc-8118-b19c-eb397d6ca41e"
+  },
+  {
+    "name": "Aviha AI",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31b29bcc-b6fc-814a-aa63-fd06268479d6"
+  },
+  {
+    "name": "AXO",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31c29bcc-b6fc-8142-a697-fd2e0b61cca7"
+  },
+  {
+    "name": "Bachatt",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "17329bcc-b6fc-8031-96c7-da4b1cd9017d"
+  },
+  {
+    "name": "Backspace",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "Slow | Early | High",
+    "website": "",
+    "notion_page_id": "6b92fd81-1d15-41d0-8001-4b1d3cb8dfc0"
+  },
+  {
+    "name": "Base14.io",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "18c29bcc-b6fc-8032-9761-e6644b16ae40"
+  },
+  {
+    "name": "BASIS Independent Silicon Valley",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81c2-95a5-d28b3f21a26d"
+  },
+  {
+    "name": "Bidflow",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://usebidflow.com/",
+    "notion_page_id": "32629bcc-b6fc-8111-82c1-e165c744a13a"
+  },
+  {
+    "name": "Bidflow (YC S25)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-819b-bfcc-c7076884243a"
+  },
+  {
+    "name": "BillMe Founder\u2019s new co",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "19629bcc-b6fc-801f-bf69-e3fa9d209049"
+  },
+  {
+    "name": "Blip Fashion",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "79f92d3b-7310-46f6-8c23-7ad203ebb7a6"
+  },
+  {
+    "name": "Boba Bhai",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "DeVC Lean In Prospect",
+    "website": "",
+    "notion_page_id": "682d8edb-f9bf-45e2-ae87-3b758d6ce685"
+  },
+  {
+    "name": "Bodhi Life",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32829bcc-b6fc-81ef-8f5c-ca0b9637a7f9"
+  },
+  {
+    "name": "Bookmarkk",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31f29bcc-b6fc-8194-b214-e2bfccbf15e5"
+  },
+  {
+    "name": "Boost Robotics",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22429bcc-b6fc-8111-84f9-c874dda94eb6"
+  },
+  {
+    "name": "BostonQ PSI",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e829bcc-b6fc-80bc-bbf4-e950e4baf928"
+  },
+  {
+    "name": "BoxPay",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2d7b9d1d-66a6-48af-a639-96fac80cec4a"
+  },
+  {
+    "name": "Breethr",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1df29bcc-b6fc-8042-8945-d8aa12da0dee"
+  },
+  {
+    "name": "Brink AI",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ed29bcc-b6fc-805e-a260-ce372f1bb9cd"
+  },
+  {
+    "name": "BriskPe",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ed29bcc-b6fc-8080-9459-c88ed69b12c8"
+  },
+  {
+    "name": "Bunny (Outlier Humans)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22b29bcc-b6fc-81f9-84f5-cb1784b8945b"
+  },
+  {
+    "name": "Caddy",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2ae29bcc-b6fc-819e-931a-ed582d024535"
+  },
+  {
+    "name": "Carbonstrong",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "a8702d7e-cfd2-476b-8e6a-c713f93498b2"
+  },
+  {
+    "name": "Chandramauli Singh's company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22a29bcc-b6fc-81a6-bb88-e24b3fa17e74"
+  },
+  {
+    "name": "CirclePe",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "f630b4d8-f57c-4992-ac7d-aae6979ae423"
+  },
+  {
+    "name": "Circuit House Technologies",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "3305cc49-da26-480b-aaa5-e5078f362ac7"
+  },
+  {
+    "name": "Clapstore Toys",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27829bcc-b6fc-80f8-bfe9-ed50ad39156f"
+  },
+  {
+    "name": "Cleevo",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "8f6f0017-79e4-4d98-b4d8-9d94bc0a9d5f"
+  },
+  {
+    "name": "Clodo",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://clodo.ai",
+    "notion_page_id": "22c29bcc-b6fc-8156-b3d3-f7a9f8033d52"
+  },
+  {
+    "name": "Clubhouse",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "f4dd2983-ec70-447b-b3e3-d4adbfa92dd1"
+  },
+  {
+    "name": "Clueso (YC W23)",
+    "sector": "",
+    "deal_status": "DeVC Lean In Prospect",
+    "website": "",
+    "notion_page_id": "732c57fb-639a-4589-b653-72cedc06296e"
+  },
+  {
+    "name": "cocreate",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22529bcc-b6fc-8134-874e-d1df63960500"
+  },
+  {
+    "name": "CoHyre AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e329bcc-b6fc-80e8-826f-e372bb5a67e1"
+  },
+  {
+    "name": "CollektAI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2a629bcc-b6fc-81fe-8259-d08b644e8a27"
+  },
+  {
+    "name": "Command",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32229bcc-b6fc-8109-a0e3-e37ec70d4689"
+  },
+  {
+    "name": "Commsor",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "bce38e34-9305-491f-afb3-c71efb0a44e3"
+  },
+  {
+    "name": "Commure",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-817e-88fd-eb24e86a3603"
+  },
+  {
+    "name": "Compose",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22a29bcc-b6fc-81c1-af6f-fbfdb2dc70c1"
+  },
+  {
+    "name": "computeUP",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "d9959345-f1c7-4149-87e9-977f35aa4c8c"
+  },
+  {
+    "name": "Confluence Labs",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "https://confluence.sh",
+    "notion_page_id": "32629bcc-b6fc-81b7-8ac3-d3083cb3ea06"
+  },
+  {
+    "name": "Confluence Labs",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "https://confluence.sh",
+    "notion_page_id": "32629bcc-b6fc-8190-bc71-e1313d4f72d1"
+  },
+  {
+    "name": "ContextFort",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22529bcc-b6fc-8123-ba17-c4287129a746"
+  },
+  {
+    "name": "Cookr",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10e29bcc-b6fc-8075-b3fa-e125259722db"
+  },
+  {
+    "name": "Coral AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "98df0bee-06a9-43df-948e-9adbceba39c6"
+  },
+  {
+    "name": "Corelight",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8166-9322-d56aeb88d808"
+  },
+  {
+    "name": "Cotodel",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c029bcc-b6fc-81db-af35-cb1fba25b87b"
+  },
+  {
+    "name": "Count AI",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "18f29bcc-b6fc-8004-b421-c84e44ca3696"
+  },
+  {
+    "name": "Crackle",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "b3c94787-011f-42bd-8614-2adb299d16fc"
+  },
+  {
+    "name": "CRED",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "6da30f53-3102-46da-89fd-2ac5448b77eb"
+  },
+  {
+    "name": "Credeau",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2ff29bcc-b6fc-81bc-83d3-fe4f289bac50"
+  },
+  {
+    "name": "Creso",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "Likely Fast | Late | High",
+    "website": "",
+    "notion_page_id": "13d29bcc-b6fc-8092-b2b9-d55405f3a7f0"
+  },
+  {
+    "name": "Crest",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10b29bcc-b6fc-8058-a2ec-e6c16529a62c"
+  },
+  {
+    "name": "Crosslayer Labs",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://www.crosslayerlabs.com/",
+    "notion_page_id": "32629bcc-b6fc-819f-a132-cf80bfa33f63"
+  },
+  {
+    "name": "Culture Circle",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Likely Fast | Early | Low",
+    "website": "",
+    "notion_page_id": "10629bcc-b6fc-8029-904d-f8a02195a46f"
+  },
+  {
+    "name": "Cybrilla",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "bd86afdc-e7c8-4789-b7ff-adbd83d11513"
+  },
+  {
+    "name": "Dataflos (f.k.a. Blockfenders)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "ba664699-e919-4ee3-b0f7-fb6120dd7de1"
+  },
+  {
+    "name": "Dawere",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "95561277-463b-489d-aa52-9387b3fe6247"
+  },
+  {
+    "name": "Deepak\u2019s new company",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "15c29bcc-b6fc-80d8-8883-f0092cb5383e"
+  },
+  {
+    "name": "Delhi Public School, Sushant Lok",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81fb-80e4-c5ed2a2e98f7"
+  },
+  {
+    "name": "Devang & Saurav\u2019s company",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22b29bcc-b6fc-8098-bb1b-f8cbaa72f5e0"
+  },
+  {
+    "name": "Deware",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1cf6b46e-3291-44be-909b-bbb55b2934ba"
+  },
+  {
+    "name": "Docura Health",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://docurahealth.com/",
+    "notion_page_id": "32629bcc-b6fc-8132-aeed-d58a6748426d"
+  },
+  {
+    "name": "Docura Health",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://docurahealth.com/",
+    "notion_page_id": "32629bcc-b6fc-81b9-b30e-cf2942812ad9"
+  },
+  {
+    "name": "Dodge AI (f.k.a. Interface AI)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "24629bcc-b6fc-801b-8d3d-c9d976d49fed"
+  },
+  {
+    "name": "Domo",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8192-bea9-e0d16abb533f"
+  },
+  {
+    "name": "DOTO Kids",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10629bcc-b6fc-80c3-be98-e0a646776118"
+  },
+  {
+    "name": "DreamSpan (f.k.a. DreamSleep)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "DeVC Lean In Prospect",
+    "website": "",
+    "notion_page_id": "84f0f78c-3578-42c2-a6fc-122805cd0a8d"
+  },
+  {
+    "name": "Drizz.Dev",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "13629bcc-b6fc-806d-8f12-f07440b7c83c"
+  },
+  {
+    "name": "Dublin High School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8142-ab7f-de95e2bb75b6"
+  },
+  {
+    "name": "Dxtr",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8028-b363-f5fe98307c0d"
+  },
+  {
+    "name": "EatBetter",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10b29bcc-b6fc-8079-8d75-c54d8adc9b26"
+  },
+  {
+    "name": "Edge Focus",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32729bcc-b6fc-8120-9027-ce13150dc390"
+  },
+  {
+    "name": "Edge Focus Partners",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32729bcc-b6fc-81d6-8371-d3eebd4eea70"
+  },
+  {
+    "name": "Eduro",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32329bcc-b6fc-81d7-87f6-c5fb94eb56d5"
+  },
+  {
+    "name": "ElecTrade (f.k.a. Hatch N Hack)",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "98b860a7-6b15-48e0-bcdc-3c95246d9054"
+  },
+  {
+    "name": "Embedder",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "24829bcc-b6fc-8039-8879-ddd0e9fee5b8"
+  },
+  {
+    "name": "EmoMee",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "7053a4a6-e7e4-4dd1-9b77-d21a8526dd2a"
+  },
+  {
+    "name": "Engram",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://engramhq.com",
+    "notion_page_id": "31529bcc-b6fc-8190-a34b-f68e81b078a2"
+  },
+  {
+    "name": "Enso",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "28829bcc-b6fc-803c-8012-d208f8e14c46"
+  },
+  {
+    "name": "Ethera",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1d329bcc-b6fc-814d-b25b-e90eb2325473"
+  },
+  {
+    "name": "ExtraaEdge",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "d3bb2445-d23a-4fb4-8bb0-b619dad37e49"
+  },
+  {
+    "name": "Fabriclore",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "51dfb241-03d0-477f-93f3-98877c4ae47d"
+  },
+  {
+    "name": "Faff (https://www.tryfaff.com/)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1d429bcc-b6fc-80f3-bb35-cb7970e5e7e8"
+  },
+  {
+    "name": "Felicity",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Portfolio",
+    "website": "",
+    "notion_page_id": "fc94240b-a228-4f7a-ba1d-7763acb97cfa"
+  },
+  {
+    "name": "Fidura AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c829bcc-b6fc-80cd-834e-e6ed4cbd235c"
+  },
+  {
+    "name": "Finlead AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "ef95c8d4-ffb9-4190-b529-baf5de42a97a"
+  },
+  {
+    "name": "Finyman",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2e629bcc-b6fc-81d8-96e0-c5bf6b8db9d1"
+  },
+  {
+    "name": "Firi",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32829bcc-b6fc-81a7-b048-e866fe30e799"
+  },
+  {
+    "name": "Firstbase",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "652d573e-aae5-4f8e-9411-ff920acb299e"
+  },
+  {
+    "name": "Fliq (f.k.a. EthosX)",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "7467f405-f53d-4df6-8d4b-d071bd1cdb86"
+  },
+  {
+    "name": "Flout (Rachna Bahadur)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "527b36b7-1a1b-4fad-a6e6-76a864af0a12"
+  },
+  {
+    "name": "Flowstate Labs",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27829bcc-b6fc-8076-94bf-d67f3cfdea38"
+  },
+  {
+    "name": "Fondant",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "ba26ad87-ae7d-4190-a24c-f51f90c54598"
+  },
+  {
+    "name": "Frex",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1d529bcc-b6fc-81a1-a57e-f7ff007f76ab"
+  },
+  {
+    "name": "Frizzle",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22c29bcc-b6fc-818b-9d42-c5dfcc4a8713"
+  },
+  {
+    "name": "FYN Wellness",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32529bcc-b6fc-814c-b47c-fa9032277633"
+  },
+  {
+    "name": "Gameramp",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "DeVC Concept Prospect",
+    "website": "",
+    "notion_page_id": "18629bcc-b6fc-8083-80cb-cf6f3ff79d77"
+  },
+  {
+    "name": "Geri AI",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81d5-b210-cbc381747208"
+  },
+  {
+    "name": "Ghostship (YC S25)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81ab-9ff3-de0c81b3f54d"
+  },
+  {
+    "name": "Gimi Michi",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "26029bcc-b6fc-80bf-8606-e5c1d9cae0ba"
+  },
+  {
+    "name": "Glidely",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8140-a0b7-e1e23daf0078"
+  },
+  {
+    "name": "Gobi\u2019s company",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-80b3-8a44-c8c1fd4133db"
+  },
+  {
+    "name": "GoCredit (f.k.a. UniPe)",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "bcf73ca4-7981-47c5-a0dc-1fc9e2f2c529"
+  },
+  {
+    "name": "Gordian",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11529bcc-b6fc-801f-80bb-d23a75eb6b81"
+  },
+  {
+    "name": "GraphCDN",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "5c25ab3e-bc75-4cdd-b022-510912e550b1"
+  },
+  {
+    "name": "Grexa",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "Likely Fast | Late | Low",
+    "website": "",
+    "notion_page_id": "13429bcc-b6fc-80d3-8aec-fe87ff58b19e"
+  },
+  {
+    "name": "Grey Sky Capital",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e729bcc-b6fc-8108-b5ef-f0917ea4d598"
+  },
+  {
+    "name": "Groupe SNCF",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81ec-8b2b-cfbaa2d9f865"
+  },
+  {
+    "name": "Growfin",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://www.growfin.ai",
+    "notion_page_id": "32729bcc-b6fc-81a2-91c3-ef4003eaf034"
+  },
+  {
+    "name": "Grvt",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "01f6d150-5c7c-40a7-a2b3-fe12b1876fb5"
+  },
+  {
+    "name": "Gusto",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81de-8c2f-e35d3457912b"
+  },
+  {
+    "name": "Happyrobot",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81d1-8f2f-de5574ff5da1"
+  },
+  {
+    "name": "Harshit Madan\u2019s new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2fe29bcc-b6fc-804b-9261-e0d85ca3bae4"
+  },
+  {
+    "name": "HealthCRED",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "ee8a742f-6a21-41c2-b1aa-0ec18f8711ef"
+  },
+  {
+    "name": "Helium Homes",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e829bcc-b6fc-80ec-861a-d38467b166ee"
+  },
+  {
+    "name": "HelloCounsel",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8084-811e-d8f6ece1cb4e"
+  },
+  {
+    "name": "Hexo AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "25d29bcc-b6fc-8106-b67f-cb4e9d5da66f"
+  },
+  {
+    "name": "HeyFinn",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31229bcc-b6fc-811b-ba99-f96674bf45bb"
+  },
+  {
+    "name": "Highperformr AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "b5336dd8-0d34-4bfc-8a4c-66982bd1145a"
+  },
+  {
+    "name": "Hill Spring International School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8118-8bb8-d2ab563272a7"
+  },
+  {
+    "name": "Hooly AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "Likely Fast | Early | High",
+    "website": "",
+    "notion_page_id": "1c729bcc-b6fc-800f-a60c-df51d7518716"
+  },
+  {
+    "name": "Hotelzify",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "f20eab85-2a92-42ed-8b98-1d9aa6243525"
+  },
+  {
+    "name": "HULP",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31329bcc-b6fc-819c-a023-eb603b1ca1ac"
+  },
+  {
+    "name": "Human Edge",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "16629bcc-b6fc-801d-8261-c089f6479d5a"
+  },
+  {
+    "name": "iBind Systems",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "3df1f05b-f722-4543-8542-fcc44217ebc3"
+  },
+  {
+    "name": "iDO Devices",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27129bcc-b6fc-8099-b362-ee7299d3f7c6"
+  },
+  {
+    "name": "Ignosis",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1f529bcc-b6fc-802f-a696-cc618093cdc8"
+  },
+  {
+    "name": "Imprezia AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22529bcc-b6fc-8186-a474-ef7558a39be5"
+  },
+  {
+    "name": "Inspecity",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "5aad2644-3c5b-48d8-9501-945303ac7460"
+  },
+  {
+    "name": "Insta Astro",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "0e7ff359-337f-4149-98bc-257eac46fe5e"
+  },
+  {
+    "name": "Intuit",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-818d-9dee-cd05a72ad9a6"
+  },
+  {
+    "name": "Inviscid AI",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "https://inviscidai.com/",
+    "notion_page_id": "32629bcc-b6fc-8114-b1a7-f431bf6dbe97"
+  },
+  {
+    "name": "Irvine Valley College",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-817a-9de6-c9f4365a87e3"
+  },
+  {
+    "name": "Jaydeep's new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32229bcc-b6fc-8141-a5b8-e99a32d3343f"
+  },
+  {
+    "name": "JB Air Purifier",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Slow | Early | High",
+    "website": "",
+    "notion_page_id": "13429bcc-b6fc-8026-aa6d-d571e81d4486"
+  },
+  {
+    "name": "Johns Hopkins Whiting School of Engineering",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-811a-bf45-fbfe8a808f46"
+  },
+  {
+    "name": "JSerra Catholic High School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8140-9df4-e2333018f1c5"
+  },
+  {
+    "name": "JustAMoment AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1a629bcc-b6fc-809c-8270-c5796361d518"
+  },
+  {
+    "name": "K V Ketan\u2019s new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ed29bcc-b6fc-8093-abf4-d17eaa5296b2"
+  },
+  {
+    "name": "K-Dense",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "https://www.k-dense.ai",
+    "notion_page_id": "d2a984a8-2d50-4d53-938c-075b59440d04"
+  },
+  {
+    "name": "Kairos Computer",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1f729bcc-b6fc-80cd-b126-e067324c9402"
+  },
+  {
+    "name": "Karta AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1f529bcc-b6fc-8007-8dd3-d287c9883da4"
+  },
+  {
+    "name": "kashif\u2019s new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ed29bcc-b6fc-8074-bbb8-cb8d4efcae18"
+  },
+  {
+    "name": "Kavana AI (Two Four Labs)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "23729bcc-b6fc-8036-9785-cd1361564c27"
+  },
+  {
+    "name": "Kaya Founders",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8196-b523-cefdcdd8c714"
+  },
+  {
+    "name": "Ki",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "24729bcc-b6fc-8038-88cb-c231f454208a"
+  },
+  {
+    "name": "Kilrr",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "19dba6ca-b00d-49cc-bbd9-83cb7f3c9e8f"
+  },
+  {
+    "name": "Kintsugi",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "17d5ab3d-e718-449a-a1ce-2c1856f4e44e"
+  },
+  {
+    "name": "Kita",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "https://www.usekita.com/",
+    "notion_page_id": "32629bcc-b6fc-8175-8f0e-ec5e983bd185"
+  },
+  {
+    "name": "Klaire",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8105-8730-c2274021863e"
+  },
+  {
+    "name": "Knot (f.k.a Slick)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1b329bcc-b6fc-80e7-8cd0-e41412d2a56d"
+  },
+  {
+    "name": "Knowtex",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-819f-8bda-c658a0605695"
+  },
+  {
+    "name": "KreditPe",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1bd29bcc-b6fc-80f8-850a-d41f02090a51"
+  },
+  {
+    "name": "Kreo",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "ba2e28c7-7189-4dda-851a-e2dcce3659f0"
+  },
+  {
+    "name": "Kulfi",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "https://kulfiapp.com",
+    "notion_page_id": "32829bcc-b6fc-81a2-8a61-f70d5ee5ab4e"
+  },
+  {
+    "name": "Kusho AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ee29bcc-b6fc-80dc-b897-eef09f3e7243"
+  },
+  {
+    "name": "Lance",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://www.lance.live/",
+    "notion_page_id": "32629bcc-b6fc-81a9-bf57-d7b868fc907b"
+  },
+  {
+    "name": "Lane",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "https://inlane.in/",
+    "notion_page_id": "2ca29bcc-b6fc-80ec-952f-f830936242f3"
+  },
+  {
+    "name": "Le fran\u00e7ais des affaires de la CCI Paris Ile-de-France",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81a4-9db5-f554824b1afb"
+  },
+  {
+    "name": "Legend of Toys",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "b47eb29a-f5ec-4a59-984c-b89d0ccc1a2d"
+  },
+  {
+    "name": "LICEO STATALE ETTORE MAJORANA",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-813c-b8c9-d4c07020b208"
+  },
+  {
+    "name": "Linktree",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8171-94a7-fdcb8bb6e24f"
+  },
+  {
+    "name": "LOGIKALITY",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2b829bcc-b6fc-81aa-aaf3-daaedf543a09"
+  },
+  {
+    "name": "Loomiz",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1bc29bcc-b6fc-814c-ad86-fd664aeebfb0"
+  },
+  {
+    "name": "LottoG",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "DeVC Concept Prospect",
+    "website": "",
+    "notion_page_id": "1af29bcc-b6fc-80d2-8b1c-f7c03603d21f"
+  },
+  {
+    "name": "Lucio AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c329bcc-b6fc-8011-a6c3-c6211c7291a6"
+  },
+  {
+    "name": "Luma Labs",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "cae60315-aa55-4424-9da5-30cd8e93ba4e"
+  },
+  {
+    "name": "Lunar",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32729bcc-b6fc-80fb-99d7-cfd0d0690728"
+  },
+  {
+    "name": "Lyc\u00e9e Les Pierres Vives",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8134-bd35-f684cb3e04e8"
+  },
+  {
+    "name": "Manav (Suvonil Chatterjee\u2019s company)",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "25729bcc-b6fc-807d-bb56-fec25f4f7270"
+  },
+  {
+    "name": "Mandrake Bioworks",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2b329bcc-b6fc-8030-82e5-ddc0fcd4a271"
+  },
+  {
+    "name": "Mannjal",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "18d29bcc-b6fc-80bc-9efb-ec03bb071323"
+  },
+  {
+    "name": "Mantys",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "b2f4215b-3c95-4757-a806-39efc1c2eadf"
+  },
+  {
+    "name": "Manufacture AI",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1df29bcc-b6fc-80df-8ac8-c7c80697efde"
+  },
+  {
+    "name": "Mars Computing",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "Slow | Early | High",
+    "website": "",
+    "notion_page_id": "e803fa2f-5689-4029-b229-f259fee94bd4"
+  },
+  {
+    "name": "Material Depot (YC W22)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "a9c42506-d40b-4726-a8cc-7e797a883aa7"
+  },
+  {
+    "name": "Matiks",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Likely Fast | Early | High",
+    "website": "",
+    "notion_page_id": "1e729bcc-b6fc-804f-bf7d-d978ab4c95a8"
+  },
+  {
+    "name": "Matrum",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "19229bcc-b6fc-8043-9738-e32c8b620e09"
+  },
+  {
+    "name": "Maven",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "https://trymaven.com/",
+    "notion_page_id": "32629bcc-b6fc-813b-b465-d541ab35bff6"
+  },
+  {
+    "name": "MeantToBe",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "18229bcc-b6fc-804a-9ce7-fca615d631e8"
+  },
+  {
+    "name": "Measure AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "446a0556-665b-45b0-92dc-4e61197f044f"
+  },
+  {
+    "name": "Medycin",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Slow | Early | High",
+    "website": "",
+    "notion_page_id": "15129bcc-b6fc-806a-994f-daba21eb776a"
+  },
+  {
+    "name": "Mello",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "23829bcc-b6fc-81f0-ad62-ecd94d5b6540"
+  },
+  {
+    "name": "Meoria",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8191-a01a-daf1a2c98788"
+  },
+  {
+    "name": "Metashot",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "52739db6-d1e2-4afa-b2ef-2cc3c23300d0"
+  },
+  {
+    "name": "Microacquire",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "870e6950-401a-43a0-86dc-46d4784b9ba7"
+  },
+  {
+    "name": "Milo Drive",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "24629bcc-b6fc-802b-be2e-c990c65789fd"
+  },
+  {
+    "name": "Mindforest",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "4f9fa472-005f-4bf0-95b9-b337ba7a9f5f"
+  },
+  {
+    "name": "Mindloop",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2b229bcc-b6fc-80b9-92a8-ecf0fe912d09"
+  },
+  {
+    "name": "MochaCare",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "https://www.mochacare.com/",
+    "notion_page_id": "32629bcc-b6fc-8146-9a27-f76303e72667"
+  },
+  {
+    "name": "MochaCare",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "https://www.mochacare.com/",
+    "notion_page_id": "32629bcc-b6fc-81ab-8a29-c8717a4332f4"
+  },
+  {
+    "name": "MochaCare (YC W26)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81bc-b6a4-ded0874d6781"
+  },
+  {
+    "name": "Modus Secure",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "a8ec442f-fbbb-477e-bcb8-050004483f02"
+  },
+  {
+    "name": "Mom\u2019s Made",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Likely Fast | Late | High",
+    "website": "",
+    "notion_page_id": "1af29bcc-b6fc-80d2-bacf-ec7897b7c5fd"
+  },
+  {
+    "name": "Moravian Academy",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8185-8201-f91e5bae1706"
+  },
+  {
+    "name": "Morphing Machines",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "e88001f4-1ec2-40c3-8113-c1df05c41ca5"
+  },
+  {
+    "name": "Multiwoven",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "9a3102ec-4b96-4b2a-a755-77edb288577f"
+  },
+  {
+    "name": "Mumbai Pav Co",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Likely Fast | Late | High",
+    "website": "",
+    "notion_page_id": "f72007b7-23d4-4b7f-8ad5-39f8d91512fb"
+  },
+  {
+    "name": "Muro AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "29d29bcc-b6fc-810b-b2a3-ec3f309f12d0"
+  },
+  {
+    "name": "Nabhdrishti Aerospace",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c329bcc-b6fc-806d-8d5a-fe43b026ed06"
+  },
+  {
+    "name": "Nama Stay World",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "https://namastayworld.com",
+    "notion_page_id": "31229bcc-b6fc-81ca-82c3-d786938ab277"
+  },
+  {
+    "name": "Naptick",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c429bcc-b6fc-8050-83f6-e471aa7a86ff"
+  },
+  {
+    "name": "Navanc",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "17329bcc-b6fc-80f9-98ef-d1254f528a34"
+  },
+  {
+    "name": "Neuralzome Cybernetics",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11f29bcc-b6fc-8040-a51c-f08cae0cb796"
+  },
+  {
+    "name": "Nexcrew",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e329bcc-b6fc-809e-b6e5-f37732ba3685"
+  },
+  {
+    "name": "Nidhi\u2019s company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ee29bcc-b6fc-8058-8bd4-cdf33a9f00ca"
+  },
+  {
+    "name": "Nimo Planet",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22629bcc-b6fc-80f5-9e72-fe85c6585506"
+  },
+  {
+    "name": "Nirna.AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "19229bcc-b6fc-8049-9c4c-eb9513aa9a8d"
+  },
+  {
+    "name": "Nixo",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "23229bcc-b6fc-8019-9173-cf1a38af4d3c"
+  },
+  {
+    "name": "Nomado",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "https://nomadokids.com",
+    "notion_page_id": "31429bcc-b6fc-81c5-8446-c5b7a51da7fa"
+  },
+  {
+    "name": "Nooks",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81ed-b3c3-cb8fd7dee2f4"
+  },
+  {
+    "name": "North Hollywood High School Highly Gifted Magnet",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81e5-a00a-c09042902f26"
+  },
+  {
+    "name": "NuPort Robotics",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "944c58f3-c62a-4f70-88f9-c729d7880997"
+  },
+  {
+    "name": "NUS High School of Mathematics & Science",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8125-8e95-e2490f11b109"
+  },
+  {
+    "name": "Nuveb Exchange",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "c9f9f521-2c03-4950-a9bc-7b5b51a55b2d"
+  },
+  {
+    "name": "NyayaNidhi",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22a29bcc-b6fc-81a4-ab8b-ef575dfb73f1"
+  },
+  {
+    "name": "Obvious Finance",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "7734f1ff-fabf-46fc-a2f9-a9746545e972"
+  },
+  {
+    "name": "OfScale",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "ad856fdf-894c-4828-acf9-731c2226284e"
+  },
+  {
+    "name": "OhSoGo",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "a49ffd87-be66-4b65-8f49-11fc8587a725"
+  },
+  {
+    "name": "Oji Cabs",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "a66dcfc6-935c-4193-a505-92867827145b"
+  },
+  {
+    "name": "Olive (YC W25)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "23e29bcc-b6fc-808c-8f79-f06b2bc6f0f4"
+  },
+  {
+    "name": "OnCall Owl",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27b29bcc-b6fc-805b-884a-c4f7e655853a"
+  },
+  {
+    "name": "OnCare",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2d6e370c-36a0-4625-b0fd-56d73e75e2d7"
+  },
+  {
+    "name": "OnFinance AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "d53c8a3c-d70d-479e-b7f4-d31a37b9dc1d"
+  },
+  {
+    "name": "Opsera",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8184-a430-ccf806e7fade"
+  },
+  {
+    "name": "OpusCollect",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2e229bcc-b6fc-819a-a211-cedd85e6a7b6"
+  },
+  {
+    "name": "Orange Slice",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22529bcc-b6fc-81d2-b329-e06af7f061c1"
+  },
+  {
+    "name": "Orbi",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "https://www.withorbi.com",
+    "notion_page_id": "30a29bcc-b6fc-814c-95e0-e8eb46cd967a"
+  },
+  {
+    "name": "Orbit Farming",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "19431912-4e09-4cbb-a834-9bf7bd3ea614"
+  },
+  {
+    "name": "Orbit Wallet",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11529bcc-b6fc-80f9-92de-db436ab9abee"
+  },
+  {
+    "name": "Origin",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "https://origin.bio/",
+    "notion_page_id": "32629bcc-b6fc-815c-a269-ff59d72e5ce6"
+  },
+  {
+    "name": "Origin Bio",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31529bcc-b6fc-80b1-9915-d9216c958adf"
+  },
+  {
+    "name": "Oximy",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32729bcc-b6fc-8123-b686-f320454a76aa"
+  },
+  {
+    "name": "Pactle",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31c29bcc-b6fc-8102-bde6-dff7d17cd08a"
+  },
+  {
+    "name": "Padel India",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "fde22137-79d7-407b-b8bc-06f4e27b2451"
+  },
+  {
+    "name": "Pallav Singh\u2019s new company",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "9cc824f6-e78b-4270-880c-4aa992b64a1f"
+  },
+  {
+    "name": "Patcorn",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "DeVC forming round ",
+    "website": "",
+    "notion_page_id": "852f6604-d6b2-4093-82a0-c003722d9b94"
+  },
+  {
+    "name": "Patronus",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "4e3b67c1-58f9-4c52-9ca3-570930b7b5d8"
+  },
+  {
+    "name": "Payso (acq. MSwipe)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "13c29bcc-b6fc-80d9-a9a2-e67ca4cadbf5"
+  },
+  {
+    "name": "Peace Vault",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "https://www.peacevault.in/",
+    "notion_page_id": "2e129bcc-b6fc-81ac-8608-d888935d12d0"
+  },
+  {
+    "name": "Peak Health",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Likely Fast | Early | Med",
+    "website": "",
+    "notion_page_id": "15129bcc-b6fc-80bb-aa7f-e2c16bd46c25"
+  },
+  {
+    "name": "PhonePe",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "eb95d281-f81c-4758-b26a-5fa516df5353"
+  },
+  {
+    "name": "Pinegap AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "cd6be8e0-831e-46a6-b2f3-1a0779f95271"
+  },
+  {
+    "name": "Pixie",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "https://mypixie.in",
+    "notion_page_id": "30429bcc-b6fc-8165-8e9c-ca9aa6888022"
+  },
+  {
+    "name": "Pleom",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22c29bcc-b6fc-81c7-8c83-d14352e029f7"
+  },
+  {
+    "name": "Poised",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "56fbb134-dc4c-4dc0-bd36-0c3709a2b536"
+  },
+  {
+    "name": "Pokus",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "2b229bcc-b6fc-8037-896a-e0443fa8ceea"
+  },
+  {
+    "name": "Polopan",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "https://polopan.com",
+    "notion_page_id": "31429bcc-b6fc-811a-9559-fdaf11e0599f"
+  },
+  {
+    "name": "Polymorph",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://usepolymorph.com/",
+    "notion_page_id": "32629bcc-b6fc-8125-91c3-c847551aa346"
+  },
+  {
+    "name": "Polymorph",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://usepolymorph.com/",
+    "notion_page_id": "32629bcc-b6fc-8186-9daa-f0ed11a851cc"
+  },
+  {
+    "name": "Polymorph (YC W26)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8194-8d51-c9b1403ba2c1"
+  },
+  {
+    "name": "Pond",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-80ac-877d-d9cd0deb2a9e"
+  },
+  {
+    "name": "Port",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e829bcc-b6fc-805c-a8b1-e40997ff8fc3"
+  },
+  {
+    "name": "Potpie",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1f229bcc-b6fc-80da-8870-f06609cd08ce"
+  },
+  {
+    "name": "PowerEdge",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "17e29bcc-b6fc-8037-bf9e-d31bd5afbfad"
+  },
+  {
+    "name": "PowerUp",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "18429bcc-b6fc-8074-9135-da40cec9b074"
+  },
+  {
+    "name": "Prabhkiran\u2019s new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11f29bcc-b6fc-80dc-9c29-df47d8fb87ee"
+  },
+  {
+    "name": "Pranay\u2019s new company",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ee29bcc-b6fc-80e2-b3c1-d9a9a725e372"
+  },
+  {
+    "name": "Pravah",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e729bcc-b6fc-805f-b5d7-ec0494bce9f3"
+  },
+  {
+    "name": "Pre6 AI",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22f29bcc-b6fc-8010-8824-d67c21e1db5f"
+  },
+  {
+    "name": "ProactAI",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "https://proactai.in",
+    "notion_page_id": "30c29bcc-b6fc-818e-bb5d-d76682e15b30"
+  },
+  {
+    "name": "Propel",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "17629bcc-b6fc-802e-acf0-d94e45272987"
+  },
+  {
+    "name": "PropelPro (Dimensionless Tech)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "de3f2444-b3f8-4e1a-b3d5-ace8150d1114"
+  },
+  {
+    "name": "Prosparity",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "e5c29f78-7116-49df-9196-9b7c9b3626b4"
+  },
+  {
+    "name": "Protent",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "https://protent.ai/",
+    "notion_page_id": "32629bcc-b6fc-817e-9b0f-e96877dd12da"
+  },
+  {
+    "name": "Proton Health",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c529bcc-b6fc-80a0-9cc9-f07dbe840ece"
+  },
+  {
+    "name": "Puch AI (f.k.a. TurboML)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "46faa35d-45fc-43a6-9df7-ebce678b0f48"
+  },
+  {
+    "name": "Puneet Singh (ex-Simpl CTO) \u2014 stealth",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31329bcc-b6fc-811b-a01f-eb4c5d300571"
+  },
+  {
+    "name": "PyEnvManager",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2e029bcc-b6fc-8125-971e-fd8498f01d25"
+  },
+  {
+    "name": "Qatalog",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "b4a86559-95d4-496a-b578-82f6c627b89f"
+  },
+  {
+    "name": "Qila",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "3686c2fd-1bee-438d-aabf-157e175eee27"
+  },
+  {
+    "name": "Qodex AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c329bcc-b6fc-8085-9410-eba29146f514"
+  },
+  {
+    "name": "Quash Bugs",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "b129417f-edf5-4434-b03d-0a5907d480d6"
+  },
+  {
+    "name": "Quivly",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "28b29bcc-b6fc-80f1-8b51-c98883d8690c"
+  },
+  {
+    "name": "Qwikly",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32829bcc-b6fc-81fa-bfbe-d56f2d2ace97"
+  },
+  {
+    "name": "RagaAI",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "https://raga.ai",
+    "notion_page_id": "31229bcc-b6fc-8180-bbd2-eefb584613f6"
+  },
+  {
+    "name": "Rahul Tarak's Company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22b29bcc-b6fc-81b7-a1cb-e348bd00eaa6"
+  },
+  {
+    "name": "Rakshan AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27429bcc-b6fc-8106-a367-e76764637827"
+  },
+  {
+    "name": "Ram J\u2019s new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8030-8f77-cf2e91b45c7e"
+  },
+  {
+    "name": "Rankly",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://tryrankly.com",
+    "notion_page_id": "30429bcc-b6fc-81b6-bed7-e86e01997300"
+  },
+  {
+    "name": "RapidClaims",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1eea9c4b-38a0-4249-bbfc-206f700453ce"
+  },
+  {
+    "name": "Rarebase",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "0dd96752-bd98-4279-a201-7b5945ce1384"
+  },
+  {
+    "name": "Ravesh\u2019s company",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-80b1-a09b-c6975ea375e6"
+  },
+  {
+    "name": "Realiti.io",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "c2e85be0-21b8-4dc1-9aaf-29b26881e47e"
+  },
+  {
+    "name": "Recrew AI (f.k.a. Gloroots)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "8528c314-63b5-454d-b44b-d6a2d8e95d11"
+  },
+  {
+    "name": "Renderwolf",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "babb07c9-f181-44db-a5ad-99b733eb8abf"
+  },
+  {
+    "name": "Repaio",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1c829bcc-b6fc-80dc-93f7-cb76939c95d3"
+  },
+  {
+    "name": "ReplyAll (PRBT)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Likely Fast | Early | Med",
+    "website": "",
+    "notion_page_id": "16129bcc-b6fc-809b-9802-e1b8ba4578f1"
+  },
+  {
+    "name": "Resolvd AI",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8136-8865-dd97a9e8aeff"
+  },
+  {
+    "name": "Returns (f.k.a. Optionbase)",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "792a52a6-46fe-4921-8011-99bfe65b9c56"
+  },
+  {
+    "name": "Revenoid",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "18929bcc-b6fc-80a8-acfc-c9eff844aae3"
+  },
+  {
+    "name": "Revspot.AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "902f3587-e9e4-4deb-b3bb-96f9e8ec9f5b"
+  },
+  {
+    "name": "Rezolv",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "13629bcc-b6fc-801c-aea2-f946593702b3"
+  },
+  {
+    "name": "Rhym",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "12029bcc-b6fc-80bd-b1f3-f842836977b4"
+  },
+  {
+    "name": "Rhym",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "471fa3e2-8b04-495f-8aad-c86893afca2a"
+  },
+  {
+    "name": "Rilo (f.k.a. Workatoms)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27029bcc-b6fc-80ce-8837-de3ec875e7dc"
+  },
+  {
+    "name": "Riverbank",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22529bcc-b6fc-81eb-a01d-e0e254227b50"
+  },
+  {
+    "name": "Riverline (f.k.a Recontact)",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1af29bcc-b6fc-80f4-876b-edc70ab57af9"
+  },
+  {
+    "name": "Rizzle",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11129bcc-b6fc-80cc-ab3f-e7537f887fb6"
+  },
+  {
+    "name": "Rotation Capital",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "fff29bcc-b6fc-8061-8edb-d90fba510980"
+  },
+  {
+    "name": "Routines",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10d29bcc-b6fc-80dd-9efb-ccb9fc4cc628"
+  },
+  {
+    "name": "RunAnywhere",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "https://www.runanywhere.ai/",
+    "notion_page_id": "32629bcc-b6fc-81ef-a9c8-e8ed32654118"
+  },
+  {
+    "name": "RunAnywhere (YC W26)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81f3-bfff-c0f31f6aab3b"
+  },
+  {
+    "name": "Ryvo AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27829bcc-b6fc-80a2-8eb8-dce3a2cf67a5"
+  },
+  {
+    "name": "Sai Alisetty\u2019s company",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-80fa-9b8d-c243e7defbd5"
+  },
+  {
+    "name": "SalesChat",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "d4b014c4-c379-40ff-a536-cece4932d20d"
+  },
+  {
+    "name": "Samsung R&D Institute India",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32729bcc-b6fc-8184-8569-e106020fe9a4"
+  },
+  {
+    "name": "Sandeep R\u2019s new co",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11229bcc-b6fc-8035-95f4-ddf71907cd77"
+  },
+  {
+    "name": "Satish & Dhawal\u2019s company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8054-b341-c6a30e11d1a1"
+  },
+  {
+    "name": "Savr",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "30f29bcc-b6fc-81c0-8dee-e413c61368fc"
+  },
+  {
+    "name": "Sayfol International School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81a0-93fc-fd12998f9fdb"
+  },
+  {
+    "name": "Selkea",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "20029bcc-b6fc-8028-aaf3-e322a0e05b85"
+  },
+  {
+    "name": "Sentrial",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://sentrial.com/",
+    "notion_page_id": "32629bcc-b6fc-8185-88cd-dba585040628"
+  },
+  {
+    "name": "Serai Homes",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "4f63ebd8-ea36-4b50-88db-4bf2397b79c5"
+  },
+  {
+    "name": "Serendipity Space",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1b529bcc-b6fc-8016-9a7a-d9df2fcbee73"
+  },
+  {
+    "name": "Seth Anandram Jaipuria School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81ec-9006-c7916c339b4b"
+  },
+  {
+    "name": "Sharang Shakti Pvt. Ltd.",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "29e29bcc-b6fc-81e6-b2f8-ea4e54d433b0"
+  },
+  {
+    "name": "ShARE - Growing a new generation of leaders",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32729bcc-b6fc-8102-b544-fdaf74314934"
+  },
+  {
+    "name": "Sheta Mittal\u2019s company",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "db90651b-faf9-4a99-aafe-5a5726e5eb20"
+  },
+  {
+    "name": "Shiro",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22629bcc-b6fc-8068-a4e7-d594842e5e3d"
+  },
+  {
+    "name": "Siff AI",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8145-80e2-d39c66abc64d"
+  },
+  {
+    "name": "Silicon Valley Commerce",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8181-a0ef-c04318af8118"
+  },
+  {
+    "name": "Skydda",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1de29bcc-b6fc-8047-8bf2-cf29d85e985f"
+  },
+  {
+    "name": "SmartSuite",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81f5-b92c-fec6ed6226d2"
+  },
+  {
+    "name": "Solar Ladder",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "cdcf7069-2276-4f22-84e9-4e6709f89c75"
+  },
+  {
+    "name": "Sonarly",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://sonarly.com/",
+    "notion_page_id": "32629bcc-b6fc-81dd-bbed-d98383fedcd4"
+  },
+  {
+    "name": "Soulside",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2f129bcc-b6fc-813f-a3ab-d43ffc9c0ead"
+  },
+  {
+    "name": "SpaceFields",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "Slow | Late | High",
+    "website": "",
+    "notion_page_id": "921694ce-ac2c-4626-acb6-5bb4e4fc4106"
+  },
+  {
+    "name": "Spare8",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "5f03512a-b4fb-49e6-86c2-06596735cb1c"
+  },
+  {
+    "name": "Sponge",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "https://paysponge.com/",
+    "notion_page_id": "32629bcc-b6fc-817c-9097-d34c18190f28"
+  },
+  {
+    "name": "Sponge",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "https://paysponge.com/",
+    "notion_page_id": "32629bcc-b6fc-812c-aee9-cc92db05f137"
+  },
+  {
+    "name": "Spybird",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "12029bcc-b6fc-806c-9682-e1efdc267142"
+  },
+  {
+    "name": "Spydra",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "b7558602-8c22-4bf4-9ebe-53f2bc86d910"
+  },
+  {
+    "name": "Sriram\u2019s company",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8055-84fd-c8ad81d6bfe3"
+  },
+  {
+    "name": "Stable Address",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "f04b5b9d-a6ab-4531-814e-d290dcae8bbb"
+  },
+  {
+    "name": "Stacksync",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8123-8a9b-deed329f34e0"
+  },
+  {
+    "name": "Stance Health (f.k.a. HealthFlex)",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "138a5abc-9891-4429-a148-30dced089e47"
+  },
+  {
+    "name": "Stealth Startup (Building for Seniors in India)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32829bcc-b6fc-815b-9251-d2273384bd07"
+  },
+  {
+    "name": "Stealth Startup (Consumer)",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32829bcc-b6fc-815c-86c2-c01d0163b4ac"
+  },
+  {
+    "name": "Stellon Labs",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22c29bcc-b6fc-8019-863f-e1faf3b37c44"
+  },
+  {
+    "name": "Storii",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1d229bcc-b6fc-81be-a2f5-d67bf8b3af98"
+  },
+  {
+    "name": "Strawberry Fields High School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-818c-bae3-eb1d6a20bd9c"
+  },
+  {
+    "name": "Supernova",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "12329bcc-b6fc-80e5-90d4-ea2f81da28c0"
+  },
+  {
+    "name": "SupportEngineer AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11529bcc-b6fc-8039-8cf7-d582124f119d"
+  },
+  {
+    "name": "SuprSend",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "85d03842-bdaa-4ac4-8ad6-a9c52f7c94e9"
+  },
+  {
+    "name": "Sutter Hill Ventures",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8139-9c45-dc735527e922"
+  },
+  {
+    "name": "Switchyards",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "ee336bba-f5ff-4602-860f-8ce28ccc3233"
+  },
+  {
+    "name": "Taakat",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "12adf0bf-2bf1-4523-a9e9-ee78916008e0"
+  },
+  {
+    "name": "TapDrop",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "15129bcc-b6fc-80dc-b9fb-f8bfe1433e63"
+  },
+  {
+    "name": "TE Connectivity",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8167-848a-e5a1a75187b1"
+  },
+  {
+    "name": "Tenacio",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "Slow | Late | High",
+    "website": "",
+    "notion_page_id": "12029bcc-b6fc-80a7-8afd-d24206c99986"
+  },
+  {
+    "name": "Tensol",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://www.tensol.ai/",
+    "notion_page_id": "32629bcc-b6fc-8132-95b7-d958b4e7273e"
+  },
+  {
+    "name": "Terafac",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "13629bcc-b6fc-801d-b2b2-cd64e8d21d3d"
+  },
+  {
+    "name": "Terra.do",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "7f0162b4-1f0f-4501-9ea9-dcd1d0d3f56e"
+  },
+  {
+    "name": "Terractive",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Portfolio",
+    "website": "",
+    "notion_page_id": "a1aeaea4-866b-4703-b35d-2b7723ce3120"
+  },
+  {
+    "name": "Tesora AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22c29bcc-b6fc-81de-a071-d4cdfe2f9268"
+  },
+  {
+    "name": "Tessary",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32729bcc-b6fc-8182-97c8-fb51ca8a4a4b"
+  },
+  {
+    "name": "Tessera Labs",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-818a-8247-d593d1284262"
+  },
+  {
+    "name": "Texinno",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e429bcc-b6fc-800b-80cc-c6f8a4678970"
+  },
+  {
+    "name": "Thariq\u2019s new company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-80bf-96e0-de4ce8f22c50"
+  },
+  {
+    "name": "The Faculty of Engineering at Lund University",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8157-b930-f161b13f2057"
+  },
+  {
+    "name": "The Medical Travel Company",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "10b29bcc-b6fc-8091-aab2-da2be29d272b"
+  },
+  {
+    "name": "The Shovel Company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ed29bcc-b6fc-80df-996d-c3eb3bf33445"
+  },
+  {
+    "name": "The University of North Carolina at Chapel Hill",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-816a-a296-c11e3f6ac60e"
+  },
+  {
+    "name": "Trackk",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "Likely Fast | Late | Low",
+    "website": "",
+    "notion_page_id": "29b29bcc-b6fc-81f9-a078-c07925d2762f"
+  },
+  {
+    "name": "Tractor Factory",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "031d8fb5-c588-416d-a527-ad9f3553ced1"
+  },
+  {
+    "name": "Tradeface",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "24629bcc-b6fc-80b8-adcd-ccd3c1738c82"
+  },
+  {
+    "name": "TruFides AI",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1f529bcc-b6fc-8032-9069-e327e428b199"
+  },
+  {
+    "name": "Truva Homes",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "In Strike Zone",
+    "website": "",
+    "notion_page_id": "0f844fee-d44b-4a4b-969d-86d638bc108e"
+  },
+  {
+    "name": "Turnover",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "419e04ca-f855-4bec-9579-b37b341780c3"
+  },
+  {
+    "name": "UC Berkeley Management, Entrepreneurship, & Technology (M.E.T.) program",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-816a-85e6-c5edf7608c9b"
+  },
+  {
+    "name": "UGX AI",
+    "sector": "B2B \ud83c\udfe2",
+    "deal_status": "Likely Fast | Early | Med",
+    "website": "",
+    "notion_page_id": "18a29bcc-b6fc-807e-a870-c46cf648b6cd"
+  },
+  {
+    "name": "UnderNeat",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "Likely Fast | Early | Low",
+    "website": "",
+    "notion_page_id": "15029bcc-b6fc-809c-8335-d80dd3ba2c51"
+  },
+  {
+    "name": "Up & Run",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1e229bcc-b6fc-80ed-ba69-cf13c4829540"
+  },
+  {
+    "name": "Uravu Labs",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "7e00b851-672d-4ad3-9644-eb216d8f1ba3"
+  },
+  {
+    "name": "Vaibhav Jain's company",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22a29bcc-b6fc-818e-9371-ef1f0b149d61"
+  },
+  {
+    "name": "Vantara AI",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22d29bcc-b6fc-8098-b46d-c7274c2896d8"
+  },
+  {
+    "name": "Virtually",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "020a0a37-dbed-49a4-b30a-ae422305972f"
+  },
+  {
+    "name": "Vista Del Lago High School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81ee-8d8d-c00a4e085dee"
+  },
+  {
+    "name": "Vitruv Motors",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "17c29bcc-b6fc-80f1-bf65-ee178b022146"
+  },
+  {
+    "name": "VoiceBit",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://www.voicebit.ai/",
+    "notion_page_id": "2e329bcc-b6fc-8120-aa05-f9e47250c2b4"
+  },
+  {
+    "name": "Volt14 Solutions",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ea29bcc-b6fc-8047-874b-ee87e2988cb0"
+  },
+  {
+    "name": "Weaver",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "11429bcc-b6fc-807b-9bfc-c9b232f9ce8f"
+  },
+  {
+    "name": "Weka",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "14e29bcc-b6fc-8081-b91e-de81dfe0b08e"
+  },
+  {
+    "name": "Whop",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8176-a665-c35efbd8c8c2"
+  },
+  {
+    "name": "Wingy",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "https://mywingy.com",
+    "notion_page_id": "31029bcc-b6fc-81db-a600-cb4f06bf9f94"
+  },
+  {
+    "name": "Wisely",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "23a29bcc-b6fc-80c4-94f2-e372059aeefc"
+  },
+  {
+    "name": "Wizly",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "22629bcc-b6fc-8040-a4c1-df33c2289400"
+  },
+  {
+    "name": "World Science University",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-814c-8175-e53fdc8b75f0"
+  },
+  {
+    "name": "Xavier College Preparatory High School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-81db-a08e-d7dacf43b5c1"
+  },
+  {
+    "name": "Xavier School",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-8192-866e-d7864301ecc6"
+  },
+  {
+    "name": "Xenova Dynamics",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31229bcc-b6fc-8125-87ae-dd40aff5e1af"
+  },
+  {
+    "name": "Xook.ai",
+    "sector": "Frontier \ud83d\ude80",
+    "deal_status": "NA",
+    "website": "https://xook.io",
+    "notion_page_id": "410d68cd-cbe5-4726-9472-2835a1656666"
+  },
+  {
+    "name": "xPay",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1ca29bcc-b6fc-803f-9086-e1aacb011b16"
+  },
+  {
+    "name": "Yaary",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "05f4fc55-2dda-4218-8728-b7134ec39534"
+  },
+  {
+    "name": "Yadavindra Public School, Mohali",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "32629bcc-b6fc-815c-a0e4-fe8aff2345b8"
+  },
+  {
+    "name": "Zapcover",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1d629bcc-b6fc-8074-a060-d18910b9033e"
+  },
+  {
+    "name": "ZFunds",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "27829bcc-b6fc-807b-ad4d-ee0d710c9898"
+  },
+  {
+    "name": "Ziffi Chess",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2e3c2b90-dcb9-4789-8dd3-05250038e3e5"
+  },
+  {
+    "name": "Ziffy",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "2b629bcc-b6fc-8056-a6a5-e3d005a84137"
+  },
+  {
+    "name": "Zingroll",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "1eb29bcc-b6fc-80fc-8fdc-e750dbef988d"
+  },
+  {
+    "name": "Zivy (fka Zoven)",
+    "sector": "SaaS \ud83d\udcbb",
+    "deal_status": "NA",
+    "website": "https://zivy.app",
+    "notion_page_id": "30329bcc-b6fc-817b-8412-cd96c6ee2d52"
+  },
+  {
+    "name": "Zoddle",
+    "sector": "",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31029bcc-b6fc-80e1-a6c2-d051c5033963"
+  },
+  {
+    "name": "ZoMint",
+    "sector": "Financial Services \ud83c\udfe6",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "31129bcc-b6fc-8190-ad82-dc17d4938233"
+  },
+  {
+    "name": "ZuAI",
+    "sector": "Consumer \ud83e\uddd1",
+    "deal_status": "NA",
+    "website": "",
+    "notion_page_id": "17529bcc-b6fc-806b-a364-c1f68f7e1e42"
+  }
+]

@@ -1,0 +1,111 @@
+---
+name: "Dxtr"
+notion_page_id: "22d29bcc-b6fc-8028-b363-f5fe98307c0d"
+postgres_id: 134
+fetched: "2026-03-20"
+---
+
+# Dxtr
+
+Table of contents (click to navigate)
+
+---
+
+## READ ME
+
+Hi there, this template has been created 2024-09-14T11:35:00.000+05:30 by Rahul
+
+Here’s how you are supposed to use the COMMENTS section:
+
+1. Include any action items for DeVC IPs (e.g. Collective outreach OR internal follow-ups) here
+2. Include EXTERNAL views (e.g. Z47 Sectoral Team, Co-investors and Collective members) here
+
+Here’s how you are supposed to use the BODY section:
+1. Include notes from ALL founder <> DeVC IP conversations with clear timestamps
+2. Include notes from ALL DeVC IP de-briefs with clear timestamps
+
+Comments section can be your “catch-all” for random views / inputs / thoughts — you can process these later IF required
+
+
+WHEN this company moves from Pipeline to Portfolio
+1. Please visit the Portfolio DB  to start taking future notes in the linked page there (reason: The Companies DB is supposed to record pre-investment interaction notes with a pipeline company)
+
+Once you have READ THIS —> PLEASE delete this block to proceed with your note-taking / data entry
+
+---
+
+## Deck insights from Notion AI on {use “@now”}
+
+---
+
+## Evaluation Plan + Key Questions to answer
+
+1. What does the company do?
+
+1. Do we (DeVC/Z47) have a thesis on this space?
+
+1. What are the top 3 questions to diligence?
+
+1. Who has piped this company to us? What are their views?
+
+1. What do refs say about the founder?
+
+1. What's the DeVC team views?
+
+1. What are the Collective signals?
+
+1. Why is this company likely to be special?
+
+1. Who can help? Experts / Venture Partners?
+
+1. Deal dynamics? Potential deal to do?
+
+---
+
+## Intro conversation with Founder on {use “@now”}
+
+### Attendees from DeVC:
+
+### Notes:
+
+### Scoring (can be copied for multiple people)
+
+Spiky Score
+
+[Table]
+
+EO/FMF/Thesis/Price Score
+
+[Table]
+
+### De-brief (if any)
+
+---
+
+## Follow-up conversation with Founder on {use “@now”}
+
+### Attendees from DeVC:
+
+### Notes:
+
+### De-brief (if any)
+
+---
+
+## Next conversation with Founder on {use “@now”}
+
+### Attendees from DeVC:
+
+### Notes:
+
+### De-brief (if any)
+
+---
+
+## Z47 Conversation with Founder on {use “@now”}
+
+### Attendees:
+
+### Notes:
+
+### De-brief (if any)

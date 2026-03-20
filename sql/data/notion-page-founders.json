@@ -1,0 +1,355 @@
+{
+  "metadata": {
+    "generated": "2026-03-20",
+    "source": "companies-pages/ directory (21 files)",
+    "files_with_content": 9,
+    "files_template_only": 12
+  },
+  "summary": {
+    "total_people_found": 26,
+    "linkedin_urls_discovered": 3,
+    "network_entries_updated": 0,
+    "new_people_with_linkedin": 3,
+    "new_people_without_linkedin": 14,
+    "existing_network_people_already_have_linkedin": 9
+  },
+  "linkedin_urls_found": [
+    {
+      "company": "AbleCredit",
+      "person": "Utkarsh Apoorva",
+      "linkedin": "https://www.linkedin.com/in/utkarshapoorva/",
+      "role": "Co-founder, AbleCredit (ex-Reshamandi Co-founder, ex-HandyTrain, ex-Autocus, ex-Edulabs)",
+      "in_network_db": false,
+      "action": "NEW_PERSON - not in network DB"
+    },
+    {
+      "company": "AbleCredit",
+      "person": "Harshad Saykhedkar",
+      "linkedin": "https://www.linkedin.com/in/harshadss/",
+      "role": "Co-founder (AI/Tech), AbleCredit (ex-Slack Staff SWE, ex-OnlineSales.ai, ex-Sokrati, ex-Vodafone)",
+      "in_network_db": false,
+      "action": "NEW_PERSON - not in network DB"
+    },
+    {
+      "company": "AbleCredit",
+      "person": "Ashwini Prabhu",
+      "linkedin": "https://www.linkedin.com/in/ashwini-prabhu-61645283/",
+      "role": "Co-founder (Business), AbleCredit (ex-Reshamandi Sr. PM, ex-HandyTrain, ex-Tangentia)",
+      "in_network_db": false,
+      "action": "NEW_PERSON - not in network DB"
+    }
+  ],
+  "people_by_company": {
+    "10Medz": {
+      "notion_page_id": "13f29bcc-b6fc-809b-bcec-f939557b8d68",
+      "people": [
+        {
+          "name": "Piyush",
+          "role": "Founder",
+          "linkedin": null,
+          "context": "Grew up in Bhopal, Stanford admit (dropped out), IIT-Roorkee JEE rank 1400, built CommsConnect NGO, sold construction business for 1.5M USD",
+          "network_match": "Piyush Gupta (id:622) has linkedin but different person (Polytrade)"
+        },
+        {
+          "name": "Divyanshi",
+          "role": "DeVC IP (evaluator)",
+          "linkedin": null,
+          "context": "Attended intro conversation, did scoring"
+        },
+        {
+          "name": "Mohit",
+          "role": "DeVC IP (evaluator)",
+          "linkedin": null,
+          "context": "Attended intro conversation, did scoring"
+        }
+      ]
+    },
+    "AbleCredit": {
+      "notion_page_id": "1ed29bcc-b6fc-8026-939f-c8fdb5ad5afb",
+      "people": [
+        {
+          "name": "Utkarsh Apoorva",
+          "role": "Co-founder",
+          "linkedin": "https://www.linkedin.com/in/utkarshapoorva/",
+          "context": "Ex-Reshamandi Co-founder (1.5 yrs), HandyTrain (Head Product), Autocus co-founder, Edulabs co-founder",
+          "in_network_db": false
+        },
+        {
+          "name": "Harshad Saykhedkar",
+          "role": "Co-founder (AI/Tech)",
+          "linkedin": "https://www.linkedin.com/in/harshadss/",
+          "context": "Ex-Slack Staff SWE (3.5 yrs), OnlineSales.ai, Sokrati Sr. Data Scientist (4.5 yrs), Vodafone",
+          "in_network_db": false
+        },
+        {
+          "name": "Ashwini Prabhu",
+          "role": "Co-founder (Business)",
+          "linkedin": "https://www.linkedin.com/in/ashwini-prabhu-61645283/",
+          "context": "Ex-Reshamandi Sr. PM (1 yr), HandyTrain (5 yrs), Tangentia",
+          "in_network_db": false
+        },
+        {
+          "name": "Dhairen",
+          "role": "Z47 evaluator",
+          "linkedin": null,
+          "context": "Led evaluation, customer refs, multiple updates"
+        },
+        {
+          "name": "Sanjeev Davanam",
+          "role": "Head of Credit Risk, AbleCredit",
+          "linkedin": null,
+          "context": "Key hire",
+          "in_network_db": false
+        },
+        {
+          "name": "Charu Sharma",
+          "role": "Chief Sales Officer, AbleCredit",
+          "linkedin": null,
+          "context": "Key hire, brought in for lender network access. Network DB has Charu Sharma (id:149) with linkedin but may be different person",
+          "network_note": "id:149 has linkedin https://www.linkedin.com/in/charusharma1 - verify if same person"
+        },
+        {
+          "name": "Ramdas Acharya",
+          "role": "Chief Credit Officer, Clix Capital (customer reference)",
+          "linkedin": null,
+          "context": "Provided table-thumping feedback on AbleCredit product",
+          "in_network_db": false
+        },
+        {
+          "name": "Tanya Chadha",
+          "role": "ex-CBO Digital Lending & Alliances, U Gro Capital (customer reference)",
+          "linkedin": null,
+          "context": "Product feedback",
+          "in_network_db": false
+        },
+        {
+          "name": "Dhruman Jani",
+          "role": "Head of Credit, InPrime (customer reference)",
+          "linkedin": null,
+          "context": "Product demo feedback",
+          "in_network_db": false
+        },
+        {
+          "name": "Shantanu C",
+          "role": "ex-Product Lead / AVP Gen AI, IIFL Home Finance (customer reference)",
+          "linkedin": null,
+          "context": "Extensive product testing feedback. Network has Shantanu Deshpande (id:392) without linkedin - likely different person"
+        }
+      ]
+    },
+    "AeroDome Technologies": {
+      "notion_page_id": "1e929bcc-b6fc-81e6-88fd-cd56a3b2366f",
+      "people": [
+        {
+          "name": "Vibhor Jain",
+          "role": "Co-founder (COO)",
+          "linkedin": null,
+          "context": "Head of Team Avishkar Hyperloop, IIT-M BTech 2023",
+          "network_match": "id:453, has linkedin: https://in.linkedin.com/in/vibhor-jain3"
+        },
+        {
+          "name": "Lokesh Kabdal",
+          "role": "Co-founder (Infra Head)",
+          "linkedin": null,
+          "context": "Infra Head of Team Avishkar Hyperloop, IIT-M Masters 2023",
+          "network_match": "id:238, has linkedin: https://www.linkedin.com/in/lokesh-kabdal/?originalSubdomain=in"
+        },
+        {
+          "name": "Anurag Patil",
+          "role": "Co-founder (Lead Mechanical Systems)",
+          "linkedin": null,
+          "context": "Lead Mechanical Systems of Team Avishkar, IIT-M Masters 2023",
+          "network_match": "id:110, has linkedin: https://www.linkedin.com/in/anurag-jeevan-patil/?originalSubdomain=in"
+        }
+      ]
+    },
+    "Agara": {
+      "notion_page_id": "2b329bcc-b6fc-813b-b406-f58f53b80ccb",
+      "people": [
+        {
+          "name": "Nikhil Ramesh",
+          "role": "Co-founder",
+          "linkedin": null,
+          "context": "Markets + Crypto native, Ex Poker Pro, AI Resident at Accel, scaled Paytm Poker to $10M",
+          "in_network_db": false
+        },
+        {
+          "name": "Manasjoti Saloi",
+          "role": "Co-founder",
+          "linkedin": null,
+          "context": "Ex-VP Product @Gojek, shipped products for 100M+ users in SE Asia",
+          "in_network_db": false
+        }
+      ]
+    },
+    "Akrid": {
+      "notion_page_id": "1d529bcc-b6fc-80d9-ad2a-f6847c1d0a96",
+      "people": [
+        {
+          "name": "Aakash (Technical Co-founder of Akrid)",
+          "role": "Technical Co-founder",
+          "linkedin": null,
+          "context": "14 yrs ML experience, ex-Dream11, ex-Glance, ex-Myntra (Head Platform Engineering & ML)",
+          "in_network_db": false
+        }
+      ]
+    },
+    "Alben D Souza's company": {
+      "notion_page_id": "10429bcc-b6fc-806a-a4c2-c8843700b151",
+      "people": [
+        {
+          "name": "Alben D Souza",
+          "role": "Founder",
+          "linkedin": null,
+          "context": "Final year BITS, Investment Analyst at Titan Capital, YC W24 admit, father in charter airline business",
+          "in_network_db": false
+        }
+      ]
+    },
+    "Alteon Energy": {
+      "notion_page_id": "2f53a1c0-a9b3-4388-9e34-dc2a9bed50b0",
+      "people": [
+        {
+          "name": "Gautam",
+          "role": "Inuka VC (reference)",
+          "linkedin": null,
+          "context": "Views from Inuka VC",
+          "network_note": "Gautam Shewakramani (id:191) in network DB without linkedin - may be this person"
+        },
+        {
+          "name": "Raj",
+          "role": "Inuka VC (reference)",
+          "linkedin": null,
+          "context": "Views from Inuka VC"
+        },
+        {
+          "name": "Manish",
+          "role": "GrowX Ventures (reference)",
+          "linkedin": null,
+          "context": "Views on technical feasibility",
+          "network_note": "Manish Gupta (id:248) at GrowX has linkedin already"
+        },
+        {
+          "name": "Akhilesh",
+          "role": "Accel Atoms (reference)",
+          "linkedin": null,
+          "context": "15-16 months of knowing the founder",
+          "network_note": "Akhilesh Agarwal (id:70) has linkedin already"
+        }
+      ]
+    },
+    "Alter AI": {
+      "notion_page_id": "22529bcc-b6fc-8190-b4d5-e1fb8a87239f",
+      "people": [
+        {
+          "name": "Srikar D (Srikar Dandamuraju)",
+          "role": "Co-founder",
+          "linkedin": null,
+          "context": "4 YOE @ Goldman Sachs (Marcus), UT Austin CS 2018, helped launch GS Card w/ Apple",
+          "network_match": "id:418, has linkedin: https://www.linkedin.com/in/srikar-d-473390136/"
+        },
+        {
+          "name": "Kevan D (Kevan Dodhia)",
+          "role": "Co-founder & CTO",
+          "linkedin": null,
+          "context": "CMU CS 2019, ex-CoFo & CTO Compute AI (acquired), built compute engine 5x faster than EMR Spark",
+          "network_match": "id:226, has linkedin: https://www.linkedin.com/in/kevan-dodhia-760183129/"
+        },
+        {
+          "name": "Anand Lalwani",
+          "role": "Angel investor, US Collective Member, CoFo Cardinal Robotics",
+          "linkedin": null,
+          "context": "$20K angel in Alter AI",
+          "network_match": "id:89, has linkedin already"
+        }
+      ]
+    },
+    "Arjun Juneja's company": {
+      "notion_page_id": "10529bcc-b6fc-8004-ae96-fde5f1e3870c",
+      "people": [
+        {
+          "name": "Arjun Juneja",
+          "role": "Founder",
+          "linkedin": null,
+          "context": "Ex-Google Ad Sales, ex-AVP BharatPe, ~9 YOE, UMich MBA admit (deferred 3x)",
+          "in_network_db": false
+        }
+      ]
+    },
+    "Arya Pathak's company": {
+      "notion_page_id": "2b829bcc-b6fc-8031-8799-e0ec91d6eb5e",
+      "people": [
+        {
+          "name": "Arya Pathak",
+          "role": "Team member at Godela (YC X25), ex-Pixxel",
+          "linkedin": null,
+          "context": "BITS Hyderabad, led Cubesat team, 2yr stint at Pixxel, software runs 6 satellites, joined Godela (YC X25)",
+          "in_network_db": false
+        }
+      ]
+    }
+  },
+  "template_only_pages": [
+    {"company": "10vc", "notion_page_id": "25f29bcc-b6fc-80fa-9af2-c357c1428095"},
+    {"company": "10x Science", "notion_page_id": "32629bcc-b6fc-813b-a4c8-ca4ee92136c2"},
+    {"company": "360 ONE", "notion_page_id": "16029bcc-b6fc-8061-b055-d8b74fa519d6"},
+    {"company": "Abhinav Sharma's new company", "notion_page_id": "22d29bcc-b6fc-8044-a8ae-f36b9fe8cf82"},
+    {"company": "Abhishek Kona's company", "notion_page_id": "22d29bcc-b6fc-80a0-95c0-d04342c3d647"},
+    {"company": "Activate AI", "notion_page_id": "20029bcc-b6fc-8007-a927-f8b132e802b3"},
+    {"company": "Aditya's VC Fund", "notion_page_id": "25029bcc-b6fc-80e5-9596-ec5021942994"},
+    {"company": "Ahead VC", "notion_page_id": "22329bcc-b6fc-80c2-98db-e87f87c0a923"},
+    {"company": "Allter", "notion_page_id": "1c329bcc-b6fc-81f8-9d78-eeed426b40b5"},
+    {"company": "Ankur Capital", "notion_page_id": "2b829bcc-b6fc-806c-b54e-d826cda28fb8"},
+    {"company": "Arrakis", "notion_page_id": "22d29bcc-b6fc-808c-aa20-fa68f1024f9c"}
+  ],
+  "network_cross_reference": {
+    "existing_people_with_linkedin_already": [
+      {"name": "Vibhor Jain", "id": 453, "company": "AeroDome Technologies"},
+      {"name": "Lokesh Kabdal", "id": 238, "company": "AeroDome Technologies"},
+      {"name": "Anurag Patil", "id": 110, "company": "AeroDome Technologies"},
+      {"name": "Srikar Dandamuraju", "id": 418, "company": "Alter AI"},
+      {"name": "Kevan Dodhia", "id": 226, "company": "Alter AI"},
+      {"name": "Anand Lalwani", "id": 89, "company": "Alter AI (angel)"},
+      {"name": "Abhinav Sharma", "id": 16, "company": "Abhinav Sharma's new company (template only)"},
+      {"name": "Abhishek Kona", "id": 44, "company": "Abhishek Kona's company (template only)"},
+      {"name": "Charu Sharma", "id": 149, "note": "May be same as AbleCredit CSO - verify"}
+    ],
+    "existing_people_missing_linkedin": [],
+    "new_people_with_linkedin_for_enrichment": [
+      {
+        "name": "Utkarsh Apoorva",
+        "linkedin": "https://www.linkedin.com/in/utkarshapoorva/",
+        "company": "AbleCredit",
+        "role": "Co-founder"
+      },
+      {
+        "name": "Harshad Saykhedkar",
+        "linkedin": "https://www.linkedin.com/in/harshadss/",
+        "company": "AbleCredit",
+        "role": "Co-founder (AI/Tech)"
+      },
+      {
+        "name": "Ashwini Prabhu",
+        "linkedin": "https://www.linkedin.com/in/ashwini-prabhu-61645283/",
+        "company": "AbleCredit",
+        "role": "Co-founder (Business)"
+      }
+    ],
+    "new_people_without_linkedin_for_enrichment": [
+      {"name": "Piyush", "company": "10Medz", "role": "Founder"},
+      {"name": "Nikhil Ramesh", "company": "Agara", "role": "Co-founder"},
+      {"name": "Manasjoti Saloi", "company": "Agara", "role": "Co-founder"},
+      {"name": "Aakash (Akrid)", "company": "Akrid", "role": "Technical Co-founder"},
+      {"name": "Alben D Souza", "company": "Alben D Souza's company", "role": "Founder"},
+      {"name": "Arjun Juneja", "company": "Arjun Juneja's company", "role": "Founder"},
+      {"name": "Arya Pathak", "company": "Arya Pathak's company / Godela", "role": "Team member"},
+      {"name": "Sanjeev Davanam", "company": "AbleCredit", "role": "Head of Credit Risk"},
+      {"name": "Ramdas Acharya", "company": "Clix Capital (AbleCredit customer)", "role": "Chief Credit Officer"},
+      {"name": "Tanya Chadha", "company": "U Gro Capital (AbleCredit customer)", "role": "ex-CBO Digital Lending"},
+      {"name": "Dhruman Jani", "company": "InPrime (AbleCredit customer)", "role": "Head of Credit"},
+      {"name": "Shantanu C", "company": "IIFL Home Finance (AbleCredit customer)", "role": "ex-Product Lead / AVP Gen AI"},
+      {"name": "Deepa PK", "company": "APAC (AbleCredit customer)", "role": "NSM"},
+      {"name": "Saloni", "company": "White Ventures", "role": "Investor"}
+    ]
+  }
+}

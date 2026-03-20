@@ -1,0 +1,354 @@
+{
+  "fetched_at": "2026-03-20T04:05:42",
+  "total": 49,
+  "with_content": 48,
+  "empty": 1,
+  "errors": 0,
+  "total_blocks": 11265,
+  "total_chars": 787037,
+  "pages": [
+    {
+      "filename": "ananant-systems.md",
+      "company": "Ananant Systems",
+      "blocks": 7,
+      "chars": 67,
+      "status": "content"
+    },
+    {
+      "filename": "multiwoven.md",
+      "company": "Multiwoven",
+      "blocks": 4,
+      "chars": 114,
+      "status": "content"
+    },
+    {
+      "filename": "poweredge.md",
+      "company": "PowerEdge",
+      "blocks": 170,
+      "chars": 14346,
+      "status": "content"
+    },
+    {
+      "filename": "powerup.md",
+      "company": "PowerUp",
+      "blocks": 410,
+      "chars": 25616,
+      "status": "content"
+    },
+    {
+      "filename": "prosparity.md",
+      "company": "Prosparity",
+      "blocks": 378,
+      "chars": 18625,
+      "status": "content"
+    },
+    {
+      "filename": "puch-ai-fka-turboml.md",
+      "company": "Puch AI (f.k.a. TurboML)",
+      "blocks": 212,
+      "chars": 10779,
+      "status": "content"
+    },
+    {
+      "filename": "quash-bugs.md",
+      "company": "Quash Bugs",
+      "blocks": 109,
+      "chars": 3711,
+      "status": "content"
+    },
+    {
+      "filename": "quivly.md",
+      "company": "Quivly",
+      "blocks": 35,
+      "chars": 3118,
+      "status": "content"
+    },
+    {
+      "filename": "qwik-build-fka-snowmountain.md",
+      "company": "Qwik Build (f.k.a Snowmountain)",
+      "blocks": 109,
+      "chars": 13763,
+      "status": "content"
+    },
+    {
+      "filename": "rakshan-ai.md",
+      "company": "Rakshan AI",
+      "blocks": 18,
+      "chars": 880,
+      "status": "content"
+    },
+    {
+      "filename": "rapidclaims.md",
+      "company": "RapidClaims",
+      "blocks": 74,
+      "chars": 4924,
+      "status": "content"
+    },
+    {
+      "filename": "realfast.md",
+      "company": "Realfast",
+      "blocks": 96,
+      "chars": 4280,
+      "status": "content"
+    },
+    {
+      "filename": "renderwolf.md",
+      "company": "Renderwolf",
+      "blocks": 149,
+      "chars": 6729,
+      "status": "content"
+    },
+    {
+      "filename": "replyall-fka-prbt.md",
+      "company": "ReplyAll (f.k.a. PRBT)",
+      "blocks": 29,
+      "chars": 2166,
+      "status": "content"
+    },
+    {
+      "filename": "revenoid.md",
+      "company": "Revenoid",
+      "blocks": 178,
+      "chars": 9304,
+      "status": "content"
+    },
+    {
+      "filename": "revspot.md",
+      "company": "Revspot",
+      "blocks": 209,
+      "chars": 14350,
+      "status": "content"
+    },
+    {
+      "filename": "rhym.md",
+      "company": "Rhym",
+      "blocks": 0,
+      "chars": 0,
+      "status": "empty"
+    },
+    {
+      "filename": "riverline-fka-recontact.md",
+      "company": "Riverline (f.k.a Recontact)",
+      "blocks": 677,
+      "chars": 57986,
+      "status": "content"
+    },
+    {
+      "filename": "saleschat.md",
+      "company": "SalesChat",
+      "blocks": 589,
+      "chars": 31585,
+      "status": "content"
+    },
+    {
+      "filename": "seeds-finance.md",
+      "company": "Seeds Finance",
+      "blocks": 385,
+      "chars": 38243,
+      "status": "content"
+    },
+    {
+      "filename": "skydda.md",
+      "company": "Skydda",
+      "blocks": 63,
+      "chars": 3377,
+      "status": "content"
+    },
+    {
+      "filename": "smallest-ai.md",
+      "company": "Smallest AI",
+      "blocks": 503,
+      "chars": 37291,
+      "status": "content"
+    },
+    {
+      "filename": "solar-ladder.md",
+      "company": "Solar Ladder",
+      "blocks": 600,
+      "chars": 47904,
+      "status": "content"
+    },
+    {
+      "filename": "soulside.md",
+      "company": "Soulside",
+      "blocks": 16,
+      "chars": 395,
+      "status": "content"
+    },
+    {
+      "filename": "spheron-network.md",
+      "company": "Spheron Network",
+      "blocks": 198,
+      "chars": 13500,
+      "status": "content"
+    },
+    {
+      "filename": "spybird.md",
+      "company": "Spybird",
+      "blocks": 60,
+      "chars": 4498,
+      "status": "content"
+    },
+    {
+      "filename": "spydra.md",
+      "company": "Spydra",
+      "blocks": 112,
+      "chars": 3850,
+      "status": "content"
+    },
+    {
+      "filename": "stance-health-fka-healthflex.md",
+      "company": "Stance Health (f.k.a HealthFlex)",
+      "blocks": 210,
+      "chars": 21690,
+      "status": "content"
+    },
+    {
+      "filename": "stellon-labs.md",
+      "company": "Stellon Labs",
+      "blocks": 26,
+      "chars": 2966,
+      "status": "content"
+    },
+    {
+      "filename": "step-security.md",
+      "company": "Step Security",
+      "blocks": 656,
+      "chars": 33206,
+      "status": "content"
+    },
+    {
+      "filename": "stupa-sports-analytics.md",
+      "company": "Stupa Sports Analytics",
+      "blocks": 359,
+      "chars": 31921,
+      "status": "content"
+    },
+    {
+      "filename": "supernova.md",
+      "company": "Supernova",
+      "blocks": 844,
+      "chars": 62465,
+      "status": "content"
+    },
+    {
+      "filename": "suprsend.md",
+      "company": "SuprSend",
+      "blocks": 76,
+      "chars": 3077,
+      "status": "content"
+    },
+    {
+      "filename": "tejas-fka-patcorn.md",
+      "company": "Tejas (f.k.a Patcorn)",
+      "blocks": 538,
+      "chars": 47131,
+      "status": "content"
+    },
+    {
+      "filename": "terafac.md",
+      "company": "Terafac",
+      "blocks": 128,
+      "chars": 6936,
+      "status": "content"
+    },
+    {
+      "filename": "terra.md",
+      "company": "Terra",
+      "blocks": 143,
+      "chars": 8283,
+      "status": "content"
+    },
+    {
+      "filename": "terractive.md",
+      "company": "Terractive",
+      "blocks": 603,
+      "chars": 48916,
+      "status": "content"
+    },
+    {
+      "filename": "tesora-ai.md",
+      "company": "Tesora AI",
+      "blocks": 84,
+      "chars": 5391,
+      "status": "content"
+    },
+    {
+      "filename": "tractor-factory.md",
+      "company": "Tractor Factory",
+      "blocks": 347,
+      "chars": 15305,
+      "status": "content"
+    },
+    {
+      "filename": "turnover.md",
+      "company": "Turnover",
+      "blocks": 208,
+      "chars": 34990,
+      "status": "content"
+    },
+    {
+      "filename": "ugx.md",
+      "company": "UGX",
+      "blocks": 73,
+      "chars": 4792,
+      "status": "content"
+    },
+    {
+      "filename": "unifize.md",
+      "company": "Unifize",
+      "blocks": 389,
+      "chars": 29285,
+      "status": "content"
+    },
+    {
+      "filename": "uravu-labs.md",
+      "company": "Uravu Labs",
+      "blocks": 147,
+      "chars": 5309,
+      "status": "content"
+    },
+    {
+      "filename": "voicebit.md",
+      "company": "VoiceBit",
+      "blocks": 83,
+      "chars": 5308,
+      "status": "content"
+    },
+    {
+      "filename": "vyomic-fka-aerodome.md",
+      "company": "VyomIC (f.k.a. AeroDome)",
+      "blocks": 311,
+      "chars": 16051,
+      "status": "content"
+    },
+    {
+      "filename": "workatoms.md",
+      "company": "Workatoms",
+      "blocks": 105,
+      "chars": 2999,
+      "status": "content"
+    },
+    {
+      "filename": "yoyo-ai-fka-trimpixel.md",
+      "company": "YOYO AI (fka Trimpixel)",
+      "blocks": 235,
+      "chars": 11581,
+      "status": "content"
+    },
+    {
+      "filename": "ziffi-chess.md",
+      "company": "Ziffi Chess",
+      "blocks": 170,
+      "chars": 9136,
+      "status": "content"
+    },
+    {
+      "filename": "zuai.md",
+      "company": "ZuAI",
+      "blocks": 140,
+      "chars": 8898,
+      "status": "content"
+    }
+  ]
+}

@@ -1,0 +1,3329 @@
+[
+  {
+    "company": "Alter AI",
+    "research_file": "alter-ai.md",
+    "founders": [
+      {
+        "name": "Olivier Legris",
+        "role": "Founder",
+        "linkedin": "https://uk.linkedin.com/in/legris",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Srikar Dandamuraju",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Former Platform Lead at Goldman Sachs, scaled post-trade infrastructure. Alter AI (YC S25).",
+        "network_status": "FOUND",
+        "network_id": 418,
+        "network_match": "Name match: Srikar Dandamuraju"
+      },
+      {
+        "name": "Kevan Dodhia",
+        "role": "CTO",
+        "linkedin": null,
+        "other_info": "Co-founded Compute.ai (acquired by Terizza in 2025).",
+        "network_status": "FOUND",
+        "network_id": 226,
+        "network_match": "Name match: Kevan Dodhia"
+      }
+    ]
+  },
+  {
+    "company": "Ambak",
+    "research_file": "ambak.md",
+    "founders": [
+      {
+        "name": "Raghuveer Malik",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Former PB Partners co-founder, driving the company's strategic vision .",
+        "network_status": "FOUND",
+        "network_id": 318,
+        "network_match": "Name match: Raghuveer Malik"
+      },
+      {
+        "name": "Rameshwar Gupta",
+        "role": "Co-Founder & CPTO",
+        "linkedin": null,
+        "other_info": "Brings technical expertise from previous roles at Freecharge and Axis Bank .",
+        "network_status": "FOUND",
+        "network_id": 332,
+        "network_match": "Name match: Rameshwar Gupta"
+      },
+      {
+        "name": "Rashi Garg",
+        "role": "Co-Founder & COO",
+        "linkedin": null,
+        "other_info": "Former leader at ZestMoney and CarDekho, overseeing operations .",
+        "network_status": "FOUND",
+        "network_id": 334,
+        "network_match": "Name match: Rashi Garg"
+      },
+      {
+        "name": "Pranav Khattar",
+        "role": "Co-Founder & Business Head",
+        "linkedin": null,
+        "other_info": "Sales expert who previously built PB Salespoint .",
+        "network_status": "FOUND",
+        "network_id": 534,
+        "network_match": "Name match: Pranav Khattar"
+      },
+      {
+        "name": "Ashish Lohia",
+        "role": "Co-Founder & Finance Head",
+        "linkedin": null,
+        "other_info": "Finance and compliance expert .",
+        "network_status": "FOUND",
+        "network_id": 535,
+        "network_match": "Name match: Ashish Lohia"
+      }
+    ]
+  },
+  {
+    "company": "Ananant Systems",
+    "research_file": "ananant-systems.md",
+    "founders": [
+      {
+        "name": "Dr. Chitranjan Singh",
+        "role": "Founder, CEO & Chief Architect",
+        "linkedin": null,
+        "other_info": "Former Qualcomm Principal Architect, IIT Kanpur, PhD U Texas Dallas. 22 yrs in US. 6 gen LTE/5G modems, 3B+ units shipped.",
+        "network_status": "FOUND",
+        "network_id": 156,
+        "network_match": "Name match: Chitranjan Singh"
+      }
+    ]
+  },
+  {
+    "company": "Answers.ai",
+    "research_file": "answers-ai.md",
+    "founders": [
+      {
+        "name": "Shubhan Dua",
+        "role": "Co-founder & COO",
+        "linkedin": "https://www.linkedin.com/in/shubhandua",
+        "other_info": "Hails from Ludhiana, India\u2014a tier 3 city. He traveled 200 miles to take the SAT before attending UC Berkeley. His background includes data engineering and serving as a Managing Partner at Dorm Room Fu",
+        "network_status": "FOUND",
+        "network_id": 403,
+        "network_match": "LinkedIn match: Shubhan Dua"
+      },
+      {
+        "name": "Siddhant Satapathy",
+        "role": "Co-founder & CTO",
+        "linkedin": null,
+        "other_info": "Brings heavy technical expertise from his time building data pipelines at Uber and leading automation efforts at Coinbase .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Apptile",
+    "research_file": "apptile.md",
+    "founders": [
+      {
+        "name": "Rohit Modi",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/rohitmodi",
+        "other_info": "Modi previously served as the Group CTO at Livspace, bringing significant enterprise scaling experience to Apptile  .",
+        "network_status": "FOUND",
+        "network_id": 353,
+        "network_match": "LinkedIn match: Rohit Modi"
+      },
+      {
+        "name": "Samyam Annappa",
+        "role": "Co-Founder & CTO",
+        "linkedin": "https://in.linkedin.com/in/samyama",
+        "other_info": "A highly experienced technologist who previously launched the home design startup DezignUp in 2014 .",
+        "network_status": "FOUND",
+        "network_id": 375,
+        "network_match": "LinkedIn match: Samyam A"
+      },
+      {
+        "name": "Vishal Sood",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Serves as the third co-founder, contributing to the design and technology vision of the company .",
+        "network_status": "FOUND",
+        "network_id": 466,
+        "network_match": "Name match: Vishal Sood"
+      }
+    ]
+  },
+  {
+    "company": "AskMyGuru",
+    "research_file": "askmyguru.md",
+    "founders": [
+      {
+        "name": "Krishna Mohan Vedula",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Previously at MPL (Mobile Premier League), managed products for 100M+ users.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vivek Sadamate",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Previously at MPL, gamification and interactive media background.",
+        "network_status": "FOUND",
+        "network_id": 475,
+        "network_match": "Name match: Vivek Sadamate"
+      }
+    ]
+  },
+  {
+    "company": "Atica",
+    "research_file": "atica.md",
+    "founders": [
+      {
+        "name": "Akash Goel",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "5+ years building disruptive hospitality tech.",
+        "network_status": "FOUND",
+        "network_id": 65,
+        "network_match": "Name match: Akash Goel"
+      },
+      {
+        "name": "Bonish Gandhi",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "5+ years hospitality tech, India-based operations.",
+        "network_status": "FOUND",
+        "network_id": 142,
+        "network_match": "Name match: Bonish Gandhi"
+      }
+    ]
+  },
+  {
+    "company": "AuraML",
+    "research_file": "auraml.md",
+    "founders": [
+      {
+        "name": "Ayush Sharma",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/ayu135",
+        "other_info": "Holds a Master's degree in Robotics from Northwestern University, specializing in deep learning and robotics  .",
+        "network_status": "FOUND",
+        "network_id": 135,
+        "network_match": "LinkedIn match: Ayush Sharma"
+      },
+      {
+        "name": "Arjun Gupta",
+        "role": "Co-Founder & CTO",
+        "linkedin": "https://in.linkedin.com/in/arjuntheprogrammer",
+        "other_info": "A former Solution Architect at OpenAI and a Forbes 30 Under 30 Asia honoree. He brings extensive experience in architecting and scaling distributed and generative AI platforms  .",
+        "network_status": "FOUND",
+        "network_id": 115,
+        "network_match": "LinkedIn match: Arjun Gupta"
+      }
+    ]
+  },
+  {
+    "company": "Aurva",
+    "research_file": "aurva.md",
+    "founders": [
+      {
+        "name": "Apurv Garg",
+        "role": "CEO & Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 112,
+        "network_match": "Name match: Apurv Garg"
+      },
+      {
+        "name": "Krishna Bagadia",
+        "role": "CTO & Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 231,
+        "network_match": "Name match: Krishna Bagadia"
+      },
+      {
+        "name": "Akash Mandal",
+        "role": "Chief Architect & Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 537,
+        "network_match": "Name match: Akash Mandal"
+      }
+    ]
+  },
+  {
+    "company": "Autosana",
+    "research_file": "autosana.md",
+    "founders": [
+      {
+        "name": "Yuvan Sundrani",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": "A lifelong builder who previously co-founded a contact-sharing app in 2020, served as Engineer #1 to CPO at a martech startup (reaching 7-figure ARR), and was Engineer #1 at an AI-therapy startup .",
+        "network_status": "FOUND",
+        "network_id": 482,
+        "network_match": "Name match: Yuvan Sundrani"
+      },
+      {
+        "name": "Jason Steinberg",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": "Worked on the founding teams of multiple mobile-first startups and played club hockey at the University of Maryland .",
+        "network_status": "FOUND",
+        "network_id": 211,
+        "network_match": "Name match: Jason Steinberg"
+      }
+    ]
+  },
+  {
+    "company": "Ballisto AgriTech (f.k.a. Orbit Farming)",
+    "research_file": "ballisto-agritech.md",
+    "founders": [
+      {
+        "name": "Kedar Makrand Gokhale",
+        "role": "Co-Founder & Director",
+        "linkedin": null,
+        "other_info": "Previously led hiring, retention, and fleet sufficiency at the hyperlocal level for Swiggy. He also previously founded an agritech startup, Truce-True Price, in 2015 .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Aishwarya Ramakrishnan",
+        "role": "Co-Founder & Director",
+        "linkedin": null,
+        "other_info": "Spent three and a half years with Mahindra\u2019s agritech business, Krish-e, before leaving in 2022 to build Orbit Farming .",
+        "network_status": "FOUND",
+        "network_id": 538,
+        "network_match": "Name match: Aishwarya Ramakrishnan"
+      }
+    ]
+  },
+  {
+    "company": "BetterPlace fka Mindforest",
+    "research_file": "betterplace-fka-mindforest.md",
+    "founders": [
+      {
+        "name": "Pravin Agarwala",
+        "role": "Co-Founder & Group CEO",
+        "linkedin": "https://in.linkedin.com/in/pravinagarwala",
+        "other_info": "An industry veteran who previously served as VP and Global Head of Cloud ERP Development at SAP  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Saurabh Tandon",
+        "role": "Co-Founder & Group COO",
+        "linkedin": null,
+        "other_info": "Drives operational scaling and platform execution  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Uday Singh",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Currently the Group CEO of SIS Group, bringing extensive experience in security and facility management .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Bidso",
+    "research_file": "bidso.md",
+    "founders": [
+      {
+        "name": "Vivek Singhal",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Backgrounds at Flipkart, Amazon, Udaan, ITC.",
+        "network_status": "FOUND",
+        "network_id": 476,
+        "network_match": "Name match: Vivek Singhal"
+      },
+      {
+        "name": "Rahul Agarwal",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 319,
+        "network_match": "Name match: Rahul Agarwal"
+      },
+      {
+        "name": "Ashwin Jain",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 129,
+        "network_match": "Name match: Ashwin Jain"
+      },
+      {
+        "name": "Aditya Krishnakumar",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 62,
+        "network_match": "Name match: Aditya Krishnakumar"
+      }
+    ]
+  },
+  {
+    "company": "BiteSpeed",
+    "research_file": "bitespeed.md",
+    "founders": [
+      {
+        "name": "Vinayak Aggarwal",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "BITS Pilani, conceived BiteSpeed while studying manufacturing engineering.",
+        "network_status": "FOUND",
+        "network_id": 462,
+        "network_match": "Name match: Vinayak Aggarwal"
+      },
+      {
+        "name": "Abhinav Tuli",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 18,
+        "network_match": "Name match: Abhinav Tuli"
+      },
+      {
+        "name": "Siddharth Barpanda",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 713,
+        "network_match": "Name match: Siddharth Barpanda"
+      }
+    ]
+  },
+  {
+    "company": "Blockfenders",
+    "research_file": "blockfenders.md",
+    "founders": [
+      {
+        "name": "Viraj Phanse",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/virajphanse",
+        "other_info": "Holds an M.S. in Computer Science from UCLA and an M.B.A. from UC Berkeley  . He brings deep enterprise experience, having previously overseen product management at Amazon Web Services (AWS) and",
+        "network_status": "FOUND",
+        "network_id": 464,
+        "network_match": "LinkedIn match: Viraj Phanse"
+      },
+      {
+        "name": "Niranjan Ingale",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "An alumnus of Pune University (B.E. and M.B.A.) and a serial entrepreneur who successfully founded two prior startups before Blockfenders .",
+        "network_status": "FOUND",
+        "network_id": 284,
+        "network_match": "Name match: Niranjan Ingale"
+      }
+    ]
+  },
+  {
+    "company": "Boba Bhai",
+    "research_file": "boba-bhai.md",
+    "founders": [
+      {
+        "name": "Dhruv Kohli",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Founded Boba Bhai in 2023, bringing nearly 14 years of experience in the hotel and restaurant industry, including previous roles as an Area Operations Manager in the QSR space  .",
+        "network_status": "FOUND",
+        "network_id": 172,
+        "network_match": "Name match: Dhruv Kohli"
+      }
+    ]
+  },
+  {
+    "company": "Bombay Play",
+    "research_file": "bombay-play.md",
+    "founders": [
+      {
+        "name": "Oliver Jones",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/oliverjones1",
+        "other_info": "A Welsh game designer who previously led game design at Glu Mobile and Zynga  . He also co-founded Moonfrog Games, where he helped create Teen Patti Gold, one of India's most successful card",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Abhas Saroha",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "An experienced software engineer who previously led engineering teams at Zynga, Moonfrog, and MakeMyTrip.com   .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "BookMyForex",
+    "research_file": "bookmyforex.md",
+    "founders": [
+      {
+        "name": "Sudarshan Motwani",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Former Head of Foreign Exchange Services at HDFC Bank and ING Vysya Bank, bringing decades of traditional banking experience to the fintech space  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Nitin Motwani",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "Drives the technological architecture and platform scalability .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Brance",
+    "research_file": "brance.md",
+    "founders": [
+      {
+        "name": "Kshitij Chaudhary",
+        "role": "Co-Founder & CEO, 30 Sundays",
+        "linkedin": "https://in.linkedin.com/in/kshitij-chaudhary-87076664",
+        "other_info": "An IIT and IIM Bangalore alumnus with prior experience at BCG and Shuttl   .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Anuj Punjani",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Brings product and technical expertise, previously associated with Apple   .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sumit Mishra",
+        "role": "Chief Business Officer & Founding Member",
+        "linkedin": null,
+        "other_info": "Brings a decade of travel industry experience, including a stint at OYO   .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "BreachLock",
+    "research_file": "breachlock.md",
+    "founders": [
+      {
+        "name": "Seemant Sehgal",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Himanshu Nautiyal",
+        "role": "Chief Operating Officer",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Shyam Prakash Jha",
+        "role": "Chief Technology Officer",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Careermatch",
+    "research_file": "careermatch.md",
+    "founders": [
+      {
+        "name": "Martijn Frusch",
+        "role": "CEO/Co-founder",
+        "linkedin": null,
+        "other_info": "Focused on growth and business strategy. He publicly documented the company's journey, emphasizing the importance of rapid hiring, firing, and listening to user feedback over rigid product vision .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vincent Oord",
+        "role": "Co-founder/Product",
+        "linkedin": null,
+        "other_info": "Drove the technical and product vision, eventually managing the brand transition when Cocoon was absorbed into Minescape (RecruitNow) .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Carnot Technologies",
+    "research_file": "carnot-technologies.md",
+    "founders": [
+      {
+        "name": "Rohan Vadgaonkar",
+        "role": "CEO & Co-founder",
+        "linkedin": null,
+        "other_info": "Leads strategy and product development  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Pushkar Limaye",
+        "role": "CTO & Co-founder",
+        "linkedin": null,
+        "other_info": "Oversees technology and product engineering  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Prathamesh Joshi",
+        "role": "Co-founder & Principal Engineer",
+        "linkedin": null,
+        "other_info": "Drives the core hardware and engineering architecture .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "ChargeMOD",
+    "research_file": "chargemod.md",
+    "founders": [
+      {
+        "name": "Raman M",
+        "role": "CEO & Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/ramanin",
+        "other_info": "Leads the company's strategic vision and operations  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Chris Thomas",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Key executive driving operational growth .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Anoop V & Advaith C",
+        "role": "Co-Founders",
+        "linkedin": "https://in.linkedin.com/in/ramanin",
+        "other_info": "Technical leaders responsible for product development and engineering .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Clyde.ai",
+    "research_file": "clyde-ai.md",
+    "founders": [
+      {
+        "name": "Point-of-sale optimization",
+        "role": "*Takeaway:* Clyde.ai competes in a crowded space where differentiation relies heavily on the accuracy of the underlying AI and the seamlessness of the user experience.\n\n## Business Model & Traction\nClyde.ai markets its core product as a free service to consumers [2]. While specific revenue metrics are not publicly disclosed, platforms in this sector typically monetize through affiliate marketing, earning cost-per-acquisition (CPA) fees from credit card issuers for successful referrals, or through B2B data licensing and integration.\n\n## Recent News & Milestones (2024\u20112026)\nSince its acquisition, Clyde.ai has maintained a quiet public profile, operating under the Array umbrella. \n* **Parent Company Expansion:** Array has continued an aggressive acquisition strategy, purchasing eDiscovery firm Celerity Discovery in September 2025 [10] and digital financial tool provider Chimney in February 2026 [11]. \n* **Social Media Activity:** Clyde AI's standalone corporate presence is minimal, limited to sporadic LinkedIn posts in September 2024 regarding AI tabletop exercises [12] and minor activity in February 2026 [13].\n\n## Risks, Information Gaps & Due\u2011Diligence Checklist\nSeveral critical information gaps exist due to the company's status as a private subsidiary:\n* **Financials:** The exact acquisition price paid by Array in 2021 remains undisclosed [3]. Current Annual Recurring Revenue (ARR) and active user counts are unknown.\n* **Product Roadmap:** It is unclear how deeply Clyde.ai's technology has been integrated into Array's broader suite of consumer credit and identity tools [11].\n\n## Implications for Indian Start\u2011ups & Strategic Recommendations\nWhile Clyde.ai is a US entity, its model provides a blueprint for the Indian market:\n1. **Strategic Acquisition Potential:** Indian founders building AI-driven financial recommendation engines should view domestic banks and larger fintechs as prime exit opportunities, mirroring Clyde's sale to Array.\n2. **Data Privacy Compliance:** Any Indian startup replicating this model must navigate the Digital Personal Data Protection (DPDP) Act, ensuring explicit consent when analyzing user transaction data via frameworks like the Account Aggregator network.\n\n## References\n\n1. *Structured Data Results (1 entities)*. https://clyde.ai/\n2. *Lessons From My First Time*. https://community.thriveglobal.com/lessons-from-my-first-time/\n3. *30 Under 30 Local 2023: Miami*. https://www.forbes.com/sites/forbesunder30team/2023/08/09/30-under-30-local-2023-miami/\n4. *This U30 Kept Launching Apps Until One Worked. Then Sold It To ...*. https://www.forbes.com/sites/zoyahasan/2026/03/06/this-u30-kept-launching-apps-until-one-worked-then-sold-it-to-myfitnesspal/\n5. *Timothy Lidman - Clyde AI*. https://www.linkedin.com/in/timlidman\n6. *About Us*. https://meetclyde.com/about\n7. *CardMatch: Find pre-qualified credit card offers and ultra ...*. https://thepointsguy.com/cardmatch/\n8. *Spender Type Tool",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "CodeAnt AI",
+    "research_file": "codeant-ai.md",
+    "founders": [
+      {
+        "name": "Amartya Jha",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Previously led DevOps and Infrastructure at Indian unicorns Zeta and ShareChat, scaling systems to handle hundreds of millions of requests  .",
+        "network_status": "FOUND",
+        "network_id": 80,
+        "network_match": "Name match: Amartya Jha"
+      },
+      {
+        "name": "Chinmay Bharti",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "An IIT Bombay alumnus (BTech/MTech in Electrical Engineering) who previously served as founding engineer at Zevi AI and a quant developer at Blu Analytics  .",
+        "network_status": "FOUND",
+        "network_id": 153,
+        "network_match": "Name match: Chinmay Bharti"
+      }
+    ]
+  },
+  {
+    "company": "Confido Health",
+    "research_file": "confido-health.md",
+    "founders": [
+      {
+        "name": "Chetan Reddy",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "An Indian entrepreneur who was inspired to start Confido after experiencing the severe administrative burden of the US healthcare system during his wife's spine surgery .",
+        "network_status": "FOUND",
+        "network_id": 152,
+        "network_match": "Name match: Chetan Reddy"
+      },
+      {
+        "name": "Vichar Shroff",
+        "role": "Co-Founder & Chief Product Officer",
+        "linkedin": null,
+        "other_info": "Leads the technical architecture, focusing on turning fragmented legacy data into actionable, real-time workflows .",
+        "network_status": "FOUND",
+        "network_id": 454,
+        "network_match": "Name match: Vichar Shroff"
+      }
+    ]
+  },
+  {
+    "company": "Corover",
+    "research_file": "corover.md",
+    "founders": [
+      {
+        "name": "Ankush Sabharwal",
+        "role": "Founder, CEO & CTO",
+        "linkedin": "https://in.linkedin.com/in/ankushsabharwal",
+        "other_info": "A national award-winning tech entrepreneur who drives the company's vision for human-centric, sovereign AI .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Kunal Bhakhri",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/kunal-bhakhri-64208a1b9",
+        "other_info": "Holds a B.Tech in Electronics and Communication from VTU and serves as a key engineering leader  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Cybrilla",
+    "research_file": "cybrilla.md",
+    "founders": [
+      {
+        "name": "Satish Perala",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/satishperala",
+        "other_info": "An IIT Kharagpur alumnus with a background in software development and entrepreneurship, Perala drives the company's overarching strategy and product scaling  .",
+        "network_status": "FOUND",
+        "network_id": 385,
+        "network_match": "LinkedIn match: Satish Perala"
+      },
+      {
+        "name": "Anchal Jajodia",
+        "role": "Co-Founder & Chief Business Officer",
+        "linkedin": "https://in.linkedin.com/in/anchaljajodia",
+        "other_info": "A University of Mumbai alumnus who spearheads business development and Cybrilla's integration with the ONDC network  .",
+        "network_status": "FOUND",
+        "network_id": 91,
+        "network_match": "LinkedIn match: Anchal Jajodia"
+      }
+    ]
+  },
+  {
+    "company": "D2C Insider",
+    "research_file": "d2c-insider.md",
+    "founders": [
+      {
+        "name": "Abhishek Shah",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": "4x founder, angel investor, 15 years consumer internet.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "DataEquinox",
+    "research_file": "dataequinox.md",
+    "founders": [
+      {
+        "name": "Gokuldas G.",
+        "role": "Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/gokuldas-p-g",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Gopi P. K.",
+        "role": "Managing Director",
+        "linkedin": "https://in.linkedin.com/in/gopi-p-k-0a11a8233?trk=public_profile_samename-profile",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Amal Sebastian",
+        "role": "Director of Engineering",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Syam Mohan",
+        "role": "Chief Operations Officer",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Dodo Payments",
+    "research_file": "dodo-payments.md",
+    "founders": [
+      {
+        "name": "Rishabh Goel",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/goelrish",
+        "other_info": "Previously built the cross-border Buy Now, Pay Later (BNPL) product for Bzaar, where he experienced the friction of international payments firsthand. He is an alumnus of London Business School",
+        "network_status": "FOUND",
+        "network_id": 342,
+        "network_match": "LinkedIn match: Rishabh Goel"
+      },
+      {
+        "name": "Ayush Agarwal",
+        "role": "Co-Founder & CPTO",
+        "linkedin": null,
+        "other_info": "Previously founded Tournafest, where he faced severe logistical challenges in collecting global payments and managing international taxes, which directly inspired Dodo's MoR model  .",
+        "network_status": "FOUND",
+        "network_id": 134,
+        "network_match": "Name match: Ayush Agarwal"
+      }
+    ]
+  },
+  {
+    "company": "Dottie",
+    "research_file": "dottie.md",
+    "founders": []
+  },
+  {
+    "company": "EasyEcom",
+    "research_file": "easyecom.md",
+    "founders": [
+      {
+        "name": "Punit Gupta",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/punitkg",
+        "other_info": "A Georgia Institute of Technology alumnus with a background in product management and digital marketing  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Swati Jindal",
+        "role": "Co-Founder & CMO",
+        "linkedin": null,
+        "other_info": "Leads marketing and customer success initiatives  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Himanshu Gupta & VR Deepak",
+        "role": "Co-Founders & Co-CTOs",
+        "linkedin": null,
+        "other_info": "Drive the platform's technical architecture and integration ecosystem .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "EdgeQ",
+    "research_file": "edgeq.md",
+    "founders": [
+      {
+        "name": "Vinay Ravuri",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Former Vice President of Product Management at Qualcomm, Ravuri founded EdgeQ to bring software-driven, open programmability to baseband infrastructure  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Hariprasad Gangadharan",
+        "role": "VP & Head of Silicon Engineering, Country Head India",
+        "linkedin": null,
+        "other_info": "Leads the company's extensive silicon verification and engineering efforts .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Ergeon",
+    "research_file": "ergeon.md",
+    "founders": [
+      {
+        "name": "Jenny He",
+        "role": "Co-founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/jiayue-jenny-he",
+        "other_info": "A former McKinsey consultant with a computer science background from Princeton, He became a licensed contractor across multiple states after experiencing the broken home-renovation process firsthand [",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Odysseas Tsatalos",
+        "role": "Co-founder & CTO",
+        "linkedin": null,
+        "other_info": "A seasoned serial entrepreneur who previously co-founded Upwork and Intacct (acquired by Sage for $850 million) .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Ergode",
+    "research_file": "ergode.md",
+    "founders": [
+      {
+        "name": "Apr 2025",
+        "role": "Jaimin Dholakia hired as CTO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Maharashtra Visionary Summit Awards",
+        "role": "CEO Rupesh Sanghavi awarded \"Maharashtra\u2019s Top Visionary CEO\"; company won \"People\u2019s Choice for Companies to Work For\" [3].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Founder",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "CEO Rupesh Sanghavi",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Falcon Autotech",
+    "research_file": "falcon-autotech.md",
+    "founders": [
+      {
+        "name": "Naman Jain",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/naman-jain-falcon",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vineet Baid",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Finarkein",
+    "research_file": "finarkein.md",
+    "founders": [
+      {
+        "name": "Nikhil Kurhe",
+        "role": "CEO & Co-Founder",
+        "linkedin": null,
+        "other_info": "Drives product roadmap, business development, and ecosystem evangelism  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Dheeraj Kumar",
+        "role": "CTO & Co-Founder",
+        "linkedin": null,
+        "other_info": "Brings over 10 years of expertise in distributed systems and advanced data processing to build scalable analytics platforms .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Aakash Narendra Agrawal",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/aakashnagrawal",
+        "other_info": "An IIM Lucknow alumnus contributing to strategy and growth  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Pradip Machindra Waghmare",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Key operational leader in the founding team .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "expansion",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "DSP Group Family Office to enhance data privacy",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "IIFL",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "FlexiLoans",
+    "research_file": "flexiloans.md",
+    "founders": [
+      {
+        "name": "Deepak Jain",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/deepak-jain-81a4048",
+        "other_info": "Brings extensive finance experience, having previously led capital markets initiatives and engaged with regulatory bodies like SEBI .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Manish Lunia",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "A Chartered Accountant and ISB alumnus with over two decades of experience in financial services and corporate strategy at Aditya Birla Group and Tata Teleservices. He also serves as the President of",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ritesh Jain & Abhishek Kothari",
+        "role": "Co-Founders",
+        "linkedin": null,
+        "other_info": "Complete the core leadership team, driving the technological and operational scaling of the platform  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "FluxGen Technologies",
+    "research_file": "fluxgen-technologies.md",
+    "founders": [
+      {
+        "name": "Ganesh Shankar",
+        "role": "Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/ganesh-shankar",
+        "other_info": "IISc alumnus, founder of Sustainability Mafia.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Emanuel Deepak",
+        "role": "Co-founder & COO",
+        "linkedin": "https://in.linkedin.com/in/emanuel-deepak-10bb9019",
+        "other_info": "Former L&T executive, 18+ yrs in industrial engineering.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Fribl",
+    "research_file": "fribl.md",
+    "founders": [
+      {
+        "name": "Fran\u00e7ois Gutierrez",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Salah Azekour",
+        "role": "CTO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "GameRamp",
+    "research_file": "gameramp.md",
+    "founders": [
+      {
+        "name": "Vivek Ramachandran",
+        "role": "Co-founder & CEO",
+        "linkedin": null,
+        "other_info": "Previously led new product initiatives at Electronic Arts (EA) and Big Viking Games, and drove consumer tech investments at Z47 (formerly Matrix Partners India)  .",
+        "network_status": "FOUND",
+        "network_id": 474,
+        "network_match": "Name match: Vivek Ramachandran"
+      },
+      {
+        "name": "Sashank Vandrangi",
+        "role": "Co-founder",
+        "linkedin": null,
+        "other_info": "Scaled complex systems at Mobile Premier League (MPL) and King (developer of Candy Crush), and worked in product strategy consulting at BCG  .",
+        "network_status": "FOUND",
+        "network_id": 384,
+        "network_match": "Name match: Sashank Vandrangi"
+      },
+      {
+        "name": "South Park Commons, Mixi, DeVC",
+        "role": "*Takeaway: The substantial $5.4M pre-seed check validates the founders' pedigree and provides ample runway to build out complex AI infrastructure before requiring Series A capital.*\n\n## 4. Market Landscape & Opportunity\n\nThe global mobile games market generates over $120 billion annually, with in-app purchases driving the majority of value [3]. However, rising user acquisition costs and complex monetization mechanics are squeezing margins for mid-tail studios [3]. GameRamp is strategically positioned in India\u2014one of the fastest-growing gaming markets globally\u2014to capture developers who lack the resources to implement sophisticated LiveOps or forecast lifetime value (LTV) confidently [2] [3].\n\n## 5. Competitive Positioning Matrix\n\nWhile traditional ad-tech players focus heavily on ad mediation, GameRamp differentiates itself by offering a full-stack AI publishing solution combined with embedded financing.\n\n**Table 2: Competitive Feature Matrix",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ramachandran",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vandrangi",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Garuda Aerospace",
+    "research_file": "garuda-aerospace.md",
+    "founders": [
+      {
+        "name": "Agnishwar Jayaprakash",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "A Harvard Business School alumnus and former international swimmer, Jayaprakash has driven the company's strategic vision and global expansion  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rithika Mohan",
+        "role": "Co-Founder & CIO/COO",
+        "linkedin": "https://in.linkedin.com/in/rithika-mohan-11235b72",
+        "other_info": "Holding executive education credentials from Harvard Business School, Mohan oversees the company's administrative and information operations  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "GeoSpoc",
+    "research_file": "geospoc.md",
+    "founders": [
+      {
+        "name": "Dhruva Rajan",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Holds an MSc in Geographical Information Systems and led the company's strategic vision  . He joined Ola post-acquisition to lead location services .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Geetha Krishna",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Brought operational and technical expertise to the founding team .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Krishna Rajan",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "A former technology lead at Barclays, providing robust software engineering architecture  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Johann San Francisco",
+        "role": "COO",
+        "linkedin": null,
+        "other_info": "Served as Chief Operating Officer, managing global GIS consulting operations  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Focuses heavily on government and infrastructure projects.",
+        "role": "*Takeaway:* GeoSpoc's integration into Ola provides a unique defensive moat, utilizing real-time data from millions of daily rides that traditional competitors cannot easily replicate.\n\n## Recent News and Milestones (2024-2026)\nThe most significant recent milestone for GeoSpoc's technology was the official launch of **Ola Maps in July 2024** [15]. Ola CEO Bhavish Aggarwal announced that the company had completely exited Google Maps and Microsoft Azure, migrating to its in-house mapping service powered by the GeoSpoc acquisition [2] [3]. This transition is expected to save Ola \u20b9100 crore annually [2]. \n\nThe launch sparked industry friction; in August 2024, MapmyIndia's CEO publicly criticized Ola Maps as a \"gimmick,\" leading to legal and intellectual property disputes regarding digital mapping rights in India [14] [16].\n\n## Business Model, Traction & Information Gaps\nHistorically, GeoSpoc operated on a B2B consulting and SaaS model, serving clients in agriculture and retail [7]. Post-acquisition, its business model has pivoted to being an internal infrastructure provider (Map-as-a-Service) for Ola's consumer and electric vehicle divisions.\n\n**Critical Information Gaps:**\nThere is a severe lack of public information regarding GeoSpoc's standalone financial metrics. Specific revenue figures, Annual Recurring Revenue (ARR), and current external client rosters are entirely undisclosed [6]. It is unclear if GeoSpoc still maintains its legacy contracts in BFSI and agriculture, or if 100% of its engineering bandwidth is now dedicated to Ola Maps. \n\n## Strategic Recommendations\n1. **Leverage IP for Monetization:** Ola should consider licensing GeoSpoc's HD/3D mapping APIs to other Indian logistics and e-commerce players, creating a new revenue stream to compete directly with MapmyIndia.\n2. **Clarify External Operations:** To maximize the subsidiary's valuation, Ola should clarify whether GeoSpoc's precision agriculture and retail analytics divisions are still operational and seeking external contracts.\n3. **Navigate IP Risks:** Given the recent legal friction with MapmyIndia [14], GeoSpoc must aggressively patent its proprietary object detection and spatial analytics algorithms to protect its \u20b9100 crore annual cost-saving infrastructure.\n\n## References\n\n1. *Ola's valuation crosses $7.3 Bn; completes GeoSpoc ...*. https://entrackr.com/2021/12/ola-valuation-crosses-7-3-bn-completes-geospoc-acquisition-for-3-5-mn/\n2. *Ola Cabs Ditch Google Maps: Rs 100 Crore Saved Annually*. https://www.drivespark.com/off-beat/ola-cabs-switches-to-ola-maps-saves-100-crore-rupees-011-052301.html\n3. *Ola Cabs switches to own mapping service, saving Rs100 cr annually*. https://www.domain-b.com/industry/industry-general/ola-cabs-switches-to-own-mapping-service-saving-rs100-cr-annually\n4. *GeoSpoc*. https://in.linkedin.com/company/geospoc\n5. *GeoSpoc - 2026 Company Profile & Team*. https://tracxn.com/d/companies/geospoc/__sQ4zOKpsdnnmXHR63P2-avznh6HOlSET0thzwPeDZmg\n6. *Geospoc Geospatial Services 2026 Company Profile*. https://pitchbook.com/profiles/company/360459-91\n7. *Geospoc Company Profile Funding & Investors*. https://yourstory.com/companies/geospoc\n8. *Ola Acquires GeoSpoc To Build Next-Generation Location ...*. https://www.ibef.org/news/ola-acquires-geospoc-to-build-nextgeneration-location-technology\n9. *Ola acquires GeoSpoc to build next-gen location technology*. https://m.economictimes.com/tech/startups/ola-acquires-geospoc-to-build-next-gen-location-technology/articleshow/86776968.cms\n10. *Dhruva Rajan",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "GoAGT",
+    "research_file": "goagt.md",
+    "founders": [
+      {
+        "name": "Nick Davis",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "A retired RAF helicopter pilot, Davis founded Anti Piracy Maritime Security Solutions (APMSS) in 2008 before establishing GoAGT . He was the sole beneficial owner and maintained total authority ove",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Cmdr. Gerry Northwood",
+        "role": "COO",
+        "linkedin": null,
+        "other_info": "A former commander of the UK counter-piracy task group, Northwood was brought in to provide operational gravitas. However, he resigned in July 2014 after discovering the full extent of the company's h",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "GoSocial",
+    "research_file": "gosocial.md",
+    "founders": [
+      {
+        "name": "Shubhendra Vikram",
+        "role": "Co-founder and current CEO of Hapramp Studio",
+        "linkedin": null,
+        "other_info": "serves as the Co-founder and current CEO of Hapramp Studio, spearheading the vision for GoSocial [5] [7].",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Pratyush Singh, Mofid Ansari, and Rajat Dangi",
+        "role": "Co-Founders of the GoSocial platform [1]",
+        "linkedin": null,
+        "other_info": "are actively listed as Co-Founders of the GoSocial platform [1].",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "GreenCell Mobility",
+    "research_file": "greencell-mobility.md",
+    "founders": [
+      {
+        "name": "Devndra Chawla",
+        "role": "MD & CEO",
+        "linkedin": "https://in.linkedin.com/in/devendrachawla",
+        "other_info": "Appointed in early 2023, Chawla brings nearly three decades of retail leadership, having previously served as CEO of Spencer\u2019s Retail and Nature's Basket, and holding executive roles at Walmart and Fu",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Grip Invest",
+    "research_file": "grip-invest.md",
+    "founders": [
+      {
+        "name": "Nikhil Aggarwal",
+        "role": "Founder & Group CEO",
+        "linkedin": null,
+        "other_info": "Serial entrepreneur and former Co-Founder of Chalo  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vivek Gulati",
+        "role": "Co-Founder & COO",
+        "linkedin": null,
+        "other_info": "Drives operational strategy and platform scaling  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Aashish Jindal",
+        "role": "Co-Founder & CPTO",
+        "linkedin": null,
+        "other_info": "Oversees product and technology development  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vaibhav Laddha",
+        "role": "CEO",
+        "linkedin": null,
+        "other_info": "Leads business operations and strategic partnerships  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Gyaan",
+    "research_file": "gyaan.md",
+    "founders": [
+      {
+        "name": "Sonny Aulakh",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Hapramp",
+    "research_file": "hapramp.md",
+    "founders": [
+      {
+        "name": "Shubhendra Vikram",
+        "role": "Co-founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Pratyush Singh",
+        "role": "Co-founder & CTO",
+        "linkedin": "https://in.linkedin.com/in/anktkmr",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rajat Dangi",
+        "role": "Co-founder",
+        "linkedin": "https://in.linkedin.com/in/anktkmr",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ankit Kumar",
+        "role": "Co-founder / Lead Mobile Dev",
+        "linkedin": "https://in.linkedin.com/in/anktkmr",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Mofid Ansari",
+        "role": "Co-founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Highperformr AI",
+    "research_file": "highperformr-ai.md",
+    "founders": [
+      {
+        "name": "Srivatsan Venkatesan",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Former Founder & CEO of CloudNucleus Technologies, with extensive experience building CRM products at Freshworks  .",
+        "network_status": "FOUND",
+        "network_id": 559,
+        "network_match": "Name match: Srivatsan Venkatesan"
+      },
+      {
+        "name": "Ramesh Ravishankar",
+        "role": "Co-Founder & Chief Growth Officer",
+        "linkedin": null,
+        "other_info": "Former product growth leader at Freshworks and Google, driving the company's thesis to target the 95% of non-active buyers .",
+        "network_status": "FOUND",
+        "network_id": 560,
+        "network_match": "Name match: Ramesh Ravishankar"
+      }
+    ]
+  },
+  {
+    "company": "Hudle",
+    "research_file": "hudle.md",
+    "founders": [
+      {
+        "name": "Suhail Narain",
+        "role": "Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/suhail-narain-62152748",
+        "other_info": "Spearheads the platform's vision to build India's recreational sports economy, bringing an educational background from the University of Michigan .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Arjun Singh Verma",
+        "role": "Co-Founder & COO",
+        "linkedin": "https://in.linkedin.com/in/arjun-singh-verma-0919a6a5",
+        "other_info": "Manages operations, leveraging his prior experience as an analyst at KPMG .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sonam Taneja",
+        "role": "Co-Founder & Head of Business Development",
+        "linkedin": "https://in.linkedin.com/in/sonam-taneja-6a661b18",
+        "other_info": "Drives venue partnerships and growth, transitioning into tech entrepreneurship after a background in the legal profession .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "IG Drones",
+    "research_file": "ig-drones.md",
+    "founders": [
+      {
+        "name": "Bodhisattwa Sanghapriya",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "IIM SBP, VSSUT alumnus.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Om Prakash",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "IIM SBP, VSSUT alumnus.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Immersive Labs",
+    "research_file": "immersive-labs.md",
+    "founders": [
+      {
+        "name": "James Hadley",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": "UK-based cybersecurity company.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "ImpactGuru",
+    "research_file": "impactguru.md",
+    "founders": [
+      {
+        "name": "Piyush Jain",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/piyushcrjain",
+        "other_info": "Holds degrees from Wharton and Harvard, with prior experience at JPMorgan and BCG .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Khushboo Jain",
+        "role": "Co-Founder & COO",
+        "linkedin": "https://in.linkedin.com/in/piyushcrjain",
+        "other_info": "Educated at Parsons School of Design, she leads the operational and creative strategies of the platform  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "IndiaGold",
+    "research_file": "indiagold.md",
+    "founders": [
+      {
+        "name": "PayU and",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Indiassetz",
+    "research_file": "indiassetz.md",
+    "founders": [
+      {
+        "name": "Founder",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "CEO Shivam Sinha",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Inmovidu",
+    "research_file": "inmovidu.md",
+    "founders": [
+      {
+        "name": "Mridula Chhetri",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/mridula-chhetri-06865410",
+        "other_info": "A former IBM executive who worked in outsourcing and acquisition deals . She is the primary face of the company and has founded multiple entities under the Movidu umbrella  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sidharta Viswanath",
+        "role": "Co-Founder & CMO",
+        "linkedin": null,
+        "other_info": "Leads marketing initiatives .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Seema Naresh",
+        "role": "Co-Founder & CPO",
+        "linkedin": null,
+        "other_info": "Serves as the Chief Product Officer  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "InspeCity",
+    "research_file": "inspecity.md",
+    "founders": [
+      {
+        "name": "Prof. Arindrajit Chowdhury",
+        "role": "CEO & Co-Founder",
+        "linkedin": null,
+        "other_info": "A professor at the Department of Mechanical Engineering at IIT Bombay, bringing extensive academic and research credibility to the company's propulsion and deep-tech initiatives  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Dr. Tausif Shaikh",
+        "role": "CTO & Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/tausif12345",
+        "other_info": "An IIT Bombay alumnus who leads the technological development of InspeCity's robotics and avionics hardware  .",
+        "network_status": "FOUND",
+        "network_id": 566,
+        "network_match": "LinkedIn match: Dr. Tausif Shaikh"
+      }
+    ]
+  },
+  {
+    "company": "InstaFinancials",
+    "research_file": "instafinancials.md",
+    "founders": [
+      {
+        "name": "Raji M",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rajesh Anand",
+        "role": "Co-Founder & Director",
+        "linkedin": null,
+        "other_info": "Focused on financial data science for intelligent business decisions.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Uday Khemka",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Isler",
+    "research_file": "isler.md",
+    "founders": [
+      {
+        "name": "Pravesh Kumar",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Vision to make Isler India's largest kitchen appliances manufacturer.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Chirag Kakkar",
+        "role": "Co-Founder & CBO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 569,
+        "network_match": "Name match: Chirag Kakkar"
+      },
+      {
+        "name": "Mudit Mishra",
+        "role": "Co-Founder & CSCO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 570,
+        "network_match": "Name match: Mudit Mishra"
+      }
+    ]
+  },
+  {
+    "company": "IUIGA",
+    "research_file": "iuiga.md",
+    "founders": [
+      {
+        "name": "Konimex Technologies",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Jumble",
+    "research_file": "jumble.md",
+    "founders": [
+      {
+        "name": "Vansh Kathuria",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Praneel Bora",
+        "role": "Co-Founder & CTO",
+        "linkedin": "https://in.linkedin.com/in/praneelbora",
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Kaamwork",
+    "research_file": "kaamwork.md",
+    "founders": [
+      {
+        "name": "Nilesh Parwani",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Ex-finance professional, second venture (first was Printbell).",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Abhay Mishra",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Byron Fuller",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Prateek Mishra",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Kaizenaire",
+    "research_file": "kaizenaire.md",
+    "founders": [
+      {
+        "name": "Charlotte Zhang",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ken Tan",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Travis",
+        "role": "Sales Director",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Kalira",
+    "research_file": "kalira.md",
+    "founders": []
+  },
+  {
+    "company": "Keyper",
+    "research_file": "keyper.md",
+    "founders": [
+      {
+        "name": "Omar Abu Innab",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Brings 20 years of experience as an investment researcher and real estate investor, previously holding roles at the Government Investments Management Company (GIMC)  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Walid Shihabi",
+        "role": "Co-Founder & CSO",
+        "linkedin": null,
+        "other_info": "An investment banking veteran with over 15 years of experience, including serving as the CEO of SHUAA Securities and Chief Commercial Officer at Urban Real Estate  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Khabri",
+    "research_file": "khabri.md",
+    "founders": [
+      {
+        "name": "Pulkit Sharma",
+        "role": "Co-founder & CEO",
+        "linkedin": null,
+        "other_info": "A software engineer who identified the early potential of podcasts in India  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sandeep Singh",
+        "role": "Co-founder",
+        "linkedin": null,
+        "other_info": "Brings critical industry experience as a former senior executive at the music streaming giant Saavn .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Aankit Roy",
+        "role": "Co-founder & CTO",
+        "linkedin": null,
+        "other_info": "Leads the platform's technical architecture and product development  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Kimatica",
+    "research_file": "kimatica.md",
+    "founders": []
+  },
+  {
+    "company": "Kisan Network",
+    "research_file": "kisan-network.md",
+    "founders": [
+      {
+        "name": "Aditya Agarwalla",
+        "role": "Co-Founder & Former CEO",
+        "linkedin": null,
+        "other_info": "Aditya dropped out of Princeton University in his junior year to build Kisan Network, becoming a Thiel Fellow and participating in Y Combinator's Winter 2016 batch .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sanjay Agarwalla",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Provided the foundational agronomic and traditional business expertise required to navigate India's complex farming landscape .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Legend of Toys",
+    "research_file": "legend-of-toys.md",
+    "founders": [
+      {
+        "name": "Afshaan Siddiqui",
+        "role": "Founder",
+        "linkedin": "https://in.linkedin.com/in/afshaan-siddiqui-isb",
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 589,
+        "network_match": "LinkedIn match: Afshaan Siddiqui"
+      },
+      {
+        "name": "Vinay Jaisingh",
+        "role": "Founder",
+        "linkedin": "https://in.linkedin.com/in/vinayjaisingh",
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 588,
+        "network_match": "LinkedIn match: Vinay Jaisingh"
+      }
+    ]
+  },
+  {
+    "company": "Lightforth",
+    "research_file": "lightforth.md",
+    "founders": [
+      {
+        "name": "Adedamola Adewale",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Markov",
+    "research_file": "markov.md",
+    "founders": [
+      {
+        "name": "Dev Mandal",
+        "role": "Co-founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/pankaj-rajan",
+        "other_info": "A student at IIT Madras (Class of '27), Mandal previously built Shiro (an AI on-call engineer) and has experience at Sarvam AI and DevRev   .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Pankaj Rajan",
+        "role": "Co-Founder & CTO, Markov ML",
+        "linkedin": "https://www.linkedin.com/in/pankaj-rajan",
+        "other_info": "Brings experience in building enterprise-grade agentic AI at scale, including evaluation frameworks with human-in-the-loop metrics .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Mazumago",
+    "research_file": "mazumago.md",
+    "founders": [
+      {
+        "name": "Matthew Smith",
+        "role": "CEO & Founder",
+        "linkedin": null,
+        "other_info": "Former Director of New Ventures BC and founding member of the League of Innovators .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Nick Addison",
+        "role": "CTO & Co-Founder",
+        "linkedin": null,
+        "other_info": "Leads the technical architecture  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Allison Sturm",
+        "role": "COO",
+        "linkedin": null,
+        "other_info": "Oversees daily operations alongside Marketing Manager Miri Rader .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Meddo",
+    "research_file": "meddo.md",
+    "founders": [
+      {
+        "name": "Saurabh Kochhar",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/saurabhkochhar",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Dr. Naveen Nishchal",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/navnishchal",
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Minko",
+    "research_file": "minko.md",
+    "founders": [
+      {
+        "name": "Sanket Shendure",
+        "role": "Co-Founder & CEO (departed June 2024)",
+        "linkedin": null,
+        "other_info": "Transitioned to Niyogin Fintech Limited.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Mintoak",
+    "research_file": "mintoak.md",
+    "founders": [
+      {
+        "name": "Raman Khanduja",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/raman-khanduja-3abb443",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rama Tadepalli",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/raman-khanduja-3abb443",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sanjay Nazareth",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/sanjay-nazareth-08483662",
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "mPaani",
+    "research_file": "mpaani.md",
+    "founders": [
+      {
+        "name": "Akanksha Hazari",
+        "role": "Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/akanksha-hazari-7835963",
+        "other_info": "A Princeton and Cambridge university alumna, former top 20 junior squash player, and winner of the Hult Prize ($1 million awarded by Bill Clinton)  . She also received the Vital Voices Global",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Mytatva",
+    "research_file": "mytatva.md",
+    "founders": []
+  },
+  {
+    "company": "NanoNet Technologies",
+    "research_file": "nanonet-technologies.md",
+    "founders": [
+      {
+        "name": "Open-Source Dominance",
+        "role": "October 2025",
+        "linkedin": null,
+        "other_info": "Nanonets released \"Nanonets-OCR2,\" a state-of-the-art suite for advanced image-to-markdown conversion and Visual Question Answering (VQA) . The model trended in the Top 10 on Hugging Face, followin",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Accel to improve the accuracy of automation processes",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "expand its global headcount",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "NetraDyne",
+    "research_file": "netradyne.md",
+    "founders": [
+      {
+        "name": "Avneesh Agrawal",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Previously Senior Vice President of Technology and head of Qualcomm Research .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "David Julian",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "Brings deep expertise in engineering and edge AI  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Niyo",
+    "research_file": "niyo.md",
+    "founders": [
+      {
+        "name": "Vinay Bagri",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Virender Bisht",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "NxtWave",
+    "research_file": "nxtwave.md",
+    "founders": [
+      {
+        "name": "Rahul Attuluri",
+        "role": "Co-founder & CEO",
+        "linkedin": null,
+        "other_info": "An IIIT Hyderabad alumnus with past experience as CTO at CyberEye and roles at Amazon and Bwin .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sashank Gujjula",
+        "role": "Co-founder & Head of Customer Experience",
+        "linkedin": null,
+        "other_info": "An IIT Bombay alumnus (AIR 119) who previously served as VP of Student Relations at iB Hubs .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Anupam Pedarla",
+        "role": "Co-founder & COO",
+        "linkedin": null,
+        "other_info": "An IIT Kharagpur alumnus and former VP of Global Business at iB Hubs .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Greater",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Oberoi Realty",
+    "research_file": "oberoi-realty.md",
+    "founders": [
+      {
+        "name": "Chairman",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Managing Director Vikas Oberoi",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "OnePlay",
+    "research_file": "oneplay.md",
+    "founders": [
+      {
+        "name": "Harshit Jain",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "Transitioned from the OTT and AI space to capitalise on the gaming boom  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Abhik Saha",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "A tech prodigy who began his engineering career at age 12, building antivirus software before co-founding OnePlay  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "OnlineInfatuation",
+    "research_file": "onlineinfatuation.md",
+    "founders": [
+      {
+        "name": "Rajesh Bhardwaj",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Also co-founder at SMARTMOVESS recruitment firm.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "OpenIAM",
+    "research_file": "openiam.md",
+    "founders": [
+      {
+        "name": "Suneet Shah",
+        "role": "Co-Founder & CTO",
+        "linkedin": "https://www.linkedin.com/in/arun-shah-b21485",
+        "other_info": "A former engineer at IBM and Novell, Shah leads product strategy and technology  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Arun Shah",
+        "role": "Co-Founder",
+        "linkedin": "https://www.linkedin.com/in/arun-shah-b21485",
+        "other_info": "Holds an electrical engineering background and co-founded the platform  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ameet Shah",
+        "role": "Chief Marketing Officer",
+        "linkedin": "https://www.linkedin.com/in/arun-shah-b21485",
+        "other_info": "Drives global marketing and go-to-market strategies  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Orange Slice",
+    "research_file": "orange-slice.md",
+    "founders": [
+      {
+        "name": "Vihaar Nandigala",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/vihaarnandigala",
+        "other_info": "Previously sold a ghost kitchen startup, KitchenKonnect, at age 19 and worked as a summer analyst at J.P. Morgan  . He also has ties to India, having spent time teaching underprivileged children",
+        "network_status": "FOUND",
+        "network_id": 620,
+        "network_match": "LinkedIn match: Vihaan Nandigala"
+      },
+      {
+        "name": "Kishan Sripada",
+        "role": "Co-Founder & CTO",
+        "linkedin": "https://www.linkedin.com/in/kishansripada",
+        "other_info": "Previously bootstrapped FORMI, a choreography software used by Broadway and NBA teams (scaling to 100k+ users), and worked as a front-end engineering intern at Ramp  .",
+        "network_status": "FOUND",
+        "network_id": 619,
+        "network_match": "LinkedIn match: Kishan Sripada"
+      }
+    ]
+  },
+  {
+    "company": "Oru Phones",
+    "research_file": "oru-phones.md",
+    "founders": [
+      {
+        "name": "Anish Agarwal",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/anishagarwal2006",
+        "other_info": "Brings over 15 years of experience working with Mobile Network Operators (MNOs), mobile insurance players, and third-party logistics (3PLs), focusing on operations management  . He is an alumnus",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Manuj Purwar",
+        "role": "Co-Founder & COO",
+        "linkedin": null,
+        "other_info": "Oversees the operational execution of the marketplace  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Paisa Bazaar",
+    "research_file": "paisa-bazaar.md",
+    "founders": [
+      {
+        "name": "Yashish Dahiya",
+        "role": "Co-Founder, Chairman & CEO of parent company PB Fintech [5].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 480,
+        "network_match": "Name match: Yashish Dahiya"
+      },
+      {
+        "name": "Alok Bansal",
+        "role": "Co-Founder & Executive Vice-Chairman of PB Fintech [5].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Naveen Kukreja",
+        "role": "Co-Founder and former CEO; transitioned to Group President at PB Fintech in early 2025 [5] [3].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Santosh Agarwal",
+        "role": "Appointed as the new CEO of Paisabazaar effective March 1, 2025, previously serving as Policybazaar's life insurance chief [8] [3].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Neeraj Tripathi",
+        "role": "Took over as Chief Financial Officer on March 1, 2025, replacing Vivek Audichya [3].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "True North",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "PaperTrue",
+    "research_file": "papertrue.md",
+    "founders": [
+      {
+        "name": "Rishi Raj",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/rishi-raj-b9462a6",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Manish Keswani",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/manish-keswani-9a5a7814b",
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Park+",
+    "research_file": "park.md",
+    "founders": [
+      {
+        "name": "Amit Lakhotia",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "A seasoned executive who previously served as Vice President at Paytm Payments and held roles at MakeMyTrip and Tokopedia  .",
+        "network_status": "FOUND",
+        "network_id": 84,
+        "network_match": "Name match: Amit Lakhotia"
+      },
+      {
+        "name": "Hitesh Gupta",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": "Elevated to co-founder in 2023, Gupta previously worked as the head of engineering for payments at Paytm  .",
+        "network_status": "FOUND",
+        "network_id": 202,
+        "network_match": "Name match: Hitesh Gupta"
+      },
+      {
+        "name": "Siva Chetan",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": "Recognized as a co-founder involved in the company's early establishment .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sequoia India",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "PeerCapital",
+    "research_file": "peercapital.md",
+    "founders": [
+      {
+        "name": "Karthik Prabhakar",
+        "role": "Founder & Managing Director",
+        "linkedin": null,
+        "other_info": "Former Director at Chiratae Ventures.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rohit M A",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Phool",
+    "research_file": "phool.md",
+    "founders": [
+      {
+        "name": "Ankit Agarwal",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "IIT Kanpur alumnus, converts temple flower waste into incense and biodegradable packaging.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Pibit AI",
+    "research_file": "pibit-ai.md",
+    "founders": [
+      {
+        "name": "Akash Agarwal",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Playto Labs",
+    "research_file": "playto-labs.md",
+    "founders": [
+      {
+        "name": "Pavan Ponnaganti",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Prior to Playto Labs, Ponnaganti co-founded Skyfi Labs, an edtech platform that developed over 100 project-based engineering courses and enrolled more than 400,000 students across 65 countries",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Plum",
+    "research_file": "plum.md",
+    "founders": [
+      {
+        "name": "Tiger Global",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Prayat Shah",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Portea Medical",
+    "research_file": "portea-medical.md",
+    "founders": [
+      {
+        "name": "Meena Ganesh",
+        "role": "Chairperson and Non-Executive Director",
+        "linkedin": null,
+        "other_info": "A serial entrepreneur who previously served as CEO of Pearson India Education Services. She holds a PGDM from IIM Calcutta and has been recognized among Fortune India's '50 Most Powerful Women in Indi",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vaibhav Tewari",
+        "role": "Chief Executive Officer and Whole-time Director",
+        "linkedin": null,
+        "other_info": "Holds a B.Tech from IIT Kanpur and a PGDM from IIM Calcutta. He previously served as Chief Marketing Officer at Microland Limited .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ganesh Krishnan",
+        "role": "Non-Executive Director",
+        "linkedin": null,
+        "other_info": "Co-founder of TutorVista and CustomerAsset.com, bringing extensive scaling experience .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "PowerUp Money",
+    "research_file": "powerup-money.md",
+    "founders": [
+      {
+        "name": "Peak XV Partners",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Powerup",
+    "research_file": "powerup.md",
+    "founders": [
+      {
+        "name": "Prateek Jindal",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Previously a co-founder at Uni Cards, a prominent credit-focused fintech. He founded PowerUp in 2024 (initially incubated within Uni Cards) before hiving it off as a separate entity in 2025  [7",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Praan",
+    "research_file": "praan.md",
+    "founders": [
+      {
+        "name": "Angad Daryani",
+        "role": "Founder",
+        "linkedin": "https://www.linkedin.com/in/angaddaryani",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rainmatter",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Puravankara",
+    "research_file": "puravankara.md",
+    "founders": []
+  },
+  {
+    "company": "Qapita",
+    "research_file": "qapita.md",
+    "founders": [
+      {
+        "name": "Ravi Ravulaparthi",
+        "role": "CEO & Co-founder",
+        "linkedin": null,
+        "other_info": "A former investment banker and IIM graduate with extensive experience in corporate finance  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Lakshman Gupta Kanamarlapudi",
+        "role": "COO & Co-founder",
+        "linkedin": null,
+        "other_info": "A Chartered Accountant who brought two decades of corporate experience to the startup .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vamsee Mohan Kamabathula",
+        "role": "CTO & Co-founder",
+        "linkedin": null,
+        "other_info": "Leads the technological architecture of the platform .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Charles Schwab",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "RING (fka Kissht)",
+    "research_file": "ring.md",
+    "founders": [
+      {
+        "name": "Ranvir Singh",
+        "role": "Founder, CEO & MD",
+        "linkedin": null,
+        "other_info": "An IIT Bombay and IIM Bangalore alumnus with over 15 years of experience. He previously served as an Associate Partner at McKinsey & Company, advising banks and financial institutions across India and",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Krishnan Vishwanathan",
+        "role": "Founder & Executive Director",
+        "linkedin": null,
+        "other_info": "An IIT Delhi and Yale University MBA graduate. He also worked at McKinsey & Company, specializing in retail financial services, before co-founding Kissht and RING .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Karan Mehta",
+        "role": "Founder & CTO",
+        "linkedin": null,
+        "other_info": "Leads the technological vision, focusing on making credit affordable and practical through advanced tech .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sonali Jindal",
+        "role": "Founder & COO",
+        "linkedin": null,
+        "other_info": "Brings deep expertise in credit risk assessment and retail banking analytics, having previously worked with HDFC Bank and Deutsche Bank .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Rizz",
+    "research_file": "rizz.md",
+    "founders": [
+      {
+        "name": "Manan Jain",
+        "role": "Co-Founder & Director",
+        "linkedin": "https://in.linkedin.com/in/mananjainx",
+        "other_info": "An alumnus of Masters' Union, Jain has a background in stealth startups and digital marketing, maintaining an active presence on LinkedIn  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Dhruv Gupta",
+        "role": "Co-Founder & Director",
+        "linkedin": null,
+        "other_info": "Appointed as a director alongside Jain upon the company's incorporation in November 2023  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Anup Dustakar",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Rope",
+    "research_file": "rope.md",
+    "founders": [
+      {
+        "name": "Sreejith Nedumpully",
+        "role": "Co-Founder & Director",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Patrick Fischer",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Roshi",
+    "research_file": "roshi.md",
+    "founders": [
+      {
+        "name": "Dhawal Shah",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Rupeek",
+    "research_file": "rupeek.md",
+    "founders": [
+      {
+        "name": "Sumit Maniyar",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Binny Bansal",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "ScreenRoot",
+    "research_file": "screenroot.md",
+    "founders": [
+      {
+        "name": "Gourav Jaswal",
+        "role": "Founder & Director",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Tanmay Modi",
+        "role": "Managing Director",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Alaganandan Balaraman",
+        "role": "Director",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "SenseHQ",
+    "research_file": "sensehq.md",
+    "founders": [
+      {
+        "name": "Anil Dharni",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Alex Rosen",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Pankaj Jindal",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ram Gudavalli",
+        "role": "Co-Founder & Engineering",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sanjay Dharmani",
+        "role": "Managing Director, India",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Sheru",
+    "research_file": "sheru.md",
+    "founders": [
+      {
+        "name": "Ankit Mittal",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": "A Birla Institute of Technology and Science (BITS) Pilani graduate and former Systems Engineer at robotics firm GreyOrange .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Shikhar Sharma",
+        "role": "Co-Founder & COO",
+        "linkedin": "https://in.linkedin.com/in/nakulmehan",
+        "other_info": "Also a BITS Pilani graduate and former Senior Embedded Engineer at GreyOrange .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Nakul Mehan",
+        "role": "Co-Founder & CTO",
+        "linkedin": "https://in.linkedin.com/in/nakulmehan",
+        "other_info": "A BITS Pilani graduate leading the technical architecture .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Signzy",
+    "research_file": "signzy.md",
+    "founders": [
+      {
+        "name": "Ankit Ratan",
+        "role": "Co-founder & CEO",
+        "linkedin": null,
+        "other_info": "Brings a background in data and analytics, driving product development, sales, and the company's vision for frictionless banking   .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Arpit Ratan",
+        "role": "Co-founder & CBO",
+        "linkedin": null,
+        "other_info": "Leverages his legal background to navigate the complex regulatory and compliance landscape of the fintech sector  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ankur Pandey",
+        "role": "Co-founder & CTO",
+        "linkedin": null,
+        "other_info": "Leads the technological architecture, ensuring the platform's AI and no-code capabilities scale securely  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Arkam",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Smallest.ai",
+    "research_file": "smallest-ai.md",
+    "founders": [
+      {
+        "name": "Sudarshan Kamath",
+        "role": "Founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/sudarshankamath",
+        "other_info": "An IIT Guwahati alumnus who previously worked as a Senior Engineer for Self Driving Vehicles at Bosch and as a Product Associate at Toppr .",
+        "network_status": "FOUND",
+        "network_id": 657,
+        "network_match": "LinkedIn match: Sudarshan Kamath"
+      },
+      {
+        "name": "Akshat Mandloi",
+        "role": "Co-Founder & AI Scientist",
+        "linkedin": "https://www.linkedin.com/in/akshat-2503",
+        "other_info": "Also an IIT Guwahati graduate, Mandloi has a background in autonomous ground vehicles and convolutional neural networks .",
+        "network_status": "FOUND",
+        "network_id": 658,
+        "network_match": "LinkedIn match: Akshat Mandloi"
+      },
+      {
+        "name": "Apoorv Sood",
+        "role": "Global Head of GTM",
+        "linkedin": null,
+        "other_info": "Recently appointed to lead enterprise growth and worldwide partnerships .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "SmartCoin",
+    "research_file": "smartcoin.md",
+    "founders": [
+      {
+        "name": "Rohit Garg",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Amit Chandel",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Vinay Singh",
+        "role": "Co-Founder & CPO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Jayant Upadhyay",
+        "role": "Co-Founder & COO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Solar Ladder",
+    "research_file": "solar-ladder.md",
+    "founders": [
+      {
+        "name": "Manan Mehta",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/manan-mehta-",
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 659,
+        "network_match": "LinkedIn match: Manan Mehta"
+      },
+      {
+        "name": "Abhishek Pillai",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/abhishek-pillai-6a63a875",
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 55,
+        "network_match": "LinkedIn match: Abhishek Pillai"
+      },
+      {
+        "name": "Farhan Ahmed",
+        "role": "Co-Founder & former CTO",
+        "linkedin": "https://in.linkedin.com/in/fahmed96",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Weaknesses",
+        "role": "Loss of technical co-founder (Farhan Ahmed) in 2025; lack of public financial metrics [6].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "SolarSquare",
+    "research_file": "solarsquare.md",
+    "founders": [
+      {
+        "name": "Neeraj Jain",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Saurabh Marda",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Sonit",
+    "research_file": "sonit.md",
+    "founders": []
+  },
+  {
+    "company": "Spintly",
+    "research_file": "spintly.md",
+    "founders": [
+      {
+        "name": "Wireless Access Control Systems",
+        "role": "Journey*. https://spintly.com/about-us/\n5. *Spintly - Crunchbase Company Profile & Funding*. https://www.crunchbase.com/organization/spintly\n6. *Rohin Parkar - Co-Founder & CEO @ Spintly*. https://www.linkedin.com/in/rohin-parkar\n7. *Spintly raises $8 million in Series A round led by Accel*. https://www.thehindubusinessline.com/companies/spintly-raises-8-million-in-series-a-round-led-by-accel/article70679201.ece\n8. *Funding",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Accel",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Stance Health",
+    "research_file": "stance-health.md",
+    "founders": [
+      {
+        "name": "Rohit Arora",
+        "role": "Co-Founder & CEO",
+        "linkedin": "https://in.linkedin.com/in/rohitarora88",
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 668,
+        "network_match": "LinkedIn match: Rohit Arora"
+      },
+      {
+        "name": "Ninad Karandikar",
+        "role": "Co-Founder",
+        "linkedin": "https://in.linkedin.com/in/rohitarora88",
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 668,
+        "network_match": "LinkedIn match: Rohit Arora"
+      },
+      {
+        "name": "General Catalyst",
+        "role": "Antler, DeVC, EX Capital (Sword Health founders), Sriharsha Majety & Nandan Reddy (Swiggy), Kulin Shah (Onsurity) [1] [5] [2].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Step Security",
+    "research_file": "step-security.md",
+    "founders": []
+  },
+  {
+    "company": "StepSecurity",
+    "research_file": "stepsecurity.md",
+    "founders": [
+      {
+        "name": "Varun Sharma",
+        "role": "Co-founder & CEO",
+        "linkedin": "https://www.linkedin.com/in/varunsharma07",
+        "other_info": "Based in Redmond, Washington, Sharma is a former Microsoft engineer who brings extensive experience in enterprise cloud security .",
+        "network_status": "FOUND",
+        "network_id": 672,
+        "network_match": "LinkedIn match: Varun Sharma"
+      },
+      {
+        "name": "Ashish Kurmi",
+        "role": "Co-founder & CTO",
+        "linkedin": "https://www.linkedin.com/in/ashish-kurmi-3428aa24",
+        "other_info": "Based in Kirkland, Washington, Kurmi is also a former Microsoft engineer and holds an educational background from Mumbai University, providing the company with strong foundational ties to the Indian e",
+        "network_status": "FOUND",
+        "network_id": 673,
+        "network_match": "LinkedIn match: Ashish Kurmi"
+      },
+      {
+        "name": "Varies",
+        "role": "*Takeaway:* StepSecurity's focus on runtime network controls and AI agent security positions it ahead of legacy static analysis tools that fail to catch active pipeline compromises [4] [3].\n\n## 6. Customer Base, Traction & Metrics\nStepSecurity has achieved significant bottom-up adoption through its community-led growth strategy.\n* **Open-Source Adoption:** Over 8,000 open-source projects use StepSecurity to harden their pipelines, including repositories from CISA, Google, Microsoft, Datadog, Kubernetes, Node, and Ruby [2].\n* **Enterprise Traction:** The enterprise tier is actively deployed across customers in the cryptocurrency, healthcare, and cybersecurity industries [2].\n* **Scale:** The platform secures more than 18,000,000 CI/CD job runs weekly [1].\n\n## 7. Business Model, Revenue Signals & Unit Economics\nStepSecurity operates on a freemium SaaS model. The \"Harden-Runner\" community tier is free for open-source projects, which acts as a powerful lead-generation engine [4]. This bottom-up approach helps the company gain internal champions who advocate for the paid enterprise tier within their organizations [3]. \n\n## 8. Recent Milestones (2024-2026)\n* **May 2024:** Announced $3 million seed funding led by Runtime Ventures [3].\n* **March 2025:** StepSecurity's Harden-Runner successfully detected a critical supply chain compromise in the popular `tj-actions/changed-files` GitHub Action (CVE-2025-30066) [4]. The company released a free, secure drop-in replacement for the community [4].\n* **March 2025:** CISA released an official alert regarding CVE-2025-30066, validating the severity of the threat StepSecurity detected [13].\n* **January-March 2026:** Launched \"Developer MDM\" to secure AI coding agents and published research on autonomous bot attacks targeting CI/CD pipelines [4] [12].\n\n## 9. Indian Market Relevance & Expansion Opportunities\nWhile StepSecurity is a US-based corporation [7], its relevance to the Indian market is substantial. Co-founder Ashish Kurmi's background at Mumbai University [9] provides a natural bridge to India's massive developer ecosystem. As Indian IT services and SaaS startups increasingly adopt GitHub Actions and face stringent global compliance standards, StepSecurity's solutions offer a critical layer of defense against supply chain attacks.\n\n## 10. Risks, Information Gaps & Due-Diligence Checklist\n**Information Gaps:** There is limited public information regarding StepSecurity's current Annual Recurring Revenue (ARR), exact employee headcount, and specific enterprise customer names (beyond industry verticals). Furthermore, there is no public disclosure of funding rounds beyond the May 2024 seed round.\n**Risks:** The company's heavy reliance on the GitHub Actions ecosystem presents a platform concentration risk. \n\n## 11. Strategic Recommendations\n1. **For Enterprise DevSecOps Teams:** Immediately evaluate StepSecurity's Harden-Runner for any GitHub Actions pipelines handling sensitive data, especially given its proven ability to detect zero-day compromises like CVE-2025-30066 [4].\n2. **For Investors:** Monitor StepSecurity for a potential Series A round. Request confidential metrics regarding enterprise conversion rates from their 8,000+ open-source user base [2].\n3. **For Indian Tech Companies:** Leverage StepSecurity's free community tier to secure open-source projects and evaluate the enterprise tier to meet emerging global compliance mandates for software supply chain security.\n\n## References\n\n1. *StepSecurity",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "SuperK",
+    "research_file": "superk.md",
+    "founders": [
+      {
+        "name": "Information Gaps",
+        "role": "Lack of public data on store-level profitability, exact gross margins, and formal CEO designation.",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Binny Bansal",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Tala Robotics",
+    "research_file": "tala-robotics.md",
+    "founders": [
+      {
+        "name": "Manish Rajpurohit",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Terafac Technologies",
+    "research_file": "terafac-technologies.md",
+    "founders": [
+      {
+        "name": "Anubhi Khandelwal",
+        "role": "Co-Founder & CEO. Ex-Siemens UK with over 9 years of hands-on robotics experience [4] [2].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 685,
+        "network_match": "Name match: Anubhi Khandelwal"
+      },
+      {
+        "name": "Amrit Singh",
+        "role": "Co-Founder. IIT-Delhi graduate and serial entrepreneur [4] [2].",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "FOUND",
+        "network_id": 686,
+        "network_match": "Name match: Amrit Singh"
+      },
+      {
+        "name": "Inuka",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Terafac",
+    "research_file": "terafac.md",
+    "founders": [
+      {
+        "name": "Cameras/Vision sensors + Edge Compute",
+        "role": "**Strategic Insight:** ABB's solution is extremely fast (25 kHz) and robust against smoke/arc glare because it uses electrical feedback, not light. Terafac's vision approach must demonstrate it can see through the harsh welding environment (arc glare, smoke) and offer easier setup (\"teaching\") to win against such established tech.\n\n---\n\n## Team & Organization\n\nThe company is led by a small founding team with significant execution pressure given their growth targets.\n\n### Founders\n* **Amrit Singh:** Co-founder.\n* **Anubhi Khandelwal:** Co-founder.\n* **Background:** The founders are described as visionary entrepreneurs focused on manufacturing intelligence [8].\n\n### Organizational Scale\n* **Headcount:** PitchBook data from early 2026 indicates a total employee count of approximately 5 [5].\n* **Risk:** There is a significant discrepancy between a 5-person team and the operational complexity of deploying 80 industrial robot cells. This suggests a heavy reliance on either system integrators (SIs) or a very recent/planned hiring surge that hasn't yet reflected in databases.\n\n---\n\n## Funding History & Cap Table\n\nTerafac has raised seed capital from a credible mix of Indian micro-VCs and angel networks. Data sources show slight variations in dates and amounts, likely due to tranche releases or reporting lags.\n\n### Funding Timeline\n* **Total Raised:** Approximately **$750K \u2013 $800K** (\u20b96.5 Crore) [3] [2].\n* **Latest Round (Pre-Seed/Seed):**\n * **Date:** August 5, 2025 (Entrackr report) [2]; Tracxn lists rounds in June/July 2024 [3].\n * **Amount:** \u20b96.5 Crore (~$800K) [2].\n * **Lead Investor:** **Inuka Capital** [2].\n * **Participating Investors:**\n * **DeVC** [2]\n * **Bharat Founders Fund** [2]\n * **Innovation Mission Punjab** [1]\n * **Infinyte Club** [3]\n * **Voltron Venture Capital** [5]\n * **Angels:** Amit Gupta, Neeraj Gupta [3].\n\n**Valuation:** Tracxn reports a post-money valuation of approximately \u20b984.7 Lakhs ($100K+) for a specific tranche, but the total round size suggests a valuation likely in the $3M\u2013$5M range (typical for this raise size), though exact figures are redacted in public snippets [3].\n\n---\n\n## Customers, Traction & GTM\n\nTerafac is transitioning from R&D to commercial scaling.\n\n### Commercial Goals\n* **Target:** 80 deployments across 20 customers in the next year (2025-26) [2].\n* **Revenue Target:** \u20b98 Crore ARR by FY26 [2].\n* **Implied Economics:** ~\u20b910 Lakh ($12K) ARR per deployment. This pricing is competitive for industrial software, suggesting a model that likely bundles software subscription with some hardware/integration fees.\n\n### Go-to-Market Strategy\n* **Model:** \"Software-as-a-Skill\" [2]. This implies a recurring revenue model where the customer pays for the *capability* (welding) rather than just a one-time software license.\n* **Sales Motion:** Likely direct sales to early OEMs and partnerships with robot system integrators to scale. The Chandigarh location offers proximity to the Northern India automotive belt (Maruti Suzuki ecosystem, tractor manufacturers in Punjab).\n\n---\n\n## Competitive Landscape\n\nThe landscape is divided into direct functional competitors (welding automation) and broader robotics players.\n\n### Functional Competitors (Welding Focus)\n* **ABB (WeldGuide):** The gold standard for adaptive welding. High cost, high reliability.\n* **Path Robotics (US):** A major global player in autonomous welding robots (uses proprietary vision/AI).\n* **Incumbent OEMs:** Fanuc (iRVision), Yaskawa (MotoSight). These offer native vision solutions that are often expensive and complex to program.\n\n### Category Competitors (Broader Robotics/AI)\nTracxn identifies 593 competitors, with top funded players including:\n* **Agile Robots:** Unicorn status, broad AI robotics platform [1].\n* **Orangewood Labs:** Focuses on teleoperation and affordable robotic arms (Y-Combinator backed) [1].\n* **Doosan Robotics:** Major cobot manufacturer [1].\n\n**Terafac's Niche:** Unlike Doosan or Agile which build robots/controllers, Terafac appears to be a **retrofit** play\u2014making *existing* dumb robots smart. This is a capital-efficient wedge if they can solve the integration challenges across different robot brands.\n\n---\n\n## Risks & Red Flags\n\n1. **Execution Bandwidth:** With ~5 employees [5] and a target of 80 deployments [2], the company is severely understaffed for the high-touch nature of industrial automation. Deploying hardware often requires on-site calibration, debugging, and training.\n2. **Technological Robustness:** Computer vision in welding is notoriously difficult due to extreme lighting changes (arc flash) and smoke. If WeldT fails to maintain tracking during a weld, it causes expensive scrap. The \"AI\" must be more reliable than a skilled welder.\n3. **Integration Complexity:** Retrofitting \"standard industrial robots\" [2] implies interfacing with closed controllers (e.g., ABB IRC5, Fanuc R-30iB). This is technically challenging and often void of warranty support from the robot OEM.\n4. **Data Discrepancies:** Funding dates vary between sources (2024 vs 2025). While common in private markets, it complicates the assessment of runway. The \u20b98 Cr ARR target for FY26 is aggressive for a seed-stage company.\n\n---\n\n## Strategic Recommendations\n\n### For Investors\n* **Verify the Pipeline:** Ask for evidence of the \"20 customers\" and \"80 deployments.\" Are these paid pilots, LOIs, or full production contracts?\n* **Technical Due Diligence:** Request a head-to-head comparison of WeldT vs. a standard laser seam tracker or Thru-Arc sensor. Measure **First-Pass Yield (FPY)** and **Setup Time** (time to program a new part).\n* **Scalability Check:** How does the team plan to support 80 installations? If they don't have a strong System Integrator (SI) partner network, support costs could crush margins.\n\n### For Potential Customers\n* **Start with a Pilot:** Test WeldT on a high-mix, low-volume part where manual welding is currently a bottleneck.\n* **Demand Interoperability:** Ensure the system works with your existing robot fleet (e.g., if you have Yaskawa, ensure WeldT supports it fully).\n* **Assess Support:** Given the small team size, define clear SLAs for downtime support.\n\n### For Terafac Management\n* **Focus on Welding:** Resist the urge to expand to \"gluing, painting, inspection\" [2] until the welding product has unassailable product-market fit and referenceable case studies.\n* **Build the SI Channel:** Partner with regional robot integrators who can handle the physical installation and first-line support, allowing the core team to focus on software.\n\n## References\n\n1. *Terafac - 2026 Company Profile, Team, Funding, Competitors & Financials - Tracxn*. https://tracxn.com/d/companies/terafac/__8CMLm7S0Zzhc30y1wRML5chzv3X2-Lo2UotYxbCZydE\n2. * Terafac raises Rs 6.5 Cr in pre-seed round led by Inuka Capital*. https://entrackr.com/snippets/terafac-raises-rs-65-cr-in-pre-seed-round-led-by-inuka-capital-9628896\n3. *Terafac - 2026 Funding Rounds & List of Investors - Tracxn*. https://tracxn.com/d/companies/terafac/__8CMLm7S0Zzhc30y1wRML5chzv3X2-Lo2UotYxbCZydE/funding-and-investors\n4. *WeldGuide IV",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Terractive",
+    "research_file": "terractive.md",
+    "founders": [
+      {
+        "name": "DeVC to accelerate its proprietary fabric development",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "DeVC",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Townhall",
+    "research_file": "townhall.md",
+    "founders": [
+      {
+        "name": "Samit Soni",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "TuneUp Technology",
+    "research_file": "tuneup-technology.md",
+    "founders": []
+  },
+  {
+    "company": "UberDhan",
+    "research_file": "uberdhan.md",
+    "founders": []
+  },
+  {
+    "company": "Unifize",
+    "research_file": "unifize.md",
+    "founders": [
+      {
+        "name": "Ben Merton",
+        "role": "Co-founder & CEO",
+        "linkedin": null,
+        "other_info": "Brings over 15 years of global leadership in regulated industries (industrial automation, life sciences, aerospace). He has led operations across the U.S., India, China, and Korea .",
+        "network_status": "FOUND",
+        "network_id": 697,
+        "network_match": "Name match: Ben Merton"
+      },
+      {
+        "name": "Lakshman Thatai",
+        "role": "Co-founder",
+        "linkedin": null,
+        "other_info": "Offers over 20 years of experience leading operational excellence in food processing, manufacturing, and medical devices .",
+        "network_status": "FOUND",
+        "network_id": 698,
+        "network_match": "Name match: Lakshman Thatai"
+      },
+      {
+        "name": "Avinash Sultanpur",
+        "role": "Co-founder & CTO",
+        "linkedin": null,
+        "other_info": "Leads the technical architecture and engineering teams .",
+        "network_status": "FOUND",
+        "network_id": 696,
+        "network_match": "Name match: Avinash Sultanpur"
+      }
+    ]
+  },
+  {
+    "company": "Vahan",
+    "research_file": "vahan.md",
+    "founders": [
+      {
+        "name": "Madhav Krishna",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "A Columbia University-trained AI researcher, Krishna returned to India to address the broken, agency-dominated blue-collar hiring process  . He was recently named to Analytics India Magazine's l",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Mohammed Abdoolcarim",
+        "role": "Co-founder",
+        "linkedin": null,
+        "other_info": "Co-founded the company alongside Krishna in 2016 .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Khosla",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Volopay",
+    "research_file": "volopay.md",
+    "founders": [
+      {
+        "name": "Rajith Shaji",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rajesh Raikwar",
+        "role": "Co-Founder & CTO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Vyapar",
+    "research_file": "vyapar.md",
+    "founders": [
+      {
+        "name": "Sumit Agarwal",
+        "role": "Co-founder & CEO",
+        "linkedin": null,
+        "other_info": "Drives the company's strategic vision to digitize the Indian MSME ecosystem. He transitioned to pursuing Vyapar full-time in October 2016  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Shubham Agrawal",
+        "role": "Co-founder & CTO",
+        "linkedin": null,
+        "other_info": "Recognized in the prestigious Forbes 30 Under 30 Asia list (Class of 2023) for his technical leadership .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ruqiya Irum",
+        "role": "Co-founder",
+        "linkedin": null,
+        "other_info": "Key founding member contributing to the platform's early architecture .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Ankit Virani",
+        "role": "Business Head",
+        "linkedin": null,
+        "other_info": "Former founder of Suvit, who joined Vyapar's leadership team following the acquisition in late 2025 .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Waku Robotics",
+    "research_file": "waku-robotics.md",
+    "founders": [
+      {
+        "name": "Victor Splittgerber",
+        "role": "CEO & Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sander Nijssen",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Leo K\u00e4\u00dfner",
+        "role": "Chief Product Officer",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Alexander Bresk",
+        "role": "Founder & COO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Florian Purchess",
+        "role": "Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "WardWiz",
+    "research_file": "wardwiz.md",
+    "founders": []
+  },
+  {
+    "company": "WeaveInsights",
+    "research_file": "weaveinsights.md",
+    "founders": []
+  },
+  {
+    "company": "Wigzo",
+    "research_file": "wigzo.md",
+    "founders": [
+      {
+        "name": "Umair Mohammed",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Spearheaded product and sales, bringing 10 years of experience from large internet companies in Singapore and India .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Himanshu Kaushik",
+        "role": "Co-Founder & COO",
+        "linkedin": "https://www.linkedin.com/in/himanshu-kaushik-06310020",
+        "other_info": "Brings experience in aligning technology with business strategy  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Mohammad Atyab",
+        "role": "Ex-CTO",
+        "linkedin": "https://in.linkedin.com/in/mohammadatyab",
+        "other_info": "A key technical architect who later exited the company to found RaySuite AI  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Jeremiah Cathey",
+        "role": "Co-Founder & CRO",
+        "linkedin": null,
+        "other_info": "Leads revenue operations .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Wimo Games",
+    "research_file": "wimo-games.md",
+    "founders": [
+      {
+        "name": "Elie Akilian",
+        "role": "Founder & Executive Chairman",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Dave Rosen",
+        "role": "Chief Executive Officer",
+        "linkedin": "https://www.linkedin.com/in/rosendave",
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Wint Wealth",
+    "research_file": "wint-wealth.md",
+    "founders": [
+      {
+        "name": "Ajinkya Kulkarni",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Anshul Rai",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "WorkOnGrid",
+    "research_file": "workongrid.md",
+    "founders": [
+      {
+        "name": "Shaurya Poddar",
+        "role": "CEO",
+        "linkedin": "https://in.linkedin.com/in/shaurya-poddar-6559b889",
+        "other_info": "Leads market engagement and strategic partnerships, actively representing Grid at major industry events like India Energy Week 2026  .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Aayush Agrawal",
+        "role": "CTO",
+        "linkedin": "https://in.linkedin.com/in/aayushagr",
+        "other_info": "A data engineer by profession, driving the platform's technical architecture  .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Xpressbees",
+    "research_file": "xpressbees.md",
+    "founders": [
+      {
+        "name": "Amitava Saha",
+        "role": "Founder, MD & CEO",
+        "linkedin": null,
+        "other_info": "An IIT-BHU and IIM Lucknow alumnus with over 25 years of experience, Saha previously served as the COO of FirstCry before spinning off Xpressbees .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Mohit Sardana",
+        "role": "CEO - B2C",
+        "linkedin": null,
+        "other_info": "Appointed in September 2025, Sardana brings deep hyper-local and food delivery expertise, having previously served as an executive at Blinkit and COO at Zomato   .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Uday R. Sharma",
+        "role": "Chief Business Officer - B2B, 3PL & Cross Border",
+        "linkedin": null,
+        "other_info": "Appointed in April 2025 to spearhead the company's pivot toward enterprise logistics .",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Santosh Abbimane",
+        "role": "Chief Financial Officer",
+        "linkedin": null,
+        "other_info": "Leads the company's financial strategy and capital allocation .",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "YieldWise",
+    "research_file": "yieldwise.md",
+    "founders": [
+      {
+        "name": "Sandesh Bhat",
+        "role": "Director/Co-Founder",
+        "linkedin": null,
+        "other_info": "MCA registered director of Yieldwise Farmtech Pvt Ltd.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Sandeep Bhat",
+        "role": "Director/Co-Founder",
+        "linkedin": null,
+        "other_info": "MCA registered director.",
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Premalatha",
+        "role": "Director/Co-Founder",
+        "linkedin": null,
+        "other_info": "MCA registered director.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Zolve",
+    "research_file": "zolve.md",
+    "founders": [
+      {
+        "name": "Raghunandan G",
+        "role": "Founder & CEO",
+        "linkedin": null,
+        "other_info": "Previously co-founded TaxiForSure.",
+        "network_status": "MISSING"
+      }
+    ]
+  },
+  {
+    "company": "Zypp Electric",
+    "research_file": "zypp-electric.md",
+    "founders": [
+      {
+        "name": "Akash Gupta",
+        "role": "Co-Founder & CEO",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Rashi Agarwal",
+        "role": "Co-Founder & CBO",
+        "linkedin": "https://in.linkedin.com/in/rashiagarwalzypp",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Tushar Mehta",
+        "role": "Co-Founder & COO",
+        "linkedin": "https://in.linkedin.com/in/tushar-mehta-26859311",
+        "other_info": null,
+        "network_status": "MISSING"
+      },
+      {
+        "name": "Melissa Horn",
+        "role": "Co-Founder",
+        "linkedin": null,
+        "other_info": null,
+        "network_status": "MISSING"
+      }
+    ]
+  }
+]

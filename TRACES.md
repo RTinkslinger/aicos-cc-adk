@@ -590,3 +590,83 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 **Changes:** ~50 files across both repos. All committed and pushed.
 **Next:** See CHECKPOINT.md for full handoff state.
 ---
+
+### Iteration 28 - 2026-03-20 (IN PROGRESS)
+**Phase:** Parallel Workstreams — WebFront v4 + Schema Migrations + Portfolio Sync + Research Catalog
+**Focus:** 7 parallel agents across 4 workstreams: bug fixes, IRGI Phase A, Companies/Network migration, Portfolio DB sync, cross-DB relations mapping, research file discovery
+
+**Agents Running (7):**
+1. WS1 Frontend Agent — Fix 7 QA/UX bugs on feat/webfront-v4 (nav touch targets, content-action linkage, sticky triage, undo toast, thesis links, evidence collapse)
+2. WS1 IRGI Agent — Prepare Phase A SQL: vector columns (1024d voyage-3.5), FTS indexes, hybrid search function, Auto Embeddings pipeline
+3. WS2 Schema Agent — Query live Notion Companies+Network schemas, cross-ref audit, produce ALTER TABLE SQL
+4. WS3 Portfolio Schema Agent — Query Notion Portfolio DB + Postgres portfolio table, full sync comparison, ALTER TABLE SQL
+5. WS3 Relations Agent — Map Portfolio↔Companies↔Network relation graph in Notion + Postgres
+6. WS4 Local Scout — Catalog all portfolio research MDs in AI CoS project
+7. WS4 Global Scout — Catalog all portfolio research MDs across ~/Claude Projects/
+
+**Changes:**
+- `sql/irgi-phase-a.sql` (1004 lines, executed on Supabase — 43 DB objects), `sql/irgi-edge-function.ts` (253 lines)
+- `sql/companies-network-migration.sql` (ALTER TABLE executed — companies 53 cols, network 52 cols)
+- `sql/portfolio-migration.sql` (CREATE TABLE executed — 83 cols, 18 indexes)
+- `sql/data/` (12+ files: Notion exports 4635+3339+142, founder registries, matching data, batch inputs)
+- `supabase/functions/embed/index.ts` + `supabase/functions/search/index.ts` (deployed ACTIVE on Supabase)
+- `supabase/deploy-functions.sh` (deployment script)
+- `aicos-digests/` on `feat/webfront-v4` — 12+ commits: bug fixes, search infra, ⌘K, bucket-grouped actions, thesis intelligence, portfolio page, triage stack, app shell, home command center, I2 fixes in progress
+- `portfolio-research/` — 252 MD files (141 Parallel batch + 108 new batch + 3 pre-existing)
+- `companies-pages/` — 153+ MD files (Notion page body content)
+- `network-pages/` — 120+ MD files (Notion page body content)
+- `docs/audits/` — 12+ audit reports (schema, data quality, enrichment, IRGI execution, cross-DB relations)
+- `docs/research/` — 4 files (shadcn composition, product design, IRGI edge functions, UX patterns)
+- `docs/superpowers/plans/` — 2 files (data sync plan, next iterations plan)
+
+**Supabase state (live):**
+- 6 tables: companies (558→4635 loading), network (959→3339 loading), portfolio (142), content_digests (22), thesis_threads (8), actions_queue (115)
+- IRGI: pgvector, pgmq, pg_cron, pg_net, 4 vector cols, 4 FTS cols, hybrid_search(), 6 intelligence functions, 2 Edge Functions, embedding pipeline autonomous
+- 252 research files, 142/142 portfolio linked, all rows embedded at 100%
+
+**82 agents spawned, 68 complete, 22 running across:**
+- WS1-4: WebFront bugs + IRGI prep + schema + research scouts
+- WS5: Schema execution + Notion exports + data population (companies 545, network 528, portfolio 142)
+- WS6: UX deep research + shadcn audit + product design
+- WS7: 141 company Parallel research + download
+- WS8: IRGI execution + Edge Functions + WebFront search + intelligence backend
+- WS9: Founder matching (291 found, 268 LinkedIn) + creator (197 inserted) + connection linker
+- WS10: Full Notion API export (4635+3339) + page content + research linking
+- WS11: Actions/Thesis/Portfolio intelligence pages
+- WS12: Triage stack + app shell + home command center
+- WS13: Continuous enrichment orchestrator + founder extractors
+- WS14: 6 alphabet enrichment agents + deep orchestrator v2 + companies re-export
+- WS15: 6 page content agents (3 company + 3 network ranges)
+- WS16: QA (build passes) + UX review (6.8/10) + Aakash review (6.5/10)
+- WS17: Strategic planning + 3 column-fill agents
+- WS18: Data loop master + website/LinkedIn/sector gap fillers
+- WS19: I2 fixes (add signal, since-last-visit, PWA, sheet/drawer)
+
+**Context:** Compaction overdue. This is a massive multi-workstream session — largest agent fleet ever (82). Two iteration machines running: WebFront (BUILD→TEST→FIX→repeat) and Data (AUDIT→FILL→LINK→VERIFY→repeat).
+**Latest (updated mid-session):**
+- Companies: **4,635 rows** in Postgres (mass upsert COMPLETE), 1,438 embedded (31%, processing)
+- Network: **3,728 rows** (mass upsert nearly done), 959 embedded (backfill queued)
+- Portfolio: 142 rows, 142/142 embedded, 142/142 research linked
+- WebFront I1: 6 agents complete (triage stack, app shell, intelligence pages, command center)
+- WebFront I1 Review: QA pass, UX 6.8/10, Aakash 6.5/10
+- WebFront I2: 4 fix agents running (add signal, since-last-visit, PWA, sheet/drawer)
+- Page content: 531 network MDs, 153+ company MDs, 142 portfolio stubs
+- Research: 252 files total, 100% portfolio coverage
+- Enrichment: alphabet army + data loop master + gap fillers (website, LinkedIn, sector)
+- 74 agents complete, 16 running, 83 total spawned
+- QA report: PASS (0 critical, 1 high, 3 medium) — QA fix agent launched
+- UX review: 6.8/10 — I2 fixes address all P0/P1 findings
+- Aakash review: 6.5/10 — Add Signal (write capability) is P0 #1, being built
+- Strategic plan written: outcome rating + people view as next P0 features
+**Database milestone:** Both mass upserts COMPLETE. 8,650 total rows (4,635 companies + 3,728 network + 142 portfolio + 22 digests + 8 thesis + 115 actions). 6,804 embeddings queued and processing autonomously. pgmq permission fix applied (service_role USAGE grant).
+**I2 fixes landing:** PWA + service worker + keyboard help ✅, QA fixes (focus, contrast, sort) in progress, Add Signal (write capability) wrapping up, Since-Last-Visit + Sheet/Drawer building. WS20 Search army launched: enhanced ⌘K, /companies detail, /network detail, /search page.
+**Data:** Portfolio column fill: ZERO gaps (100% Notion match). Enrich J-O: 17 people linked, 36 LinkedIn filled. Network mass upsert DONE (3,728). Embedding pipeline: ~6,804 processing autonomously.
+**82 complete, 12 running, 87 total. 3 iteration machines active.**
+- I2 progress: 4/5 done. PWA ✅, Add Signal ✅, Keyboard Help ✅, Since-Last-Visit + P0 Banner ✅. Sheet/Drawer + QA fixes remaining.
+- Write capability LIVE: FAB, server action, Sonner, context buttons on thesis/portfolio
+- P0 Banner: fixed-top flame gradient, dismissible, pulse. Since-Last-Visit: delta pills, NewBadge component.
+- QA fixes DONE: focus-visible, contrast (#8a8894), chronological sort, ILIKE escape, orphan cleanup
+- I2: 5/5 fix agents complete except Sheet/Drawer (last one). Build type error from Sheet/Drawer agent (full_name vs person_name) — fix on commit.
+- **83 complete, 11 running, 87 total.**
+**Next:** Sheet/Drawer lands → fix build → I2 review round (target 8+/10) → merge+deploy. WS20 search army building.
+---

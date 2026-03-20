@@ -1,0 +1,2912 @@
+[
+  {
+    "company": "Alter AI",
+    "founder_name": "Srikar D.",
+    "linkedin_url": "https://www.linkedin.com/in/srikar-d-473390136",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 418,
+    "network_notion_page_id": "22a29bcc-b6fc-80d3-b819-efcdb457c843",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Alter AI",
+    "founder_name": "Kevan Dodhia",
+    "linkedin_url": "https://www.linkedin.com/in/kevan-dodhia-760183129",
+    "role": "Co-Founder & CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 226,
+    "network_notion_page_id": "22529bcc-b6fc-81d1-9edd-c3628f939836",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Ambak",
+    "founder_name": "Raghuveer Malik",
+    "linkedin_url": "https://in.linkedin.com/in/raghuveer-malik-bb2a4218",
+    "role": "Co-founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 318,
+    "network_notion_page_id": "ac575bb3-d9ea-4f46-a52a-ca83a5c7b250",
+    "match_method": "name"
+  },
+  {
+    "company": "Ambak",
+    "founder_name": "Rameshwar Gupta",
+    "linkedin_url": "https://in.linkedin.com/in/rameshwargupta11",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 332,
+    "network_notion_page_id": "14229bcc-b6fc-80d4-9b2d-f17136675f50",
+    "match_method": "name"
+  },
+  {
+    "company": "Ambak",
+    "founder_name": "Rashi Garg",
+    "linkedin_url": "https://in.linkedin.com/in/rashigarg",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 334,
+    "network_notion_page_id": "24829bcc-b6fc-80f2-bc5b-c2c5a218842f",
+    "match_method": "name"
+  },
+  {
+    "company": "Ambak",
+    "founder_name": "Pranav Khattar",
+    "linkedin_url": "https://in.linkedin.com/in/pranavkhattarin",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Ambak",
+    "founder_name": "Ashish Lohia",
+    "linkedin_url": "https://in.linkedin.com/in/ashish-lohia-61827137",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Ananant Systems",
+    "founder_name": "Amiya Pathak",
+    "linkedin_url": "https://www.linkedin.com/in/amiyapathak",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 87,
+    "network_notion_page_id": "12fa0563-1166-43c6-bd4b-ebd5a1495e2f",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Ananant Systems",
+    "founder_name": "Chitu Singh",
+    "linkedin_url": "https://www.linkedin.com/in/chitu-singh-2232991",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 156,
+    "network_notion_page_id": "15229bcc-b6fc-8072-bdbe-cd3bf26b43e6",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Answers.ai",
+    "founder_name": "Shubhan Dua",
+    "linkedin_url": "https://www.linkedin.com/in/shubhandua",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 403,
+    "network_notion_page_id": "1d829bcc-b6fc-80f1-8bca-fb5450e7cf40",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Answers.ai",
+    "founder_name": "Siddhant Satapathy",
+    "linkedin_url": "https://www.linkedin.com/in/siddhant-satapathy",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 407,
+    "network_notion_page_id": "24829bcc-b6fc-803c-acee-f6c22b33fcdc",
+    "match_method": "company"
+  },
+  {
+    "company": "Answers.ai",
+    "founder_name": "Mamoun Debbagh",
+    "linkedin_url": "https://www.linkedin.com/in/mamoun-debbagh-882163196",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 246,
+    "network_notion_page_id": "24829bcc-b6fc-8050-8f2e-f8b927f82238",
+    "match_method": "name"
+  },
+  {
+    "company": "Answers.ai",
+    "founder_name": "Bri Wilburn",
+    "linkedin_url": "https://www.linkedin.com/in/bri-wilburn-3523471b8",
+    "role": "Co-founder & CMO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 143,
+    "network_notion_page_id": "24829bcc-b6fc-80c8-8b41-ec87f2a367ca",
+    "match_method": "company"
+  },
+  {
+    "company": "Apptile",
+    "founder_name": "Rohit Modi",
+    "linkedin_url": "https://in.linkedin.com/in/rohitmodi",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 353,
+    "network_notion_page_id": "c2d235e8-2b98-4deb-bb7a-e9a911938c15",
+    "match_method": "name"
+  },
+  {
+    "company": "Apptile",
+    "founder_name": "Samyam Annappa",
+    "linkedin_url": "https://in.linkedin.com/in/samyama",
+    "role": "Co-Founder & CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 375,
+    "network_notion_page_id": "02f234b0-9629-4655-bf2a-d61d1b4a2b7a",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Apptile",
+    "founder_name": "Vishal Sood",
+    "linkedin_url": "https://www.linkedin.com/in/soodvishal",
+    "role": "Founder & CPO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 466,
+    "network_notion_page_id": "1d1adf49-efd6-4993-a03e-fb9d0a4c1f14",
+    "match_method": "name"
+  },
+  {
+    "company": "AskMyGuru",
+    "founder_name": "Krishna Mohan Vedula",
+    "linkedin_url": "https://in.linkedin.com/in/vedulakrishnamohan",
+    "role": "CEO, Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 232,
+    "network_notion_page_id": "1c329bcc-b6fc-8078-b8a6-d296bcefa2c6",
+    "match_method": "company"
+  },
+  {
+    "company": "AskMyGuru",
+    "founder_name": "Vivek Sadamate",
+    "linkedin_url": "https://in.linkedin.com/in/vivek-sadamate",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 475,
+    "network_notion_page_id": "1c329bcc-b6fc-80e6-bcbf-c0d8e3cf56f3",
+    "match_method": "name"
+  },
+  {
+    "company": "Atica",
+    "founder_name": "Akash Goel",
+    "linkedin_url": "https://www.linkedin.com/in/akashgoel",
+    "role": "Co\u2011founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 65,
+    "network_notion_page_id": "59097d47-f10d-4d9c-956b-6399c655a665",
+    "match_method": "name"
+  },
+  {
+    "company": "Atica",
+    "founder_name": "Bonish Gandhi",
+    "linkedin_url": "",
+    "role": "Co\u2011founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 142,
+    "network_notion_page_id": "13629bcc-b6fc-8023-aa89-e60cf6aabbca",
+    "match_method": "name"
+  },
+  {
+    "company": "AuraML",
+    "founder_name": "Arjun Gupta",
+    "linkedin_url": "https://in.linkedin.com/in/arjuntheprogrammer",
+    "role": "Co-Founder and CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 115,
+    "network_notion_page_id": "24829bcc-b6fc-80d7-b4e6-dee5c8b2ad4d",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "AuraML",
+    "founder_name": "Sarvagy Shah",
+    "linkedin_url": "https://in.linkedin.com/in/sarvagyshah",
+    "role": "Cofounder & CRO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Aurva",
+    "founder_name": "Apurv Garg",
+    "linkedin_url": "https://www.linkedin.com/in/apurvgarg",
+    "role": "CEO / Co-founder (Apurv Garg)",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 112,
+    "network_notion_page_id": "5fd0c42e-ae7d-48c5-a1fb-6126241d2826",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Aurva",
+    "founder_name": "Krishna Bagadia",
+    "linkedin_url": "https://www.linkedin.com/in/krishna-bagadia",
+    "role": "CTO / Co-founder (Krishna Bagadia)",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 231,
+    "network_notion_page_id": "d1bc84f7-9c56-4d53-a2db-cdbaec867cc4",
+    "match_method": "name"
+  },
+  {
+    "company": "Aurva",
+    "founder_name": "Akash Mandal",
+    "linkedin_url": "https://in.linkedin.com/in/akash-mandal",
+    "role": "Co-founder / Chief Architect (Akash Mandal)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Autosana",
+    "founder_name": "Yuvan Sundrani",
+    "linkedin_url": "https://www.linkedin.com/in/yuvan-sundrani",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 482,
+    "network_notion_page_id": "22529bcc-b6fc-81a7-bdfd-ded3a346e964",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Autosana",
+    "founder_name": "Jason Steinberg",
+    "linkedin_url": "https://www.linkedin.com/in/jason-steinberg7",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 211,
+    "network_notion_page_id": "22529bcc-b6fc-81ac-88a3-cc45ef16b79e",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Ballisto AgriTech (f.k.a. Orbit Farming)",
+    "founder_name": "Aishwarya Ramakrishnan",
+    "linkedin_url": "https://in.linkedin.com/in/aishwarya-ramakrishnan",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Bidso",
+    "founder_name": "Rahul Agarwal",
+    "linkedin_url": "https://www.linkedin.com/in/therahulagarwal",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 319,
+    "network_notion_page_id": "24829bcc-b6fc-8013-a3f5-db3342740b1e",
+    "match_method": "name"
+  },
+  {
+    "company": "Bidso",
+    "founder_name": "Vivek Singhal",
+    "linkedin_url": "https://www.linkedin.com/in/viveksinghal87",
+    "role": "Co-founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 476,
+    "network_notion_page_id": "62f0fe48-cecd-4153-b4f2-0fb50092ec46",
+    "match_method": "name"
+  },
+  {
+    "company": "Bidso",
+    "founder_name": "Ashwin Jain",
+    "linkedin_url": "https://www.linkedin.com/in/ashwin-jain-50742923",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 129,
+    "network_notion_page_id": "24829bcc-b6fc-8013-81bf-e43abf27fd88",
+    "match_method": "name"
+  },
+  {
+    "company": "Bidso",
+    "founder_name": "Aditya Krishnakumar",
+    "linkedin_url": "https://www.linkedin.com/in/aditya-krishnakumar-02244531",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 62,
+    "network_notion_page_id": "28dd97bb-a23e-4f54-bb72-1e6244a7cc18",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "BiteSpeed",
+    "founder_name": "Vinayak Aggarwal",
+    "linkedin_url": "https://www.linkedin.com/in/vinayak2507",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 462,
+    "network_notion_page_id": "d27c0480-6ad2-4127-a923-0c8ae959b07b",
+    "match_method": "name"
+  },
+  {
+    "company": "BiteSpeed",
+    "founder_name": "Abhinav Tuli",
+    "linkedin_url": "",
+    "role": "Former Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 18,
+    "network_notion_page_id": "2bf29bcc-b6fc-8076-8824-c78b98e85413",
+    "match_method": "name"
+  },
+  {
+    "company": "BiteSpeed",
+    "founder_name": "Aparna Aggarwal",
+    "linkedin_url": "",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "BiteSpeed",
+    "founder_name": "Siddharth Barpanda",
+    "linkedin_url": "",
+    "role": "Former Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Blockfenders",
+    "founder_name": "Niranjan Ingale",
+    "linkedin_url": "https://www.linkedin.com/in/niranjan-ingale-82942a37",
+    "role": "Founder & CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 284,
+    "network_notion_page_id": "24829bcc-b6fc-8058-883a-e17503049f3b",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Blockfenders",
+    "founder_name": "Purshotam Lalwani",
+    "linkedin_url": "https://in.linkedin.com/in/purulalwani",
+    "role": "Principal Engineering Leader",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Boba Bhai",
+    "founder_name": "Dhruv Kohli",
+    "linkedin_url": "https://in.linkedin.com/in/dhruv-kohli-6b34a3b6",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 172,
+    "network_notion_page_id": "5095fadb-9e17-4647-86af-224213d3a009",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Boost Robotics",
+    "founder_name": "Hardik Singh",
+    "linkedin_url": "https://www.linkedin.com/in/hardiksingh",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 197,
+    "network_notion_page_id": "22429bcc-b6fc-80d9-bb33-ff25e2414165",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Boost Robotics",
+    "founder_name": "Hans Kumar",
+    "linkedin_url": "https://www.linkedin.com/in/kumarhans",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 196,
+    "network_notion_page_id": "22429bcc-b6fc-806c-a96c-f46dcd1841a4",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Boxpay",
+    "founder_name": "Shobhit Mehra",
+    "linkedin_url": "https://in.linkedin.com/in/mehrashobhit",
+    "role": "Founder & Chief Executive Officer",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 395,
+    "network_notion_page_id": "725a05b2-f130-4099-b214-0d017e9b81b0",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Boxpay",
+    "founder_name": "Puneet Singh",
+    "linkedin_url": "https://in.linkedin.com/in/puneetsingh1",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 315,
+    "network_notion_page_id": "6ca3c0cb-f6cc-4486-b1d6-84a881a5372b",
+    "match_method": "name+company"
+  },
+  {
+    "company": "CarbonStrong",
+    "founder_name": "Vikramaditya Singh",
+    "linkedin_url": "https://in.linkedin.com/in/vikramaditya-singh-750262121",
+    "role": "Co-Founder & COO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 460,
+    "network_notion_page_id": "24829bcc-b6fc-806f-9b08-d3b2aac1849d",
+    "match_method": "name"
+  },
+  {
+    "company": "CarbonStrong",
+    "founder_name": "Harsh Jain",
+    "linkedin_url": "https://in.linkedin.com/in/harsh-jain-471866122",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 198,
+    "network_notion_page_id": "6bc7fd5e-c2d0-4869-aee4-156bddec8dc8",
+    "match_method": "company"
+  },
+  {
+    "company": "Cleevo",
+    "founder_name": "Mayank Jain",
+    "linkedin_url": "https://in.linkedin.com/in/mayankjn",
+    "role": "Co\u2011founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 253,
+    "network_notion_page_id": "99439f05-d2f1-4b64-8909-33eba7021532",
+    "match_method": "name"
+  },
+  {
+    "company": "Cleevo",
+    "founder_name": "Karan Shah",
+    "linkedin_url": "https://in.linkedin.com/in/karanhiteshshah",
+    "role": "Co\u2011founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 220,
+    "network_notion_page_id": "4af07ff6-b332-467c-a7a0-e10d48038771",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "cocreate",
+    "founder_name": "Tamish Pulappadi",
+    "linkedin_url": "https://www.linkedin.com/in/tamish-pulappadi",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 431,
+    "network_notion_page_id": "22529bcc-b6fc-81e9-9221-dda334ca76cd",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "cocreate",
+    "founder_name": "Archish Arun",
+    "linkedin_url": "https://www.linkedin.com/in/archisharun",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 113,
+    "network_notion_page_id": "22529bcc-b6fc-81c9-bfe0-eb47d60f9b2d",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "cocreate",
+    "founder_name": "Sid Yu",
+    "linkedin_url": "https://www.linkedin.com/in/sid-yu",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "CodeAnt",
+    "founder_name": "Amartya Jha",
+    "linkedin_url": "https://www.linkedin.com/in/amartya-jha",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 80,
+    "network_notion_page_id": "2a1bdacd-f1ab-4b2c-ad24-77c6b61bed26",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "CodeAnt",
+    "founder_name": "Chinmay Bharti",
+    "linkedin_url": "https://www.linkedin.com/in/chinmay-bharti",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 153,
+    "network_notion_page_id": "16e58bd5-c579-4144-9df2-5e240af73bec",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Coffeee",
+    "founder_name": "Neha Sharma",
+    "linkedin_url": "",
+    "role": "Co-Founder & CSO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Coffeee",
+    "founder_name": "Mohit Gulati",
+    "linkedin_url": "",
+    "role": "CIO & Managing Partner",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Coffeee",
+    "founder_name": "Amit Veer",
+    "linkedin_url": "",
+    "role": "Co-founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Coind",
+    "founder_name": "Eugenie Whitman",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Coind",
+    "founder_name": "Mary Valdovinos",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Coind",
+    "founder_name": "Sylvia Doran",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Confido Health",
+    "founder_name": "Chetan Reddy",
+    "linkedin_url": "https://www.linkedin.com/in/mchetanreddy500",
+    "role": "Co-founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 152,
+    "network_notion_page_id": "a7db7085-7bf0-4e73-bd29-9123e2526324",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Confido Health",
+    "founder_name": "Vichar Shroff",
+    "linkedin_url": "https://www.linkedin.com/in/vichar-shroff",
+    "role": "Chief Product Officer & Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 454,
+    "network_notion_page_id": "9e661dd4-5db4-4623-adfe-66436cb5b365",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Crackle",
+    "founder_name": "Aviv Eyal",
+    "linkedin_url": "https://www.linkedin.com/in/avive",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Crackle",
+    "founder_name": "David Samuel",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Crackle",
+    "founder_name": "Josh Felser",
+    "linkedin_url": "https://www.linkedin.com/in/joshfelser",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Crackle",
+    "founder_name": "Mike Sitrin",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Crest",
+    "founder_name": "Rahul Vishwakarma",
+    "linkedin_url": "https://in.linkedin.com/in/rahul-getcrest",
+    "role": "Co-Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Crest",
+    "founder_name": "Akhil Kumar",
+    "linkedin_url": "https://in.linkedin.com/in/akhil-kumar",
+    "role": "",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 66,
+    "network_notion_page_id": "26029bcc-b6fc-80e7-9048-d039a683a660",
+    "match_method": "name"
+  },
+  {
+    "company": "Crest",
+    "founder_name": "Yogesh Byahatti",
+    "linkedin_url": "https://in.linkedin.com/in/yogesh-getcrest",
+    "role": "",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Cybrilla",
+    "founder_name": "Kuntal Bhansali",
+    "linkedin_url": "https://in.linkedin.com/in/kuntal-bhansali-7650286",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Cybrilla",
+    "founder_name": "Anchal Jajodia",
+    "linkedin_url": "https://in.linkedin.com/in/anchaljajodia",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 91,
+    "network_notion_page_id": "e432bc58-d2d2-4115-adf5-c24da27562de",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Digital Paani",
+    "founder_name": "Mansi Jain",
+    "linkedin_url": "https://www.linkedin.com/in/mansi-jain-b93b35106",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 250,
+    "network_notion_page_id": "f4852659-f9c3-4260-abd0-6659296a9682",
+    "match_method": "name"
+  },
+  {
+    "company": "Digital Paani",
+    "founder_name": "Rajesh Jain",
+    "linkedin_url": "https://www.linkedin.com/in/rajesh-jain-41420536",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 328,
+    "network_notion_page_id": "85b2d934-0f9d-4947-905e-f7518e2a9a79",
+    "match_method": "name"
+  },
+  {
+    "company": "Dodo Payments",
+    "founder_name": "Rishabh Goel",
+    "linkedin_url": "https://www.linkedin.com/in/goelrish",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 342,
+    "network_notion_page_id": "bfb6d300-fa43-4419-af3b-6454f4bf2230",
+    "match_method": "name"
+  },
+  {
+    "company": "Dodo Payments",
+    "founder_name": "Ayush Agarwal",
+    "linkedin_url": "https://www.linkedin.com/in/aagarwal1012",
+    "role": "Co-Founder & CPTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 134,
+    "network_notion_page_id": "e087eb8d-f327-497f-89d8-621676de4c5b",
+    "match_method": "name"
+  },
+  {
+    "company": "Dodo Payments",
+    "founder_name": "Joshua D'Costa",
+    "linkedin_url": "https://www.linkedin.com/in/joshua-d-costa",
+    "role": "Founding Growth & Marketing Lead",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Eight Networks",
+    "founder_name": "Mohit Paliwal",
+    "linkedin_url": "https://in.linkedin.com/in/mohit-paliwal177",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 260,
+    "network_notion_page_id": "a765e3bc-553e-4742-be1c-c300a1bf5933",
+    "match_method": "name"
+  },
+  {
+    "company": "ElecTrade",
+    "founder_name": "Akshay Goyal",
+    "linkedin_url": "",
+    "role": "Co-Founder and COO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ElecTrade",
+    "founder_name": "Milind Srivastava",
+    "linkedin_url": "",
+    "role": "Co-founder and VP, Technology",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 256,
+    "network_notion_page_id": "62a77bbe-b4e9-4420-bbcb-482821da0946",
+    "match_method": "name"
+  },
+  {
+    "company": "ElecTrade",
+    "founder_name": "Rahul Sharma",
+    "linkedin_url": "",
+    "role": "Co-founder, CTO & MD",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ElecTrade",
+    "founder_name": "Rishikesh Ranjan",
+    "linkedin_url": "https://in.linkedin.com/in/rishikeshranjan",
+    "role": "Co-Founder and CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 346,
+    "network_notion_page_id": "4dca5374-a8b2-43de-b700-f00f48b6eef5",
+    "match_method": "name"
+  },
+  {
+    "company": "Emomee",
+    "founder_name": "Pooja Jauhari",
+    "linkedin_url": "https://in.linkedin.com/in/pooja-jauhari-4ab38755",
+    "role": "Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 303,
+    "network_notion_page_id": "14329bcc-b6fc-802d-8513-edfee3417985",
+    "match_method": "name"
+  },
+  {
+    "company": "Emomee",
+    "founder_name": "Varun Duggirala",
+    "linkedin_url": "https://in.linkedin.com/in/varunduggi",
+    "role": "Co-founder & Content Chief",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 445,
+    "network_notion_page_id": "7ca85793-6d99-49fe-9ca7-5ccf6db8edcf",
+    "match_method": "name"
+  },
+  {
+    "company": "Emomee",
+    "founder_name": "Suraksha Subramaniam",
+    "linkedin_url": "https://in.linkedin.com/in/suraksha-subramaniam-290b91289",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ExtraaEdge",
+    "founder_name": "Abhishek Ballabh",
+    "linkedin_url": "https://in.linkedin.com/in/abhi-ballabh-extraaedge",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 30,
+    "network_notion_page_id": "bf526195-3808-4e11-bb71-5fe0da65fc3c",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "ExtraaEdge",
+    "founder_name": "Sushil Mundada",
+    "linkedin_url": "https://in.linkedin.com/in/sushil-mundada-extraaedge",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 430,
+    "network_notion_page_id": "ca578f25-e7d3-4e21-827c-337c05518ea0",
+    "match_method": "name"
+  },
+  {
+    "company": "Fabriclore",
+    "founder_name": "Vijay Sharma",
+    "linkedin_url": "https://in.linkedin.com/in/vijay-sharma-548a341a",
+    "role": "Co-founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 455,
+    "network_notion_page_id": "b8c0d098-c95b-4620-97a6-52de8d141a63",
+    "match_method": "name"
+  },
+  {
+    "company": "Fabriclore",
+    "founder_name": "Anupam D Arya",
+    "linkedin_url": "https://in.linkedin.com/in/anupamdeoarya",
+    "role": "Cofounder & VP - Product",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 107,
+    "network_notion_page_id": "a9dae677-b8e6-4b88-9057-3f564cfaada7",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Fabriclore",
+    "founder_name": "Sandeep Sharma",
+    "linkedin_url": "https://in.linkedin.com/in/sandeep-sharma-b7b68921",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 455,
+    "network_notion_page_id": "b8c0d098-c95b-4620-97a6-52de8d141a63",
+    "match_method": "company"
+  },
+  {
+    "company": "Felicity",
+    "founder_name": "Paul Chang",
+    "linkedin_url": "https://www.linkedin.com/in/pchang328",
+    "role": "Co-founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Felicity",
+    "founder_name": "Saahil Madge",
+    "linkedin_url": "https://www.linkedin.com/in/saahil-madge",
+    "role": "Co-founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Finsire",
+    "founder_name": "Mridul Manhas",
+    "linkedin_url": "https://in.linkedin.com/in/mridul-manhas",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 262,
+    "network_notion_page_id": "24829bcc-b6fc-8084-8c8c-ff8e7378a7ae",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Finsire",
+    "founder_name": "Shreyans Nahar",
+    "linkedin_url": "https://in.linkedin.com/in/shreyans-nahar",
+    "role": "Co-founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 397,
+    "network_notion_page_id": "567b2906-99ea-4dbe-90ae-d7b2bec3e27f",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Finsire",
+    "founder_name": "Subramaniam Chintamani",
+    "linkedin_url": "https://in.linkedin.com/in/subramaniam-chintamani",
+    "role": "Co-founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Fliq (f.k.a. EthosX)",
+    "founder_name": "Deepanshu .",
+    "linkedin_url": "https://in.linkedin.com/in/deepanshu1",
+    "role": "Co\u2011founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 168,
+    "network_notion_page_id": "b5ce7ac9-1cee-4399-8c62-905362590293",
+    "match_method": "company"
+  },
+  {
+    "company": "Fliq (f.k.a. EthosX)",
+    "founder_name": "Smit Patoliya",
+    "linkedin_url": "https://in.linkedin.com/in/smit-patoliya",
+    "role": "Co\u2011Founder and CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 411,
+    "network_notion_page_id": "24829bcc-b6fc-80d4-8944-de0ccc6ba0f0",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Fliq (f.k.a. EthosX)",
+    "founder_name": "Surbhi Singh",
+    "linkedin_url": "https://ca.linkedin.com/in/surbhibsingh",
+    "role": "Co\u2011Founder and Head of Business Development at Fliq by EthosX",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Flytbase",
+    "founder_name": "Nitin Gupta",
+    "linkedin_url": "https://www.linkedin.com/in/nitin7gupta",
+    "role": "Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 289,
+    "network_notion_page_id": "bea803ad-2fc2-4b97-95a6-3ea1d4f61974",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Frizzle",
+    "founder_name": "Abhay Gupta",
+    "linkedin_url": "https://www.linkedin.com/in/abhaygupta-",
+    "role": "Co-founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 518,
+    "network_notion_page_id": "22c29bcc-b6fc-8100-89d3-daaa6f186afe",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Frizzle",
+    "founder_name": "Shyam Sai",
+    "linkedin_url": "https://www.linkedin.com/in/shyamsai",
+    "role": "Co-founder & CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 404,
+    "network_notion_page_id": "22c29bcc-b6fc-81a3-b1d6-eae6c5cc08b3",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "GameRamp",
+    "founder_name": "Vivek Ramachandran",
+    "linkedin_url": "https://www.linkedin.com/in/vivekr94",
+    "role": "Co\u2011founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 474,
+    "network_notion_page_id": "5370b06c-f6c2-45e8-ac8e-8a562c537def",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "GameRamp",
+    "founder_name": "Sashank Vandrangi",
+    "linkedin_url": "https://www.linkedin.com/in/sashankvandrangi",
+    "role": "Co\u2011founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 384,
+    "network_notion_page_id": "1ac29bcc-b6fc-80df-a697-eb5e0ae78fe6",
+    "match_method": "name"
+  },
+  {
+    "company": "Gimi Michi",
+    "founder_name": "Nishank Goyal",
+    "linkedin_url": "https://in.linkedin.com/in/nishank-goyal",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 285,
+    "network_notion_page_id": "26029bcc-b6fc-80ed-9fe9-e3746cde4104",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Gimi Michi",
+    "founder_name": "Akhil Kumar",
+    "linkedin_url": "https://in.linkedin.com/in/aragog",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 66,
+    "network_notion_page_id": "26029bcc-b6fc-80e7-9048-d039a683a660",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "GlamPlus",
+    "founder_name": "Divyanshu Singh",
+    "linkedin_url": "https://in.linkedin.com/in/divyanshusingh1",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 177,
+    "network_notion_page_id": "12629bcc-b6fc-8045-8527-e28df1522ad4",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "GlamPlus",
+    "founder_name": "Rohan Singh",
+    "linkedin_url": "https://in.linkedin.com/in/rohan-singh-620390201",
+    "role": "Co-Founder & COO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "GlamPlus",
+    "founder_name": "Vatsalya Agarwal",
+    "linkedin_url": "",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Gloroots",
+    "founder_name": "Abhirup Nath",
+    "linkedin_url": "https://in.linkedin.com/in/abhirupnath",
+    "role": "Co\u2011founder & CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 23,
+    "network_notion_page_id": "062af591-9fa2-49d9-a84a-585677fea2ac",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Gloroots",
+    "founder_name": "Mayank Bhutoria",
+    "linkedin_url": "https://www.linkedin.com/in/mayankkumarbhutoria",
+    "role": "Co\u2011founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Gloroots",
+    "founder_name": "Yamini Jain",
+    "linkedin_url": "https://in.linkedin.com/in/yamini-jain-405a4661",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "GoCredit (f.k.a. UniPe)",
+    "founder_name": "Anupam Acharya",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 106,
+    "network_notion_page_id": "24829bcc-b6fc-80a9-ba70-f9b145266252",
+    "match_method": "name"
+  },
+  {
+    "company": "Grexa",
+    "founder_name": "Ashutosh Kumar",
+    "linkedin_url": "https://in.linkedin.com/in/ashutosh-kumar6",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 128,
+    "network_notion_page_id": "17429bcc-b6fc-80a3-b9d5-fcd1902fa32e",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Grexa",
+    "founder_name": "Narendra Agrawal",
+    "linkedin_url": "https://in.linkedin.com/in/agrawalnarendra",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Grexa",
+    "founder_name": "Ayush Varshney",
+    "linkedin_url": "https://in.linkedin.com/in/ayushvarshney",
+    "role": "CTO/Co\u2011founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 136,
+    "network_notion_page_id": "17429bcc-b6fc-80c2-a42d-cd374632e1f1",
+    "match_method": "name"
+  },
+  {
+    "company": "Grexa",
+    "founder_name": "Arpit Oswal",
+    "linkedin_url": "https://in.linkedin.com/in/arpit-oswal",
+    "role": "Co\u2011founder & CPO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Grvt",
+    "founder_name": "Aaron Ong",
+    "linkedin_url": "https://www.linkedin.com/in/aaronongcs",
+    "role": "Co-Founder & CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 498,
+    "network_notion_page_id": "18029bcc-b6fc-80d8-9f6e-e8ce6230a079",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Grvt",
+    "founder_name": "Hong Gyu Yea",
+    "linkedin_url": "https://www.linkedin.com/in/hong-gyu-yea-b5264728",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 203,
+    "network_notion_page_id": "18029bcc-b6fc-801b-a3cc-fc8cea442451",
+    "match_method": "name"
+  },
+  {
+    "company": "Grvt",
+    "founder_name": "Matthew Quek",
+    "linkedin_url": "https://www.linkedin.com/in/matthew-quek-01403274",
+    "role": "Co-Founder & COO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 252,
+    "network_notion_page_id": "18029bcc-b6fc-8009-9e21-d99c82073e8c",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "HealthCred",
+    "founder_name": "Shrey Jain",
+    "linkedin_url": "https://in.linkedin.com/in/shrey-jain-a150aab2",
+    "role": "Founder (HealthCred)",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 396,
+    "network_notion_page_id": "eef1bfe6-3749-48a2-a897-82f1e01ebb6a",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "HealthCred",
+    "founder_name": "Arpit Jangir",
+    "linkedin_url": "https://ae.linkedin.com/in/arpit-jangir",
+    "role": "Cofounder & Chief Operating Officer (HealthCred)",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 118,
+    "network_notion_page_id": "14229bcc-b6fc-80c7-9c86-f7d442eaf5af",
+    "match_method": "name"
+  },
+  {
+    "company": "Hexo AI",
+    "founder_name": "Kunal Bhatia",
+    "linkedin_url": "https://www.linkedin.com/in/kunalbhatia91",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Hexo AI",
+    "founder_name": "Vignesh Baskaran",
+    "linkedin_url": "https://www.linkedin.com/in/vigneshbaskaran0123",
+    "role": "CTO and Cofounder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Highperformr AI",
+    "founder_name": "Srivatsan Venkatesan",
+    "linkedin_url": "https://in.linkedin.com/in/srivatsanv",
+    "role": "Cofounder/CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Highperformr AI",
+    "founder_name": "Ramesh Ravishankar",
+    "linkedin_url": "https://in.linkedin.com/in/rameshravi",
+    "role": "Co-Founder & Chief GTM Officer",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Hotelzify",
+    "founder_name": "Anirudh Ganesh",
+    "linkedin_url": "https://www.linkedin.com/in/anirudhganesh",
+    "role": "Co-Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Hotelzify",
+    "founder_name": "Unnikrishnan CJ",
+    "linkedin_url": "https://in.linkedin.com/in/unnikrishnan-cj-20265993",
+    "role": "CTO, Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "iBind Systems",
+    "founder_name": "Santu Maity",
+    "linkedin_url": "https://www.linkedin.com/in/santumaity",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "iBind Systems",
+    "founder_name": "Sanat Bhat",
+    "linkedin_url": "https://www.linkedin.com/in/sanat-bhat-751a7314b",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Inspecity",
+    "founder_name": "Arindrajit Chowdhury",
+    "linkedin_url": "https://in.linkedin.com/in/arindrajit-chowdhury",
+    "role": "CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Inspecity",
+    "founder_name": "Dr. Tausif Shaikh",
+    "linkedin_url": "https://in.linkedin.com/in/tausif12345",
+    "role": "CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Insta Astro",
+    "founder_name": "Nitin Verma",
+    "linkedin_url": "https://in.linkedin.com/in/nitinv97",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Intract",
+    "founder_name": "Mehul Kamra",
+    "linkedin_url": "https://in.linkedin.com/in/mehul-kamra",
+    "role": "Founding team / Product Leader (per LinkedIn profile)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Isler",
+    "founder_name": "Chirag Kakkar",
+    "linkedin_url": "https://in.linkedin.com/in/chirag-kakkar",
+    "role": "Co-Founder & COO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Isler",
+    "founder_name": "Mudit Mishra",
+    "linkedin_url": "https://in.linkedin.com/in/mudit-mishra-60b80521",
+    "role": "Co-Founder & CSCO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Isler",
+    "founder_name": "Varchas Bansal",
+    "linkedin_url": "https://in.linkedin.com/in/varchas-bansal",
+    "role": "Co-Founder (listed as COO on Tracxn)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kairos Computer",
+    "founder_name": "Manas Bam",
+    "linkedin_url": "https://www.linkedin.com/in/manasbam",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kairos Computer",
+    "founder_name": "Samarth P.",
+    "linkedin_url": "https://www.linkedin.com/in/samarthap",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kavana AI (Two Four Labs)",
+    "founder_name": "Shubham Ratrey",
+    "linkedin_url": "https://in.linkedin.com/in/shubhamratrey",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kavana AI (Two Four Labs)",
+    "founder_name": "Sagar Ghai",
+    "linkedin_url": "https://in.linkedin.com/in/sagar-ghai-374840b8",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kavana AI (Two Four Labs)",
+    "founder_name": "Kunal Joshi",
+    "linkedin_url": "https://in.linkedin.com/in/kunaljijoshi",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kilrr",
+    "founder_name": "Hitesh Bhagia",
+    "linkedin_url": "https://www.linkedin.com/in/hitesh-bhagia/",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kintsugi",
+    "founder_name": "Pujun Bhatnagar",
+    "linkedin_url": "https://www.linkedin.com/in/pujun",
+    "role": "Co-founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kintsugi",
+    "founder_name": "Jeff Gibson",
+    "linkedin_url": "https://www.linkedin.com/in/jeffgibsonsf",
+    "role": "Co-founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Klaar",
+    "founder_name": "Sharthok Chakraborty",
+    "linkedin_url": "https://www.linkedin.com/in/sharthok-chakraborty",
+    "role": "Co-Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Klaire",
+    "founder_name": "F\u00e9lix des Rotours",
+    "linkedin_url": "https://fr.linkedin.com/in/f%C3%A9lix-des-rotours-b6a1a822a",
+    "role": "CEO & Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kreo",
+    "founder_name": "Himanshu Gupta",
+    "linkedin_url": "https://in.linkedin.com/in/himanshugupta9690",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kreo",
+    "founder_name": "Niraj Chitnis",
+    "linkedin_url": "https://in.linkedin.com/in/nirajchitnis",
+    "role": "Co-founder & CMO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kreo",
+    "founder_name": "Ishan Sukul",
+    "linkedin_url": "https://in.linkedin.com/in/ishansukul",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kubesense (Tyke)",
+    "founder_name": "Venkatesh Radhakrishnan",
+    "linkedin_url": "https://www.linkedin.com/in/venkatesh-radhakrishnan-23910938",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Kubesense (Tyke)",
+    "founder_name": "Guru prasad G",
+    "linkedin_url": "https://in.linkedin.com/in/guru-prasad-g-125a52127",
+    "role": "Co-Founder and CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Lane",
+    "founder_name": "Samiksha Agarwal",
+    "linkedin_url": "https://www.linkedin.com/in/samikshaag",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Legend of Toys",
+    "founder_name": "Vinay Jaisingh",
+    "linkedin_url": "https://in.linkedin.com/in/vinayjaisingh",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Legend of Toys",
+    "founder_name": "Afshaan Siddiqui",
+    "linkedin_url": "https://in.linkedin.com/in/afshaan-siddiqui-isb",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Lucio AI",
+    "founder_name": "Vasu Aggarwal",
+    "linkedin_url": "https://www.linkedin.com/in/vasulucio",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Lucio AI",
+    "founder_name": "Darsan Guruvayurappan",
+    "linkedin_url": "https://www.linkedin.com/in/darsang",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Mantys",
+    "founder_name": "Kriti Arora",
+    "linkedin_url": "https://ae.linkedin.com/in/kriti-arora-mantys",
+    "role": "CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Mantys",
+    "founder_name": "Mudit Dangi",
+    "linkedin_url": "https://in.linkedin.com/in/mudit-dangi",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Marrfa",
+    "founder_name": "Jamil Ahmad",
+    "linkedin_url": "https://ae.linkedin.com/in/jamil-ahmad-a1a59935?trk=org-employees",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Material Depot",
+    "founder_name": "Manish Reddy",
+    "linkedin_url": "https://www.linkedin.com/in/manishguduru",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Material Depot",
+    "founder_name": "Sarthak Agrawal",
+    "linkedin_url": "https://www.linkedin.com/in/sarthak-a-74889652",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Measure AI",
+    "founder_name": "Gokula Krishnan Ramachandran",
+    "linkedin_url": "https://sg.linkedin.com/in/gokula-krishnan-ramachandran-93012b110",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "MiniMines",
+    "founder_name": "Anupam Kumar",
+    "linkedin_url": "https://in.linkedin.com/in/anupamk121",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Modus Secure",
+    "founder_name": "Sunit Gautam",
+    "linkedin_url": "https://in.linkedin.com/in/gsunit",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Modus Secure",
+    "founder_name": "Somesh Lund",
+    "linkedin_url": "https://in.linkedin.com/in/someshlund",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Mom's Made",
+    "founder_name": "Sameer Kumar",
+    "linkedin_url": "https://in.linkedin.com/in/kumarsameer396",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Morphing Machines",
+    "founder_name": "Deepak Shapeti",
+    "linkedin_url": "https://in.linkedin.com/in/deepak-shapeti-4b5493189",
+    "role": "Co-Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Morphing Machines",
+    "founder_name": "Ranjani Narayan",
+    "linkedin_url": "https://in.linkedin.com/in/ranjani-narayan-4215993",
+    "role": "CTO & Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Morphing Machines",
+    "founder_name": "S.K. Nandy",
+    "linkedin_url": "https://in.linkedin.com/in/s-k-nandy-4232141",
+    "role": "Founder & Chief Scientific Advisor",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Multiwoven",
+    "founder_name": "Sujoy Golan",
+    "linkedin_url": "https://www.linkedin.com/in/sujoygolan",
+    "role": "Co-Founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 422,
+    "network_notion_page_id": "627c35af-90d7-4959-844b-ec00ba219618",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Multiwoven",
+    "founder_name": "Nagendra Dhanakeerthi",
+    "linkedin_url": "https://www.linkedin.com/in/nagstler",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 265,
+    "network_notion_page_id": "179a88c0-18b0-4b7e-836e-24471a26b90e",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Multiwoven",
+    "founder_name": "Subin T P",
+    "linkedin_url": "https://www.linkedin.com/in/subintp",
+    "role": "Co-Founder & Engineering Lead",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Navo (f.k.a. BizUp)",
+    "founder_name": "Suparn Goel",
+    "linkedin_url": "https://in.linkedin.com/in/suparngoel",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Navo (f.k.a. BizUp)",
+    "founder_name": "Anshul Singhal",
+    "linkedin_url": "https://in.linkedin.com/in/anshul-singhal-21696810",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Nimo Planet",
+    "founder_name": "Rohildev Nattukallingal",
+    "linkedin_url": "https://www.linkedin.com/in/rohildev",
+    "role": "Founder and CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Nixo",
+    "founder_name": "Priya Khandelwal",
+    "linkedin_url": "https://www.linkedin.com/in/priya-khandelwal-86b84018b",
+    "role": "Co-founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "NuPort",
+    "founder_name": "Fahim Salam",
+    "linkedin_url": "https://www.linkedin.com/in/fahimsalam",
+    "role": "CEO (listed as CEO on LinkedIn; Crunchbase lists him as Co\u2011Founder & CEO)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Offline",
+    "founder_name": "Syed Asad Hussain",
+    "linkedin_url": "https://ca.linkedin.com/in/syed-ah",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Offline",
+    "founder_name": "Chris Banks",
+    "linkedin_url": "https://www.linkedin.com/in/christionbanks",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ofScale",
+    "founder_name": "Vijay Akkaladevi",
+    "linkedin_url": "https://www.linkedin.com/in/vijayakkaladevi/",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ofScale",
+    "founder_name": "Tarun Kedia",
+    "linkedin_url": "https://www.linkedin.com/in/tarunkedia/",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ofScale",
+    "founder_name": "Suvigna Shour",
+    "linkedin_url": "https://www.linkedin.com/in/suvignashour/",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "OhSoGo",
+    "founder_name": "Aashish Benjamin Oommen",
+    "linkedin_url": "https://www.linkedin.com/in/aashishbenjamin",
+    "role": "Co\u2011founder (former); Chief Marketing & Revenue Officer / Head of Brand & Growth (as listed in related LinkedIn posts)",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 503,
+    "network_notion_page_id": "a3c134b1-9826-43aa-99a4-2f72a66b9950",
+    "match_method": "company"
+  },
+  {
+    "company": "OnCare",
+    "founder_name": "Amar Sneh",
+    "linkedin_url": "https://www.linkedin.com/in/snehamar",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "OnCare",
+    "founder_name": "Deepak Kumar",
+    "linkedin_url": "https://www.linkedin.com/in/deepak-kumar-5b547b2b",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 167,
+    "network_notion_page_id": "2f829bcc-b6fc-81a5-bc36-ca21a9474b55",
+    "match_method": "name"
+  },
+  {
+    "company": "One Impression",
+    "founder_name": "Apaksh Gupta",
+    "linkedin_url": "https://in.linkedin.com/in/apaksh",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "One Impression",
+    "founder_name": "Jivesh Gupta",
+    "linkedin_url": "https://in.linkedin.com/in/jivesh92",
+    "role": "Co-founder & COO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Orange Slice",
+    "founder_name": "Kishan Sripada",
+    "linkedin_url": "https://www.linkedin.com/in/kishansripada",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Orange Slice",
+    "founder_name": "Vihaan Nandigala",
+    "linkedin_url": "https://www.linkedin.com/in/vihaarnandigala",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Pinegap",
+    "founder_name": "Ankit Varmani",
+    "linkedin_url": "https://www.linkedin.com/in/ankitvarmani",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Pinegap",
+    "founder_name": "Deepak Sharma",
+    "linkedin_url": "",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Polytrade",
+    "founder_name": "Piyush Gupta",
+    "linkedin_url": "https://www.linkedin.com/in/piyush-polytrade",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Potpie",
+    "founder_name": "Aditi Kothari",
+    "linkedin_url": "https://www.linkedin.com/in/aditi-kothari",
+    "role": "Co-Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Potpie",
+    "founder_name": "Dhiren Mathur",
+    "linkedin_url": "https://www.linkedin.com/in/dhirenmathur",
+    "role": "Founding Engineer (Backend)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "PowerEdge",
+    "founder_name": "Abhishek Gupta",
+    "linkedin_url": "https://in.linkedin.com/in/abhishek-gupta-b566245",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 39,
+    "network_notion_page_id": "18f29bcc-b6fc-800f-9090-da5486a612ff",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "PowerEdge",
+    "founder_name": "Spencer Bartsch",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "PowerUp",
+    "founder_name": "Benjamin Delaille",
+    "linkedin_url": "",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "PowerUp",
+    "founder_name": "Josselin Priour",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Prosparity",
+    "founder_name": "Saurabh Khodke",
+    "linkedin_url": "https://in.linkedin.com/in/saurabh-khodke-80694240",
+    "role": "",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Prosparity",
+    "founder_name": "Anirudh Dhakar",
+    "linkedin_url": "https://in.linkedin.com/in/anirudh-dhakar-78979a4b",
+    "role": "",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Prosparity",
+    "founder_name": "Kanishk Agarwal",
+    "linkedin_url": "https://in.linkedin.com/in/kanishk-agarwal",
+    "role": "",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Prosparity",
+    "founder_name": "Russell Fernandez",
+    "linkedin_url": "https://in.linkedin.com/in/russellfer",
+    "role": "",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Puch AI (f.k.a. TurboML)",
+    "founder_name": "Siddharth Bhatia",
+    "linkedin_url": "https://www.linkedin.com/in/bhatia-siddharth",
+    "role": "CEO & Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Quash Bugs",
+    "founder_name": "Ameer Hamza",
+    "linkedin_url": "https://in.linkedin.com/in/ameerhamzzza",
+    "role": "Co\u2011Founder \u2014 Product & Design",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Quivly",
+    "founder_name": "Chandrika Maheshwari",
+    "linkedin_url": "https://www.linkedin.com/in/chandrikamaheshwari",
+    "role": "Co-founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Quivly",
+    "founder_name": "Tanay Agrawal",
+    "linkedin_url": "https://www.linkedin.com/in/tanayagrawal19",
+    "role": "Co-founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Quivly",
+    "founder_name": "Ginger Dhaliwal",
+    "linkedin_url": "https://www.linkedin.com/in/ginger-dhaliwal-6276875b",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Qwik Build (f.k.a Snowmountain)",
+    "founder_name": "Nilesh Trivedi",
+    "linkedin_url": "https://in.linkedin.com/in/nileshtrivedi",
+    "role": "Co-founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Qwik Build (f.k.a Snowmountain)",
+    "founder_name": "Pradeep Ayyagari",
+    "linkedin_url": "https://in.linkedin.com/in/pradeep3ayyagari",
+    "role": "CPO & Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Qwik Build (f.k.a Snowmountain)",
+    "founder_name": "Brij Bhasin",
+    "linkedin_url": "https://www.linkedin.com/in/brijbhasin",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "RapidClaims",
+    "founder_name": "Dushyant Mishra",
+    "linkedin_url": "https://www.linkedin.com/in/idushyantmishra-f8",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "RapidClaims",
+    "founder_name": "Jot Sarup Singh",
+    "linkedin_url": "https://www.linkedin.com/in/jot-sarup-singh",
+    "role": "Co-founder & CPTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Realfast",
+    "founder_name": "Sidu Ponnappa",
+    "linkedin_url": "https://sg.linkedin.com/in/sidup",
+    "role": "Co-founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Realfast",
+    "founder_name": "Aakash Dharmadhikari",
+    "linkedin_url": "https://in.linkedin.com/in/aakashd",
+    "role": "Co-founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 488,
+    "network_notion_page_id": "18029bcc-b6fc-80ab-870d-df1457e45e38",
+    "match_method": "name"
+  },
+  {
+    "company": "Renderwolf",
+    "founder_name": "Prashant Pawan Pisipati",
+    "linkedin_url": "https://www.linkedin.com/in/prashantpawan",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Renderwolf",
+    "founder_name": "Ryan Idrogo-Lam",
+    "linkedin_url": "https://www.linkedin.com/in/ryan-idrogo-lam-12a17b27",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ReplyAll (f.k.a. PRBT)",
+    "founder_name": "Rushabh Sanghavi",
+    "linkedin_url": "https://in.linkedin.com/in/rushabhsanghavi",
+    "role": "Founder / CEO (listed as Founder on profile)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Revenoid",
+    "founder_name": "Rabi Gupta",
+    "linkedin_url": "https://www.linkedin.com/in/rabigupta",
+    "role": "Cofounder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Revenoid",
+    "founder_name": "Ashish Kumar",
+    "linkedin_url": "https://www.linkedin.com/in/ashishkumar14",
+    "role": "Co Founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Revenoid",
+    "founder_name": "Satwick Saxena",
+    "linkedin_url": "https://www.linkedin.com/in/satwick",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Revspot",
+    "founder_name": "Darshan Subash",
+    "linkedin_url": "https://in.linkedin.com/in/darshansubash",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Revspot",
+    "founder_name": "Chirag Wadhera",
+    "linkedin_url": "https://in.linkedin.com/in/chiragw15",
+    "role": "Co-founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Revspot",
+    "founder_name": "Jitesh Sharma",
+    "linkedin_url": "https://in.linkedin.com/in/jitesh-sharma-86a6a123",
+    "role": "",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Rhym",
+    "founder_name": "Gaurav Wadhwani",
+    "linkedin_url": "https://in.linkedin.com/in/wadhwanigaurav",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Rhym",
+    "founder_name": "Gaurav Toora",
+    "linkedin_url": "https://in.linkedin.com/in/tooragaurav",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Rhym",
+    "founder_name": "Ekta Singh",
+    "linkedin_url": "",
+    "role": "CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Riverline (f.k.a Recontact)",
+    "founder_name": "Ankit Sanghvi",
+    "linkedin_url": "https://in.linkedin.com/in/sanghvian",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Riverline (f.k.a Recontact)",
+    "founder_name": "Abhishek Gupta",
+    "linkedin_url": "https://in.linkedin.com/in/13abhishek",
+    "role": "Co\u2011founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 40,
+    "network_notion_page_id": "24829bcc-b6fc-806e-bb66-f0352d514538",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "Riverline (f.k.a Recontact)",
+    "founder_name": "Jayanth Krishnaprakash",
+    "linkedin_url": "https://in.linkedin.com/in/jayanth151002",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "SalesChat",
+    "founder_name": "Hardik Bavishi",
+    "linkedin_url": "https://in.linkedin.com/in/hardik-bavishi-441a2017",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "SalesChat",
+    "founder_name": "Harshal Vora",
+    "linkedin_url": "https://in.linkedin.com/in/harshal-vora-1350a610",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Seeds Finance",
+    "founder_name": "Willy Tan",
+    "linkedin_url": "https://id.linkedin.com/in/willytan13",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Skydda",
+    "founder_name": "Dhruv Chaudhari",
+    "linkedin_url": "",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Skydda",
+    "founder_name": "Anu Engineer",
+    "linkedin_url": "https://www.linkedin.com/in/anu-engineer-2052b2",
+    "role": "CEO & Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Smallest AI",
+    "founder_name": "Sudarshan Kamath",
+    "linkedin_url": "https://www.linkedin.com/in/sudarshankamath",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Smallest AI",
+    "founder_name": "Akshat Mandloi",
+    "linkedin_url": "https://www.linkedin.com/in/akshat-2503",
+    "role": "Co\u2011founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Solar Ladder",
+    "founder_name": "Abhishek Pillai",
+    "linkedin_url": "https://www.linkedin.com/in/abhishek-pillai-6a63a875",
+    "role": "Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 55,
+    "network_notion_page_id": "24829bcc-b6fc-802c-b9a0-f8eb74d6ce1c",
+    "match_method": "name"
+  },
+  {
+    "company": "Solar Ladder",
+    "founder_name": "Manan Mehta",
+    "linkedin_url": "https://www.linkedin.com/in/manan-mehta-",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Soulside",
+    "founder_name": "Anurag Verma",
+    "linkedin_url": "https://www.linkedin.com/in/anuragvermaknn",
+    "role": "Co-founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Soulside",
+    "founder_name": "Surabhi Bhandari",
+    "linkedin_url": "https://www.linkedin.com/in/surabhibhandari",
+    "role": "Co-founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Spheron Network",
+    "founder_name": "Prashant Maurya",
+    "linkedin_url": "https://www.linkedin.com/in/techprashantmaurya",
+    "role": "Co-Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Spheron Network",
+    "founder_name": "Mitrasish Mukherjee",
+    "linkedin_url": "https://ae.linkedin.com/in/mmitrasish",
+    "role": "Co-Founder & CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Spybird",
+    "founder_name": "Sanjay Gohil",
+    "linkedin_url": "https://www.linkedin.com/in/sanjay-gohil-199766133",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Spybird",
+    "founder_name": "Arvind Shiyal",
+    "linkedin_url": "https://www.linkedin.com/in/arvind-shiyal-a8820b208",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Spydra",
+    "founder_name": "Manish Tewari",
+    "linkedin_url": "https://www.linkedin.com/in/mtewari",
+    "role": "Co\u2011founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Spydra",
+    "founder_name": "Ashwath Govindan",
+    "linkedin_url": "https://in.linkedin.com/in/ashwath",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Stance Health (f.k.a HealthFlex)",
+    "founder_name": "Rohit Arora",
+    "linkedin_url": "https://www.linkedin.com/in/rohitarora88",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Stance Health (f.k.a HealthFlex)",
+    "founder_name": "Ninad Karandikar",
+    "linkedin_url": "https://www.linkedin.com/in/ninad-karandikar-30aba718",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Stellon Labs",
+    "founder_name": "Rohan Joshi",
+    "linkedin_url": "https://www.linkedin.com/in/rohan-m-joshi",
+    "role": "Co\u2011founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Stellon Labs",
+    "founder_name": "Divam Gupta",
+    "linkedin_url": "https://www.linkedin.com/in/divamgupta",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Step Security",
+    "founder_name": "Varun Sharma",
+    "linkedin_url": "https://www.linkedin.com/in/varunsharma07",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Step Security",
+    "founder_name": "Ashish Kurmi",
+    "linkedin_url": "https://www.linkedin.com/in/ashish-kurmi-3428aa24",
+    "role": "CTO & Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Stupa Sports Analytics",
+    "founder_name": "Megha Gambhir",
+    "linkedin_url": "https://in.linkedin.com/in/megha-gambhir-5406aa31",
+    "role": "Founder & CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Stupa Sports Analytics",
+    "founder_name": "Deepak Malik",
+    "linkedin_url": "https://in.linkedin.com/in/deepak-malik-4a2a0369",
+    "role": "Co-Founder & COO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Supernova",
+    "founder_name": "Artem Ufimtcev",
+    "linkedin_url": "https://www.linkedin.com/in/artufimtcev",
+    "role": "Chief Technology Officer (listed on LinkedIn)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Supernova",
+    "founder_name": "Jiri Trecak",
+    "linkedin_url": "https://www.linkedin.com/in/jiri-trecak/",
+    "role": "CEO / CTO (listed on Crunchbase)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Supernova",
+    "founder_name": "Oskar Koristka",
+    "linkedin_url": "https://www.linkedin.com/in/oskar-koristka-194805114/",
+    "role": "COO & Co-founder (listed on Crunchbase)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Supernova",
+    "founder_name": "Vaclav Lustek",
+    "linkedin_url": "https://www.linkedin.com/in/lustek",
+    "role": "Product owner / Founder (LinkedIn / Crunchbase indicate product/engineering role and founding status)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "SuprSend",
+    "founder_name": "Gaurav Verma",
+    "linkedin_url": "https://www.linkedin.com/in/gauravv",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "SuprSend",
+    "founder_name": "Nikita Navral",
+    "linkedin_url": "https://in.linkedin.com/in/nikita-navral",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Tejas (f.k.a Patcorn)",
+    "founder_name": "Sailesh Rekhani",
+    "linkedin_url": "https://in.linkedin.com/in/sailesh-rekhani-896b72137",
+    "role": "Director (listed on company board)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Tejas (f.k.a Patcorn)",
+    "founder_name": "Nikhil Agrawal",
+    "linkedin_url": "https://in.linkedin.com/in/nikhilagrawal633",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Tejas (f.k.a Patcorn)",
+    "founder_name": "Saijal Rekhani",
+    "linkedin_url": "https://in.linkedin.com/in/saijalrekhani",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Terafac",
+    "founder_name": "Anubhi Khandelwal",
+    "linkedin_url": "https://in.linkedin.com/in/anubhikhandelwal",
+    "role": "Founder, CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Terafac",
+    "founder_name": "Amrit Singh",
+    "linkedin_url": "https://in.linkedin.com/in/liveamrit",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Terra",
+    "founder_name": "Do Kwon",
+    "linkedin_url": "https://www.linkedin.com/in/do-kwon/",
+    "role": "Co-founder & CEO (Terraform Labs)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Terra",
+    "founder_name": "Daniel Shin",
+    "linkedin_url": "https://kr.linkedin.com/in/danielshin",
+    "role": "Co-founder (Terraform Labs)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Terractive",
+    "founder_name": "Raena Ambani",
+    "linkedin_url": "https://in.linkedin.com/in/raena-ambani",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Terractive",
+    "founder_name": "Rahee Ambani Choksi",
+    "linkedin_url": "https://in.linkedin.com/in/rahee-ambani-choksi-7a192bab",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Tesora AI",
+    "founder_name": "Vivek Rao",
+    "linkedin_url": "https://www.linkedin.com/in/vivek-raop",
+    "role": "CEO & Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Tesora AI",
+    "founder_name": "Federico Reyes G\u00f3mez",
+    "linkedin_url": "https://www.linkedin.com/in/federico-reyes-gomez",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Tractor Factory",
+    "founder_name": "Shailesh Tiwari",
+    "linkedin_url": "https://in.linkedin.com/in/shailesh-tiwari-11098414b",
+    "role": "Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "UGX",
+    "founder_name": "Abhishek Kumar",
+    "linkedin_url": "https://in.linkedin.com/in/abhishek-kumar-5ba83914",
+    "role": "Co-Founder",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 46,
+    "network_notion_page_id": "24829bcc-b6fc-80ea-9ec9-c0ae85a34723",
+    "match_method": "name+company"
+  },
+  {
+    "company": "UGX",
+    "founder_name": "Ankur Singh",
+    "linkedin_url": "https://in.linkedin.com/in/ankurkrsingh",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "UGX",
+    "founder_name": "Prakhar Nigam",
+    "linkedin_url": "https://in.linkedin.com/in/prakhar-n",
+    "role": "Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Unifize",
+    "founder_name": "Avinash Sultanpur",
+    "linkedin_url": "https://in.linkedin.com/in/asultanpur",
+    "role": "Co\u2011Founder, CTO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Unifize",
+    "founder_name": "Ben Merton",
+    "linkedin_url": "https://www.linkedin.com/in/bmerton",
+    "role": "Co\u2011Founder, CEO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Unifize",
+    "founder_name": "Lakshman Thatai",
+    "linkedin_url": "https://www.linkedin.com/in/lakshmanthattai",
+    "role": "Co\u2011Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Uravu Labs",
+    "founder_name": "Swapnil Shrivastav",
+    "linkedin_url": "https://in.linkedin.com/in/swapnil-shrivastav-374867aa",
+    "role": "CEO & Co-Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Uravu Labs",
+    "founder_name": "Venkatesh RY",
+    "linkedin_url": "https://in.linkedin.com/in/venkatesh-ry-6726354a",
+    "role": "Co-Founder, Design and Operations",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Uravu Labs",
+    "founder_name": "Govinda Balaji (Balaji GB)",
+    "linkedin_url": "https://in.linkedin.com/in/govinda-balaji-b-631b91106",
+    "role": "Co-Founder, Engineering and Production (Engineering Lead)",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "VoiceBit",
+    "founder_name": "Jay Patel",
+    "linkedin_url": "https://www.linkedin.com/in/imjaypatel12",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "VoiceBit",
+    "founder_name": "Hitesh Kenjale",
+    "linkedin_url": "https://www.linkedin.com/in/hiteshkenjale",
+    "role": "Co\u2011founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "VoiceBit",
+    "founder_name": "Lovre Soric",
+    "linkedin_url": "https://www.linkedin.com/in/lovre-soric",
+    "role": "Co\u2011Founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "VyomIC (f.k.a. AeroDome)",
+    "founder_name": "Lokesh Kabdal",
+    "linkedin_url": "https://in.linkedin.com/in/lokesh-kabdal",
+    "role": "Co-founder & CEO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 238,
+    "network_notion_page_id": "1ec29bcc-b6fc-80f5-b0d9-e9c0d7af3f6b",
+    "match_method": "name"
+  },
+  {
+    "company": "VyomIC (f.k.a. AeroDome)",
+    "founder_name": "Vibhor Jain",
+    "linkedin_url": "https://in.linkedin.com/in/vibhor-jain3",
+    "role": "Co-founder, CBO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 453,
+    "network_notion_page_id": "1e929bcc-b6fc-81c4-bcc2-dc24bbbddc8d",
+    "match_method": "linkedin"
+  },
+  {
+    "company": "VyomIC (f.k.a. AeroDome)",
+    "founder_name": "Anurag Patil",
+    "linkedin_url": "https://in.linkedin.com/in/anurag-jeevan-patil",
+    "role": "Co-founder & CTO",
+    "match_status": "FOUND_IN_NETWORK",
+    "network_id": 110,
+    "network_notion_page_id": "1ec29bcc-b6fc-804a-bc8f-e7310513e0c0",
+    "match_method": "name"
+  },
+  {
+    "company": "YOYO AI (fka Trimpixel)",
+    "founder_name": "Nikhil Pandey",
+    "linkedin_url": "https://in.linkedin.com/in/softdata",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "YOYO AI (fka Trimpixel)",
+    "founder_name": "Harshal Patel",
+    "linkedin_url": "https://in.linkedin.com/in/harshalpatel88",
+    "role": "Co-Founder & CBO",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "YOYO AI (fka Trimpixel)",
+    "founder_name": "Prakhar Saxena",
+    "linkedin_url": "https://in.linkedin.com/in/prakharsx",
+    "role": "",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Ziffi Chess",
+    "founder_name": "Akshat Bansal",
+    "linkedin_url": "https://in.linkedin.com/in/akshat-bansal-a1a46216",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "Ziffi Chess",
+    "founder_name": "Aditya Dubey",
+    "linkedin_url": "https://in.linkedin.com/in/adityadubey001",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ZuAI",
+    "founder_name": "Arpit Jain",
+    "linkedin_url": "https://www.linkedin.com/in/arpitkotecha",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  },
+  {
+    "company": "ZuAI",
+    "founder_name": "Anubhav Mishra",
+    "linkedin_url": "https://in.linkedin.com/in/anubhavmishra-lm",
+    "role": "Co-founder",
+    "match_status": "NOT_IN_NETWORK",
+    "network_id": null,
+    "network_notion_page_id": null,
+    "match_method": null
+  }
+]

@@ -1,0 +1,1 @@
+UPDATE network n SET engagement_playbook = string_to_array(v.val, '|'), updated_at = now() FROM (VALUES ('6c22055b-2f52-4ac7-adff-7741d29ea1d6','Programmatic Dealflow'),('dbdffe0b-bd73-443a-aa12-02974339d639','Solo Capitalist')) AS v(pid,val) WHERE n.notion_page_id = v.pid AND n.engagement_playbook IS NULL;

@@ -1,0 +1,10 @@
+---
+name: "LICEO STATALE ETTORE MAJORANA"
+notion_page_id: "32629bcc-b6fc-813c-b8c9-d4c07020b208"
+db_id: 243
+fetched: "2026-03-20T03:44:31"
+---
+
+# LICEO STATALE ETTORE MAJORANA
+
+

@@ -4,6 +4,66 @@
 
 ---
 
+## VERIFIED AGAINST LIVE NOTION — 2026-03-20
+
+**Verification method:** Queried live Notion schemas via `notion-fetch` on `collection://` data source URLs, queried live Postgres via `information_schema.columns`, and performed three-way cross-reference.
+
+**Live schema counts:**
+- Companies DB: **49 properties** (matches audit count)
+- Network DB: **42 properties** (audit listed 44 — 2 system fields `url` and `createdTime` are NOT exposed in live schema)
+- Companies Postgres: **32 columns** (matches audit)
+- Network Postgres: **34 columns** (matches audit)
+
+### Corrections from Live Verification
+
+**Companies DB — 8 corrections:**
+
+| # | Audit Claim | Live Reality | Impact |
+|---|-------------|-------------|--------|
+| 1 | Field "Corp Dev DB" (relation) | Actual Notion name is **"Corp Dev"**. Target DB: `59c31a93-110d-4e80-a5ca-84c43f585ae2` | Name correction only — column still needed |
+| 2 | Field "Finance DB" (relation) | Actual Notion name is **"💰 Finance DB"**. Target DB: `9b59fd98-919d-4043-993d-eb7772659dd6` (different ID than assumed) | Name + target DB correction |
+| 3 | Field "Network DB" (relation) | Actual Notion name is **"🌐 Network DB"** | Name correction only |
+| 4 | Field "Portfolio DB" (relation) | Actual Notion name is **"Portfolio Interaction Notes"** (relation -> Portfolio DB `4dba9b7f`) | Name correction — different semantic meaning |
+| 5 | Field "Tasks Tracker" listed as separate relation (#44) | **DOES NOT EXIST** in live Notion. Only "Pending Tasks" exists. | Remove from gap list — reduces actionable gaps by 1 |
+| 6 | Field "Description/Notes" listed as field #49, HIGH priority | **DOES NOT EXIST** in live Notion (was inferred from CONTEXT.md "Description" field) | Remove from gap list — reduces actionable gaps by 1. Optional PG-only enrichment. |
+| 7 | `last_round_timing` Postgres column noted as "no clear Notion match" | **"Last Round Timing"** (select, 11 options) EXISTS in live Notion and maps perfectly | Not a gap — already fully mapped |
+| 8 | — (not in audit) | **"Meeting Notes"** (relation -> Meeting Notes DB `0dc61edf`) EXISTS in live Notion | Audit missed this field — adds 1 to actionable gaps |
+
+**Net effect on Companies gaps:** Original 24 actionable → remove 2 (Tasks Tracker, Description/Notes) + add 1 (Meeting Notes) - 2 more corrections (Last Round Timing was already mapped, not a gap) = **21 actionable Notion-to-PG gaps** + 1 optional PG-only enrichment (description)
+
+**Network DB — 3 corrections:**
+
+| # | Audit Claim | Live Reality | Impact |
+|---|-------------|-------------|--------|
+| 1 | Listed "url" and "createdTime" as system fields (#41, #42) | NOT exposed in live Notion schema | Reduce total Notion field count from 44 to 42 |
+| 2 | Fields Email, Phone, IDS Notes, Relationship Status, Last Interaction, Source listed as "may exist in Notion" | Confirmed **NOT in Notion** as of 2026-03-20 | Still valuable as PG-only enrichment columns |
+| 3 | Batch, Company Stage, Sector Classification listed as "view-only" | Confirmed as **rollup** type in live schema (correctly skipped) | No change |
+
+**Net effect on Network gaps:** Original 18 actionable → no change (the 6 fields confirmed not-in-Notion were already listed as needing PG columns) = **18 actionable gaps** (5 HIGH, 7 MEDIUM, 6 LOW). But 6 of these are now explicitly marked as PG-only enrichment rather than Notion sync targets.
+
+### Revised Coverage Scorecard
+
+| Metric | Companies DB | Network DB |
+|--------|-------------|------------|
+| Notion fields (live verified) | 49 | 42 |
+| Postgres columns (live verified) | 32 | 34 |
+| Notion fields mapped to Postgres | 20 (was 19 — Last Round Timing now counted) | 23 |
+| Notion fields missing from PG (actionable) | **21** (Notion sync targets) | **12** (Notion-sourced only) |
+| PG-only enrichment columns to add | 0 (description optional — see SQL) | **6** (email, phone, ids_notes, relationship_status, last_interaction, source) |
+| Notion fields SKIP (formula/rollup/system/deprecated) | 8 | 7 (3 rollup + 1 system + 3 deprecated) |
+| PG-only columns (existing enrichment + infra) | 13 | 11 |
+
+### Final Migration SQL
+
+Written to: `sql/companies-network-migration.sql`
+
+- Companies: 21 new columns + 6 indexes (final: 53 columns)
+- Network: 12 new Notion columns + 6 PG-only enrichment columns + 8 indexes (final: 52 columns)
+- All idempotent (IF NOT EXISTS)
+- No SQL executed — prepare only
+
+---
+
 ## Companies DB
 
 ### Notion Schema (COMPLETE -- 49 fields)

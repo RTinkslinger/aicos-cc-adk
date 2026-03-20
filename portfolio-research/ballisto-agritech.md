@@ -1,133 +1,66 @@
-# Orbit-to-Balisto's EV Tiller Bet: Early Proof, Scaling Risks, and Go-To-Market Playbook
+---
+company: Ballisto AgriTech (f.k.a. Orbit Farming)
+source: Parallel Deep Research (pro-fast)
+date: 2026-03-20
+task_group: tgrp_1a4ad04e8a3743e39cef1b5b5c16165b
+---
+
+# Balisto AgriTech (Orbit Farming) – India’s First Home-Made Electric Power-Tiller Playbook
 
 ## Executive Summary
+Balisto AgriTech (formerly Orbit AgriTech/Orbit Farming) is an emerging Indian agritech startup focused on electrifying farm mechanization for mid-sized farmers. Founded in 2024 by ex-Swiggy and Mahindra executives, the company has developed India's first indigenous electric power tiller, the Balisto 130 Pro, which promises to cut operational costs to just 10% of conventional diesel tillers. Backed by a $1.96M Seed round led by Bharat Founders Fund, the company is actively expanding its footprint in Maharashtra. However, critical information gaps remain regarding its unit economics, exact revenue figures, and commercial sales volume.
 
-**Orbit AgriTech** (legally **Higher Orbit Agritech Private Limited**) is executing a strategic pivot in Indian farm mechanization by targeting the power tiller segment with electric propulsion, rather than the crowded electric tractor space. The company's flagship product, the **Orbit PT Pro**, is a 12-HP modular electric power tiller designed to lower total cost of ownership (TCO) and reduce operator fatigue for mid-sized farmers (2–10 hectares).
+## 1. Company Overview & Value Proposition
+Balisto AgriTech is a Mumbai-based developer of smart, electric farm machinery designed to replace manual and diesel-powered farming methods [1] [2]. The company's core value proposition centers on making farm mechanization cleaner, safer, and more affordable for the next generation of Indian agriculture [1]. 
 
-**Key Strategic Insights:**
-* **EV Mechanization Beachhead:** Unlike competitors focusing on capital-intensive electric tractors, Orbit is attacking the tiller market. The PT Pro features detachable batteries that can be transported via two-wheelers for charging—a critical adaptation for rural infrastructure constraints [1].
-* **Brand Migration Risk:** The company is currently navigating a rebrand from "Orbit Farming" to "Orbit AgriTech," with emerging social media assets using the name "**Balisto Agritech**" [2]. This fragmentation across legal, web, and social channels creates a risk of customer confusion and requires immediate unification.
-* **Operational Maturity:** Founded in February 2024, the company raised a **$1.96M Seed round** in April 2024 from **Bharat Founders Fund**, **DeVC**, and **Indian Silicon Valley** [3] [4]. The founders, including a former Swiggy VP of Operations, bring strong execution pedigree but must now prove manufacturing scalability.
-* **Regional GTM Focus:** Hiring patterns and expo presence indicate a concentrated go-to-market (GTM) strategy in Western Maharashtra (Pune, Satara, Ahmednagar), leveraging local dealer networks and proximity to manufacturing hubs [1].
+Its flagship product is the **Balisto 130 Pro**, marketed as India's first indigenous electric power tiller [3] [1]. The machine is engineered to address traditional farming challenges such as rising fuel costs, physical strain, and frequent breakdowns, operating at just 10% of the cost of conventional tillers [3] [1]. The company is also developing an electric tractor platform known as the PT-PRO [1] [2].
 
-## Company Snapshot and Brand Status
+## 2. Founding Team & Leadership
+The company was founded in 2024 by two IIT Bombay alumni with deep operational and agritech experience [4] [5]:
+* **Kedar Makrand Gokhale (Co-Founder & Director):** Previously led hiring, retention, and fleet sufficiency at the hyperlocal level for Swiggy. He also previously founded an agritech startup, Truce-True Price, in 2015 [5].
+* **Aishwarya Ramakrishnan (Co-Founder & Director):** Spent three and a half years with Mahindra’s agritech business, Krish-e, before leaving in 2022 to build Orbit Farming [5].
 
-**Higher Orbit Agritech Private Limited** is the legal entity behind the brand, incorporated on February 11, 2024. While the company operates primarily as **Orbit AgriTech**, recent digital footprints suggest a transition toward the name **Balisto**.
+## 3. Funding History & Capital Structure
+Balisto AgriTech has raised capital to fuel its initial R&D and market entry, though public data shows some discrepancies. 
 
-### Legal Entity, Governance, and Footprint
-The company maintains a clean corporate structure with active compliance status.
-* **Corporate Identity:** Registered as **Higher Orbit Agritech Private Limited** (CIN: U28219MH2024PTC419028) with the Registrar of Companies, Mumbai [5] [6].
-* **Capital Structure:** Authorized capital of ₹45 Lakhs with a paid-up capital of ₹36.46 Lakhs as of FY25 [6].
-* **Leadership:** Directors include **Kedar Makrand Gokhale** and **Aishwarya Ramakrishnan** [5].
-* **Headquarters:** Registered office in Worli, Mumbai, with operational hiring focused on Pune and Satara, indicating a "hub-and-spoke" operational model [1] [6].
+| Date | Round | Amount Raised | Lead Investor | Total Investors |
+| :--- | :--- | :--- | :--- | :--- |
+| Apr 30, 2024 | Seed | $1.96M | Bharat Founders Fund | 16 |
 
-### Brand Evolution and Channel Inventory
-The company is currently managing multiple brand identities, which presents a short-term marketing challenge.
-* **Legacy:** Originally "Orbit Farming" (domain: `orbitfarming.in`) [4].
-* **Current Operating Brand:** "Orbit AgriTech" is the primary professional face, with over 2,000 LinkedIn followers and 11–50 employees listed [1].
-* **Emerging Identity:** Instagram handles such as `balisto.agritech` have appeared, featuring content related to the Orbit PT Pro [2].
-* **Actionable Insight:** The coexistence of "Orbit" and "Balisto" requires a decisive brand architecture strategy to prevent diluting dealer confidence and search engine authority.
+*Note: Tracxn reports the Seed round at $1.96M [2]. The founders hold approximately 71.24% of the company, while funds hold 11.34% and an ESOP pool accounts for 9.90% [2].*
 
-## Product and Technology
+## 4. Market Position & Competition
+Balisto operates in a highly fragmented but growing market for electric agricultural machinery. Tracxn ranks the company 8th among 29 active competitors [2]. 
 
-Orbit's core innovation is the **Orbit PT Pro**, a 12-HP electric power tiller that addresses the specific pain points of diesel tiller operation: high vibration, physical fatigue, and rising fuel costs.
-
-### Flagship Product: Orbit PT Pro
-The PT Pro is positioned as India's first commercially viable electric farm machine in its class.
-* **Performance:** Rated at **12 HP**, placing it in direct competition with standard diesel power tillers used for wetland puddling and dry land cultivation [1].
-* **User Experience:** Marketing emphasizes "farmer-first design" focused on safety and comfort, specifically targeting the reduction of vibration—a major health issue for tiller operators [1].
-* **Field Validation:** Early customer usage cases highlight the machine's modularity; farmers have been documented transporting detachable batteries on EV scooters to charge them at home, bypassing the need for field-side power infrastructure [1].
-
-### Technical Approach and Roadmap
-The technology stack prioritizes modularity and rural adaptability over complex autonomy.
-* **Powertrain:** Likely utilizes a high-torque electric motor paired with a proprietary Battery Management System (BMS) to handle the high-load duty cycles of tilling.
-* **Energy Network:** The "swappable" battery architecture allows for continuous operation if the farmer owns multiple packs, effectively solving the range anxiety associated with fixed-battery electric tractors.
-* **Future Vision (Orbit 2.0):** The company has signaled a roadmap toward "smarter" machinery with enhanced operator comfort and potentially higher performance metrics [1].
-
-## Target Customer and Go-To-Market
-
-The company is executing a hyper-local strategy, focusing on mid-sized farmers in Maharashtra who are sensitive to operational expenditures (OpEx).
-
-### ICP and Jobs-to-be-Done
-* **Ideal Customer Profile (ICP):** Farmers owning **2–10 hectares** of land. This segment is too small to justify large tractors but large enough to require mechanization beyond manual labor [7].
-* **Primary Pain Points:**
- * **Rising Diesel Costs:** Daily fuel expenditure is a significant cash drain.
- * **Labor Shortage:** Difficulty finding operators willing to use physically demanding diesel tillers.
- * **Health:** Long-term vibration exposure from diesel engines causes physical ailments.
-
-### Distribution and Activation
-* **Regional Beachhead:** Hiring for "Business Development Officers" in **Satara** and "Field Service Technicians" in **Pune** confirms a Western Maharashtra focus [1].
-* **Event Marketing:** The company maintained a physical presence at **Kisan Krushi Pradarshan** in Moshi (Dec 2025), a major regional agri-expo, located at Hall 4, Stall S149 [8].
-* **Digital Engagement:** Leveraging LinkedIn and Instagram to showcase "real-world" usage, including testimonials from early adopters like Datta Harde [1].
-
-## Funding History and Ownership
-
-Orbit AgriTech has secured significant early-stage capital, validating its thesis among credible investors.
-
-### Rounds and Investors
-* **Seed Round:** Raised **$1.96 Million** on April 30, 2024 [4].
-* **Investor Syndicate:** The round included 16 participants. Key institutional backers include:
- * **Bharat Founders Fund** [3] [4]
- * **DeVC** [3]
- * **Indian Silicon Valley** (Angel Group) [3]
-* **Valuation:** The post-money valuation was approximately **₹88.2 Million** (INR) as of May 2024 [4].
-
-### Ownership Structure
-* **Founders:** Retain majority control with **71.24%** equity [4].
-* **Funds:** Hold **11.34%**.
-* **ESOP Pool:** A healthy **9.90%** has been set aside for employee stock options, crucial for attracting technical talent [4].
-* **Angels:** Hold **6.53%**.
-
-## Competitive Landscape
-
-While the electric tractor market is becoming crowded, Orbit has carved a niche in the electric *tiller* segment, which has fewer direct EV competitors but massive competition from incumbent diesel manufacturers.
-
-### Competitor Snapshot
-
-| Company | Product Focus | Status | Key Differentiator/Note |
+| Competitor | Location | Total Funding | Core Focus |
 | :--- | :--- | :--- | :--- |
-| **Orbit / Balisto** | **12-HP EV Power Tiller** | **Seed** | **Modular battery, low-cost entry** |
-| **Farm-ng** | Small Electric Tractors | Acquired | US-based; robotics focus [4] |
-| **Cellestial E-mobility** | Electric Tractors | Acquired | India-based; acquired by Murugappa Group (TI Clean Mobility) [4] |
-| **Moonrider** | Heavy-duty EV Tractors | Seed | Raised ~$2.38M; focuses on larger HP segment [4] |
-| **Greenworks Tools** | Commercial Tools | Public | US-based; broad portfolio, less focused on Indian ag [4] |
-| **Solectrac** | Electric Tractors | Acquired | US-based; struggled with scaling [4] |
+| Farm-ng | United States | $10M | Electric tractors |
+| Cellestial E-mobility | India | $701K | AI-enabled electric tractors |
+| Moonrider | India | $2.38M | Heavy-duty electric tractors |
+| **Balisto AgriTech** | **India** | **$1.96M** | **Electric power tillers & tractors** |
 
-**Strategic Implication:** Orbit is avoiding the "Red Ocean" of electric tractors (25HP+) where startups compete with giants like Mahindra and Sonalika. By focusing on the 12HP tiller segment, they compete primarily against commoditized diesel engines, where the EV value proposition (lower vibration, lower running cost) is starkest.
+Balisto differentiates itself by focusing specifically on the Indian mid-sized farm segment and emphasizing indigenous manufacturing to keep capital and operational costs low [1] [5].
 
-## Recent News and Milestones (Last 12 Months)
+## 5. Recent Milestones (2024-2026)
+* **Incorporation & Funding (2024):** Founded as Orbit Farming/Orbit AgriTech and secured Seed funding in April 2024 [2] [5].
+* **Rebranding (Late 2024/Early 2025):** Rebranded from Orbit Agritech to Balisto Agritech to better connect with the farmer community and improve brand memorability [6].
+* **Product Launch:** Introduced the Balisto 130 Pro electric power tiller [3].
+* **Team Expansion (2025-2026):** Conducted extensive hiring drives for Field Service Technicians, Machine Technicians, and Business Development Officers across Maharashtra (Pune and Satara divisions) [1]. As of August 2025, the company had 16 employees [2].
 
-* **October 2025:** Featured in **Harvard Technology Review** in an article on intelligent mechanization in India, highlighting the PT Pro [1] [9].
-* **October 2025:** Co-founder Aishwarya Ramakrishnan shared a viral field update regarding customer Datta Harde transporting batteries on a scooter, validating the "portable energy" thesis [1].
-* **December 2025:** Exhibited at the **Kisan Agri Show** in Moshi, Pune, signaling readiness for commercial orders [8].
-* **January 2026:** Active recruitment for field service and sales roles in Maharashtra, indicating a transition from R&D to commercial sales [1].
+## 6. Business Model, Traction & Information Gaps
+Balisto AgriTech operates a B2B/B2C hardware sales model, providing farm equipment directly to mid-sized farmers to increase their profitability [5]. The company is actively building a localized service network, evidenced by its hiring of field service technicians in rural Maharashtra [1].
 
-## Risks and Red Flags
-
-* **Brand Fragmentation:** The simultaneous use of "Orbit Farming," "Orbit AgriTech," and "Balisto" creates confusion. If "Balisto" is the future brand, the legacy "Orbit" assets need to be deprecated quickly to avoid losing search traffic and brand equity.
-* **Hardware Capital Intensity:** With a paid-up capital of ~₹36 Lakhs against a $1.96M raise, the company is likely burning cash on inventory and R&D. Managing working capital for hardware manufacturing is a classic failure mode for agritech startups.
-* **Adoption Inertia:** While EV OpEx is lower, the upfront CapEx of electric tillers (batteries + motor) is typically higher than diesel equivalents. Success depends heavily on financing partnerships (NBFCs) to make the sticker price accessible.
-
-## Technology Stack and Technical Approach
-
-* **Core Engineering:** The 12-HP rating suggests a peak power output of roughly 9-10 kW. The system likely uses a **BLDC (Brushless DC) motor** for high torque at low RPMs, essential for tilling soil.
-* **Energy System:** The "detachable battery" feature is the critical tech differentiator. It decouples the machine from the charging infrastructure, allowing farmers to charge batteries at home (via standard 15A sockets) rather than needing 3-phase power at the farm shed.
-* **Design Philosophy:** The "modular" description implies that the battery or motor unit might be adaptable for other implements (e.g., water pumps, sprayers) in the future, increasing the utility of the expensive battery asset [1].
-
-## Action Plan for Stakeholders
-
-* **For Investors:** Request a breakdown of the "Balisto" rebrand strategy and a unit economics analysis comparing the PT Pro's TCO against a standard VST Shakti or Kamco diesel tiller.
-* **For Partners/Dealers:** Verify the warranty terms on the battery packs and the availability of replacement modules, as this will be the primary concern for farmers.
-* **For Competitors:** Monitor Orbit's expansion into the Satara/Pune belt; their success with the "swappable battery" model could force tractor OEMs to rethink their fixed-battery strategies for sub-20HP machinery.
+**Information Gaps & Missing Metrics:**
+While product development and hiring indicate positive momentum, there is limited public information regarding commercial traction. Specifically, the following data points are currently unavailable in public domains:
+* **Revenue & Unit Sales:** Exact number of Balisto 130 Pro units sold and current Annual Recurring Revenue (ARR).
+* **Pricing:** The exact retail price of the Balisto 130 Pro and the upcoming PT-PRO.
+* **Customer Base:** The total number of active farmers utilizing the equipment.
 
 ## References
 
-1. *Orbit AgriTech*. https://www.linkedin.com/company/orbitagritech
-2. *Orbit Agritech*. https://www.instagram.com/popular/orbit-agritech/
-3. *Higher Orbit Agritech 2026 Company Profile: Valuation, Funding & Investors | PitchBook*. https://pitchbook.com/profiles/company/756346-15
-4. *Orbit Agritech - 2026 Company Profile, Team, Funding & Competitors - Tracxn*. https://tracxn.com/d/companies/orbitagritech/__Jj7ePpgQpRClbJnXQw0G4_sH1cmW_gcuglRH1XnYXBQ
-5. *HIGHER ORBIT AGRITECH PRIVATE LIMITED | CIN U77302MH2024PTC419028 Company Details*. https://www.indiafilings.com/search/higher-orbit-agritech-private-limited-cin-U77302MH2024PTC419028
-6. *HIGHER ORBIT AGRITECH PRIVATE LIMITED - U28219MH2024PTC419028*. https://www.instafinancials.com/company/higher-orbit-agritech-private-limited-U77302MH2024PTC419028
-7. *27 Agritech Startups Disrupting Agricultural Landscape In India*. https://inc42.com/startups/27-agritech-startups-disrupting-agricultural-landscape-in-india/
-8. *Orbit Farming (@orbit.agritech)*. https://www.facebook.com/orbit.agritech/
-9. *Aishwarya Ramakrishnan - Orbit Agritech | LinkedIn*. https://in.linkedin.com/in/aishwarya-ramakrishnan
+1. *Balisto Agritech*. https://www.linkedin.com/company/balistoagritech
+2. *Orbit Agritech - 2026 Company Profile & Team*. https://tracxn.com/d/companies/orbitagritech/__Jj7ePpgQpRClbJnXQw0G4_sH1cmW_gcuglRH1XnYXBQ
+3. *Balisto AgriTech*. https://www.youtube.com/channel/UCO7rMAJMmZj-DCqKzxuRJSQ
+4. *Electric, Intelligent, Homegrown Mechanization for Indian Farmers*. https://harvardtechnologyreview.com/2025/10/01/electric-intelligent-homegrown-mechanization-for-indian-farmers-spotlight-on-orbit-agritech/
+5. *Ex-Swiggy Exec Kedar Gokhale Launches Agritech Startup ...*. https://inc42.com/buzz/ex-swiggy-exec-kedar-gokhale-launches-agritech-startup-orbit-farming/
+6. *#balistoagritech #newchapter #agritechleadership | Balisto ...*. https://www.linkedin.com/posts/balistoagritech_balistoagritech-newchapter-agritechleadership-activity-7435591581295960064-wUkV

@@ -258,4 +258,11 @@ Search pages built as part of WebFront. Cmd+K, /companies, /network, /search all
 
 ## Resume Command
 To restart all permanent machineries:
-> "Resume machineries" → read CHECKPOINT.md → restart all 8 permanent machines with armies of agents
+> "Resume machineries" → read CHECKPOINT.md → restart ALL 8 permanent machines with armies of agents
+
+**No sync gates. No blocking.** All machines run in parallel. Cindy setup (AgentMail, calendar API) happens as part of M8's loops — user provides creds when ready, M8 plugs them in. Other machines never wait.
+
+## User Actions (do whenever convenient, not blocking)
+1. **AgentMail**: Create account at agentmail.to ($20/mo), set up domain, create cindy inbox → provide API key + inbox address
+2. **Calendar**: Confirm Google vs M365 as primary → provide API credentials
+3. Both can happen async while all machines keep running

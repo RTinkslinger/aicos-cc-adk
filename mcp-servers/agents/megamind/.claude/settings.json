@@ -1,0 +1,34 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/agents/megamind/.claude/hooks/stop-iteration-log.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/agents/megamind/.claude/hooks/prompt-manifest-check.sh"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/agents/megamind/.claude/hooks/pre-compact-flush.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

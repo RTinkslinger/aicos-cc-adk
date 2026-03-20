@@ -264,5 +264,5 @@ To restart all permanent machineries:
 
 ## User Actions (do whenever convenient, not blocking)
 1. **AgentMail**: Create account at agentmail.to ($20/mo), set up domain, create cindy inbox → provide API key + inbox address
-2. **Calendar**: Confirm Google vs M365 as primary → provide API credentials
+2. **Calendar**: Just add Cindy's email as guest on calendar invites. She receives .ics via AgentMail inbox — no API needed. Works with Google, M365, Calendly, anything.
 3. Both can happen async while all machines keep running

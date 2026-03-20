@@ -17,7 +17,7 @@
   "state": {
     "status": "active",
     "last_session": {
-      "timestamp": "2026-03-20T09:25:50Z",
+      "timestamp": "2026-03-20T09:28:58Z",
       "summary": "claude-ai-sync v7.2.0 — aligned with source-of-truth (17 tools, SyncAgent live, 7 Postgres tables). Resolved 14 conflicts between CLAUDE.md/CONTEXT.md and source-of-truth docs.",
       "key_commit": "9918a0f"
     },
@@ -46,13 +46,13 @@
       "TRACES.md",
       "docs/audits/2026-03-20-companies-network-schema-audit.md",
       "docs/audits/2026-03-20-cross-db-relations-map.md",
+      "docs/audits/2026-03-20-irgi-phase-a-execution.md",
       "docs/audits/2026-03-20-parallel-dashboard-findings.md",
       "docs/audits/2026-03-20-parallel-results-disk-scan.md",
       "docs/audits/2026-03-20-parallel-results-qmd-search.md",
       "docs/audits/2026-03-20-portfolio-schema-audit.md",
       "docs/audits/2026-03-20-research-files-catalog-global.md",
-      "docs/audits/2026-03-20-research-files-catalog-local.md",
-      "docs/audits/2026-03-20-schema-migration-execution.md"
+      "docs/audits/2026-03-20-research-files-catalog-local.md"
     ],
     "pending_inbox": []
   },
@@ -75,6 +75,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T09:25:50Z",
+  "updated_at": "2026-03-20T09:28:58Z",
   "updated_by": "cc"
 }

@@ -1000,29 +1000,137 @@ A good assessment has:
 
 ---
 
-## 12. Strategic Functions Reference (L61-90)
+## 12. Skills Reference
 
-### generate_strategic_briefing()
-**Returns:** JSONB daily briefing for Aakash. Access via `strategic_briefing` view.
-**Sections:** top_actions (10), thesis_momentum (8 theses), portfolio_health (total/green/yellow/red + red_companies), recent_cascades (48h), convergence state, obligation_alerts, recommendations.
-**Usage:** `SELECT * FROM strategic_briefing;` or `SELECT generate_strategic_briefing();`
+Load these skill files for detailed function signatures, usage examples, and workflows.
+Use `Skill` tool or `Read` to access them at runtime.
 
-### detect_opportunities()
-**Returns:** JSONB opportunity analysis.
-**Sections:** thesis_clusters (portfolio companies per thesis), cross_thesis_opportunities (companies at 3+ thesis intersections), high_conviction_pipeline (top actions on Very High/High theses), relationship_hotspots (network people connected to 2+ companies), strategic_insights.
-**Usage:** `SELECT detect_opportunities();`
+### Skill Files
 
-### generate_decision_framework(action_id INT)
-**Returns:** JSONB structured decision framework for a specific action.
-**Sections:** pros, cons, key_questions, recommended_next_step, thesis_context, portfolio_context.
-**Access all Ultra actions:** `SELECT * FROM decision_frameworks;`
+| Skill | Path | What It Covers |
+|-------|------|----------------|
+| **Strategic Reasoning** | `skills/megamind/strategic-reasoning.md` | ROI calculation, 5-component formula, diverge/converge lens, DB table schemas |
+| **Depth Grading** | `skills/megamind/depth-grading.md` | Auto-grading algorithm, execution prompts, trust ramp, routing |
+| **Cascade Protocol** | `skills/megamind/cascade-protocol.md` | Cascade algorithm steps, blast radius, convergence rules, escalation |
+| **Strategic Briefing** | `skills/megamind/strategic-briefing.md` | Briefing pipeline, narrative engine, decision frameworks, views |
+| **Portfolio Risk** | `skills/megamind/portfolio-risk.md` | Risk assessment, decision queue, convergence simulation, network map |
+| **Depth Automation** | `skills/megamind/depth-automation.md` | Auto-refresh grades, stale dismissal, cascade dedup guard |
+| **Cascade Functions** | `skills/megamind/cascade-functions.md` | Cascade event creation, impact analysis, obligation cascades |
 
-### generate_strategic_assessment() [UPGRADED]
-**Now includes:** portfolio_thesis_coverage, entity_connections count, pending_obligations, conviction_summary (all 8 theses), cascade_activity since last assessment.
-**Scheduled:** pg_cron job 8, daily at 6:00 UTC.
+### When to Load Which Skill
 
-### Key Views Added
+| Work Type | Load These Skills |
+|-----------|-------------------|
+| Depth grading new actions | `depth-grading.md` + `strategic-reasoning.md` + `depth-automation.md` |
+| Cascade processing | `cascade-protocol.md` + `cascade-functions.md` + `portfolio-risk.md` |
+| Daily strategic assessment | `strategic-briefing.md` + `portfolio-risk.md` + `depth-automation.md` |
+| Answering Aakash's strategic questions | `strategic-briefing.md` + `portfolio-risk.md` |
+| Obligation cascade processing | `cascade-functions.md` |
+
+---
+
+## 13. SQL Functions Inventory (COMPLETE)
+
+All SQL functions available to Megamind via `psql $DATABASE_URL`. These are YOUR power
+tools — use them instead of writing raw queries when a function exists.
+
+### Briefing & Narrative
+
+| Function | Args | Returns | Purpose |
+|----------|------|---------|---------|
+| `generate_strategic_briefing()` | none | jsonb | Full JSONB briefing (top actions, thesis momentum, portfolio health, cascades, convergence, obligations, recommendations) |
+| `format_strategic_briefing(date)` | `p_date DEFAULT CURRENT_DATE` | text | Formatted text memo with 8 sections (Attention, Contradictions, Decisions, Key Questions, Follow-on, Thesis, Obligations, People) |
+| `generate_strategic_narrative(focus)` | `p_focus DEFAULT 'portfolio_attention'` | jsonb | Focused narrative section. Focus modes: `portfolio_attention`, `upcoming_decisions`, `network_priorities` |
+| `latest_briefing()` | none | TABLE | Most recent stored briefing from briefing_history |
+| `store_daily_briefing()` | none | void | Generates and stores briefing. Runs via pg_cron daily. |
+| `narrative_score_explanation(id)` | `p_action_id bigint` | jsonb | Human-readable breakdown of why an action has its score |
+
+### Decision & Opportunity
+
+| Function | Args | Returns | Purpose |
+|----------|------|---------|---------|
+| `actions_needing_decision_v2(limit)` | `p_limit DEFAULT 10` | TABLE | Top N actions needing Aakash's decision, enriched with company/person/thesis/obligation context |
+| `generate_decision_framework(id)` | `p_action_id integer` | jsonb | Structured pros/cons/key_questions/recommendation for specific action |
+| `detect_opportunities()` | none | jsonb | Cross-cutting analysis: thesis clusters, cross-thesis companies, high-conviction pipeline, relationship hotspots |
+
+### Portfolio & Risk
+
+| Function | Args | Returns | Purpose |
+|----------|------|---------|---------|
+| `portfolio_risk_assessment()` | none | TABLE | Per-company risk scan: health, risk_tier, risk_score, risk_factors, open actions, overdue obligations |
+| `strategic_network_map(limit)` | `p_limit DEFAULT 20` | TABLE | Ranks people by strategic importance: portfolio connections, obligations, interaction recency |
+
+### Scoring & Recalibration
+
+| Function | Args | Returns | Purpose |
+|----------|------|---------|---------|
+| `compute_portfolio_strategic_score(id)` | `p_id integer` | numeric | Computes 5-component strategic score for single action |
+| `recalibrate_strategic_scores()` | none | TABLE | Batch recalculates all open action scores, returns deltas |
+| `apply_strategic_recalibration()` | none | jsonb | Recalculates AND writes scores to actions_queue |
+
+### Depth Automation
+
+| Function | Args | Returns | Purpose |
+|----------|------|---------|---------|
+| `auto_refresh_depth_grades()` | none | TABLE | Checks pending grades against current context, returns needed changes |
+| `auto_dismiss_stale_actions()` | none | TABLE | Dismisses stale actions (>30d low score, >14d no grade, etc.) |
+| `cascade_dedup_guard(text, threshold)` | `p_action_text, p_threshold DEFAULT 0.6` | TABLE | Checks if proposed action is duplicate of existing one |
+
+### Cascade & Convergence
+
+| Function | Args | Returns | Purpose |
+|----------|------|---------|---------|
+| `create_cascade_event(type, id, desc, scope)` | trigger_type, trigger_id, description, impact_scope jsonb | integer | Creates cascade event record with chain limit enforcement |
+| `cascade_impact_analysis(event_id)` | `p_event_id DEFAULT NULL` | jsonb | Analyzes blast radius, score deltas, resolution/generation candidates |
+| `simulate_convergence(decisions)` | `p_decisions jsonb DEFAULT '[]'` | jsonb | Previews effect of proposed decisions on convergence ratio |
+| `generate_strategic_assessment()` | none | void | Writes full strategic assessment record. Runs via pg_cron daily at 6:00 UTC. |
+
+### Obligation Functions
+
+| Function | Args | Returns | Purpose |
+|----------|------|---------|---------|
+| `process_obligation_cascade()` | none | TABLE | Processes obligation changes, adjusts linked action scores and depths |
+| `auto_generate_obligation_followup_actions()` | none | void | Creates follow-up actions for overdue obligations |
+| `obligation_health_summary()` | none | varies | Overall obligation system health |
+| `obligation_staleness_audit()` | none | varies | Identifies stale obligations |
+| `obligation_fulfillment_rate()` | none | varies | I-owe vs they-owe fulfillment rates |
+| `detect_obligation_fulfillment_candidates()` | none | varies | Obligations that may be fulfilled but not marked |
+| `detect_obligation_fulfillment_from_interactions()` | none | varies | Checks interactions for fulfillment signals |
+
+### Triggers (auto-fire, NOT called directly)
+
+| Trigger | Fires On | Purpose |
+|---------|----------|---------|
+| `regrade_on_strategic_change()` | thesis_threads.conviction or strategic_config changes | Auto-recalculates affected depth grades |
+| `process_cascade_event()` | INSERT into cascade_events | Auto-processes cascade downstream effects |
+
+### Views (queryable, pre-computed)
+
 | View | Purpose |
 |------|---------|
-| `strategic_briefing` | Daily briefing (calls generate_strategic_briefing) |
+| `strategic_briefing` | Daily briefing (wraps `generate_strategic_briefing()`) |
 | `decision_frameworks` | All pending Ultra actions with structured frameworks |
+| `megamind_convergence` | Current convergence health metrics |
+| `strategic_recommendations` | Active strategic recommendations |
+
+---
+
+## 14. Collaboration Model
+
+### Megamind reads from other agents' outputs
+
+| Agent | What Megamind Reads | Table/Source |
+|-------|-------------------|--------------|
+| **ENIAC** (Content Agent) | Raw action scores, thesis evidence, content digests | `actions_queue.relevance_score`, `content_digests`, `thesis_threads` |
+| **Datum** | Enriched entity data, company records, people records | `companies`, `network`, `entity_connections` |
+| **Cindy** | Interaction signals, obligation changes, communication intelligence | `interactions`, `obligations`, `notifications WHERE source='Cindy'` |
+| **M5 Scoring** | Multiplicative scoring model outputs | `actions_queue.user_priority_score` |
+
+### Other agents depend on Megamind's outputs
+
+| Consumer | What They Read | Source |
+|----------|---------------|--------|
+| **Orchestrator** | Depth grades, execution routing, ACK responses | `depth_grades`, Megamind ACK text |
+| **WebFront** | Briefings, cascade reports, decision frameworks, convergence | `briefing_history`, `cascade_events`, `notifications`, views |
+| **Content Agent** | Calibrated execution prompts from depth grades | `depth_grades.execution_prompt` |
+| **Datum Agent** | Entity enrichment prompts from depth grades | `depth_grades.execution_prompt WHERE execution_agent='datum'` |

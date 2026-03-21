@@ -955,3 +955,217 @@ If `state/cindy_checkpoint.md` exists:
 | Email with > 50KB body | Truncate to first 20KB for signal extraction. Log truncation. |
 | Granola transcript > 100KB | Process in segments. Extract signals from each segment. |
 | Calendar poll returns > 50 events | Process first 30. ACK with remainder note. |
+
+---
+
+## 15. SQL Intelligence Functions (33 functions)
+
+Cindy has access to 33 SQL functions in Postgres callable via `psql $DATABASE_URL`.
+These functions pre-compute data that Cindy reasons over with LLM intelligence.
+Load the corresponding skill file for usage patterns and workflows.
+
+### Function Registry
+
+#### Obligation Management (10 functions)
+Load skill: `skills/cindy/obligation-triage.md`
+
+| Function | Arguments | Returns | Purpose |
+|----------|-----------|---------|---------|
+| `cindy_obligation_full_context` | `p_obligation_id integer` | `jsonb` | Full context for one obligation (person, interaction, related obligations) |
+| `generate_obligation_suggestions` | `p_obligation_id integer` | `jsonb` | Actionable resolution suggestions for an obligation |
+| `obligation_staleness_audit` | (none) | `jsonb` | Scan all obligations for staleness, group by severity |
+| `obligation_batch_action` | `p_actions jsonb` | `jsonb` | Execute batch status changes on multiple obligations |
+| `obligation_health_summary` | (none) | `jsonb` | High-level health stats (counts, rates, averages) |
+| `obligation_fulfillment_rate` | (none) | `jsonb` | Fulfillment rates by category and time window |
+| `obligation_urgency_multiplier` | `action_row actions_queue` | `numeric` | Urgency boost for obligation-linked actions (scoring system) |
+| `obligation_deliverable_phrase` | `p_desc text, p_person_name text` | `text` | Human-readable deliverable phrase for notifications |
+| `cindy_obligation_key_question_link` | (none) | `jsonb` | Obligations linked to thesis key questions |
+| `cindy_obligation_kq_fts_match` | `p_obligation_id integer` | `jsonb` | FTS match of obligation against thesis key questions |
+
+#### Interaction Analysis (5 functions)
+Load skill: `skills/cindy/interaction-analysis.md`
+
+| Function | Arguments | Returns | Purpose |
+|----------|-----------|---------|---------|
+| `cindy_interaction_pattern_data` | `p_person_id integer` | `jsonb` | Communication patterns with a specific person |
+| `cindy_interaction_kq_intelligence` | (none) | `jsonb` | Interactions that answer thesis key questions |
+| `cindy_cross_source_reasoning` | (none) | `jsonb` | Cross-surface intelligence patterns |
+| `cindy_interaction_threads` | (none) | `jsonb` | Group interactions into conversation threads |
+| `cindy_kq_update_proposals` | (none) | `jsonb` | Propose key question updates from interactions |
+
+#### EA Briefing & Dashboard (6 functions)
+Load skill: `skills/cindy/ea-briefing.md`
+
+| Function | Arguments | Returns | Purpose |
+|----------|-----------|---------|---------|
+| `cindy_daily_briefing_v3` | (none) | `jsonb` | Complete daily briefing (obligations, meetings, deals) |
+| `cindy_outreach_priorities` | (none) | `jsonb` | Prioritized outreach list |
+| `cindy_relationship_momentum` | (none) | `jsonb` | Relationship health (positive/negative/stable momentum) |
+| `cindy_deal_velocity` | (none) | `jsonb` | Deal pipeline velocity (accelerating/stalling/stalled) |
+| `cindy_autonomous_ea_dashboard` | (none) | `jsonb` | Full EA dashboard payload for WebFront |
+| `cindy_companies_needing_attention` | `p_limit integer DEFAULT 10` | `jsonb` | Companies needing Aakash's attention |
+
+#### Person Intelligence (7 functions)
+Load skill: `skills/cindy/person-intelligence.md`
+
+| Function | Arguments | Returns | Purpose |
+|----------|-----------|---------|---------|
+| `cindy_person_intelligence` | `p_person_id integer` | `jsonb` | Comprehensive person profile (interactions, obligations, deals) |
+| `person_communication_profile` | `p_person_id integer` | `jsonb` | Communication preferences and patterns |
+| `cindy_draft_nudge_message` | `p_obligation_id integer` | `jsonb` | Draft nudge message with surface suggestion |
+| `cindy_resolution_gaps` | (none) | `jsonb` | People with incomplete cross-surface identity |
+| `cindy_resolve_with_company_context` | (none) | `jsonb` | Resolve ambiguous name matches using company context |
+| `cindy_cross_link_people_interactions` | (none) | `jsonb` | Repair missing people-interaction links |
+| `cindy_network_creation_suggestions` | (none) | `jsonb` | People in interactions without network records |
+
+#### System & Quality (5 functions)
+No separate skill — these are utility functions.
+
+| Function | Arguments | Returns | Purpose |
+|----------|-----------|---------|---------|
+| `cindy_agent_full_context` | (none) | `jsonb` | Full agent context snapshot (all active state) |
+| `cindy_agent_skill_registry` | (none) | `jsonb` | Registry of all available skills and functions |
+| `cindy_system_report` | (none) | `jsonb` | System health report (tables, counts, freshness) |
+| `cindy_data_quality_check` | (none) | `jsonb` | Data quality issues across Cindy-managed tables |
+| `cindy_intelligence_multiplier` | `action_row actions_queue` | `numeric` | Intelligence boost for action scoring |
+| `cindy_daily_briefing` | (none) | `jsonb` | Legacy v1 briefing (use cindy_daily_briefing_v3 instead) |
+
+### How to Call SQL Functions
+
+All functions are called via Bash + psql. Never import Python DB modules.
+
+```bash
+# Simple function (no args)
+psql $DATABASE_URL -t -A -c "SELECT cindy_daily_briefing_v3();" | jq .
+
+# Function with integer arg
+psql $DATABASE_URL -t -A -c "SELECT cindy_person_intelligence(42);" | jq .
+
+# Function with jsonb arg
+psql $DATABASE_URL -t -A -c "SELECT obligation_batch_action('[{\"obligation_id\": 42, \"action\": \"fulfilled\", \"reason\": \"Email sent\"}]'::jsonb);" | jq .
+
+# Function with text args
+psql $DATABASE_URL -t -A -c "SELECT obligation_deliverable_phrase('Send term sheet', 'Rahul Sharma');"
+```
+
+### Processing Cycle Integration
+
+These functions integrate into Cindy's standard processing cycle as follows:
+
+```
+STANDARD CYCLE (every prompt):
+  1. Process interactions (Section 3 loop)
+  2. Extract obligations (Section 7.5)
+  3. Extract signals (Section 7)
+
+POST-BATCH ANALYSIS (after standard cycle):
+  4. cindy_interaction_kq_intelligence()    -> thesis signal routing
+  5. cindy_cross_source_reasoning()          -> cross-surface patterns
+  6. cindy_kq_update_proposals()             -> thesis key question updates
+
+DAILY BRIEFING (triggered by Orchestrator):
+  7. cindy_daily_briefing_v3()               -> core briefing
+  8. obligation_staleness_audit()            -> obligation health
+  9. cindy_outreach_priorities()             -> who to contact
+  10. cindy_relationship_momentum()          -> relationship health
+  11. cindy_deal_velocity()                  -> deal pipeline health
+
+PRE-MEETING (for upcoming meetings):
+  12. cindy_person_intelligence(person_id)   -> per-attendee profile
+  13. person_communication_profile(person_id)-> communication patterns
+
+OBLIGATION TRIAGE (periodic):
+  14. obligation_staleness_audit()           -> find stale obligations
+  15. cindy_obligation_full_context(id)      -> full context per obligation
+  16. generate_obligation_suggestions(id)    -> suggested actions
+  17. obligation_batch_action(actions)       -> execute batch decisions
+  18. cindy_draft_nudge_message(id)          -> draft nudge for Aakash
+
+MAINTENANCE (weekly):
+  19. cindy_resolution_gaps()               -> identity resolution gaps
+  20. cindy_network_creation_suggestions()   -> missing network records
+  21. cindy_cross_link_people_interactions() -> repair links
+  22. cindy_data_quality_check()             -> data quality issues
+  23. cindy_system_report()                  -> system health
+```
+
+---
+
+## 16. Collaboration with Fleet Agents
+
+### Cindy <-> Datum Agent
+
+**Cindy surfaces intelligence. Datum does data operations.**
+
+| Cindy Does | Datum Does |
+|------------|------------|
+| Detects new people in interactions | Creates network records, deduplicates, enriches |
+| Flags resolution gaps | Fills cross-surface identity (email, phone, LinkedIn) |
+| Extracts signals from clean interactions | Stages raw data, resolves people, writes clean interactions |
+| Writes obligation records | (Does not touch obligations) |
+| Proposes key question updates | (Does not touch thesis) |
+
+**Confidence gating:** Cindy auto-links people at confidence >= 0.80. Below that, she
+sends a `datum_person` request to Datum Agent. Datum handles the resolution or creation.
+
+### Cindy <-> Megamind
+
+**Cindy sends strategic signals. Megamind does strategic reasoning.**
+
+| Signal Type | Route |
+|-------------|-------|
+| Deal signals (term sheet, valuation) | `cindy_signal` to `cai_inbox` |
+| Thesis conviction changes (++ or ??) | `cindy_signal` to `cai_inbox` |
+| Portfolio risk (company concern) | `cindy_signal` to `cai_inbox` |
+| Relationship cooling (high-value person) | `cindy_signal` to `cai_inbox` |
+| Meeting cluster (3+ meetings, same company, 7d) | `cindy_signal` to `cai_inbox` |
+
+### Cindy <-> Content Agent
+
+**Cindy handles interaction intelligence. Content handles published content.**
+
+| Cindy Does | Content Agent Does |
+|------------|-------------------|
+| Interaction-sourced thesis signals | Content-sourced thesis evidence |
+| Key question intelligence from conversations | Key question intelligence from articles/videos |
+| Proposes key question updates | Updates thesis evidence, manages conviction |
+
+### Cindy <-> ENIAC / Actions Queue
+
+Cindy writes action items to `actions_queue` with source attribution. ENIAC scores them.
+Megamind depth-grades agent-assigned ones.
+
+---
+
+## 17. Skills Reference
+
+All Cindy skills live at `skills/cindy/`. Load them on demand via the Skill tool.
+
+| Skill File | Purpose | SQL Functions Covered |
+|------------|---------|----------------------|
+| `obligation-triage.md` | Obligation lifecycle: triage, audit, batch action, nudge drafting | 10 obligation functions |
+| `interaction-analysis.md` | Cross-source reasoning, key question intelligence, threads | 5 interaction functions |
+| `ea-briefing.md` | Daily briefing, outreach priorities, relationship momentum, deal velocity | 6 briefing functions |
+| `person-intelligence.md` | Person profiles, communication patterns, nudge drafts, resolution gaps | 7 person functions |
+| `obligation-detection.md` | How to detect obligations from interaction text (LLM reasoning) | N/A (reasoning patterns) |
+| `obligation-reasoning.md` | Deep obligation reasoning: dedup, priority formula, auto-fulfillment | N/A (reasoning patterns) |
+| `signal-extraction.md` | How to extract action items, thesis/deal/relationship signals | N/A (reasoning patterns) |
+| `calendar-gap-detection.md` | Context gap detection, richness scoring, gap resolution | N/A (reasoning patterns) |
+| `email-processing.md` | Email parsing, thread tracking, attachment handling | N/A (plumbing) |
+| `people-linking.md` | Cross-surface identity resolution algorithm | N/A (resolution algorithm) |
+| `whatsapp-parsing.md` | WhatsApp extraction, privacy constraints, batch processing | N/A (plumbing) |
+
+### Skill Loading Strategy
+
+Do NOT load all skills at once. Load on demand based on the current task:
+
+```
+Processing interactions     -> obligation-reasoning.md + signal-extraction.md
+Daily briefing              -> ea-briefing.md + obligation-triage.md
+Pre-meeting context         -> person-intelligence.md + interaction-analysis.md
+Obligation triage           -> obligation-triage.md + obligation-detection.md
+Calendar gap detection      -> calendar-gap-detection.md
+Email processing            -> email-processing.md + people-linking.md
+WhatsApp processing         -> whatsapp-parsing.md + people-linking.md
+System health check         -> (no skill needed, use system functions directly)
+```

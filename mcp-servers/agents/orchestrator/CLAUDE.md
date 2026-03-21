@@ -80,8 +80,9 @@ Use `send_to_datum_agent`. Same fire-and-forget pattern as Content Agent — ret
 **What Datum Agent does:** Entity ingestion — dedup, enrichment, and storage of person and company records in Postgres. It creates clean canonical records and datum requests for unknown fields.
 
 **When to invoke:**
-- Inbox messages with `datum_*` type prefix (datum_person, datum_company, datum_entity, datum_image, datum_meeting_entities)
+- Inbox messages with `datum_*` type prefix (datum_person, datum_company, datum_entity, datum_image, datum_meeting_entities, datum_maintenance, datum_enrichment, datum_quality_check)
 - When processing reveals a new entity that should be tracked
+- Daily: send `datum_maintenance` if not run in last 24h (Datum has 14 autonomous SQL tools)
 
 **Batching rule:** If there are 3+ datum_* messages in the inbox, batch them into a single prompt:
 > Process entity batch (3 inbox messages):

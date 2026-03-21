@@ -292,6 +292,61 @@ M12 backfill/enrichment work is Datum's permanent loop. This includes:
 
 This work runs as part of Datum's regular processing, not as a separate machine.
 
+### SQL Tool Functions (14 autonomous tools — call via psql)
+
+You have 14 SQL functions in Postgres that do heavy lifting. Call them via
+`psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOUR tools.
+
+#### Maintenance & Quality
+
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_daily_maintenance()` | **Master function.** Runs all maintenance in one call. Run daily minimum. | op, op_status, op_count, op_details |
+| `datum_data_quality_check()` | Comprehensive quality metrics (read-only). Use for health reports. | check_name, check_status, count_value, pct_value, details |
+| `datum_garbage_detector()` | Finds garbage entries: first-name-only, empty names, multi-person, org suffixes. | id, person_name, role_title, issue, recommendation |
+| `datum_consistency_enforcer()` | Auto-fixes: pseudo-IDs, missing notion_page_ids, exit mismatches, signal gaps. | check_name, issues_found, auto_fixed, remaining, details |
+| `datum_stale_action_detector()` | Finds stale, unscored, or duplicate actions. | category, action_count, avg_days_old, action_ids, recommendation |
+| `datum_notion_drift_check()` | Checks Notion sync freshness per entity type. | entity_type, total, synced, drifted, never_synced, last_sync_at, status |
+
+#### Enrichment & Linking
+
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_signal_propagator()` | Propagates exit/health/external signals across portfolio + companies. | operation, affected_count, details |
+| `datum_network_signal_enricher()` | Enriches network members with portfolio company signals via entity_connections. | check_name, people_updated, details |
+| `datum_thesis_auto_backfill()` | Backfills thesis_connection on actions from linked portfolio companies. | operation, affected_count, details |
+| `datum_cross_entity_linker()` | Builds entity_connections graph: employee links, portfolio links, action links. | operation, records_processed, details |
+| `datum_company_name_deduplicator()` | Finds duplicate companies by name (exact, normalized, prefix/suffix). Read-only. | company_a_id, a_name, company_b_id, b_name, score, reason |
+
+#### Identity Resolution
+
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_resolve_pseudo_ids()` | Fixes broken `pg:` references in actions_queue to real Notion page IDs. | action_id, old_id, new_id, company_name, method |
+| `datum_entity_health()` | Per-entity-type fill rates (companies, portfolio, network, actions). | entity_type, metric, total, filled, pct, status |
+| `datum_thesis_coverage()` | Maps thesis threads to portfolio + action counts. | thesis, portfolio_count, action_count, active, exited |
+
+### Skills (load on demand)
+
+| Skill | When to Load | What It Teaches |
+|-------|-------------|-----------------|
+| `skills/datum/data-quality.md` | Maintenance, quality checks, garbage cleanup | How to use all 6 maintenance SQL functions, interpret results, act on findings |
+| `skills/datum/enrichment.md` | M12 loops, enrichment, entity linking | How to use all 5 enrichment SQL functions, M12 loop pattern, monitoring |
+| `skills/datum/identity-resolution.md` | New entities, dedup decisions, datum_requests | Confidence gating, create vs. not create, cross-surface stitching, Cindy collaboration |
+| `skills/datum/datum-processing.md` | Entity ingestion (existing) | Input parsing, field mapping, processing checklist |
+| `skills/datum/dedup-algorithm.md` | Dedup checks (existing) | 4-tier dedup for persons and companies, merge protocol |
+| `skills/datum/people-linking.md` | People resolution (existing) | 6-tier resolution, cross-surface linking |
+
+### Confidence Gating Protocol
+
+| Confidence | Action |
+|------------|--------|
+| >= 0.90 | ACT AUTONOMOUSLY (create, merge, link) |
+| 0.70-0.89 | ASK VIA DATUM_REQUEST (do not act) |
+| < 0.70 | DO NOT CREATE (log for context only) |
+
+**Exception:** User-initiated entities ("Add Rahul from Composio") always get created.
+
 **Query patterns:**
 
 ```bash
@@ -607,6 +662,44 @@ This is your **primary continuous loop**. Every heartbeat or Orchestrator trigge
 check for new staging rows and process them. This replaces the old pattern where
 Python processors did people resolution inline.
 
+### datum_maintenance
+Daily maintenance trigger from Orchestrator.
+```
+Run daily maintenance cycle.
+```
+
+When received:
+1. Load skill: `skills/datum/data-quality.md`
+2. Run `datum_daily_maintenance()` — the master function
+3. Interpret all results (OK/WARNING/NEEDS_ATTENTION)
+4. Write notification summarizing findings
+5. For NEEDS_CLEANUP: run `datum_garbage_detector()` and act on results
+6. For NEEDS_ENRICHMENT: queue enrichment work for next cycle
+7. End with structured ACK
+
+### datum_enrichment
+M12 enrichment loop trigger.
+```
+Run enrichment loop.
+```
+
+When received:
+1. Load skill: `skills/datum/enrichment.md`
+2. Follow the M12 Enrichment Loop Pattern (measure → fix links → propagate → backfill → dedup → cleanup → measure again)
+3. Log before/after metrics
+4. Write audit entry if significant improvement
+
+### datum_quality_check
+On-demand quality check.
+```
+Run data quality check and report.
+```
+
+When received:
+1. Run `datum_data_quality_check()` + `datum_entity_health()`
+2. Write notification with all WARNING/CRITICAL metrics
+3. End with structured ACK
+
 ### Pipeline Action (from autonomous execution)
 Agent-assigned action from actions_queue.
 ```
@@ -809,6 +902,10 @@ Write to the `notifications` table for significant events:
 | Batch too large | `batch_overflow` | Entity batch exceeded 20 limit |
 | Input parse failure | `parse_failed` | Could not extract entity from input |
 | Pipeline action executed | `pipeline_action_done` | Completed agent-assigned pipeline action |
+| Maintenance completed | `maintenance_complete` | Daily maintenance finished with summary |
+| Maintenance alert | `maintenance_alert` | Maintenance found issues needing attention |
+| Quality report | `quality_report` | Data quality check results with metrics |
+| Enrichment progress | `enrichment_progress` | M12 loop completed with before/after deltas |
 
 **Format:**
 ```sql

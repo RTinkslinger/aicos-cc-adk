@@ -992,5 +992,12 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - M8: ONE THING fixed (Schneider #1), deal velocity tracker, AgentMail confirmed
 - WhatsApp: only 8 summaries ingested — full conversation history needs per-chat markdown for hybrid search
 - Agents must use reasoning+tools (MCP, Skills, Bash, web search) not Python pipelines
-- Session still active — 9 machines looping perpetually. Total agents spawned: 80+
+- CRITICAL GAP: 212+ SQL functions built but ZERO agent files (CLAUDE.md, skills, tool configs). Agents on droplet have no idea tools exist.
+- Resumed machines with AGENT BUILD mandate: M4 writing Datum skills, M7 writing Megamind skills, M8 writing Cindy skills, M6 creating ENIAC agent, M5 writing scoring skills, M10 writing CIR skills
+- CHECKPOINT.md updated with agent-build priority
+- Machine loops must write skills + tools TOGETHER going forward — the whole agent gets smarter each loop
+- M9 audit: 249 SQL functions, only 41 (16%) referenced in agent files. ENIAC has no CLAUDE.md. 208 functions invisible.
+- 8 new skill files written (obligation-triage, interaction-analysis, strategic-briefing, data-quality, enrichment, eniac-research, eniac-search, etc.)
+- M4 Datum: 3 skills written + CLAUDE.md updated with 14-function inventory + orchestrator routing updated. Gap CLOSED for Datum.
+- Session still active — 6 machines writing agent files. Total agents spawned: 90+
 ---

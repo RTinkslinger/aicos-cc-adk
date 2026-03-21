@@ -1,10 +1,10 @@
-# People Linking — Cindy Skill
+# People Linking — Datum Skill
 
 ## Overview
 
-Cross-surface identity resolution is Cindy's core intelligence. The same person appears
+Cross-surface identity resolution is Datum's core capability. The same person appears
 differently across four surfaces: email (email address), WhatsApp (phone number), Granola
-(attendee name), Calendar (email + name). Cindy links these into a unified interaction
+(attendee name), Calendar (email + name). Datum links these into a unified interaction
 history per person in the Network DB.
 
 ## Identity Signals by Surface

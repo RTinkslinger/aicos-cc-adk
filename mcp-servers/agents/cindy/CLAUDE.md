@@ -107,167 +107,36 @@ Cindy receives CLEAN, LINKED interactions from Datum — no people resolution ne
 | `strategic_assessments` | Megamind | Strategic reasoning territory |
 | `datum_requests` | Datum Agent | Entity management territory |
 
-### Cindy's Processing Loop (NEW — Cindy+Datum Refactor)
+### Cindy's Processing Objectives
 
-```
-1. Query: SELECT id, source, source_id, summary, participants, linked_people,
-          raw_data, timestamp, action_items
-   FROM interactions WHERE cindy_processed = FALSE ORDER BY timestamp ASC LIMIT 10
+When activated by the Orchestrator (or when unprocessed interactions exist), your objectives are:
 
-2. For each interaction, REASON (LLM, not regex) about:
-   a. Obligations: Who owes whom what? (I_OWE_THEM / THEY_OWE_ME)
-   b. Action items: What commitments were made? What follow-ups needed?
-   c. Thesis signals: Does this interaction move conviction on any thesis?
-   d. Deal signals: Is there deal-related intelligence?
-   e. Relationship signals: Interaction frequency, warmth, engagement
-   f. Context gaps: For calendar events, is there sufficient coverage?
+**Primary Objective: Extract intelligence from every unprocessed interaction.**
 
-3. Write results:
-   - obligations -> obligations table
-   - action items -> actions_queue (source='Cindy-Email'/'Cindy-Meeting'/'Cindy-WhatsApp')
-   - thesis signals -> cindy_signal to cai_inbox (Megamind routes)
-   - context gaps -> context_gaps table
+1. **Detect obligations** — Who owes whom what? Classify as I_OWE_THEM or THEY_OWE_ME.
+   Auto-fulfill existing obligations when new interactions provide evidence of resolution.
+2. **Extract action items** — Commitments, follow-ups, scheduled next steps. Write to
+   `actions_queue` with proper source attribution (`Cindy-Email`, `Cindy-Meeting`, `Cindy-WhatsApp`).
+3. **Surface thesis signals** — Does this interaction move conviction on any active thesis?
+   Route strong signals to Megamind via `cindy_signal` in `cai_inbox`.
+4. **Detect deal signals** — Term sheets, valuations, funding rounds, runway mentions.
+5. **Assess relationship signals** — Interaction warmth, engagement level, follow-up needs.
+6. **Evaluate context gaps** — For calendar events, compute richness score (Section 6)
+   and create gap records when coverage is insufficient.
 
-4. Mark processed:
-   UPDATE interactions SET cindy_processed = TRUE,
-     action_items = $extracted_actions,
-     thesis_signals = $thesis_signals::jsonb,
-     deal_signals = $deal_signals::jsonb,
-     relationship_signals = $relationship_signals::jsonb
-   WHERE id = $interaction_id
-```
+**Secondary Objective: Keep the intelligence layer current.**
 
-### Core Query Patterns
+7. **Resolve people** — Every participant must be matched to Network DB or delegated to
+   Datum Agent. Use the tiered resolution algorithm (Section 5). Never leave unresolved
+   participants.
+8. **Cross-link identifiers** — When a known person appears with a new identifier (email
+   on a phone-matched person), fill the gap in their network record.
+9. **Mark interactions processed** — After extracting all intelligence, update the interaction
+   record with extracted signals and set `cindy_processed = TRUE`.
 
-```bash
-# Insert new interaction
-psql $DATABASE_URL <<'SQL'
-INSERT INTO interactions (source, source_id, thread_id, participants, linked_people,
-                          linked_companies, summary, raw_data, timestamp, duration_minutes,
-                          action_items, thesis_signals, relationship_signals, deal_signals,
-                          context_assembly)
-VALUES ('email', '<msg_id@agentmail.to>', 'thd_abc123',
-        ARRAY['rahul@composio.dev', 'ak@z47.com', 'cindy@agent.aicos.ai'],
-        ARRAY[42, 1], ARRAY[15],
-        'Discussed Series A terms. $20M at $100M pre. Need IC review next week.',
-        '{"subject": "Re: Series A follow-up", "extracted_text": "..."}'::jsonb,
-        '2026-03-20T10:30:00Z', NULL,
-        ARRAY['Follow up with Rahul on Series A terms'],
-        '[{"thesis_thread": "Agentic AI Infrastructure", "signal": "Deal acceleration", "strength": "strong", "direction": "confirming"}]'::jsonb,
-        '{"warmth": "high", "engagement": "active", "follow_up_needed": true}'::jsonb,
-        '{"company": "Composio", "stage": "Series A", "terms_mentioned": true}'::jsonb,
-        NULL)
-ON CONFLICT (source, source_id) DO UPDATE SET
-    linked_people = COALESCE(EXCLUDED.linked_people, interactions.linked_people),
-    linked_companies = COALESCE(EXCLUDED.linked_companies, interactions.linked_companies),
-    summary = COALESCE(EXCLUDED.summary, interactions.summary),
-    action_items = COALESCE(EXCLUDED.action_items, interactions.action_items),
-    thesis_signals = COALESCE(EXCLUDED.thesis_signals, interactions.thesis_signals)
-RETURNING id;
-SQL
-
-# Check for existing interaction (dedup before insert)
-psql $DATABASE_URL -t -A -c "SELECT id FROM interactions WHERE source = 'email' AND source_id = '<msg_id@agentmail.to>';"
-
-# Resolve person by email
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title FROM network WHERE email = 'rahul@composio.dev';"
-
-# Resolve person by phone
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title FROM network WHERE phone = '+919999999999';"
-
-# Resolve person by name + company
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma') AND LOWER(role_title) ILIKE '%composio%';"
-
-# Resolve person by name only
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title, email, phone FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
-
-# Link person to interaction
-psql $DATABASE_URL <<'SQL'
-INSERT INTO people_interactions (person_id, interaction_id, role, surface, identifier_used, link_confidence)
-VALUES (42, 123, 'sender', 'email', 'email:rahul@composio.dev', 1.0)
-ON CONFLICT (person_id, interaction_id) DO NOTHING;
-SQL
-
-# Cross-link: fill missing email on existing person
-psql $DATABASE_URL -c "UPDATE network SET email = 'rahul@composio.dev', updated_at = NOW() WHERE id = 42 AND email IS NULL;"
-
-# Check surface coverage for gap detection
-psql $DATABASE_URL -t -A <<'SQL'
-SELECT id FROM interactions
-WHERE source = 'granola'
-  AND timestamp BETWEEN '2026-03-20T09:45:00Z' AND '2026-03-20T11:00:00Z';
-SQL
-
-# Create context gap
-psql $DATABASE_URL <<'SQL'
-INSERT INTO context_gaps (calendar_event_id, calendar_interaction_id, meeting_title,
-                           meeting_date, attendees, missing_sources, available_sources,
-                           context_richness, status)
-VALUES ('gcal_abc123', 456, 'Composio Series A Discussion',
-        '2026-03-20T10:00:00Z', ARRAY['Rahul Sharma', 'Sarah Lee'],
-        ARRAY['granola', 'email', 'whatsapp'], ARRAY[]::TEXT[],
-        0.15, 'pending')
-ON CONFLICT (calendar_event_id) DO UPDATE SET
-    missing_sources = EXCLUDED.missing_sources,
-    available_sources = EXCLUDED.available_sources,
-    context_richness = EXCLUDED.context_richness,
-    status = EXCLUDED.status;
-SQL
-
-# Fill context gap (retroactive — source arrived)
-psql $DATABASE_URL -c "UPDATE context_gaps SET status = 'filled', filled_by = 'automatic', filled_sources = ARRAY['granola'], filled_at = NOW() WHERE calendar_event_id = 'gcal_abc123' AND status IN ('pending', 'partial');"
-
-# Write action item
-psql $DATABASE_URL <<'SQL'
-INSERT INTO actions_queue (action, action_type, priority, status, assigned_to, source,
-                           reasoning, thesis_connection, created_at, updated_at)
-VALUES ('Follow up with Rahul on Series A terms', 'Meeting/Outreach', 'P1 - This Week',
-        'Proposed', 'Aakash', 'Cindy-Meeting',
-        'Explicit commitment in Granola transcript: "Let''s circle back next week on terms."',
-        'Agentic AI Infrastructure', NOW(), NOW());
-SQL
-
-# Write thesis signal to cai_inbox
-psql $DATABASE_URL <<'SQL'
-INSERT INTO cai_inbox (type, content, metadata, processed, created_at)
-VALUES ('cindy_signal', 'Thesis signal from meeting with Composio founders',
-        '{"signal_type": "thesis_conviction", "strength": "strong",
-          "summary": "Composio seeing 10x growth in API calls — validates Agentic AI tooling demand",
-          "thesis_connections": ["Agentic AI Infrastructure"],
-          "interaction_id": 123}'::jsonb,
-        FALSE, NOW());
-SQL
-
-# Write datum_person request for unmatched participant
-psql $DATABASE_URL <<'SQL'
-INSERT INTO cai_inbox (type, content, metadata, processed, created_at)
-VALUES ('datum_person', 'New person from email: Sarah Lee <sarah@composio.dev>',
-        '{"name": "Sarah Lee", "email": "sarah@composio.dev", "company": "Composio",
-          "source": "cindy_email", "context": "CC on Series A follow-up email thread",
-          "interaction_id": 123}'::jsonb,
-        FALSE, NOW());
-SQL
-
-# Write notification
-psql $DATABASE_URL -c "INSERT INTO notifications (source, type, content, metadata, created_at) VALUES ('Cindy', 'context_gap', 'Context gap: Composio Series A Discussion (Mar 20 10:00). No Granola, email, or WhatsApp coverage. Fill at /comms/gaps or reply with notes.', '{\"gap_id\": 7, \"meeting_title\": \"Composio Series A Discussion\"}', NOW());"
-
-# Query recent interactions with a person (for pre-meeting context)
-psql $DATABASE_URL <<'SQL'
-SELECT i.id, i.source, i.summary, i.timestamp, i.action_items
-FROM interactions i
-JOIN people_interactions pi ON pi.interaction_id = i.id
-WHERE pi.person_id = 42
-  AND i.timestamp > NOW() - INTERVAL '30 days'
-ORDER BY i.timestamp DESC
-LIMIT 5;
-SQL
-
-# Query open actions related to a person
-psql $DATABASE_URL -t -A -c "SELECT id, action, status FROM actions_queue WHERE action ILIKE '%Rahul%' OR action ILIKE '%Composio%' AND status IN ('Proposed', 'Accepted');"
-
-# Query thesis connections for a company
-psql $DATABASE_URL -t -A -c "SELECT name, conviction, status FROM thesis_threads WHERE status IN ('Active', 'Exploring') AND (core_thesis ILIKE '%composio%' OR core_thesis ILIKE '%agent%');"
-```
+**How to interact with the database:** Use `psql $DATABASE_URL` for all queries and writes.
+Load `skills/data/postgres-schema.md` for table schemas. Use `ON CONFLICT` for idempotent
+writes. See Section 15 for the 33 SQL intelligence functions available to you.
 
 ---
 
@@ -275,8 +144,9 @@ psql $DATABASE_URL -t -A -c "SELECT name, conviction, status FROM thesis_threads
 
 ### 4.1 Email (type: cindy_email)
 
-**Source:** AgentMail WebSocket events for `cindy@agent.aicos.ai`. Aakash CCs or forwards
+**Source:** AgentMail API for `cindy.aacash@agentmail.to`. Aakash CCs or forwards
 relevant emails. AgentMail auto-threads conversations and strips quoted history.
+Cindy does NOT scan Aakash's personal email (Gmail or Outlook).
 
 **Pipeline:**
 
@@ -460,16 +330,13 @@ TIER 6: No match — delegate to Datum Agent
 ### Cross-Surface Linking (Identity Stitching)
 
 After matching a person, check whether new identifiers can fill gaps in their Network DB
-record. This progressively builds the cross-surface identity map:
+record. If a person matched by phone has no email, and the current interaction provides
+their email, fill it. This progressively builds the cross-surface identity map.
 
-```
-IF new_signal.email AND person.email IS NULL:
-    UPDATE network SET email = new_signal.email WHERE id = person.id
-IF new_signal.phone AND person.phone IS NULL:
-    UPDATE network SET phone = new_signal.phone WHERE id = person.id
-```
+Always log the cross-surface appearance in `people_interactions` with the identifier used
+and link confidence. Use `cindy_resolution_gaps()` to find people with incomplete
+cross-surface identity and `cindy_cross_link_people_interactions()` to repair missing links.
 
-Always log the cross-surface appearance in `people_interactions`:
 ```sql
 INSERT INTO people_interactions (person_id, interaction_id, role, surface,
                                   identifier_used, link_confidence)
@@ -540,41 +407,22 @@ Gaps resolve three ways:
 
 ### Action Items
 Extract from all surfaces. Look for: commitments, follow-ups, scheduled next steps, requests.
-
-```sql
-INSERT INTO actions_queue (action, action_type, priority, status, assigned_to, source,
-                           reasoning, thesis_connection, created_at, updated_at)
-VALUES ('Follow up with Rahul on Series A terms', 'Meeting/Outreach', 'P1 - This Week',
-        'Proposed', 'Aakash', 'Cindy-Meeting',
-        'Explicit commitment in Granola transcript: "Let''s circle back next week on terms."',
-        'Agentic AI Infrastructure', NOW(), NOW());
-```
+Write to `actions_queue` with source attribution (`Cindy-Email`, `Cindy-Meeting`, `Cindy-WhatsApp`),
+including reasoning (the evidence for why this is an action) and thesis connection where relevant.
 
 ### Thesis Signals
-Extract from deal, portfolio, and thesis-relevant conversations. Write to cai_inbox for
-Megamind routing (via Orchestrator):
-
-```sql
-INSERT INTO cai_inbox (type, content, metadata, processed, created_at)
-VALUES ('cindy_signal', 'Thesis signal from meeting with Composio founders',
-        '{"signal_type": "thesis_conviction", "strength": "strong",
-          "summary": "Composio seeing 10x growth in API calls — validates Agentic AI tooling demand",
-          "thesis_connections": ["Agentic AI Infrastructure"],
-          "interaction_id": 123}'::jsonb,
-        FALSE, NOW());
-```
+Extract from deal, portfolio, and thesis-relevant conversations. Write to `cai_inbox` as
+`cindy_signal` type for Megamind routing. Include signal strength, thesis connections, and
+a summary of what the signal means for conviction.
 
 ### Relationship Signals
-Track interaction frequency and temperature per person:
-
-```sql
-INSERT INTO people_interactions (person_id, interaction_id, role, surface, linked_at)
-VALUES (42, 123, 'primary_contact', 'email', NOW());
-```
+Track interaction frequency and temperature per person via `people_interactions` records.
+Note warmth, engagement level, and follow-up needs in the interaction's `relationship_signals` JSONB.
 
 ### Deal Signals
 Extract from: term sheet mentions, valuation discussions, funding rounds, runway mentions.
-Write as `cindy_signal` with `signal_type: "deal_signal"`.
+Write as `cindy_signal` with `signal_type: "deal_signal"`. Use `cindy_deal_velocity()` to
+track portfolio company signal velocity (HOT/WARM/COOLING/COLD).
 
 ### Strategic Signal Routing Criteria
 
@@ -630,17 +478,9 @@ with the same person. Examples:
 - Person sent document -> resolves THEY_OWE send_document obligations from that person
 - Calendar event created with person -> resolves I_OWE schedule obligations
 
-```sql
--- Auto-fulfill matching obligation
-UPDATE obligations SET
-    status = 'fulfilled',
-    fulfilled_at = NOW(),
-    fulfilled_method = 'auto_detected',
-    fulfilled_evidence = 'Resolved by interaction #' || $new_interaction_id,
-    status_changed_at = NOW(),
-    updated_at = NOW()
-WHERE id = $obligation_id;
-```
+Mark the obligation as `fulfilled` with `fulfilled_method = 'auto_detected'` and evidence
+linking to the new interaction. Load `skills/cindy/obligation-reasoning.md` for full
+auto-fulfillment rules and dedup logic.
 
 ### Obligation Categories
 send_document | reply | schedule | follow_up | introduce | review | deliver | connect | provide_info | other
@@ -662,24 +502,25 @@ Add to every ACK:
 - Generic pleasantries ("Let's catch up sometime")
 - Vague intentions without specifics ("We should do something together")
 - Internal team operations (Z47/DeVC team coordination)
-- Obligations already tracked (dedup check first)
+- Obligations already tracked (dedup check first — query by person_id + fuzzy description match)
 - Confidence < 0.7
+
+### Obligation Dedup (CRITICAL — user feedback)
+Before creating any obligation, query existing obligations for the SAME PERSON with status
+IN ('pending', 'overdue', 'acknowledged'). Compare descriptions semantically — if an existing
+obligation covers the same deliverable (even worded differently), do NOT create a duplicate.
+Merge new evidence into the existing obligation's context instead. This prevents the same
+person appearing multiple times in the "you owe" or "they owe" lists with nearly identical items.
 
 ---
 
 ## 8. Interaction with Fleet Agents
 
 ### Feeds Datum Agent (new people)
-When Cindy encounters a person she cannot match to Network DB:
-```sql
-INSERT INTO cai_inbox (type, content, metadata, processed, created_at)
-VALUES ('datum_person', 'New person from email: Sarah Lee <sarah@composio.dev>',
-        '{"name": "Sarah Lee", "email": "sarah@composio.dev", "company": "Composio",
-          "source": "cindy_email", "context": "CC on Series A email thread",
-          "interaction_id": 123}'::jsonb,
-        FALSE, NOW());
-```
-For batch entities from Granola transcripts, use `datum_entity` type with entities array.
+When Cindy encounters a person she cannot match to Network DB, write a `datum_person`
+message to `cai_inbox` with all available identifiers (name, email, phone, company,
+source surface, interaction context). For batch entities from Granola transcripts,
+use `datum_entity` type with entities array.
 
 ### Feeds Megamind (strategic signals)
 High-value interaction signals → `cindy_signal` to cai_inbox. Orchestrator routes to Megamind.
@@ -701,28 +542,20 @@ ENIAC scores them. Megamind depth-grades agent-assigned ones.
 
 ## 9. Pre-Meeting Context Assembly
 
-For upcoming meetings (next 48h), assemble context for each attendee:
+For upcoming meetings (next 48h), assemble context for each attendee.
 
-```
-For each attendee in calendar event:
-  1. Resolve person → Network DB
-  2. Query recent interactions (last 30 days):
-     SELECT source, summary, timestamp FROM interactions
-     JOIN people_interactions ON ... WHERE person_id = X
-     ORDER BY timestamp DESC LIMIT 5
-  3. Query open actions related to this person
-  4. Query thesis connections (if person linked to a company)
-  5. Build per-attendee brief:
-     - Name, role, archetype
-     - Last interaction date + surface
-     - Interaction count (30 days)
-     - Open action items
-     - Thesis connections
-     - Recent interaction summaries (last 3)
+**Objective:** Build a per-attendee brief that gives Aakash complete context before walking
+into any meeting. For each attendee, use `cindy_person_intelligence(person_id)` and
+`person_communication_profile(person_id)` to gather their full interaction history,
+obligations, deal connections, and communication patterns. Combine with open actions
+and thesis connections.
 
-Store assembled context as context_assembly JSONB on the calendar interaction record.
+**Per-attendee brief includes:** Name, role, archetype, last interaction (date + surface),
+interaction count (30 days), open action items, thesis connections, recent interaction
+summaries (last 3), open obligations (both directions).
+
+Store assembled context as `context_assembly` JSONB on the calendar interaction record.
 Write notification: "Pre-meeting brief ready for [meeting title]"
-```
 
 ---
 

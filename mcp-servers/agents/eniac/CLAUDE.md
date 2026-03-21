@@ -51,13 +51,14 @@ You do not run on timers or heartbeats. You activate on demand.
 
 | Tool | Purpose |
 |------|---------|
-| **Bash** | Shell commands. `psql $DATABASE_URL` for all DB access. |
+| **Bash** | Shell commands. `psql $DATABASE_URL` for all DB access. `curl` for quick web fetches. |
 | **Read** | Read files from the filesystem |
 | **Write** | Write files to the filesystem |
 | **Edit** | Edit files |
 | **Grep** | Search file contents |
 | **Glob** | Find files by pattern |
 | **Skill** | Load skill markdown files for domain knowledge |
+| **Agent** | Spawn subagents for parallel research tasks (see Section 9) |
 
 ### Web Tools MCP (HTTP server at localhost:8001)
 
@@ -393,7 +394,58 @@ You CANNOT:
 
 ---
 
-## 9. Session State
+## 9. Subagent Strategy
+
+You have access to subagents via the **Agent** tool for parallel research. Subagents run
+in isolated contexts — they don't see your conversation history but they inherit your
+MCP servers and project context.
+
+### Available Subagents
+
+| Subagent | Purpose | When to Use |
+|----------|---------|-------------|
+| **web-researcher** | Multi-step web investigations | Competitive landscapes, evidence gathering from multiple web sources, company deep-dives requiring Playwright |
+| **thesis-analyst** | Thesis health, bias, and momentum analysis | Thesis deep-dives spanning multiple theses, bias detection across the portfolio |
+| **company-profiler** | Company intelligence gathering | Company diligence, portfolio company research, deal pipeline analysis |
+
+### Parallelization Patterns
+
+| Research Scenario | Strategy |
+|-------------------|----------|
+| Thesis deep-dive | Spawn web-researcher (evidence for) + web-researcher (evidence against) in parallel. You handle DB queries and synthesis. |
+| Company diligence | Spawn company-profiler + web-researcher (competitive landscape) simultaneously |
+| Health check sweep | Spawn thesis-analyst for bulk thesis health. You handle signal detection and system queries. |
+| Queue batch (3+ items) | Process items sequentially. Within each item, spawn subagent for web-heavy work. |
+| Cross-reference validation | You handle DB queries. Spawn web-researcher to validate signals against external sources. |
+
+### Rules (Mandatory)
+
+1. **YOU call `eniac_save_research_findings()`** — subagents NEVER write to the database directly.
+   They return structured text. You review, verify, cross-reference, adjust confidence, then persist.
+2. **Review before persisting** — never dump raw subagent output as a research finding.
+   Always synthesize: combine with DB context, score confidence, note contradictions.
+3. **Max 3 concurrent subagents** — more than 3 causes token/memory pressure on the droplet.
+4. **Simple psql queries: do them yourself** — don't spawn a subagent for a single DB call.
+5. **Always provide clear research questions** — tell the subagent exactly what to investigate,
+   what sources to prioritize, and what format to return results in.
+6. **Verify subagent source claims** — if a subagent cites a URL, spot-check at least one
+   per research item. Trust but verify.
+
+### Subagent Prompt Template
+
+When spawning a subagent, provide a structured prompt:
+
+```
+Research question: [specific question]
+Context: [what we already know from DB]
+Sources to check: [specific URLs, company sites, databases]
+Return format: [structured findings with source URLs, dates, confidence 0.0-1.0]
+Time budget: [focus on top 3-5 sources, not exhaustive]
+```
+
+---
+
+## 10. Session State
 
 Track your session state in `/opt/agents/eniac/state/`:
 

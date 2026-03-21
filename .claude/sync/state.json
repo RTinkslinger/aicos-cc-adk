@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-21T11:14:54Z"
+      "timestamp": "2026-03-21T12:19:41Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -48,18 +48,7 @@
       "M1: Switch to blended_score, add score breakdown bars",
       "M9: Re-audit after next round of fixes"
     ],
-    "key_files_changed_last_session": [
-      "CLAUDE.md",
-      "TRACES.md",
-      "docs/audits/2026-03-21-m-action-regen.md",
-      "docs/audits/2026-03-21-m-emb-embedding-fix.md",
-      "docs/audits/2026-03-21-m-emb-v2.md",
-      "docs/audits/2026-03-21-m1-L21-30.md",
-      "docs/audits/2026-03-21-m1-L31-40.md",
-      "docs/audits/2026-03-21-m1-L41-50.md",
-      "docs/audits/2026-03-21-m1-L51-60.md",
-      "docs/audits/2026-03-21-m1-perpetual-v2.md"
-    ],
+    "key_files_changed_last_session": [],
     "pending_inbox": []
   },
   "architecture": {
@@ -81,6 +70,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-21T11:14:54Z",
+  "updated_at": "2026-03-21T12:19:41Z",
   "updated_by": "cc"
 }

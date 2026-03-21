@@ -57,11 +57,38 @@ Run maintenance functions regularly. Detect and handle garbage, staleness, drift
 ### SQL Tool Functions (14 autonomous tools in Postgres)
 Call via `psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOUR tools — they do heavy lifting inside Postgres.
 
-**Maintenance:** `datum_daily_maintenance()`, `datum_data_quality_check()`, `datum_garbage_detector()`, `datum_consistency_enforcer()`, `datum_stale_action_detector()`, `datum_notion_drift_check()`
+**Maintenance (6):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_daily_maintenance()` | Master function — runs all others in sequence | `(op, op_status, op_count, op_details)` |
+| `datum_data_quality_check()` | Read-only health metrics across all entity types | `(check_name, check_status, count_value, pct_value, details)` |
+| `datum_garbage_detector()` | Finds garbage entries in network (first-name-only, empty, org suffixes) | `(id, person_name, role_title, issue, recommendation)` |
+| `datum_consistency_enforcer()` | Auto-fixes pseudo-IDs, missing notion_page_ids, exit mismatches | `(check_name, issues_found, auto_fixed, remaining, details)` |
+| `datum_stale_action_detector()` | Finds stale/unscored/duplicate actions | `(category, action_count, avg_days_old, action_ids, recommendation)` |
+| `datum_notion_drift_check()` | Checks sync freshness between Postgres and Notion | `(entity_type, total_entities, synced, possibly_drifted, never_synced, last_sync_at, sync_status)` |
 
-**Enrichment:** `datum_signal_propagator()`, `datum_network_signal_enricher()`, `datum_thesis_auto_backfill()`, `datum_cross_entity_linker()`, `datum_company_name_deduplicator()`
+**Enrichment (5):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_signal_propagator()` | Propagates signals across portfolio/companies/network | `(operation, affected_count, details)` |
+| `datum_network_signal_enricher()` | Enriches network members with portfolio company signals | `(check_name, people_updated, details)` |
+| `datum_thesis_auto_backfill()` | Backfills thesis_connection on actions from portfolio | `(operation, affected_count, details)` |
+| `datum_cross_entity_linker()` | Builds entity_connections graph (people->companies, portfolio->companies, actions->companies) | `(operation, records_processed, details)` |
+| `datum_company_name_deduplicator()` | Finds potential duplicate companies by name matching | `(company_a_id, company_a_name, company_b_id, company_b_name, similarity_score, match_reason)` |
 
-**Identity:** `datum_resolve_pseudo_ids()`, `datum_entity_health()`, `datum_thesis_coverage()`
+**Identity & Health (3):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_resolve_pseudo_ids()` | Fixes broken `pg:` references in actions_queue | `(action_id, old_company_id, new_company_id, company_name, resolution_method)` |
+| `datum_entity_health()` | Per-entity-type fill rate metrics | `(entity_type, metric, total_count, filled_count, pct, status)` |
+| `datum_thesis_coverage()` | Maps thesis threads to portfolio and actions | `(thesis, portfolio_count, action_count, active_portfolio, exited_portfolio)` |
+
+**Quick reference — which to run when:**
+- Routine heartbeat: `datum_daily_maintenance()` (runs everything)
+- Health check: `datum_entity_health()` + `datum_data_quality_check()`
+- After entity creation: `datum_cross_entity_linker()` + `datum_signal_propagator()`
+- After batch import: `datum_company_name_deduplicator()` + `datum_garbage_detector()`
+- Sync issues: `datum_notion_drift_check()`
 
 ---
 

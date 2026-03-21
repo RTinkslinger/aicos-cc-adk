@@ -559,3 +559,50 @@ $function$;
 -- Health: 10/10
 
 -- MODEL STATE: v5.1-L96 | 16 multipliers | cap=1.35 | sigmoid@8.0 | Health 10/10
+
+-- ============================================================
+-- PERPETUAL LOOP v8 AUDIT (2026-03-21) — Agent v2
+-- ============================================================
+
+-- CRITICAL: snapshot_scores() NOT on cron
+-- refresh_active_scores() (cron jobid 24) does NOT call snapshot_scores()
+-- refresh_action_scores() (NOT on cron) DOES call snapshot_scores()
+-- Last snapshot: 10:58 UTC, 9.7 hours stale at audit time
+-- score_trend() and scoring_velocity() returning stale data
+-- FIX: Add PERFORM snapshot_scores() to refresh_active_scores()
+
+-- ENRICHMENT GAP: 18/41 (43.9%) active actions not context-enriched
+-- 8 obligation actions (IDs 139-146): zero scoring_factors, all defaults
+-- 10 original actions: have scoring_factors but no context_enriched flag
+-- Impact: confidence test fails, multiplier coverage reduced
+-- FIX: Run enrich_action_context() for all 18
+
+-- P0 ANOMALY ANALYSIS: Actions #136 (6.25) and #137 (6.37)
+-- Root cause: base scores 4.64/4.72 (all non-strategic factors at 0.5 default)
+-- Combined_mult maxed at 1.35 cap — boosts can't overcome weak base
+-- Design tension: priority label vs. model data quality
+-- NOT a bug — model correctly reports low confidence when factors are defaults
+
+-- MULTIPLIER COVERAGE IMPROVEMENT (vs. agent-build audit):
+-- portfolio_health: 17.1% -> 29.3% (+12.2pp from companies bridge fix)
+-- key_question: 14.6% -> 26.8% (+12.2pp from semantic embeddings)
+-- thesis_momentum: 41.5% -> 65.9% (+24.4pp from thesis connection resolution)
+-- thesis_breadth: 0% -> 56.1% (NEW in v5.2)
+
+-- SCORING SEPARATION: ZERO overlap between accepted and dismissed score ranges
+-- Accepted: 6.33-9.17 | Dismissed: 1.00-4.00 | Gap: 5.96
+
+-- SKILL FILES: 3 files at mcp-servers/agents/skills/scoring/
+-- Aligned with persistent agent pattern (objectives not scripts)
+-- Gap: no enrichment detection skill, no obligation scoring factors skill,
+--       no score diff tool, no calibration report
+
+-- PREFERENCE LEARNING: 113 decisions, 8.8% accept rate (20% threshold not met)
+-- Guard correctly preventing premature activation
+-- 12 manually seeded preference rows active
+
+-- KQ EMBEDDINGS: 386/386 complete (100%)
+-- Agent feedback: 2 records, 2 agents, 0 applied
+
+-- MODEL STATE: v5.2 | 17 multipliers | cap=[0.4,1.35] | sigmoid@8.0 | Health 10/10
+-- Regression: 20/22 PASS | Separation: 5.96 (ZERO overlap) | Enrichment: 56.1%

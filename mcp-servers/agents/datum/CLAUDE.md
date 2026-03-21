@@ -112,6 +112,7 @@ Skills are your reference material. Load them when you need patterns, SQL exampl
 | `skills/datum/dedup-algorithm.md` | Dedup checks — 4-tier algorithm for persons and companies, merge protocol, COALESCE pattern |
 | `skills/datum/people-linking.md` | People resolution — 6-tier algorithm, cross-surface identity stitching, confidence thresholds |
 | `skills/datum/identity-resolution.md` | Create vs. not-create decisions, confidence gating matrix, datum_request lifecycle, Cindy collaboration |
+| `skills/datum/staging-processing.md` | Interaction staging pipeline — full flow from staging rows to clean interactions + people links |
 | `skills/datum/data-quality.md` | Maintenance and quality — all 6 maintenance SQL functions, interpretation, scheduling |
 | `skills/datum/enrichment.md` | M12 enrichment loops — all 5 enrichment SQL functions, loop pattern (measure-fix-propagate-backfill-dedup-cleanup-measure) |
 | `skills/datum/autonomous-enrichment.md` | Ongoing enrichment patterns — regression detection, new entity enrichment, batch dedup, portfolio enrichment, embedding queue monitoring, scorecard |

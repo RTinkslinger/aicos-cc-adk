@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-21T01:41:22Z"
+      "timestamp": "2026-03-21T01:54:34Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -48,18 +48,7 @@
       "M1: Switch to blended_score, add score breakdown bars",
       "M9: Re-audit after next round of fixes"
     ],
-    "key_files_changed_last_session": [
-      "CHECKPOINT.md",
-      "TRACES.md",
-      "docs/audits/2026-03-20-companies-network-schema-audit.md",
-      "docs/audits/2026-03-20-data-fix2-m2-loop4.md",
-      "docs/audits/2026-03-20-data-loop-progress.md",
-      "docs/audits/2026-03-20-data-quality-m2-loop1.md",
-      "docs/audits/2026-03-20-datum-build-review-m4-loop3.md",
-      "docs/audits/2026-03-20-datum-integration-m4-loop4.md",
-      "docs/audits/2026-03-20-deep-enrichment-progress.md",
-      "docs/audits/2026-03-20-intelligence-quality-portfolio-m9.md"
-    ],
+    "key_files_changed_last_session": [],
     "pending_inbox": []
   },
   "architecture": {
@@ -81,6 +70,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-21T01:41:22Z",
+  "updated_at": "2026-03-21T01:54:34Z",
   "updated_by": "cc"
 }

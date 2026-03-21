@@ -606,3 +606,77 @@ $function$;
 
 -- MODEL STATE: v5.2 | 17 multipliers | cap=[0.4,1.35] | sigmoid@8.0 | Health 10/10
 -- Regression: 20/22 PASS | Separation: 5.96 (ZERO overlap) | Enrichment: 56.1%
+
+-- ============================================================
+-- PERPETUAL LOOP v9 (2026-03-21) — Obligation Urgency + Agent Tools
+-- ============================================================
+
+-- 44. snapshot_scores() added to refresh_active_scores() cron path
+-- Previously: refresh_active_scores() (cron jobid 24, */30) did NOT call snapshot_scores()
+-- Score snapshots were 10+ hours stale — score_trend() and scoring_velocity() unreliable
+-- FIX: PERFORM snapshot_scores() added at end of refresh_active_scores()
+-- Now: every 30 minutes, scores are refreshed AND snapshotted automatically
+
+-- 45. enrich_action_context() — expanded to cover Accepted status
+-- Previously: only enriched status='Proposed' actions
+-- FIX: WHERE status IN ('Proposed', 'Accepted')
+-- Also: added companies bridge routing for company_notion_id resolution
+-- Coverage: 19 newly enriched (was 23/42, now 42/42 = 100%)
+
+-- 46. obligation_urgency_multiplier(action_row) — 18th multiplier
+-- Replaces the simple obligation_boost flag with real obligation data
+-- Uses obligation_action_links to look up linked obligations
+-- Factors: obligation priority (blended_priority), overdue days, obligation type, status
+-- Signals:
+--   Priority >= 0.9 (critical): +10%
+--   Priority >= 0.7 (high): +6%
+--   Overdue > 14d: +8%
+--   Overdue > 7d: +5%
+--   I_OWE_THEM type: +4% (reputation at stake)
+--   Fulfilled obligation: 0.75x (-25% penalty — action is stale)
+--   Orphaned (no obligation link): 0.92x (-8% penalty)
+-- Cap: [0.75, 1.25]
+-- Coverage: 6/30 proposed actions (20%)
+-- Impact: AuraML obligations boosted to 1.19x, fulfilled obligations penalized to 0.75x
+
+-- 47. auto_dismiss_fulfilled_obligation_actions(dry_run) — cleanup tool
+-- Finds actions linked to fulfilled/completed/cancelled obligations
+-- dry_run=true: returns candidates without changing anything
+-- dry_run=false: dismisses actions, records reason in scoring_factors
+-- Immediate result: 2 stale actions dismissed (MSC Fund, DubDub — obligations fulfilled)
+
+-- 48. score_diff() — agent tool for score change analysis
+-- Compares last two score snapshots
+-- Returns: risers (score went up), fallers (score went down),
+--          new_actions (appeared since last snapshot),
+--          removed_actions (expired/dismissed since last snapshot)
+-- Delta threshold: > 0.05 points to filter noise
+-- Agents use this to understand what changed and why
+
+-- 49. scoring_calibration_report() — comprehensive health report
+-- Returns: model version, distribution by bucket, stats (mean/stddev/range),
+--          multiplier coverage (which multipliers are active on how many actions),
+--          enrichment coverage, confidence stats, anomalies (P0 below median,
+--          high score + low confidence), preference learning state,
+--          agent feedback state, score history freshness, regression summary
+-- Replaces the need to query multiple functions separately
+
+-- 50. explain_score() — updated to v5.3-M5L9
+-- Added thesis_breadth multiplier to JSONB output
+-- Obligation urgency signals in explanation:
+--   "URGENT obligation (overdue, priority N linked)" for v_obligation_mult > 1.10
+--   "obligation already FULFILLED — action may be stale" for 0.75x
+--   "orphaned obligation follow-up" for 0.92x
+-- Formula: 18 multipliers, cap=[0.4,1.35]
+
+-- DISTRIBUTION BEFORE/AFTER (Proposed only):
+--   Bucket | Before v9 | After v9
+--   9-10   | 12.5%     | 10.0%
+--   7-8    | 31.3%     | 26.7%
+--   5-6    | 40.6%     | 40.0%
+--   3-4    | 15.6%     | 23.3% (fulfilled obligations pushed here)
+
+-- MODEL STATE: v5.3-M5L9 | 18 multipliers | cap=[0.4,1.35] | sigmoid@8.0
+-- Regression: 20/22 PASS | Enrichment: 100% | Anomalies: 0
+-- New tools: score_diff(), scoring_calibration_report(), auto_dismiss_fulfilled_obligation_actions()
+-- Cron: snapshot_scores() now runs via refresh_active_scores() every 30min

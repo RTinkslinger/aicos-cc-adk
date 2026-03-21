@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-21T20:43:31Z"
+      "timestamp": "2026-03-21T20:45:28Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -48,7 +48,11 @@
       "M1: Switch to blended_score, add score breakdown bars",
       "M9: Re-audit after next round of fixes"
     ],
-    "key_files_changed_last_session": [],
+    "key_files_changed_last_session": [
+      "mcp-servers/agents/datum/CLAUDE.md",
+      "docs/audits/2026-03-21-m10-agent-v2.md",
+      "mcp-servers/agents/skills/datum/autonomous-enrichment.md"
+    ],
     "pending_inbox": []
   },
   "architecture": {
@@ -70,6 +74,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-21T20:43:31Z",
+  "updated_at": "2026-03-21T20:45:28Z",
   "updated_by": "cc"
 }

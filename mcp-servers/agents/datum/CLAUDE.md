@@ -104,6 +104,11 @@ Call via `psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOU
 | `enriched_search(query, limit)` | Semantic search across all entities with enriched results | Ranked results with context |
 | `enriched_balanced_search(query, limit)` | Balanced search across entity types with weighted relevance | Ranked results balanced across types |
 
+**Scorecard (1):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_scorecard()` | Concise JSON scorecard — companies, network, portfolio, actions, graph, queue, quality metrics with overall RED/YELLOW/GREEN health | JSON object |
+
 **Quick reference — which to run when:**
 - Routine heartbeat: `datum_daily_maintenance()` (runs everything)
 - Health check: `datum_entity_health()` + `datum_data_quality_check()`

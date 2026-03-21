@@ -17,14 +17,10 @@
   "state": {
     "status": "active",
     "last_session": {
-      "summary": "Iteration 30: 61 agents across 8 machines. All past 10-loop minimum. M7+M8 deployed to droplet, M1 deployed to digest.wiki, CIR queue fixed, 13K entity connections, scoring iterated 3x, FTS rebuild in progress.",
-      "timestamp": "2026-03-20T19:37:57Z"
+      "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
+      "timestamp": "2026-03-21T01:39:07Z"
     },
-    "current_tasks": [
-      "M5 L11: Combined scoring fix (normalization+decay+acceptance) — agent running",
-      "M6 L11: FTS column rebuild with page_content — agent running",
-      "M12 L2+L5: Embedding enrichment + portfolio-thesis connections — agents running"
-    ],
+    "current_tasks": [],
     "recent_decisions": [
       {
         "decision": "Army pattern: specialized single-task agents per loop step",
@@ -44,12 +40,13 @@
     ],
     "blocked_on": [],
     "next_session_priorities": [
-      "Check if M5/M6/M12 agents completed — verify their results",
-      "M5: Verify scoring stddev >1.0 after combined fix",
-      "M6: Verify FTS search works after rebuild, test hybrid_search",
-      "M12: Continue L7-10 (Notion page content extraction, web enrichment)",
-      "M9: L13 re-audit after all fixes land",
-      "All machines: Continue looping past current state"
+      "Resume machineries: all 8 machines loop 21-40",
+      "Commit 284 uncommitted files in parent repo",
+      "M7→M5: Fix strategic_score feedback loop (CRITICAL)",
+      "M12: Notion page content extraction at scale (4,143 companies)",
+      "M8: Deploy AgentMail API key, test real email processing",
+      "M1: Switch to blended_score, add score breakdown bars",
+      "M9: Re-audit after next round of fixes"
     ],
     "key_files_changed_last_session": [
       "CHECKPOINT.md",
@@ -84,6 +81,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-20T19:37:57Z",
+  "updated_at": "2026-03-21T01:39:07Z",
   "updated_by": "cc"
 }

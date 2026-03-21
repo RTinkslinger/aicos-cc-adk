@@ -214,13 +214,25 @@ MACHINE (e.g., M1 WebFront) — permanent, loops forever
 ```
 
 ### Rules
-1. **Each STEP has an ARMY of specialist agents (4-5 minimum).** Like a product team at Uber/Airbnb/ByteDance: product designer, UX researcher, UI designer, data scientist, engineer, QA lead, etc.
-2. **"Add X more agents per machine" = staff MORE specialists at each step.** Not a longer task list.
+1. **Each STEP has a SERIAL CHAIN of 5 specialist agents (minimum).** Like a product org at Uber/Airbnb/ByteDance: work passes from specialist to specialist, each building on the prior one's output.
+2. **"Add X more agents per machine" = staff MORE specialists in each step's chain.** Not a longer task list.
 3. **Loops are FULL CYCLES** — input → build → assess → product leadership → research → build again. Each cycle's output feeds the next cycle's input. Flywheel improvement.
-4. **Cross-machine sync is MANDATORY.** Machines are intertwined. Every specialist agent needs context from OTHER machines' recent outputs. Propagate changes across all machines.
+4. **Cross-machine sync is MANDATORY.** Machines are intertwined. Every specialist needs context from OTHER machines' recent outputs. Propagate changes across all machines.
 5. **Product Leadership step** suggests problems + exploratory directions, NOT instructions. "UX feels rough on tab transitions → maybe try visual loading feedback, faster data streaming, or novel approaches."
 6. **Think/Research/Solve step** = deep and wide research. Study Linear, Superhuman, Bloomberg. Research is core behavior, not optional.
-7. **Machine agent is an ORCHESTRATOR** that spawns specialist sub-agents via the Agent tool. It is NOT a solo worker doing sequential tasks.
+7. **Parallelism is ACROSS machines (8 running simultaneously), not within steps.** Within each step, specialists work serially — each building on the previous one's output. This mirrors how product orgs work (designer → engineer → QA).
+
+### How Specialists Work Within a Step
+```
+Step (e.g., Build/Execute):
+  Specialist 1 (Product Designer): Reviews requirements → design brief
+  Specialist 2 (Engineer): Takes design brief → implements code
+  Specialist 3 (Data Engineer): Takes implementation → wires data layer
+  Specialist 4 (UX Researcher): Takes result → reviews against best practices
+  Specialist 5 (QA): Takes all output → tests, documents issues
+  → Step output = final specialist's refined result
+```
+Each specialist receives ALL prior specialists' output. The chain compounds quality. The machine agent role-plays each specialist in sequence.
 
 ### Agent Architecture (Python = plumbing, Claude = reasoning)
 - Python scripts: data extraction, API calls, file I/O (plumbing ONLY)

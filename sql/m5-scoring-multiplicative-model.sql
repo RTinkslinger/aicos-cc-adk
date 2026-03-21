@@ -734,7 +734,16 @@ $function$;
 --     — these are batch-generated portfolio check-ins that were high-quality but dismissed
 --     — verb_pattern should eventually learn from this pattern
 
+-- 54. action_verb_pattern_multiplier() — expanded v5.3-M5L10
+-- NEW verb patterns: PORTFOLIO_CHECKIN, OVERDUE, INVESTIGATE, ASSESS, CHASE, FOLLOW_UP
+-- Also: ANALYZE/ANALYSE now classified as MAP_RESEARCH (was falling through)
+-- Coverage: 9/24 → 13/24 proposed actions with verb signal (54.2%)
+-- OVERDUE pattern: 5 samples, 0% accept → 0.82x (moderate signal)
+-- CHASE pattern: recognized for obligation follow-ups
+-- FOLLOW_UP pattern: recognized for "Follow up:" prefix
+
 -- MODEL STATE: v5.3-M5L10 | 18 multipliers | cap=[0.4,1.35] | sigmoid@8.0
--- Crons: normalize_all_scores DISABLED (was jobid 6), 4 remaining crons healthy
+-- Crons: normalize_all_scores DISABLED (was jobid 6), 3 remaining crons healthy
 -- Regression: 20/22 PASS | Health: 10/10 | Enrichment: 100%
 -- Preference learning: guarded (115 decisions, 8.7% accept rate)
+-- Verb pattern coverage: 54.2% (was 37.5%)

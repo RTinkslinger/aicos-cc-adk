@@ -1,5 +1,57 @@
 # CLAUDE.md
 
+## MANDATORY CONTEXT — CANNOT BE SKIPPED UNDER ANY CIRCUMSTANCES
+
+**THE FOLLOWING IS NOT OPTIONAL. IT IS NOT A SUGGESTION. IT IS A HARD REQUIREMENT.**
+**EVERY SINGLE SESSION IN THIS PROJECT MUST FOLLOW THESE RULES.**
+**THERE ARE NO EXCEPTIONS. THERE ARE NO SHORTCUTS. THERE IS NO "I'LL DO IT DIFFERENTLY."**
+
+### STEP 0: Before ANYTHING else — read the golden pattern file
+
+```
+Read docs/source-of-truth/GOLDEN-SESSION-PATTERN.md — THE ENTIRE FILE, NOT SKIMMING
+```
+
+This file contains the ONLY correct way to operate in this project. **Golden Pattern v2** — extracted from session 2026-03-20 (rated 10/10) + refined through 100+ corrections + perfected in the last 60 minutes of session 2026-03-21 (perpetual loops, feedback infrastructure, agent-first architecture). Every deviation has resulted in wasted hours.
+
+**"Resume machineries" = read Section 9 of the golden pattern file. It tells you EXACTLY what to do.**
+
+### HARD RULES (violating ANY of these is a session failure)
+
+1. **AGENTS DO ALL THINKING.** Claude Agent SDK agents reason. SQL functions fetch data. Python scripts move data. If you write SQL that scores, assesses, recommends, detects, or predicts — you have FAILED. That logic belongs in an agent.
+
+2. **MACHINE LOOP ≠ AGENT DOING WORK.** M4 machine loop BUILDS the Datum agent (its code, skills, tools, instructions). Datum agent RUNS AUTONOMOUSLY on the droplet. M8 machine loop BUILDS Cindy. Cindy RUNS on her own. The machine loop makes agents SMARTER. It does not DO the agent's work.
+
+3. **MACHINES ARE PERPETUAL.** They loop forever with internal specialist steps (product leadership → research → build → review → fix → cross-machine). They do NOT stop after one build. They do NOT ask "shall I proceed?" They EXECUTE.
+
+4. **DATUM RUNS EVERY SESSION.** M4 Datum has been neglected in every session since the golden one. This is the #1 recurring failure. Datum = data quality, linkages, enrichment, embedding health. Skip it and every other machine works with garbage data.
+
+5. **ORCHESTRATOR DIFFUSES CONTEXT.** The CC main thread reads agent results, routes findings to other machines, spawns fix agents, routes user feedback in real-time, maintains the task dashboard, captures the feedback timeline. It does NOT launch agents and walk away.
+
+6. **USER IS THE ONLY JUDGE.** Machine self-grades are meaningless. The system reported 9.6/10 while the user experienced 3/10. Technical health ≠ product quality. If the user says 3/10, it's 3/10.
+
+7. **WEBFRONT DEPLOYS EVERY M1 LOOP.** The user is the sole consumer. They test live on digest.wiki. No batching deploys.
+
+8. **FEEDBACK TIMELINE CREATED AT SESSION START.** `docs/feedback-timeline-YYYY-MM-DD.md` — append every user reaction with timestamp. At pause: analyze patterns, feed reasoned analysis to machines.
+
+9. **BACKEND = LIGHT PLUMBING.** lifecycle.py, systemd, deploy.sh, cron. No reasoning. No intelligence logic in Python or SQL. Ever.
+
+10. **NEVER BYPASS USER TRIAGE.** The depth grading system (Skip/Scan/Investigate/Ultra) exists so the USER decides what to delegate to agents. Never auto-delegate. Never remove user control.
+
+### IF YOU FIND YOURSELF DOING ANY OF THESE — STOP IMMEDIATELY
+
+- Writing a complex SQL function that "assesses risk" or "generates intelligence"
+- Launching one fat agent with "do 10 loops"
+- Skipping Datum machine
+- Not deploying M1 after a loop
+- Reporting 9/10 when the user said 3/10
+- Asking "shall I proceed?" instead of executing
+- Not creating the feedback timeline
+- Building smarter SQL instead of smarter agents
+- Not reading GOLDEN-SESSION-PATTERN.md
+
+---
+
 This file provides guidance to Claude Code when working with code in this repository.
 
 ## Project Overview
@@ -131,6 +183,28 @@ Any agent building or modification MUST cross-reference the Agent SDK documentat
 3. **No silent fallbacks:** If the Agent SDK can't do something, STOP and discuss before taking an alternative path
 4. **Research first:** Read `docs/research/2026-03-15-agent-web-mastery/` for web browsing problem statements and solutions
 
+## FUNDAMENTAL ARCHITECTURE RULE (HARDCODED — NEVER VIOLATE)
+
+**Claude Agent SDK agents do ALL the thinking. SQL/Python/scripts are PLUMBING ONLY.**
+
+The stack:
+1. **Infrastructure** (Postgres, pgvector, pgmq) → enables agents, stores data
+2. **Data** (structured + unstructured) → raw material for agents to query
+3. **SQL functions** → simple data access tools FOR agents. NOT intelligence logic. NOT scoring formulas. NOT risk assessment algorithms.
+4. **Python scripts** → plumbing (data movement, API calls, file I/O). NOT reasoning.
+5. **Claude Agent SDK agents** (ENIAC, Datum, Cindy, Megamind) → ALL reasoning, scoring, risk assessment, strategic analysis, obligation prioritization, intelligence generation. WITH tools + skills + instructions + examples.
+
+**WHAT THIS MEANS FOR MACHINE LOOPS:**
+- Do NOT build smarter SQL functions that encode intelligence (no 15-multiplier scoring procedures, no weighted risk assessment in SQL)
+- DO build SQL functions as simple TOOLS that agents call (fetch data, aggregate, join, store results)
+- DO build agent skills, tools, instructions that make AGENTS smarter
+- The scoring function, risk assessment, intelligence generation = AGENT REASONING, not procedural SQL
+- WebFront renders AGENT OUTPUT (stored in DB after agent reasoning), not SQL function results
+- Preference stores, feedback loops, self-learning = agents reading accumulated user decisions and adapting their reasoning
+- This is REAL AI — Claude/Anthropic model power reasoning with full context, not SQL pretending to think
+
+**EVERY TIME you're about to write a complex SQL function that "scores" or "assesses" or "recommends" — STOP. That logic belongs in an agent.**
+
 ## Anti-Patterns
 
 - Do NOT default to morning briefs, dashboards, or generic task automation
@@ -138,6 +212,9 @@ Any agent building or modification MUST cross-reference the Agent SDK documentat
 - Do NOT lose the action-optimizer framing by narrowing to only meeting optimization
 - Do NOT design for desktop — Aakash lives on WhatsApp and mobile
 - Do NOT treat meeting optimization as the whole system — it's one output of the action optimizer
+- Do NOT build intelligence logic in SQL functions — agents reason, SQL fetches data
+- Do NOT write Python scripts that make intelligence decisions — scripts are plumbing for agents
+- Do NOT build "smarter SQL" when the answer is "smarter agents" — this has been violated 100+ times
 
 ## MCP Tool Routing (MANDATORY)
 
@@ -199,6 +276,10 @@ Trigger: "close session" / "end session" / "wrap up". All steps are conditional 
 ## Machine → Loop → Step → Army Pattern (HARDCODED)
 
 **This is the MANDATORY execution pattern for all permanent machineries. No simplification.**
+
+**PLAYBOOK:** Read `docs/source-of-truth/MACHINE-LOOP-PLAYBOOK.md` before ANY "resume machineries" command. It contains the definitive execution pattern with anti-patterns, agent templates, and the orchestrator's role. Reference session: 2026-03-20.
+
+**FEEDBACK TIMELINE (MANDATORY):** When running machine loops, IMMEDIATELY create `docs/feedback-timeline-YYYY-MM-DD.md` and append ALL user feedback with timestamps as it comes in. At pause/sync, reason about patterns and feed into next wave. This is hardcoded — no exceptions.
 
 ### Structure
 ```

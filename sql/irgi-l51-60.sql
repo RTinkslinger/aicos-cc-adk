@@ -1,0 +1,70 @@
+-- IRGI Intelligence Functions — L51-60
+-- Date: 2026-03-21
+-- Machine: M6 IRGI
+-- Theme: Intelligence Quality Revolution — from metrics to readable intelligence
+--
+-- ROOT CAUSE ADDRESSED: User rates intelligence 3/10 despite IRGI score 9.6/10.
+-- Functions were technically correct but returned generic metrics instead of
+-- actionable intelligence. Portfolio key_questions, high_impact, external_signal,
+-- spikey, scale_of_business, fumes_date, cash_in_bank, and research_file_path
+-- were all unused. Actions were truncated to 80 chars. Thesis evidence had no
+-- portfolio company context.
+--
+-- Changes:
+--   L51-52: REWRITE company_intelligence_profile() — now surfaces ALL portfolio fields:
+--     key_questions, spikey, scale_of_business, high_impact, external_signal,
+--     fumes_date, cash_in_bank, ownership_pct, follow_on_decision, research_file_path.
+--     People show roles+LinkedIn. Actions show full text+reasoning. Interactions show
+--     deal and relationship signals.
+--
+--   L53-54: REWRITE aggregate_thesis_evidence() — NEW evidence types:
+--     - portfolio_insight: portfolio companies linked to thesis with key_questions,
+--       scale, spikey, high_impact, external_signal (via entity_connections + company name match)
+--     - interaction_signal: interactions with deal_signals and thesis_signals from M8/Cindy
+--     - Actions now show full text + reasoning (was: LEFT(action, 200) with no reasoning)
+--     - Outcomes now show the outcome decision text
+--
+--   L55-56: NEW enriched_search() — wrapper around hybrid_search that adds context_snippet:
+--     - Companies: if portfolio, shows health/ownership/scale/spikey/key_questions
+--     - Network: shows role/LinkedIn/status/last_interaction/page_content
+--     - Actions: shows priority/type/status/thesis_connection/reasoning
+--     - Thesis: shows conviction/status/key_companies/evidence_for/evidence_against
+--     - Content: shows channel + digest_data
+--
+--   L57-58: REWRITE portfolio_intelligence_map() — Bloomberg terminal feel:
+--     - Fund column now shows scale_of_business + SPIKEY + fumes countdown + cash
+--     - Thesis connections include conviction level
+--     - Key people include roles
+--     - Attention reasons prioritized: RED HEALTH > FUMES countdown > Yellow + KQ > no KQ
+--     - Sort order: Red first, then fumes urgency, then yellow, then green
+--
+--   L59-60: Quality self-test across all 8 theses + full benchmark update:
+--     - All 8 theses produce 60 evidence items each (limit)
+--     - Each thesis gets: 10 portfolio_insights, 20 actions, 15 content, 10 network
+--     - Portfolio insights surface key_questions when present (12/142 companies have KQ)
+--     - irgi_benchmark updated to 27 functions (added enriched_search)
+--
+-- Performance results (all PASS):
+--   company_intelligence_profile: 12.3ms (was ~15ms, threshold 200ms)
+--   aggregate_thesis_evidence: 45.6ms (was 37ms, slight increase from portfolio joins)
+--   enriched_search: 13.9ms (NEW, threshold 300ms)
+--   portfolio_intelligence_map: 18.2ms (was 17ms, stable)
+--   Full benchmark: 27/27 PASS, avg 19.4ms
+--
+-- Data coverage (portfolio fields):
+--   scale_of_business: 81/142 (57%)
+--   spikey: 98/142 (69%)
+--   key_questions: 12/142 (8.5%)
+--   high_impact: 21/142 (14.8%)
+--   external_signal: 2/142 (1.4%)
+--   fumes_date: 1/142 (0.7%)
+--   cash_in_bank: 1/142 (0.7%)
+--
+-- Embedding recovery since L41-50:
+--   interactions: 0% -> 100% (FIXED)
+--   companies: 10.7% -> 50.8% (recovering)
+--   network: 2.5% -> 10.4% (recovering)
+--   find_similar_network: 0 rows -> 5 rows (functional again)
+--
+-- All functions deployed directly to Supabase via execute_sql.
+-- This file is a record of what was deployed; the canonical source is the database.

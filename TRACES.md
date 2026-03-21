@@ -857,3 +857,140 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 
 **Context:** 9 background agents running (7 machines + 2 research). Session ongoing.
 ---
+
+### Iteration 32 - 2026-03-21
+**Phase:** Resume Machineries (crash recovery) + Machine Loop Playbook
+**Focus:** Recover from crashed session, launch 8 machines L21-35, document definitive machine loop execution pattern
+
+**Changes:**
+- `docs/source-of-truth/MACHINE-LOOP-PLAYBOOK.md` (new — definitive reference for machine loop execution. Captures golden pattern from 2026-03-20 session vs anti-patterns from this session. Includes agent templates, orchestrator ledger, cross-machine routing, specialist chains, machine cadence.)
+- `CLAUDE.md` (added PLAYBOOK reference under Machine Loop section)
+- `memory/feedback_deploy_every_loop.md` (new — WebFront must deploy after EVERY loop)
+- `memory/feedback_machine_loop_execution_quality.md` (new — 1 agent = 1 task, separate build/review, active orchestrator)
+- `memory/MEMORY.md` (added 2 new feedback entries)
+
+**Machines Launched (all background, 8 parallel):**
+- M5 Scoring L26-35, M6 IRGI L21-30, M7 Megamind L21-30, M8 Cindy L26-35
+- M9 Intel QA L21-30, M10 CIR L26-35, M12 Data Enrichment L16-25
+- M1 WebFront L21-30 (with deploy-per-loop mandate sent via SendMessage)
+
+**Crashed Session Recovery (2026-03-21 earlier):**
+- M5: 5 loops completed (multiplicative model, portfolio detection, health monitoring) — at L25
+- M8: 5 loops (Granola staging, WhatsApp, Datum processing, Cindy reasoning) — at L25
+- M10: 5 loops (queue drain, staleness fix, connection expansion, analytics) — at L25
+- M12: 5 loops L11-15 (portfolio content, sector 100%, website/domain, email) — at L15
+
+**Key Decision:**
+- User rated this session 5/10 for machine loop execution (vs 10/10 for 2026-03-20 golden session)
+- Root cause: launched 8 fat monolithic agents ("run 10 loops each") instead of focused single-task agents with separate build/review/fix and active orchestrator routing
+- Created `MACHINE-LOOP-PLAYBOOK.md` as permanent reference to prevent regression in future sessions
+- Playbook captures: ONE agent = ONE task, separate build/review agents, orchestrator reads results and routes findings, cross-machine context is LIVE not static, plan 1 wave at a time
+
+**Context:** 8 background agents running. Session marked as "poor sample" by user — reference playbook for correct pattern.
+---
+
+### Iteration 33 - 2026-03-21
+**Phase:** Massive Machine Loop Session — 60+ agents, 9 machines perpetual, Golden Pattern codified
+**Focus:** 5+ waves of all machines looping in parallel, user feedback stream integration, data enrichment to 142/142, system quality 3/10→6.0/10
+
+**Changes (files created/modified this session):**
+- `docs/source-of-truth/GOLDEN-SESSION-PATTERN.md` (rewritten 3x — definitive 7-section reference: foundations, machine list, loop pattern, orchestrator behavior, critical learnings, agent inventory, session checklist)
+- `docs/source-of-truth/MACHINE-LOOP-PLAYBOOK.md` (evolved 5x — feedback timeline, worktrees, intertwined machines, agentic architecture)
+- `CLAUDE.md` (hardened top section: MANDATORY CONTEXT with 10 hard rules, cannot skip under any circumstances)
+- `docs/feedback-timeline-2026-03-21.md` (new — 12+ timestamped user feedback points with pattern analysis)
+- `docs/audits/2026-03-21-*.md` (~40 audit reports across all machines)
+- `sql/*.sql` (~10 SQL reference files)
+- `aicos-digests/` (15+ commits deployed to digest.wiki — score explanation modal, person intel panel, strategic briefing memo, obligation action buttons, feedback widget, contradictions section, progressive disclosure, mobile fixes)
+- `memory/` (8 new feedback memories: deploy-every-loop, execution-quality, machines-evolution-not-fixes, real-quality-scores, context-loss, intelligence-flow, progressive-disclosure-chat, agents-do-thinking, feedback-timeline, cindy-EA, real-intelligence-vision, conversational-UX, machine-architecture-definitive)
+
+**Session Stats:**
+- 60+ agents spawned across 5+ waves
+- 9 permanent machines running perpetual (M1, M4, M5, M6, M7, M8, M9, M10, M12) + M-Backend identified
+- 2 temp machines (M-EMB embedding fix, M-ActionRegen stale action cleanup)
+- System quality: 3.4/10 → 6.0/10 (M9 honest audit)
+- M12 Data: 0/142 → 142/142 research files read (100% key_questions, 100% high_impact)
+- Network embeddings: 10.5% → 74.6% (approaching 100%)
+- Company embeddings: 100% recovered
+- Scoring: 15→16 multipliers, model v5.0-L86, health 10/10, compression fixed (55%→24.5%)
+- IRGI: 8→27+ functions, search precision 62→96%, IRGI 8.7/10
+- Megamind: convergence 0.28→0.764, strategic briefing v3.0 with 20 contradictions
+- Cindy: 0→38 functions, daily briefing 51ms, relationship momentum, nudge drafts
+- CIR: Grade A, 115K propagation events, embedding queue root cause fixed (3 bugs)
+- Datum: thesis mapping 31.7%→64.8%, funding 44.4%→68.3%, company_notion_id 0%→68.1%
+- Actions: 144→34 proposed (85 auto-dismissed), company_notion_id 0→98 linked
+- WebFront: 15+ deploys, score explanation modal, person intelligence panel, strategic briefing, obligation stories+actions, feedback widget, contradictions, progressive disclosure
+- Feedback widget LIVE on digest.wiki with page→machine routing
+
+**Key Decisions:**
+- Golden Session Pattern codified as definitive reference (MUST FOLLOW in CLAUDE.md)
+- Machine loop ≠ agent doing work (machine BUILDS agent, agent runs autonomously)
+- Agents do ALL thinking, SQL/Python = plumbing ONLY (hardcoded after 100+ violations)
+- Machines are perpetual evolution loops with internal specialist chains
+- Feedback timeline mandatory at session start
+- Datum machine NEVER neglect (was neglected, now running)
+- M-Backend machine identified (backend infra outside Agent SDK)
+- User feedback = RL signal. Feedback widget stores with page→machine routing.
+
+**User Feedback Patterns (from timeline):**
+1. Intelligence quality >> technical health (system reported 9/10, user experienced 3/10)
+2. Data richness is the bottleneck (85+ columns exist, functions used 5)
+3. UX is about stories not data ("You offered to meet Mohit..." not "Overdue 11 days")
+4. Progressive disclosure L0→L1→L2 with optional "chat with me"
+5. Agents do thinking, scripts are plumbing
+6. Machines are intertwined — every output is every other machine's input
+7. Product context erodes across agent waves — must include product vision in prompts
+
+**Context:** 9 perpetual machines running. System at 6.0/10. Network embeddings approaching 100%. Feedback widget live.
+
+**Late session updates (post iteration 33 entry):**
+- M5: Stale scores fixed, auto-refresh trigger live, model v5.1, key_question_relevance 0→23.1%
+- M12: 142/142 COMPLETE — all research files read and injected
+- M10: Network embeddings 74.6%, approaching 100%
+- M4: Thesis mapping 64.8%, funding 68.3%, datum_data_quality_check() built
+- M7: Contradictions section, briefing_history, convergence 0.764, obligation-dismiss cycle fixed
+- M8: 38 functions, relationship momentum, nudge drafts, interaction threading
+- M6: Search 97ms, balanced_search fixing cross-surface bias, deal_intelligence_brief
+- M1: 15+ deploys including feedback widget, strategic briefing memo, person intel panel, contradictions
+- M9: System 6.0/10, scoring excellent, IRGI correlation needs investigation
+- user_feedback_store CHECK constraint fixed (widget now works)
+- M-ActionRegen: 8 stale dismissed, queue cleaned to 34 proposed
+- Feedback system: get_machine_feedback() + mark_feedback_processed() + processed_by column — infrastructure not discipline
+- user_feedback_store CHECK constraint fixed (widget works)
+- Gmail MCP unblocked (user approved permission)
+- AgentMail API key confirmed on droplet
+- M5: auto-refresh trigger live, perfect separation (accepted 8.50 vs dismissed 2.52), model v5.1-L96
+- M8: cindy_companies_needing_attention() built, ONE THING ranking flaw found
+- M7: briefing v4.0 rebuilt (8 sections, NULL bug fixed, obligation-dismiss cycle fixed)
+- M4: pseudo-IDs 0, signals 100%, 7 autonomous Datum tools built
+- M10: network embeddings 87.3%→approaching 100%, connection pool healed (7.1%)
+- M6: balanced_search fixes cross-surface bias, 31 functions, IRGI 8.9/10
+- M12: 142/142 COMPLETE — all research files read
+- M1: feedback widget live, P0 attention list (user feedback fix), person intel, relationship momentum, strategic briefing wired
+- MILESTONE: Network embeddings 100% (3,528/3,528) — from 23.3% to 100% in one session
+- M5: perfect score separation (accepted 8.50, dismissed 2.52), auto-refresh trigger, model v5.1-L96
+- Feedback infrastructure: get_machine_feedback() + mark_feedback_processed() + processed_by column — machines self-check feedback
+- M8: cindy_companies_needing_attention() composite scoring, ONE THING ranking flaw identified + being fixed
+- M4: 12 autonomous tools, datum_daily_maintenance() master orchestrator, 8 duplicate companies merged
+- Feedback system WORKING: 4 new bug reports from /portfolio/52 surfaced via get_machine_feedback(), routed to M1+M4
+- User bugs: ownership wrong, founder links broken, deep research button dead — being fixed
+- M6: 36 functions, ENIAC toolkit complete (research_brief, research_queue, save_findings), IRGI 8.8/10
+- M8: ONE THING ranking fixed (Schneider #1 over WhatsApp admin), 7 network auto-created, Gmail is OUT OF SCOPE (Cindy reads her own AgentMail inbox only)
+- Feedback: cindy_email_scope memory saved — Cindy reads cindy.aacash@agentmail.to, not user's Gmail/Outlook
+- M5: 17 multipliers, semantic KQ matching 40.4%, score refresh cron (30min), separation 6.08pts, model v5.2
+- M10: MILESTONE — all embeddings 100% across all tables. CIR pivots to freshness.
+- M1: All 4 /portfolio/52 bugs fixed + ownership % globally fixed across 8 files + briefing v4.0 wired + home briefing card
+- M8: Deal velocity tracker (AuraML COOLING + #1 obligation), Gmail removed from scope, AgentMail confirmed
+- M4: Ownership diagnosed as display bug (data correct), datum_daily_maintenance 9/11
+- Feedback: Cindy+Datum collaboration pattern documented (confidence gating, gap-filling via WebFront, no garbage entries)
+- 7 garbage network entries (first-name only) need cleanup or deletion
+- M6: 7-surface search (interactions + portfolio added), thesis crossref fixed (7 theses, 30 results), 36 functions PASS
+- M5: 17 multipliers, semantic KQ matching 40.4%, thesis_breadth multiplier, score refresh cron, model v5.2
+- M8: Deal velocity (AuraML COOLING + Schneider #1), Gmail out of scope corrected to AgentMail
+- Feedback: Cindy+Datum collaboration pattern documented, WhatsApp full ingestion needed, agents use reasoning not Python pipelines
+- M4: Network signals 100%, 17 names fixed via LinkedIn slugs, datum_daily_maintenance at 17 ops, notion_drift_check built
+- M6: 7-surface search live, thesis crossref 30 results, ENIAC toolkit complete
+- M8: ONE THING fixed (Schneider #1), deal velocity tracker, AgentMail confirmed
+- WhatsApp: only 8 summaries ingested — full conversation history needs per-chat markdown for hybrid search
+- Agents must use reasoning+tools (MCP, Skills, Bash, web search) not Python pipelines
+- Session still active — 9 machines looping perpetually. Total agents spawned: 80+
+---

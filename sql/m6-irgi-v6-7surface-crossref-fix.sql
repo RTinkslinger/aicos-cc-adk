@@ -1,0 +1,52 @@
+-- M6 IRGI v6: 7-surface search + crossref thesis status fix
+-- Date: 2026-03-21
+-- Changes:
+--   1. irgi_interaction_thesis_crossref: Status filter Active → Active+Exploring
+--   2. hybrid_search: Added interactions + portfolio surfaces
+--   3. balanced_search: New min_interactions/min_portfolio params, old signature dropped
+--   4. enriched_balanced_search: Handles interactions + portfolio context
+--   5. agent_search_context: Handles interactions + portfolio in all columns
+
+-- ============================================================
+-- FIX 1: irgi_interaction_thesis_crossref — include Exploring theses
+-- ============================================================
+-- KEY CHANGE: WHERE t.status = 'Active' → WHERE t.status IN ('Active', 'Exploring')
+-- Without this, 7/8 theses (all Exploring) were invisible to crossref.
+-- After fix: 7 theses matched, 30 results (was 1 thesis, 17 results)
+
+-- ============================================================
+-- FIX 2: hybrid_search — add interactions + portfolio
+-- ============================================================
+-- Added interactions + portfolio to:
+--   - AND-match proxy selection (Strategy 1a)
+--   - OR-match proxy fallback (Strategy 1b)
+--   - Trigram fallback (Strategy 2, portfolio only - interactions don't have a name field)
+--   - Semantic + keyword search CTEs (ix_semantic/ix_keyword/ix_combined, pf_semantic/pf_keyword/pf_combined)
+--   - all_results UNION
+
+-- ============================================================
+-- FIX 3: balanced_search — new surface slots
+-- ============================================================
+-- Added parameters: min_interactions integer DEFAULT 1, min_portfolio integer DEFAULT 1
+-- Added interactions_raw and portfolio_raw CTEs
+-- Added to reserved slot allocation
+-- DROPPED old signature without min_interactions/min_portfolio:
+--   DROP FUNCTION IF EXISTS public.balanced_search(text, vector, integer, double precision, double precision, integer, integer, integer, integer, integer, text, timestamp with time zone, timestamp with time zone)
+
+-- ============================================================
+-- FIX 4: enriched_balanced_search — context for new surfaces
+-- ============================================================
+-- Added WHEN bs.source_table = 'interactions' context: source, date, deal signals, thesis signals
+-- Added WHEN bs.source_table = 'portfolio' context: health, scale, spikey, key questions, impact
+-- DROPPED old signature:
+--   DROP FUNCTION IF EXISTS public.enriched_balanced_search(text, vector, integer, double precision, double precision, integer, integer, integer, integer, integer, text, timestamp with time zone, timestamp with time zone)
+
+-- ============================================================
+-- FIX 5: agent_search_context — full enrichment for new surfaces
+-- ============================================================
+-- why_it_matters: Added interactions (source + date + summary + deal signals) and portfolio (health + scale + fumes + spikey + KQ)
+-- portfolio_connection: Added portfolio surface (DIRECT link)
+-- thesis_relevance: Added interactions entity type mapping
+-- recent_signals: Added interactions surface (full summary text)
+-- interaction_recency: Added interactions surface (date + source)
+-- agent_action_hint: Added portfolio Red health urgency, interactions analysis hint

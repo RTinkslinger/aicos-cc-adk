@@ -1,0 +1,53 @@
+-- IRGI Intelligence Functions — L41-50
+-- Date: 2026-03-21
+-- Machine: M6 IRGI
+-- Changes:
+--   L41: NEW find_companies_with_active_deals(days)
+--   L42: NEW relationship_strength_score(person_id, company_id)
+--   L43-44: NEW portfolio_intelligence_map(limit)
+--   L45-46: NEW embedding_health_report()
+--   L47: NEW predict_next_actions(thesis_id, limit)
+--   L48: NEW detect_emerging_signals(days)
+--   L49-50: NEW irgi_system_report(), FIX network_intelligence_report, UPDATE irgi_benchmark
+--
+-- All functions deployed directly to Supabase via execute_sql.
+-- This file is a record of what was deployed; the canonical source is the database.
+--
+-- Performance results (all PASS):
+--   find_companies_with_active_deals: 110ms (threshold 200ms)
+--   relationship_strength_score: 3.6ms (threshold 200ms)
+--   portfolio_intelligence_map: 17ms (threshold 500ms)
+--   embedding_health_report: 11ms (threshold 200ms)
+--   predict_next_actions: 20ms (threshold 200ms)
+--   detect_emerging_signals: 3.8ms (threshold 300ms)
+--   irgi_system_report: ~470ms (includes running full benchmark)
+--
+-- Bug fixes:
+--   network_intelligence_report: match_reason -> match_reasons (was breaking benchmark)
+--   irgi_benchmark: 21 -> 26 functions
+--
+-- Key findings:
+--   IRGI Score: 7.7/10
+--   Network embeddings: 80.8% -> 2.5% (M12 regression)
+--   Companies embeddings: 8.2% -> 10.7% (M12 progress)
+--   Interactions embeddings: 0% (still zero)
+
+-- ============================================================================
+-- All 7 new functions + 2 fixes are deployed to Supabase and documented in
+-- docs/audits/2026-03-21-m6-L41-50.md. Key patterns used:
+--
+-- 1. Interaction-Aware: Joins interactions.deal_signals JSONB to entity_connections
+--    and portfolio tables for cross-referencing deal data with portfolio status.
+--
+-- 2. Composite Scoring: relationship_strength_score uses weighted model
+--    (30% frequency, 25% connection, 20% recency, 15% signals, 10% obligations)
+--
+-- 3. God View: portfolio_intelligence_map uses LEFT JOIN LATERAL pattern
+--    for efficient per-company metric computation across 7 data sources.
+--
+-- 4. Predictive: predict_next_actions generates 5 prediction types from
+--    evidence gaps, key questions, coverage holes, network outreach, cross-thesis.
+--
+-- 5. Spike Detection: detect_emerging_signals compares recent vs baseline
+--    activity windows to identify new entrants and activity spikes.
+-- ============================================================================

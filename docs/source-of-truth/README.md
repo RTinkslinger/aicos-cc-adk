@@ -21,6 +21,8 @@ Exhaustive reference for the AI CoS system. Each file is self-contained and shar
 | **DROPLET-RUNBOOK.md** | Operational guide: services, directory layout, credentials, deploy, monitoring, failure recovery, scaling | Debugging infra, deploying, adding services |
 | **MCP-CLOUDFLARE-TUNNEL-SETUP.md** | Cloudflare Tunnel setup and configuration guide | Setting up or debugging MCP tunnel endpoints |
 | **MACHINERIES.md** | Build protocol: 6 iteration machines, army-of-agents approach, loop patterns, restart context | Starting a new session, resuming work, understanding the build approach |
+| **GOLDEN-SESSION-PATTERN.md** | **THE definitive execution pattern (v2).** Machine list, loop structure, feedback infrastructure, orchestrator behavior, agent-first architecture, session checklist. | **MUST READ before any "resume machineries" command. Loaded by CLAUDE.md.** |
+| **MACHINE-LOOP-PLAYBOOK.md** | Operational supplement: quick reference, prompt template, Supabase IDs, Cindy email setup, droplet services | Quick operational lookup during machine loops |
 
 ---
 

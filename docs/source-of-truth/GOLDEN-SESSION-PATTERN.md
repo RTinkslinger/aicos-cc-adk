@@ -54,8 +54,23 @@ WRONG (script-following, no reasoning):
 - Agent CLAUDE.md evolves as capabilities grow (new objectives, refined boundaries)
 - Hooks added for lifecycle quality gates
 - NEVER write step-by-step processing instructions in CLAUDE.md
-- NEVER build Python scripts that encode intelligence logic
 - NEVER create ephemeral agents (subprocess API calls)
+- Python scripts CAN do: data manipulation, codified logical processing, non-reasoning tasks. Python scripts CANNOT do: reasoning, strategic decisions, intelligence generation. If it needs reasoning → agent. If it's pure data transformation → Python tool is fine.
+- Machine loops keep building tools and commands that agents can USE — the agent's power grows each loop
+
+### 1a-iii. AGENT BUILD REVIEW SPECIALIST (MANDATORY for M4/M6/M7/M8 loops)
+
+Every machine loop that builds agents (Datum, ENIAC, Megamind, Cindy) MUST include a **Best-in-Class Autonomous Agent Review** specialist. This specialist reviews work from the vantage point of:
+
+1. **Is the agent CLAUDE.md objective-driven?** Or does it have step-by-step scripts? If scripts → rewrite as objectives.
+2. **Are skills rich enough?** Do they have patterns of success, anti-patterns, tool signatures with WHEN to use? Or are they thin lists?
+3. **Are tools properly declared?** Can the agent discover and chain tools through reasoning? Or does it need hardcoded sequences?
+4. **Is context/memory utilized?** Does the agent accumulate knowledge across sessions? Or does it start fresh every time?
+5. **Are hooks leveraged?** Stop hooks for iteration logging? Pre-compact hooks for state preservation? PostToolUse hooks for quality gates?
+6. **Is the agent truly autonomous?** Could it run for 24 hours without human intervention and produce useful output? Or would it get stuck?
+7. **Best-in-class benchmark:** Is this how Anthropic would build a persistent agent? Would this agent implementation impress the Claude Agent SDK team?
+
+This review specialist runs AFTER the build specialist in each machine loop. Its output feeds the next loop's improvements.
 
 ### 1b. Machine Loop ≠ Agent Doing Work
 
@@ -162,6 +177,14 @@ STEP 4: BUILD
 
 STEP 5: REVIEW (within the loop)
   → Test. Check edge cases. Score quality honestly.
+
+STEP 5b: AGENT BUILD REVIEW (for M4/M6/M7/M8 ONLY)
+  → Best-in-class autonomous agent review specialist
+  → Is CLAUDE.md objective-driven or scripted?
+  → Are skills rich with patterns + anti-patterns?
+  → Are tools discoverable and chainable?
+  → Is context/memory/hooks utilized?
+  → Would this impress the Agent SDK team?
 
 STEP 6: CROSS-MACHINE SYNC
   → What did this loop produce that other machines need?

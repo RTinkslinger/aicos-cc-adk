@@ -72,6 +72,26 @@ Every machine loop that builds agents (Datum, ENIAC, Megamind, Cindy) MUST inclu
 
 This review specialist runs AFTER the build specialist in each machine loop. Its output feeds the next loop's improvements.
 
+**Reference:** `docs/research/2026-03-21-persistent-agent-sdk-pattern.md` — the definitive persistent agent pattern from deep research.
+
+### 1a-iv. TOOL PERMISSIONS (HARDCODED)
+
+- **Main agents (Cindy, Datum, Megamind, ENIAC):** ALL tools allowed. No restrictions. `permission_mode="dontAsk"` with every tool enabled. These agents are fully autonomous.
+- **Subagents:** OVER-TOOL. Enable tools even if "maybe needed." Better to have an unused tool than a stuck agent. Task-related toolsets but generous.
+- **Python lifecycle code:** manages start/stop/hooks/security. Does NOT make intelligence decisions. Does NOT manage conversation state. Does NOT run tool loops.
+
+### 1a-v. ORCHESTRATOR MUST ACTIVELY MONITOR (HARDCODED)
+
+The CC orchestrator (this Claude Code session) MUST actively monitor all running machines. NOT launch and walk away.
+
+**Rules:**
+1. Check machine status EVERY TIME a machine completes or user sends a message
+2. If no machine has completed in 30+ minutes, actively check their output files for signs of stalling
+3. Report to user: which machines are running, which stalled, which completed
+4. NEVER go 2.5 hours without checking — this happened on 2026-03-21 and all 8 machines silently died
+5. If a machine stalls: diagnose why (context exhaustion, API limit, error) and relaunch
+6. The orchestrator is the BRAIN — a brain that stops monitoring is a dead brain
+
 ### 1b. Machine Loop ≠ Agent Doing Work
 
 | Term | What It Is | Example |

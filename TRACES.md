@@ -754,7 +754,7 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - M1 L3+L4 ✅: Scoring integrated + pre-meeting prep (portfolio above fold, PREP buttons). Both deployed.
 - M7 L2+L3 ✅: Megamind built (970L CLAUDE.md) + lifecycle integrated. Deployed to droplet.
 - M8 L1 ✅: All research done + design spec 2,290L. L2 BUILD 🔄.
-- M9 L1 ✅: 4 audits (5.5/6.2/50/59). CRITICAL: current_role='postgres' bug. L2 FIX 🔄.
+- M9 L1 ✅: 4 audits (5.5/6.2/50/59). CRITICAL: role_title='postgres' bug. L2 FIX 🔄.
 - M10 launched: Living System Architecture (continuous intelligence refresh).
 - Session: 52 agents spawned, 46 complete. 10 machines. Both repos deployed. Keep looping to 10+ per machine.
 
@@ -780,4 +780,49 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 
 **Context:** 58 agents spawned, ALL complete. 11 machines. Session at natural sync point. Compaction overdue (iteration 30 — do at session start next time).
 **Next:** Complete Loop 2 across all machines → L2 REVIEW → L3 BUILD/FIX → iterate toward 10 loops each.
+---
+
+### Iteration 30 - 2026-03-20
+**Phase:** 8-Machine Army — 76 agents, 7 machines at loop 20
+**Focus:** Resume machineries with army pattern. 76 agents across 5+ waves. All 8 machines past 10-loop minimum, 7 at 20.
+
+**Agent Fleet (28 agents across 8 machines):**
+- M12 Data Enrichment (7 agents): column rename (role_title renamed from current_role), role data restoration, company embedding enrichment, network embedding enrichment, entity_connections seeder, network dedup (276 groups), mega-orchestrator
+- M7 Megamind (4 agents): fix action_text→action refs, fix thesis_connection array→pipe-delimited, add strategic_score column + views, mega-orchestrator
+- M5 Scoring (3 agents): IRGI→priority score integration, multi-factor scoring model from scoring_factors JSON, mega-orchestrator
+- M6 IRGI (3 agents): network function expansion, bias detection enhancement, mega-orchestrator
+- M10 CIR (4 agents): trigger verification, propagation functions build, preference learning e2e test, mega-orchestrator
+- M9 Intel QA (4 agents): scoring distribution audit, IRGI function audit, data completeness audit, mega-orchestrator
+- M8 Cindy (4 agents): email processor scaffold, calendar+WhatsApp+Granola processors, interactions embedding trigger, mega-orchestrator
+- M1+M11 WebFront (1 agent): /comms (Cindy Alerts), /strategy (Megamind), depth grading UI, Geist fonts, obligations dashboard
+
+**Changes (IN PROGRESS):**
+- `mcp-servers/agents/megamind/CLAUDE.md` (action_text→action, thesis_connection format fixes)
+- `mcp-servers/agents/skills/megamind/` (same fixes)
+- `mcp-servers/agents/cindy/email/` (new — email processor pipeline)
+- `mcp-servers/agents/cindy/calendar/` (new — .ics processing)
+- `mcp-servers/agents/cindy/whatsapp/` (new — extraction script)
+- `mcp-servers/agents/cindy/granola/` (new — meeting notes integration)
+- Supabase: ALTER TABLE network RENAME role_title (from current_role, done), ADD strategic_score to actions_queue, entity_connections seeded, CIR triggers verified, propagation functions built, embedding triggers on interactions
+- Multiple SQL files and skills updated for column rename
+- `docs/audits/` (3+ new audit reports from M9)
+- `aicos-digests/` (feat/m1-m11-loops branch: /comms, /strategy, depth grading, obligations)
+
+**Decisions:**
+- Army pattern: many specialized single-task agents (not monolithic multi-loop agents) — matches successful iteration 28-29 approach
+- Wave 1 = foundation fixes (column renames, blockers, triggers). Wave 2 = consumers (audits, UI, enrichment).
+- All agents autonomous — no pause unless truly blocked on human input
+
+**Results:**
+- M7 Megamind: L5-11✅ deployed to droplet, cascade trigger live, 2 views created
+- M9 Intel QA: L4-12✅ full audit cycle, 6 reports, found 3 CRITICALs (compression, emails, orphans)
+- M8 Cindy: L5-12✅ email processor (785L), obligation extractor (393L), WhatsApp (982L), Granola (1069L), deployed+tested
+- M10 CIR: L3-11✅ triggers verified, 4 propagation functions, queue bug fixed (3,495→0), dead-letter queue
+- M1+M11 WebFront: L6-13✅ /comms+/strategy+depth grading+Geist fonts+a11y, merged+deployed to digest.wiki
+- M5 Scoring: L7-10✅ compression fix, L11🔄 4-fix combined migration (normalization+decay+acceptance+score)
+- M6 IRGI: L6-11✅ network in 5 functions, bias detection, L11🔄 FTS rebuild+P0 fixes
+- M12 Data: L1✅ rename(233 files), L4✅ connections(13,287), L6✅ dedup(191), L2+L5🔄 embeddings+portfolio
+
+**Key metrics:** 13,287 entity connections (10x), 3,531 network (deduped), bias_summary view live, CIR queue healthy, Megamind+Cindy live on droplet, /comms+/strategy deployed
+**Context:** Paused at API limit. ~13 agents still running (may complete). Full state in CHECKPOINT.md.
 ---

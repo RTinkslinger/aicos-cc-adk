@@ -37,7 +37,7 @@
 | Column | Filled | Rate | Severity |
 |--------|--------|------|----------|
 | person_name | 3,728 | 100% | -- |
-| current_role | 3,728 | 100% | -- |
+| role_title | 3,728 | 100% | -- |
 | email | 3,728 | 100% | -- |
 | linkedin | 3,126 | 83.9% | MEDIUM (602 missing) |
 | home_base | ~3,600+ | ~97% | LOW |

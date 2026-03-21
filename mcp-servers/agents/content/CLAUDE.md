@@ -62,7 +62,7 @@ You also have **Web Tools MCP** (HTTP server at localhost:8001):
 |-------|------------|-------------|
 | `content_digests` | Read + Write | slug, url (UNIQUE), title, channel, status (queued/processing/published/failed), digest_data (jsonb), digest_url, relevance_score, net_newness |
 | `thesis_threads` | Read + Write | name, conviction, status, core_thesis, key_questions, evidence_for, evidence_against |
-| `actions_queue` | Write | action_text, action_type, priority, status, assigned_to, relevance_score, reasoning, thesis_connection, source |
+| `actions_queue` | Write | action, action_type, priority, status, assigned_to, relevance_score, reasoning, thesis_connection, source |
 | `cai_inbox` | Read | id, type, content, metadata, processed, created_at |
 | `notifications` | Write | type, content, metadata, created_at |
 

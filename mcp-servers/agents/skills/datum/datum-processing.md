@@ -15,7 +15,7 @@ Input: "Add Rahul Sharma, CTO at Composio"
 Parsed:
   type: person
   person_name: Rahul Sharma
-  current_role: CTO at Composio       ← "Role at Company" format
+  role_title: CTO at Composio       ← "Role at Company" format
   linkedin: (unknown)
   home_base: (unknown)
 ```
@@ -34,15 +34,15 @@ Parsed:
 | Extracted From Input | DB Column | Notes |
 |---------------------|-----------|-------|
 | Person name ("Rahul Sharma") | `person_name` | NOT "name" |
-| Role + Company ("CTO at Composio") | `current_role` | NOT "role" — combined "Role at Company" format |
+| Role + Company ("CTO at Composio") | `role_title` | NOT "role" — combined "Role at Company" format |
 | LinkedIn URL | `linkedin` | NOT "linkedin_url" |
 | City / Location | `home_base` | NOT "city" — TEXT[] array |
 | Email | `email` | Direct mapping |
 | Phone | `phone` | Direct mapping |
 
 **Extraction patterns:**
-- "X at Y" / "X from Y" / "X, Y" → person_name + current_role (combine as "Role at Company")
-- "CTO" / "CEO" / "Founder" / "VP" / "Head of" → role component of current_role
+- "X at Y" / "X from Y" / "X, Y" → person_name + role_title (combine as "Role at Company")
+- "CTO" / "CEO" / "Founder" / "VP" / "Head of" → role component of role_title
 - "linkedin.com/in/..." → linkedin
 - Domain-like strings (x.com, x.io, x.dev) → company domain
 - City names / "based in X" → home_base (wrap in ARRAY[])
@@ -142,7 +142,7 @@ If a pending request exists, do NOT create a duplicate.
 | Column | Type | Datum Agent Usage |
 |--------|------|-------------------|
 | `person_name` | TEXT | P0 — required for record creation (NOT "name") |
-| `current_role` | TEXT | P0 — "Role at Company" format (NOT "role") |
+| `role_title` | TEXT | P0 — "Role at Company" format (NOT "role") |
 | `linkedin` | TEXT | P1 — strongest dedup key (NOT "linkedin_url") |
 | `e_e_priority` | TEXT | P1 — engagement priority classification |
 | `email` | TEXT | P2 — contact |

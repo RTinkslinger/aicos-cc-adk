@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS obligations (
     person_name TEXT NOT NULL,
         -- Denormalized for quick display (avoid JOIN on every WebFront render)
     person_role TEXT,
-        -- Denormalized: current_role from network table
+        -- Denormalized: role_title from network table
 
     -- What
     obligation_type TEXT NOT NULL CHECK (obligation_type IN ('I_OWE_THEM', 'THEY_OWE_ME')),

@@ -118,7 +118,7 @@
 | 1 | `id` | integer | NO | nextval('network_id_seq') |
 | 2 | `notion_page_id` | text | YES | - |
 | 3 | `person_name` | text | NO | - |
-| 4 | `current_role` | text | YES | - |
+| 4 | `role_title` | text | YES | - |
 | 5 | `home_base` | text[] | YES | '{}' |
 | 6 | `linkedin` | text | YES | - |
 | 7 | `ryg` | text | YES | - |

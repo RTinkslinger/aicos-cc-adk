@@ -39,9 +39,9 @@ Produces a **strategic score** from 0.0 to 1.0.
 
 Query:
 ```sql
-SELECT name, conviction FROM thesis_threads
+SELECT thread_name, conviction FROM thesis_threads
 WHERE status IN ('Active', 'Exploring')
-  AND name = ANY($thesis_connections);
+  AND thread_name = ANY(string_to_array($thesis_connection, '|'));
 ```
 
 ### Portfolio Exposure Multiplier
@@ -112,11 +112,15 @@ Your 5-step convergence process:
 
 2. **Cluster:** Group related actions by thesis thread, company, or person.
    ```sql
-   SELECT thesis_connection, COUNT(*) as action_count,
+   -- NOTE: thesis_connection is pipe-delimited TEXT, not an array.
+   -- For clustering, unnest the pipe-delimited values:
+   SELECT thesis, COUNT(*) as action_count,
           AVG(relevance_score) as avg_score
-   FROM actions_queue
+   FROM actions_queue,
+        LATERAL unnest(string_to_array(thesis_connection, '|')) AS thesis
    WHERE status IN ('Proposed', 'Accepted')
-   GROUP BY thesis_connection
+     AND thesis_connection != ''
+   GROUP BY thesis
    ORDER BY action_count DESC;
    ```
    Evaluate the CLUSTER, not individual items. A thesis with 8 open actions needs pruning,
@@ -125,7 +129,7 @@ Your 5-step convergence process:
 3. **Rank:** Within each cluster, apply diminishing returns.
    ```sql
    SELECT COUNT(*) FROM depth_grades
-   WHERE thesis_connections && ARRAY[$thesis_name]
+   WHERE $thesis_name = ANY(thesis_connections)
      AND execution_status = 'completed'
      AND created_at > NOW() - INTERVAL '14 days';
    ```
@@ -136,7 +140,7 @@ Your 5-step convergence process:
    - Query:
      ```sql
      SELECT assigned_to, COUNT(*) FROM actions_queue
-     WHERE thesis_connection = $thesis_name
+     WHERE thesis_connection LIKE '%' || $thesis_name || '%'
        AND status IN ('Proposed', 'Accepted', 'In Progress')
      GROUP BY assigned_to;
      ```

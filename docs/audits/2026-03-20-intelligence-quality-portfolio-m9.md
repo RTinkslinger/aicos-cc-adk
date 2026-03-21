@@ -3,7 +3,7 @@
 
 ## Executive Summary
 
-The Supabase intelligence layer holds **142 portfolio companies**, **3,722 network entries**, **4,565 companies**, and **115 actions**. Portfolio data is structurally sound with good Notion-to-Postgres sync fidelity. However, a **catastrophic `current_role` corruption** in the network table (100% of rows show "postgres" instead of actual roles) and pervasive duplicate person entries severely undermine the intelligence layer's utility for founder lookups, meeting prep, and relationship scoring.
+The Supabase intelligence layer holds **142 portfolio companies**, **3,722 network entries**, **4,565 companies**, and **115 actions**. Portfolio data is structurally sound with good Notion-to-Postgres sync fidelity. However, a **catastrophic `role_title` corruption** in the network table (100% of rows show "postgres" instead of actual roles) and pervasive duplicate person entries severely undermine the intelligence layer's utility for founder lookups, meeting prep, and relationship scoring.
 
 ### Overall Scores
 
@@ -76,11 +76,11 @@ Assessment: Stage values are internally consistent. The taxonomy (pre-product ->
 
 ## Dimension 2: Founder Linkage Quality (25/100)
 
-### Critical Finding: `current_role` Field Corruption
+### Critical Finding: `role_title` Field Corruption
 
-**All 3,722 network entries have `current_role` = "postgres"**
+**All 3,722 network entries have `role_title` = "postgres"**
 
-This is not a default value (column_default is NULL). The value "postgres" is the Postgres database superuser role name, strongly suggesting a sync/migration bug where `current_role()` (the Postgres SQL function that returns the current database user) was inadvertently written to all rows instead of the actual person's role.
+This is not a default value (column_default is NULL). The value "postgres" is the Postgres database superuser role name, strongly suggesting a sync/migration bug where `role_title()` (the Postgres SQL function that returns the current database user) was inadvertently written to all rows instead of the actual person's role.
 
 **Impact:** Complete inability to:
 - Identify founders vs. investors vs. operators in the network
@@ -185,7 +185,7 @@ Full coverage is excellent. However, the **quality of similarity results is poor
 
 ### Critical Issues
 
-1. **`current_role` = "postgres" for ALL 3,722 entries** (see Dimension 2). This is the single most damaging data quality issue in the database.
+1. **`role_title` = "postgres" for ALL 3,722 entries** (see Dimension 2). This is the single most damaging data quality issue in the database.
 
 2. **`enrichment_status` = "raw" for ALL 3,722 entries** -- no enrichment has been run on any network contact. Combined with the role corruption, this means the network table has names + LinkedIn URLs + company links but essentially no professional context.
 
@@ -246,7 +246,7 @@ All 40 checked were consistent. The sector taxonomy (Consumer, SaaS, B2B, Financ
 
 | # | Issue | Impact | Table | Fix Effort |
 |---|-------|--------|-------|-----------|
-| 1 | `current_role` = "postgres" for all 3,722 network entries | No role data for any contact. Blocks founder lookup, meeting prep, relationship routing. | network | Re-sync from Notion or enrich from LinkedIn. M (hours). |
+| 1 | `role_title` = "postgres" for all 3,722 network entries | No role data for any contact. Blocks founder lookup, meeting prep, relationship routing. | network | Re-sync from Notion or enrich from LinkedIn. M (hours). |
 | 2 | `enrichment_status` = "raw" for all 3,722 network entries | No enriched data on any contact. The network table is structurally linked but contextually barren. | network | Run enrichment pipeline. L (days). |
 
 ### P1 -- High (Degrades intelligence accuracy)
@@ -274,7 +274,7 @@ All 40 checked were consistent. The sector taxonomy (Consumer, SaaS, B2B, Financ
 ## Recommendations for M2/M4 (Data Layer) Fix Priorities
 
 ### Immediate (This Sprint)
-1. **Fix `current_role` corruption.** Investigate the sync code that populates this field. The Postgres function `current_role` returns "postgres" -- search for any SQL that uses `current_role` without table-qualifying it (e.g., `SELECT current_role` instead of `SELECT n.current_role FROM network n`). Re-sync the field from Notion after fixing.
+1. **Fix `role_title` corruption.** Investigate the sync code that populates this field. The Postgres function `role_title` returns "postgres" -- search for any SQL that uses `role_title` without table-qualifying it (e.g., `SELECT role_title` instead of `SELECT n.role_title FROM network n`). Re-sync the field from Notion after fixing.
 2. **Run network deduplication.** Group by LinkedIn URL (normalize trailing slashes and query params), merge entries, preserve the most complete record.
 
 ### Next Sprint

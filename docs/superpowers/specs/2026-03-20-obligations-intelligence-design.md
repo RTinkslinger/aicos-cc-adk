@@ -78,7 +78,7 @@ CREATE TABLE obligations (
     person_name TEXT NOT NULL,
         -- Denormalized for quick display (avoid JOIN on every WebFront render)
     person_role TEXT,
-        -- Denormalized: current_role from network table
+        -- Denormalized: role_title from network table
 
     -- What
     obligation_type TEXT NOT NULL CHECK (obligation_type IN ('I_OWE_THEM', 'THEY_OWE_ME')),
@@ -1162,14 +1162,14 @@ async function createManualObligation(input: {
 }) {
   const person = await supabase
     .from('network')
-    .select('person_name, current_role')
+    .select('person_name, role_title')
     .eq('id', input.personId)
     .single();
 
   await supabase.from('obligations').insert({
     person_id: input.personId,
     person_name: person.data?.person_name,
-    person_role: person.data?.current_role,
+    person_role: person.data?.role_title,
     obligation_type: input.type,
     description: input.description,
     category: input.category,

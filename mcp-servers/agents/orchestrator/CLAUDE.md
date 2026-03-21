@@ -108,7 +108,7 @@ Use `send_to_megamind_agent`. Same fire-and-forget pattern — returns immediate
 1. **Depth grading** — when new agent-assigned actions exist that have not been depth-graded:
    ```bash
    psql $DATABASE_URL -t -A -c "
-     SELECT id, action_text, relevance_score, thesis_connection, action_type
+     SELECT id, action, relevance_score, thesis_connection, action_type
      FROM actions_queue
      WHERE assigned_to = 'Agent'
        AND status = 'Proposed'
@@ -135,7 +135,7 @@ Use `send_to_megamind_agent`. Same fire-and-forget pattern — returns immediate
 3. **Cascade processing** — when depth-graded work completes and needs cascade analysis:
    ```bash
    psql $DATABASE_URL -t -A -c "
-     SELECT dg.id, dg.action_id, aq.action_text, aq.thesis_connection
+     SELECT dg.id, dg.action_id, aq.action, aq.thesis_connection
      FROM depth_grades dg
      JOIN actions_queue aq ON dg.action_id = aq.id
      WHERE dg.execution_status = 'completed'

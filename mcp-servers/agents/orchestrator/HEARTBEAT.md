@@ -101,7 +101,7 @@ If <12 hours: skip.
 
 ```bash
 psql $DATABASE_URL -t -A -c "
-  SELECT id, action_text, relevance_score, thesis_connection, action_type
+  SELECT id, action, relevance_score, thesis_connection, action_type
   FROM actions_queue
   WHERE assigned_to = 'Agent'
     AND status = 'Proposed'
@@ -143,7 +143,7 @@ If no results: skip.
 
 ```bash
 psql $DATABASE_URL -t -A -c "
-  SELECT dg.id, dg.action_id, aq.action_text, aq.thesis_connection
+  SELECT dg.id, dg.action_id, aq.action, aq.thesis_connection
   FROM depth_grades dg
   JOIN actions_queue aq ON dg.action_id = aq.id
   WHERE dg.execution_status = 'completed'

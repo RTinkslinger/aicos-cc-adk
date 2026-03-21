@@ -49,13 +49,13 @@ Key design decisions preserved from the plan:
 
 ### 4. `mcp-servers/agents/datum/CLAUDE.md` (Minor Issue #1 fix)
 
-- Fixed ACK example in Section 4 Step 6: changed generic column names (`name, company, role, linkedin_url, city`) to actual column names (`person_name, current_role, linkedin, home_base, e_e_priority`)
+- Fixed ACK example in Section 4 Step 6: changed generic column names (`name, company, role, linkedin_url, city`) to actual column names (`person_name, role_title, linkedin, home_base, e_e_priority`)
 
 ### 5. `mcp-servers/agents/skills/datum/datum-processing.md` (Minor Issue #2 fix)
 
-- Fixed text input parsing example to use actual column names (`person_name`, `current_role`) instead of generic names
+- Fixed text input parsing example to use actual column names (`person_name`, `role_title`) instead of generic names
 - Added "Parsed Field -> DB Column Mapping (Person)" table mapping extracted fields to actual column names
-- Fixed extraction patterns to reference actual columns (`person_name`, `current_role`, `linkedin`, `home_base`)
+- Fixed extraction patterns to reference actual columns (`person_name`, `role_title`, `linkedin`, `home_base`)
 
 ### 6. `mcp-servers/agents/deploy.sh`
 

@@ -192,7 +192,7 @@ The Notion MCP `notion-query-database-view` returns max 100 rows per call with `
 | `url` (page URL) | system | `notion_page_id` | TEXT | Extract UUID from URL | YES |
 | `Name` | title | `person_name` | TEXT NOT NULL | Direct | YES |
 | `Linkedin` | url | `linkedin` | TEXT | Direct | YES |
-| `Current Role` | select | `current_role` | TEXT | Direct | YES |
+| `Current Role` | select | `role_title` | TEXT | Direct | YES |
 | `Current Co` | relation | `current_company_ids` | TEXT[] | Parse JSON, extract UUIDs | YES |
 | `Past Cos` | relation | `past_company_ids` | TEXT[] | Parse JSON, extract UUIDs | YES |
 | `Home Base` | multi_select | `home_base` | TEXT[] | Parse JSON array | YES |
@@ -554,7 +554,7 @@ INSERT INTO network (
     -- URL
     linkedin,
     -- Select fields
-    current_role, ryg, e_e_priority, sourcing_flow_hots, investing_activity,
+    role_title, ryg, e_e_priority, sourcing_flow_hots, investing_activity,
     -- Multi-select fields
     home_base, local_network_tags, investorship, devc_relationship,
     collective_flag, engagement_playbook, leverage, customer_for,
@@ -590,7 +590,7 @@ ON CONFLICT (notion_page_id) DO UPDATE SET
     notion_last_edited = EXCLUDED.notion_last_edited,
     person_name = EXCLUDED.person_name,
     linkedin = EXCLUDED.linkedin,
-    current_role = EXCLUDED.current_role,
+    role_title = EXCLUDED.role_title,
     ryg = EXCLUDED.ryg,
     e_e_priority = EXCLUDED.e_e_priority,
     sourcing_flow_hots = EXCLUDED.sourcing_flow_hots,

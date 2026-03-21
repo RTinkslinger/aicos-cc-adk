@@ -69,7 +69,8 @@ CREATE TABLE IF NOT EXISTS actions_queue (
     notion_last_edited TIMESTAMPTZ,
     last_local_edit TIMESTAMPTZ,
     last_notion_edit TIMESTAMPTZ,
-    notion_synced BOOLEAN DEFAULT TRUE
+    notion_synced BOOLEAN DEFAULT TRUE,
+    strategic_score NUMERIC
 );
 
 -- 3. action_outcomes
@@ -148,7 +149,7 @@ CREATE TABLE IF NOT EXISTS network (
     id SERIAL PRIMARY KEY,
     notion_page_id TEXT UNIQUE,
     person_name TEXT NOT NULL,
-    current_role TEXT,
+    role_title TEXT,
     home_base TEXT[] DEFAULT '{}',
     linkedin TEXT,
     ryg TEXT,

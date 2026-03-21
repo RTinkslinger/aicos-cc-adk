@@ -299,7 +299,7 @@ From Supabase query on `llfkxnsfczludgigknbs`, table `network`:
 | 1 | id | integer | NO | nextval('network_id_seq') | PK, auto-increment |
 | 2 | notion_page_id | text | YES | — | Links to Notion page |
 | 3 | person_name | text | NO | — | Maps to Notion Name |
-| 4 | current_role | text | YES | — | Maps to Notion Current Role |
+| 4 | role_title | text | YES | — | Maps to Notion Current Role |
 | 5 | home_base | text[] | YES | '{}' | Maps to Notion Home Base (multi_select) |
 | 6 | linkedin | text | YES | — | Maps to Notion Linkedin |
 | 7 | ryg | text | YES | — | Maps to Notion R/Y/G |
@@ -560,7 +560,7 @@ CREATE INDEX IF NOT EXISTS idx_network_linkedin ON network(linkedin) WHERE linke
 |----------------|----------------|--------|
 | Name | person_name | MAPPED |
 | Linkedin | linkedin | MAPPED |
-| Current Role | current_role | MAPPED |
+| Current Role | role_title | MAPPED |
 | Current Co | current_company_ids | MAPPED |
 | Past Cos | past_company_ids | MAPPED |
 | Home Base | home_base | MAPPED |

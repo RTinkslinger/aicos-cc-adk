@@ -115,7 +115,7 @@ Claude should:
 - `.env.local` — NOTION_TOKEN (gitignored, read by scripts)
 
 ### Schema Safety Rules (MANDATORY)
-- Network: `person_name` NOT `name`, `"current_role"` QUOTED
+- Network: `person_name` NOT `name`, `role_title` (renamed from current_role)
 - Relations: TEXT[] arrays of Notion page UUIDs
 - UPSERT: ON CONFLICT (notion_page_id) DO UPDATE
 - New entries without notion_page_id: plain INSERT

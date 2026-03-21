@@ -248,7 +248,7 @@ BEGIN
     SELECT
       nw.id,
       nw.person_name AS nw_title,
-      coalesce(nw.current_role, '') || ' | ' || coalesce(array_to_string(nw.home_base, ', '), '') AS nw_snippet,
+      coalesce(nw.role_title, '') || ' | ' || coalesce(array_to_string(nw.home_base, ', '), '') AS nw_snippet,
       1 - (nw.embedding <=> query_embedding) AS score,
       row_number() OVER (ORDER BY nw.embedding <=> query_embedding) AS rank
     FROM network nw
@@ -263,7 +263,7 @@ BEGIN
     SELECT
       nw.id,
       nw.person_name AS nw_title,
-      coalesce(nw.current_role, '') || ' | ' || coalesce(array_to_string(nw.home_base, ', '), '') AS nw_snippet,
+      coalesce(nw.role_title, '') || ' | ' || coalesce(array_to_string(nw.home_base, ', '), '') AS nw_snippet,
       ts_rank_cd(nw.fts, ts_query) AS score,
       row_number() OVER (ORDER BY ts_rank_cd(nw.fts, ts_query) DESC) AS rank
     FROM network nw

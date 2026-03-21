@@ -255,8 +255,8 @@ For each attendee:
      WHERE pi.person_id = $person_id AND i.timestamp > NOW() - INTERVAL '30 days'
      ORDER BY i.timestamp DESC LIMIT 5
   3. Get open actions:
-     SELECT action_text, status FROM actions_queue
-     WHERE (action_text ILIKE '%person_name%' OR action_text ILIKE '%company%')
+     SELECT action, status FROM actions_queue
+     WHERE (action ILIKE '%person_name%' OR action ILIKE '%company%')
        AND status IN ('Proposed', 'Accepted')
   4. Get thesis connections:
      SELECT name, conviction FROM thesis_threads

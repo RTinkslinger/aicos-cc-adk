@@ -39,7 +39,7 @@ Query for thesis context:
 ```sql
 SELECT name, conviction, status
 FROM thesis_threads
-WHERE name = $thesis_connection
+WHERE thread_name = ANY(string_to_array($thesis_connection, '|'))
   AND status IN ('Active', 'Exploring');
 ```
 
@@ -84,7 +84,7 @@ WHERE execution_status = 'completed'
 ```sql
 SELECT assigned_to, COUNT(*) as cnt
 FROM actions_queue
-WHERE thesis_connection = $thesis_name
+WHERE thesis_connection LIKE '%' || $thesis_name || '%'
   AND status IN ('Proposed', 'Accepted', 'In Progress')
 GROUP BY assigned_to;
 ```
@@ -251,7 +251,7 @@ Before grading, always check how many similar actions have been completed recent
 ```sql
 SELECT COUNT(*) as n
 FROM depth_grades
-WHERE thesis_connections && ARRAY[$thesis_name]
+WHERE $thesis_name = ANY(thesis_connections)
   AND execution_status = 'completed'
   AND created_at > NOW() - INTERVAL '14 days';
 ```

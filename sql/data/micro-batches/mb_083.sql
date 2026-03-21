@@ -1,0 +1,142 @@
+UPDATE companies SET page_content = '---
+name: "Grayscale Ventures"
+notion_page_id: "2bc60d0d-491d-4b91-9940-5016c7976360"
+db_id: 179
+fetched: "2026-03-20T03:43:44"
+---
+
+# Grayscale Ventures
+
+2025-03-12 — @Aakash to find the 5th company & enter here
+' WHERE page_content_path = 'companies-pages/grayscale-ventures.md';
+UPDATE companies SET page_content = '---
+name: "Crosslink"
+notion_page_id: "24e29bcc-b6fc-80ac-a1e4-cf16d9d1bdf3"
+postgres_id: 117
+fetched: "2026-03-20"
+---
+
+# Crosslink
+
+Table of contents (click to navigate)
+
+---
+
+## READ ME
+
+Hi there, this template has been created 2024-09-14T11:35:00.000+05:30 by Rahul
+
+Here’s how you are supposed to use the COMMENTS section:
+
+1. Include any action items for DeVC IPs (e.g. Collective outreach OR internal follow-ups) here
+2. Include EXTERNAL views (e.g. Z47 Sectoral Team, Co-investors and Collective members) here
+
+Here’s how you are supposed to use the BODY section:
+1. Include notes from ALL founder <> DeVC IP conversations with clear timestamps
+2. Include notes from ALL DeVC IP de-briefs with clear timestamps
+
+Comments section can be your “catch-all” for random views / inputs / thoughts — you can process these later IF required
+
+
+WHEN this company moves from Pipeline to Portfolio
+1. Please visit the Portfolio DB  to start taking future notes in the linked page there (reason: The Companies DB is supposed to record pre-investment interaction notes with a pipeline company)
+
+Once you have READ THIS —> PLEASE delete this block to proceed with your note-taking / data entry
+
+---
+
+## Deck insights from Notion AI on {use “@now”}
+
+---
+
+## Evaluation Plan + Key Questions to answer
+
+1. What does the company do?
+
+1. Do we (DeVC/Z47) have a thesis on this space?
+
+1. What are the top 3 questions to diligence?
+
+1. Who has piped this company to us? What are their views?
+
+1. What do refs say about the founder?
+
+1. What''s the DeVC team views?
+
+1. What are the Collective signals?
+
+1. Why is this company likely to be special?
+
+1. Who can help? Experts / Venture Partners?
+
+1. Deal dynamics? Potential deal to do?
+
+---
+
+## Intro conversation with Founder on {use “@now”}
+
+### Attendees from DeVC:
+
+### Notes:
+
+### Scoring (can be copied for multiple people)
+
+Spiky Score
+
+[Table]
+
+EO/FMF/Thesis/Price Score
+
+[Table]
+
+### De-brief (if any)
+
+---
+
+## Follow-up conversation with Founder on {use “@now”}
+
+### Attendees from DeVC:
+
+### Notes:
+
+### De-brief (if any)
+
+---
+
+## Next conversation with Founder on {use “@now”}
+
+### Attendees from DeVC:
+
+### Notes:
+
+### De-brief (if any)
+
+---
+
+## Z47 Conversation with Founder on {use “@now”}
+
+### Attendees:
+
+### Notes:
+
+### De-brief (if any)' WHERE page_content_path = 'companies-pages/crosslink.md';
+UPDATE companies SET page_content = '---
+name: "Felicity"
+notion_page_id: "fc94240b-a228-4f7a-ba1d-7763acb97cfa"
+postgres_id: 152
+fetched: "2026-03-20"
+---
+
+# Felicity
+
+' WHERE page_content_path = 'companies-pages/felicity.md';
+UPDATE companies SET page_content = '---
+name: "Fireside Ventures"
+notion_page_id: "745d78d8-af79-4a27-9100-cf834bc68d58"
+postgres_id: 156
+fetched: "2026-03-20"
+---
+
+# Fireside Ventures
+
+' WHERE page_content_path = 'companies-pages/fireside-ventures.md';

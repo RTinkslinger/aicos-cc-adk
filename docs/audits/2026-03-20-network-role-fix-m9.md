@@ -6,31 +6,31 @@
 
 ## Bug Summary
 
-All 3,722 rows in the `network` table had `current_role = 'postgres'` -- the PostgreSQL system function `current_role` resolved instead of the table column, due to an unquoted reference in a SQL statement (likely during a mass upsert or migration).
+All 3,722 rows in the `network` table had `role_title = 'postgres'` -- the PostgreSQL system function `role_title` resolved instead of the table column, due to an unquoted reference in a SQL statement (likely during a mass upsert or migration).
 
 ## Root Cause
 
-PostgreSQL has a built-in function `current_role` that returns the current database user (in Supabase's case, `'postgres'`). When SQL references `current_role` without quoting (`"current_role"`), PostgreSQL interprets it as the system function, not the column name.
+PostgreSQL has a built-in function `role_title` that returns the current database user (in Supabase's case, `'postgres'`). When SQL references `role_title` without quoting (`"role_title"`), PostgreSQL interprets it as the system function, not the column name.
 
 The corruption was likely caused by a SQL statement like:
 ```sql
--- BAD: current_role resolves to system function 'postgres'
-UPDATE network SET current_role = current_role WHERE ...;
+-- BAD: role_title resolves to system function 'postgres'
+UPDATE network SET role_title = role_title WHERE ...;
 -- or
-INSERT INTO network (..., current_role, ...) VALUES (..., current_role, ...);
+INSERT INTO network (..., role_title, ...) VALUES (..., role_title, ...);
 ```
 
 The correct form requires quoting:
 ```sql
 -- GOOD: quotes force column reference
-UPDATE network SET "current_role" = 'Co-Founder CEO' WHERE ...;
+UPDATE network SET "role_title" = 'Co-Founder CEO' WHERE ...;
 ```
 
 ## Investigation
 
 | Check | Result |
 |-------|--------|
-| Rows with `current_role = 'postgres'` | 3,722 (100%) |
+| Rows with `role_title = 'postgres'` | 3,722 (100%) |
 | Other columns corrupted | None (person_name, linkedin, ryg, etc. all clean) |
 | Rows with notion_page_id | 3,320 |
 | Rows without notion_page_id | 402 |
@@ -42,15 +42,15 @@ UPDATE network SET "current_role" = 'Co-Founder CEO' WHERE ...;
 2. **Extraction:** Parsed `Current Role` select property from each entry's Notion properties
 3. **Coverage:** 2,829 entries with valid roles out of 3,339 total (510 had NULL role in Notion)
 4. **Method:**
-   - First, set all `current_role = 'postgres'` to NULL
+   - First, set all `role_title = 'postgres'` to NULL
    - Then, applied UPDATE via `fill-final` SQL batch files + direct VALUES-based UPDATEs
-   - All UPDATEs used properly quoted `"current_role"` column name
+   - All UPDATEs used properly quoted `"role_title"` column name
 
 ## Result
 
 | Metric | Before | After |
 |--------|--------|-------|
-| `current_role = 'postgres'` | 3,722 | **0** |
+| `role_title = 'postgres'` | 3,722 | **0** |
 | Valid non-NULL roles | 0 | **3,225** |
 | NULL roles (no data in Notion) | 0 | **497** |
 
@@ -79,7 +79,7 @@ UPDATE network SET "current_role" = 'Co-Founder CEO' WHERE ...;
 
 **MANDATORY for all future SQL touching the `network` table:**
 
-1. Always quote `"current_role"` in SQL -- it collides with the PostgreSQL system function
+1. Always quote `"role_title"` in SQL -- it collides with the PostgreSQL system function
 2. The existing `fill-final` SQL files already use correct quoting
 3. Any ORM or migration code that generates SQL for this column must use quoted identifiers
 4. Consider renaming the column to `role` or `person_role` to eliminate the collision entirely (future migration)
@@ -87,5 +87,5 @@ UPDATE network SET "current_role" = 'Co-Founder CEO' WHERE ...;
 ## Files Referenced
 
 - Recovery data: `sql/data/network-full-export.json`
-- Original fill SQL: `sql/data/fill-final/000-current_role.sql` through `009-current_role.sql`
+- Original fill SQL: `sql/data/fill-final/000-role_title.sql` through `009-role_title.sql`
 - Notion export: `sql/data/network-notion-export.json` (529 entries, supplementary)

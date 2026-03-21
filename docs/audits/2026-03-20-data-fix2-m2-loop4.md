@@ -12,7 +12,7 @@ Investigation found portfolio row `id=150, portfolio_co="Terra"` has `company_na
 
 Found 6 junk placeholder records in `network` table:
 - IDs: 3202, 3224, 3633, 3215, 3672, 3560
-- All had `person_name = 'Founder 2'`, `current_role = 'postgres'`
+- All had `person_name = 'Founder 2'`, `role_title = 'postgres'`
 
 **Action:** Deleted all 6 rows. Network count: 3728 -> 3722.
 

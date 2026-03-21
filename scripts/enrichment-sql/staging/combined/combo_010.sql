@@ -1,0 +1,68 @@
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(275, 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '),
+(277, 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '),
+(279, 'Next Steps: - [ ] @Krish Bajaj to try the product and provide feedback - [ ] @Rahul Mathur to conduct reference checks on the founder - [ ] If progressing, arrange meeting with another partner at DVC - [ ] @Rahul Mathur to potentially connect founder with additional potential users Notes 1. Dr Winson Park - Korean researcher - 1. Hybrid job based in Dubai 1. Founder of Xpay recommended him 1. Product #1 - sentiment analysis for brands 1. $20 per month 1. Product #2 - receptionist for dentists 1. $500 per month from clinics 1. Was selling from India to USA 1. Discontinued 1. WhatsApp 1. Doing via Linked Devices 1. Indian user willing to pay $50 per month 1. US user willing to pay $80 per month 1. They want Slack integration 1. Shipped for Rishabh Dodo Payments 1. Smart / inherent virality via “@loop” 1. Users: 1. CA or Doctor for Qs 1. Founders to monitor senitments from 1. Students / others use it to listen to WA groups Sir, can I get one green tea please? Okay sir. Thank you. Hey Amon, how are you doing? Hey man, very nice background. Where are you calling from today? I''m in Bangalore. Thanks sir, it''s a fake background. No, I''ll go in. I''m in Bangalore. Residency has a global network, so I''m part of Bangalore right now. But yeah, I''ll go in Jan. For like 3 months. Where are you right now? I was in Bangalore. He is in HSR. Currently, I am in Badubhishnadi. Residency is a very good thing. I recently was in SF, I met Abhinav from Breather and he speaks very highly of the resid...'),
+(283, 'Deck: [File: download](https://prod-files-secure.s3.us-west-2.amazonaws.com/b21975bb-aebf-48e3-8c44-1573c4404129/c03c41e0-d2d8-4543-b15d-a8d53a028d10/1._Modus_AI--Fundraising.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666H7XLVMC%2F20260320%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260320T105658Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGgaCXVzLXdlc3QtMiJHMEUCIQD%2FGwFQao5dI0GDb0x7cTeid9oZgJvyW3cDhABH3pf1DQIgC7f3rxd8uGiKg5KHV2Qm%2FpWbTb2nxymg0%2FiQ7Y9vpNQq%2FwMIMRAAGgw2Mzc0MjMxODM4MDUiDBytoewTaYvbMdVlwircA9RuoshDLpVmLUs5HzjvLIafs%2F8vodmSo2haKbTwYaNq7QsDD1%2F60JZdzJoJ1MuXmiMSTVfhi1%2BRmjYWfpx8DkTLVV2D476v21rBhx5MhjJFnwDWLDb9Vt422VEniywh2u0MkWmkQNVJUKBibTKixMDJ11zET1udRjc5rMrCqktenqwwLJApNTstRRY2yOqj05VVl7ZBSGKyHtAtmYaOX1y7DaYD542MYsIzax84lcuDaRqyaEYQHJzmGNk58ll0CPrHE7Dn4W%2FJytkBTf7%2F5vRnqnQKjo1h3RD3Ly77ym%2BuwaCXgf89w8bKXPngKJT%2BKDFGrVitPB7%2B9n7EOt3q695JXKLe6x03OZFdDBGfrbzfBdidKjG%2FQV8XxbLcOmae6L%2FtLW%2FXT4FowuNryQ9P1dRoQL78baiqkfZ5v6CHq0C1djUH4Uc5wGbcx04soPh5OUbyrqlA9foKr1ftn1ihzs0j33zoLfrXYgRjMOZ8PXE3NL6EqymbDWQukJ721H62fntScwONK5iw0OsrXMX%2Bfj5N7BOGkyN2bnWLcCaNem8idcqs6B34vJoi0aorH%2Fe0PAD%2F0YgV1UsVQhPorYXkNEmzHJt5EMTlRvXld8xr7yeWLKcw%2BqhG%2BK5sjqWDMJv8880GOqUB58NbLqpzQXZeLn6vIAMKvgYBzbTVKS43VBnwTQnawerr9deqPDSGyhVCsuTEjxw7pLu4xI2%2BPKdrwcPz6eMZgJbvLnc1BrgR9HU2BYwXMpTVG25glDq5DeTPFaQE9VzJnr9ULlwdGml%2FIC%2BAdxlrEiGDLC2VNDiC4ZT7r88CALFKhbuve2UJjT5SMvJeEeytgkwdGuwQMXq3X1PY%2BmtYjiUgxd%2Fv&X-...'),
+(284, 'Notes:: 1. **Childhood** 1. Full Hindi guy 1. From small town in Bihar 1. Not strong financial background 1. 23 years old 1. **Rewards / gaming business** 1. First business he built at 17 1. Built an app on no-code platform 1. Got 1L+ installs 1. Was making $4K per month || scaled to 500K installs 1. Google killed the business by changing ads policy 1. **2nd business** 1. 1M installs 1. WhatsApp related business 1. Each QA update killed the release 1. BLR - Jain Univ — just before COVID - left 1. **Food delivery business in his local city** 1. Started before Swiggy & Zomato post COVID 1. Swiggy & Zomato entered which killed the business 1. Sold the software & logistics to a restaurant business locally 1. **Kutumb** 1. Approached Abhishek with an earlier idea 1. Abhishek told him to come to Kutumb & test 1. Wanted to find the next $1bn idea 1. Ran thousands of ads 1. Spoke to customers across T1 and T2 1. Explored a lot of T1/T2 cities 1. Tried multiple D2C products 1. Problem in D2C → frequency 1. **His learnings** 1. Snacks → high frequency category 1. Companies are making guilt free western snacks 1. Why not make traditional snacks guilt free 1. Ran 50 ads variants — found 50 SKUs 1. Saw QC tailwind 1. Mom is the culinary expert 1. He figured out something about the form factor (I can’t understand Hindi) 1. **MIS** 1. No QC | no 3P market 1. October - ₹3L in Sales | 70% pre-paid | CAC 1. **What would change if he had capital** 1. 3 years — ₹100 crore 1. **Kitchen** 1. Start...')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(289, 'Investor Feedback & Decision: - **Z47''s assessment**: - Very high bar for QSR investments - Founders "not bad but nothing exceptional" - Category not sufficiently differentiated (every market has street food) - Prefer non-linear business models over linear store-by-store expansion - 10% EBITDA at ₹20 lakh stores "not great" - economics typically degrade as businesses scale - First few outlets often have better economics that aren''t replicable at scale - Network-wide EBITDA likely to settle at 8-10% - **Key investor concerns**: - Things get difficult at 10-20 outlet scale due to competition, food consistency issues, or location choices - 15% monthly attrition means 150 people leaving monthly at 100-store scale - Important metrics to track: customer feedback, NPS, repeat rates, same-store sales growth - **Investment decision**: Pass from Z47, but Titan Fund is leading the round And both moving and targeting the new target with the update in Bangalore for the Ramadhin survey for today. We all built that up for the update in Bangalore now. Then we also started downloads to operate your veg pan to find out Yes, so about me, I am a commerce graduate turned chef. Before I met Tanay at Mesa, I spent roughly two and a half years working in the kitchen. I started my culinary training in France and then ended up spending two years working in Sweden in a Michelin star restaurant and also in the south of France. So I worked across different formats, Michelin star hotels. In the meanwhile,...'),
+(290, 'Action Items: - [ ] Circle back regarding next steps - [ ] Follow up on establishing team in Bay Area Now within a pre-construction, the task can be looked into four different phases. The first one is feasibility, second scoping and costing, third scheduling and procurement and finally construction readiness. After construction readiness, it goes into the project manager who does the execution through the handover. But a project manager usually deals with one project at any point in time. Now compared to that, a pre-con manager... It is not an execution, they deal with multiple projects. Now, the idea for the preform manager, as I was saying, they have to bring in more business. So, the more the number of projects they are able to deal with in parallel, the better it is for them. So, that''s where their North Star metric lies. Now, they had all of these four phases. We land in scoping and costing, that''s the second phase. It will expand to others, but the buyer is the same for all of the phases, because it is the pre-con manager. Now in scoping and costing, primarily what a pre-con manager does is scope sheets, bid levelling and price benchmarking. While I am saying this, I am talking from the perspective of a general contractor, all of it. Pre-con teams exist with owners, developers, subcontractors across the ecosystem, but we work with only general contractors to begin with. Now, when the general contractor receives or the pre-con manager receives all the bid packages from t...'),
+(291, 'AS: Weak Maybe: + In domain founders, good pedigree  – GE + Rolls Royce + Technically strong + Arjun and Rohit seem to have a good leader -follower dynamics ? Founder archetype is  not Matrix ZOB – didn’t see any H&H or ambition to make It very big ? Moat in technology – gas turbines well researched and in commercial use already ? Limited TAM and team also unclear on end market – speaking of multiple use cases but no real pipeline ? Prototype still under development, leveraging IISC facilities ? Thesis – need to understand space better **Meeting Notes:** [Rohit Chouhan](https://www.linkedin.com/in/rohit-chouhan-842b063a/?originalSubdomain=in) - Masters from IIT Delhi - Joined DRDO as Scientist in GTRE - Developing gas turbine engine for Tejas - Developed for 4 years: Kaveri engine - Worked on hot end, development on supply chain – foreign vendors etc - Worked on small gas turbine also – on cruise missile - Joined GE - Known for execution excellence - Started gas turbine team from scratch – became global tech leader for 40-140 mw power gen machine - Designed 3-4 new products, and new tech development - Has more than 50 US granted patents: 20 is on new gas turbine, 30 on new tech within turbine components for efficiency - End use case of their turbines - Aviation – powering aircraft engine - Same tech also used in power generation – electricity - Fundamental diff: in power gen weight is not a constraint, in aviation need lighter variant - Their first product is more suited to A...'),
+(292, 'Deck 2026-03-10T11:26:00.000+05:30: [File: download](https://prod-files-secure.s3.us-west-2.amazonaws.com/b21975bb-aebf-48e3-8c44-1573c4404129/57a143dc-6603-4927-94a5-bf5bc6271f9a/2026_03_10_Nama_Stay.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TDK7S7WY%2F20260320%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260320T110025Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGgaCXVzLXdlc3QtMiJGMEQCIDG%2F40sSul6%2BZ9DMQ8TseacEBaKWicSR2lh6n2Ng%2BFAxAiBlxv1qSNj99GnVXHn0gUWDTNE5Fibo%2B3K9DyvkRmMjRSr%2FAwgxEAAaDDYzNzQyMzE4MzgwNSIMB%2B99qIcvDGn7aZnxKtwDJ3qvQPncQdIe5lLYLyeV1Je%2FlJ4GSUB7STdaeCsp8htO9VQ765yrtFNF4LcmTG8deJAiSbcbIYTR2HExJVeUKzUhsWhOxT8EF6zlfsnIYvciQBYtU0hON9fTE76BdpQZKbjdWDnNUkW7BnpJbP1vZOyK%2FnMb6S7IzSu%2FRl5ON0IBj0cpihp9hyvmHzHj%2FJaXm%2Fr5f0uDhPne7XR6xJ50Jn4jv1TkPBUuBz37Yfc8wnWOSvGVwzwnwdTzsAu8cMatz8Q6tB%2ByGJOgQnKQItYmyM4iu4b9jtOMnO6V2Op6NR3cgEmCkT5ZdWolluXyqd2nZyZCq5WIidEIqdA97ID71oYHvZYCej2qagBhhNa1VrjWzCY8QWK7DaEBWeCuL35A2nvIMuInedSz6dKKCwaRR%2F3cOY01xJz7g3oMWTvDt1KWF17im3OyyMqTjYX0jA8MfNAMMEgqhyGn6nvxevExN436uuwD23DML3vXR0KfylQ8rh7ciJFCIUJ7o%2BXmdfnfegeulSAGQQQi4m9UAlPzO24zTXmFHHpdwSRNeYH1%2FAVflWmwKUiiJjmmp750HAhFw6MM1KYzpsh6Hg45NQ%2Fm6PmSwUvSocBMGWPxZ5QC4pdqVQ5C6Q44f4J6wb4wuP3zzQY6pgFlZONdrk%2B41qzVSC7OA2QlU%2FAVe8NoMGcogjFqgntJFNJDguXp%2BS4bunnmVIe6LW0yGVSz7aVzk42KrvAJm1aQFlUz8QNFnuvvj7S67BjuMLkRgQJB%2BIBomabx7d0auHEedIrwWuEre21eBv%2BMGzmjJ%2BnLI9CFk8dsLzutfhcEM8hmWFtJw9%2BV1yVXPPFCQD0pwpwcYpdVz...'),
+(293, 'Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): ')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;
+

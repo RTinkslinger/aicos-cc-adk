@@ -127,16 +127,16 @@ SQL
 psql $DATABASE_URL -t -A -c "SELECT id FROM interactions WHERE source = 'email' AND source_id = '<msg_id@agentmail.to>';"
 
 # Resolve person by email
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, current_role FROM network WHERE email = 'rahul@composio.dev';"
+psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title FROM network WHERE email = 'rahul@composio.dev';"
 
 # Resolve person by phone
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, current_role FROM network WHERE phone = '+919999999999';"
+psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title FROM network WHERE phone = '+919999999999';"
 
 # Resolve person by name + company
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, current_role FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma') AND LOWER(current_role) ILIKE '%composio%';"
+psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma') AND LOWER(role_title) ILIKE '%composio%';"
 
 # Resolve person by name only
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, current_role, email, phone FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
+psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title, email, phone FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
 
 # Link person to interaction
 psql $DATABASE_URL <<'SQL'
@@ -176,7 +176,7 @@ psql $DATABASE_URL -c "UPDATE context_gaps SET status = 'filled', filled_by = 'a
 
 # Write action item
 psql $DATABASE_URL <<'SQL'
-INSERT INTO actions_queue (action_text, action_type, priority, status, assigned_to, source,
+INSERT INTO actions_queue (action, action_type, priority, status, assigned_to, source,
                            reasoning, thesis_connection, created_at, updated_at)
 VALUES ('Follow up with Rahul on Series A terms', 'Meeting/Outreach', 'P1 - This Week',
         'Proposed', 'Aakash', 'Cindy-Meeting',
@@ -220,7 +220,7 @@ LIMIT 5;
 SQL
 
 # Query open actions related to a person
-psql $DATABASE_URL -t -A -c "SELECT id, action_text, status FROM actions_queue WHERE action_text ILIKE '%Rahul%' OR action_text ILIKE '%Composio%' AND status IN ('Proposed', 'Accepted');"
+psql $DATABASE_URL -t -A -c "SELECT id, action, status FROM actions_queue WHERE action ILIKE '%Rahul%' OR action ILIKE '%Composio%' AND status IN ('Proposed', 'Accepted');"
 
 # Query thesis connections for a company
 psql $DATABASE_URL -t -A -c "SELECT name, conviction, status FROM thesis_threads WHERE status IN ('Active', 'Exploring') AND (core_thesis ILIKE '%composio%' OR core_thesis ILIKE '%agent%');"
@@ -398,12 +398,12 @@ TIER 4: Exact name + company match
   IF signal.name AND signal.company:
     SELECT id, person_name FROM network
     WHERE LOWER(person_name) = LOWER(signal.name)
-      AND LOWER(current_role) ILIKE '%' || LOWER(signal.company) || '%'
+      AND LOWER(role_title) ILIKE '%' || LOWER(signal.company) || '%'
     → auto-link, confidence 0.95
 
 TIER 5: Name-only match (lower confidence)
   IF signal.name:
-    SELECT id, person_name, current_role, email, phone FROM network
+    SELECT id, person_name, role_title, email, phone FROM network
     WHERE LOWER(person_name) = LOWER(signal.name)
     IF single result → auto-link, confidence 0.80 (flag for confirmation)
     IF multiple results → ambiguous, create datum request with candidates
@@ -499,7 +499,7 @@ Gaps resolve three ways:
 Extract from all surfaces. Look for: commitments, follow-ups, scheduled next steps, requests.
 
 ```sql
-INSERT INTO actions_queue (action_text, action_type, priority, status, assigned_to, source,
+INSERT INTO actions_queue (action, action_type, priority, status, assigned_to, source,
                            reasoning, thesis_connection, created_at, updated_at)
 VALUES ('Follow up with Rahul on Series A terms', 'Meeting/Outreach', 'P1 - This Week',
         'Proposed', 'Aakash', 'Cindy-Meeting',

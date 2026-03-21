@@ -21,10 +21,10 @@ It produces one of three outcomes:
 LinkedIn URL is a globally unique identifier. If available, check it first.
 
 **NOTE:** The network table uses `linkedin` (not `linkedin_url`), `person_name` (not `name`),
-`current_role` (not `role`). Always use the exact column names.
+`role_title` (not `role`). Always use the exact column names.
 
 ```sql
-SELECT id, person_name, current_role, linkedin
+SELECT id, person_name, role_title, linkedin
 FROM network
 WHERE linkedin = $candidate_linkedin;
 ```
@@ -39,10 +39,10 @@ use the most recently updated record (`ORDER BY updated_at DESC LIMIT 1`).
 ### Tier 2: Exact Name Match (Confidence 0.95)
 
 Exact text match on person_name (case-insensitive). The network table does not have a
-separate "company" column — company context is embedded in `current_role`.
+separate "company" column — company context is embedded in `role_title`.
 
 ```sql
-SELECT id, person_name, current_role, linkedin
+SELECT id, person_name, role_title, linkedin
 FROM network
 WHERE LOWER(person_name) = LOWER($candidate_name);
 ```
@@ -64,7 +64,7 @@ through Tier 1-2, detected on subsequent encounters.
 **For records that already have embeddings** (e.g., re-enrichment, batch second pass):
 
 ```sql
-SELECT id, person_name, current_role,
+SELECT id, person_name, role_title,
        1 - (embedding <=> $candidate_embedding) as similarity
 FROM network
 WHERE embedding IS NOT NULL
@@ -87,7 +87,7 @@ Last resort when neither LinkedIn, nor embedding is available. Same query as Tie
 reached when Tier 3 also failed (no embeddings available).
 
 ```sql
-SELECT id, person_name, current_role, linkedin
+SELECT id, person_name, role_title, linkedin
 FROM network
 WHERE LOWER(person_name) = LOWER($candidate_name);
 ```
@@ -176,7 +176,7 @@ When merging new data into an existing record:
 ```sql
 -- For persons (NOTE: use actual column names from network table)
 UPDATE network SET
-  current_role = COALESCE($new_role, current_role),
+  role_title = COALESCE($new_role, role_title),
   linkedin = COALESCE($new_linkedin, linkedin),
   email = COALESCE($new_email, email),
   home_base = COALESCE($new_home_base, home_base),

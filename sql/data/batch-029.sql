@@ -1,4 +1,4 @@
-UPDATE network SET "current_role" = CASE notion_page_id
+UPDATE network SET "role_title" = CASE notion_page_id
   WHEN 'f81c8132-9549-4c37-af67-4c80a1dd23ff' THEN 'VC Partner'
   WHEN 'f82f042e-be6f-4d8e-9ae1-64daf7c3d308' THEN 'Co-Founder CEO'
   WHEN 'f8465376-cef7-4808-8a4b-54f99557d086' THEN 'Co-Founder COO'
@@ -30,4 +30,4 @@ UPDATE network SET "current_role" = CASE notion_page_id
   WHEN 'fff29bcc-b6fc-8067-abfb-e7b3f66857ed' THEN 'Co-Founder CTO'
 END, updated_at = now()
 WHERE notion_page_id IN ('f81c8132-9549-4c37-af67-4c80a1dd23ff','f82f042e-be6f-4d8e-9ae1-64daf7c3d308','f8465376-cef7-4808-8a4b-54f99557d086','f889644f-a3c5-4817-8161-ae134504b7d3','f8dfcde6-09e9-481e-9493-c022131f0f26','f9193264-1612-4771-be08-8bf5ee6091e6','f9b359f2-5be1-4988-8c30-933f22c5d3b8','fa1abafa-b9b7-4043-86be-b58cf47c565c','fb114abe-3f40-44e0-a682-1274d7d8b6f6','fb44291c-6ae7-4ec4-9cee-a2aa27744491','fb456965-c497-41fc-8d18-2b9ec989808e','fbf83005-d6d1-4e16-b760-b89075d475be','fc31044a-2107-41dd-a5a4-122ad8a1940c','fcad7c55-127a-4647-9888-abed61ba315a','fcb7b0e8-b0fa-4943-9811-96e0527c1ade','fcd09a3b-2fd2-4e1b-adfb-7301b37e1d31','fd551406-cbfb-4f5b-9c76-b1a9082ced27','fde8e5e5-0a41-402b-9d77-f5b98e7ab30e','fe0276fa-7b90-4214-81fa-51f7e9dfc400','fef16606-d228-4ebb-8953-34e3d91d7651','fefed0d5-466f-46fc-bc6d-a497056d26ac','ff2c7173-c91e-40ef-acb3-2183965df441','ff47b884-a5e2-4f41-9d65-485cf9cc3838','ff4c7aff-3b26-427e-b5bc-4edd17023805','ff8007ab-85e4-45f5-a0cd-cff3ad1eb5fd','ff95e8bb-29b0-4eda-85f3-a7118ce90494','fff29bcc-b6fc-8019-8570-df9a286e6623','fff29bcc-b6fc-8053-8fa1-ee2bbcb2f2ac','fff29bcc-b6fc-8067-abfb-e7b3f66857ed')
-AND "current_role" IS NULL;
+AND "role_title" IS NULL;

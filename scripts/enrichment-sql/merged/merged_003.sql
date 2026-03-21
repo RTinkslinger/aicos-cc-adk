@@ -1,0 +1,197 @@
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(223, 'Heads up note for Kairos 2025-07-03T19:59:00.000+05:30: Hi team, Sharing the heads-up note for our investment in [Kairos Computer](https://www.kairos.computer/). This is a computer use AI agent which is capable of automating any tasks through a simple screen recording. DeVC is investing $30K as part of a wider $300K Pre-Seed round as a Community Top-Up to Prateek Sharma (GP @ Ahead VC) and Venky Karnam (GP @ Shift Left Ventures) For context: Cash met Venky in the USA - he owns 1% of Groww & sold his Meesho position for $15M. Prateek co-hosted the IIT Tribes event on 14th May 2025 with DeVC in SFBA. **Founders** 1. [Samarth P](https://www.linkedin.com/in/samarthap/) - CTO | Univ of Toronto grad 1. 6 months @ [Delphi](/22329bccb6fc80c298dbe87f87c0a923) (Sequoia US funded co) 1. 1.5 yrs @ Google as SDE-1 1. [Manas Bam](https://www.linkedin.com/in/manasbam/) - CEO | Stanford grad 1. 3 months @ Delphi 1. 3 months internship @ Sarvam AI **Investing Process** 1. This opportunity was sourced by Aakash during his SF trip in May 2025 1. The founders are part of the Afore VC FIR (Founder In Residence) program 1. Afore VC’s cohort is known to be a great mining ground for tech founders 1. Cash did a 1PE and spent an evening with the founders developing use-cases which generated pull to allow DeVC to participate in an already filled round on same terms as existing investors 1. Founders also attended the IIT Tribes event hosted by Aakash on 17th May 2025 1. Decided to write a Community Top ...'),
+(224, 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '),
+(225, 'Market & Competition Discussion: - Competing with established players like Cursor, WinSurf - Potential challenges with market entry timing - Competition moving in similar direction (e.g., Cursor’s future roadmap) - Discussion around differentiation strategy and market positioning
+Background: - Kashif is currently at Rattle (engineering team) - Has been at Rattle for 2 years, 8 months - Previous experience: - Small Case (2 years, initial team member) - StockX (e-commerce platform for sneakers) - Last day at Rattle: May 30th
+Startup Context & Problem Space: - Building “Next Crew” - an AI worker system for engineering teams - Key problems being addressed: - Limited engineering bandwidth despite AI coding tools - Need for expertise in prompt engineering to effectively use AI tools - Current MVP features: - Full stack engineering capabilities - Code writing and review - Jira ticket integration - Team collaboration via GitHub, Jira, and Slack
+Current Traction & Status: - Basic MVP is live - 2 active users providing feedback - Main blocker: SOC2 compliance needed for deployment to engineering teams - Currently working on expanding tool integrations
+Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1....'),
+(226, 'Heads up Note by Cash 2025-11-25: Sharing a brief note for our $20K investment in Two Four Lab’s pre-seed round, amounting to ~0.1% ownership Total Round size - $3.5 million (3m by lightspeed, 400k 3one4) Post Money Valuation - $22.22 Million The founding team has strong FMF and knows the consumer tech growth playbook well. They are building multiple AI companions with personalities and with live ops first approach like gaming <u>**Product**</u> Kavana is a new kind of consumer app, where people discover and chat with delightful AI humans. [https://heykavana.com/](https://heykavana.com/) <u>**Founding Team**</u> 1. [Kunal Joshi](https://www.linkedin.com/in/kunaljijoshi/) - Was early growth lead at Kuku FM from earliest days and scaled the platform to ~60M ARR - IIT Mandi 2016 grad 1. [Shubham Ratrey](https://www.linkedin.com/in/shubhamratrey/) - Founding engineer at Kuku FM Founder BRCs: The founders had strong soft refs from Kuku FM. Kunal has been key to driving growth at Kuku “Star of Kuku” - Lal Bisu (co-founder Kuku) <u>**investment Considerations**</u> - Experience operators with strong FMF and past experience of building and scaling consumer tech product - Unique differentiated arpproach to build for a large TAM <u>**Risks**</u> - Product risk : they have to build the growth loop and drive retention with AI character bot approach. - Pre-monetisation + many funded comps doing the same thing with limited to none real differentiated strategy'),
+(228, 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): ')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(232, 'Update shared 2025-10-06T16:32:00.000+05:30: [Video](https://prod-files-secure.s3.us-west-2.amazonaws.com/b21975bb-aebf-48e3-8c44-1573c4404129/2cee6ec5-35b4-468f-9f28-9d2a04bfa1cb/Klaire_GTM_version_%28v4%29.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466524BVX4L%2F20260320%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260320T103520Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGgaCXVzLXdlc3QtMiJHMEUCIEKdWpQmNtIHwm%2Br9LDJ080sF0GCiZMZl3Y%2FTJ3QJS3RAiEAzp08S0MJmNPu2kU3RWq8HnAeB7JTQ909vV8gQ6gGc9oq%2FwMIMRAAGgw2Mzc0MjMxODM4MDUiDJb9OeNHS3e8B1oN%2ByrcA0MPYpTFfGjGb6BoqjAvn0XZ7FxgSXuuhh8HIzXJ%2B2NdBhluBD02IpIQbi5DQW1SMS4uvx1nVOIpb6ZL9Jj%2FHhKl9hg4FR4IhIyTGofE4SSxF3JQOMNs5nAcRa8nf53JbCQIqF%2FXMukrpUxdEau0m78tW%2BVq1FKJ9IU%2FNZI9ybhOwoI3ivyphDWhgyWvqvbc5BPgcg0KFvDXd1O9Oy2aYzOa3HvDIcyCMvbRZ1sGgBiVv3IAVg1C3Bj9hqzBPSnQAOtXMACApOyjXykpel1wzkIK411U15iior9Pj7LO0NcJU2sIoGhJBeEiL66gwhDIsRXStTRXqyYT%2FLyHYWfn6Dr4euVogk9ofgbG3gDe2rfNBVZ3%2FChK3qrbOmlzFPpdronZiUqSTJL5Y6jkdIV34iarO%2BHvaY3s6ljGvyg%2BCyjJGZPRgvjFI0MVKe8ty4ksT4NuPOsrILqhBrmf5JM3m0OeHAzZaoiu4CCacSTbZz4KYU3bPuQS53Rk2vISYE2IGt602j7mrY3SVuhpy%2BIMANCBQWLWJRO%2FPlO8jdBOkc3t1oWlzV5EmwzNpe2cO0%2FZKemfDGuif17rh4f9aIYKB8%2F6D0bM8HiTZ%2BjlffbaHxdnzgufCqgEGqPNgUZhMID9880GOqUBWkba8YUhI9DbkoWgHuRU0pIwteiA2CW2jqxiPmtHFNJc%2F01qtmiWZaVritZpvFWJ1ZyZGf6RQRHbS18bLqkHmmX8%2Bx1HhM4EuYgBYMTh3wl6PHudPvHt4RW%2FscG9FpBiugRwAXsnIYfc%2FUlQTCUssMJveUtSLv22zDcBPsls4r56sHftwA86M74QXchbl1BCOvX6...'),
+(233, 'Product & Technology Differentiation: - Built tracking system for brand inventory movement - Focus on top-selling styles identified through inventory tracking - Limited curation strategy (targeting 6-7K styles vs marketplace model) - Developing Tinder-like UI for better preference understanding - Emphasis on quick delivery to reduce return rates (currently seeing significantly lower returns than industry average of 35-40%)
+Notes:: Pivoted to Qcom for Fashion. Meeting funds this week (Elevation tomo/day after) Connected with me 1m back to discuss the idea to understand failure points. Met again today – to discuss fund raise strategies. Launched 10days back – progress below. No deck – 10 days of ops. **CV: M+ | **Think we should get more eyes on the guy - if nothing then get one more point on eval line. <u>Avi let me know if I can set this up – in the meantime will do ex-employee refs.</u> This may not be the right round given he has some execution to prove - <u>but DeVC should lean in imo - better founder than Slikk</u> **Spikey = 1 (***I’ve always liked him – overall rate him higher than Ackshay at Slikk***); Thesis: 7 | TAM: 8** ++ Marketing / GTM – the team has always had an edge ++ Best product/tech team among the 9-10 QcomXfashion players ++ Interesting thoughts on “discovery and assortment” ++ Hackers – “figuring hacks to understand top sellers for brands (so that we are not a liquidation channel, but a pareto channel)” – Interesting POV ++ Speed of iteration ++ been fru...'),
+(235, 'Notes:: <u>**AP: Maybe to Maybe -ve (Apr-23, to update latest views)**</u> + Entrepreneurial +/? EO-like profile, but an engineering track guy + Track record at Flipkart, Anil G angel investing in his last venture + Rapid progress from last time. Incorporated the co., going all-in on bank partnerships + Thesis: Credit over UPI rails ? Unclear capability as a solo Fintech founder ? Philosophical/anecdotal over sharp and succinct consumer insights ? Anil''s ref - may/may not invest in this venture ? Unclear right to win vs. existing incumbents/new vertical players who will launch this ? Raise doesn''t make sense <u>**Dhairen - Maybe**</u> Zpikey - close to 0.5 (product) + Commercial, resourceful - *claims that he has cracked the same terms as OneCard for secured CC. Using FK network to get bottom commercials from vendors* + Numerate, analytical - *thoughts around commerce as rewards for retention* + Followership - *entire team from WeTradeApp has stuck around, are these T1 folks?* + Thesis - positive on credit on UPI - *credit penetration driver in UPI native user base + higher wallet share of spends* ?+ FS business building? Though comes across as a quick learner ? Good start but Qs on scaling up? GTM for scale up seemed weak too, will need to double click <u>**Founder**</u> [Prashant Kumar](https://www.linkedin.com/in/prashantkumar6/) - Founder and CEO @ WeTradeApp (1.25 yrs), Head of Engg. @ Protonn (10 mo), Head of Engg. @ Flipkart Wholesale (7.75 yrs), Syncapse (1.25 yrs), P...'),
+(238, 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '),
+(240, 'Action Items: - [ ] Founder to speak with Nitin at 6:30pm today - [ ] Investors to debrief and circle back with decision - [ ] Connect founder with more founders for peer support - [ ] New hire (ex-Droom) to start January 19th and develop used car frameworks - [ ] Begin state expansion applications for next year (Delhi/Bombay) I was studying for finals as well. And then I was in Europe for three to four years actually. So I was doing my under-tatuation from there, from University of St. Gallen. So it''s like a small town at the northern side of Switzerland, very close to the German borders. It has like 80,000 people population. So either you will find very, very old people or like very young folks. Nobody in the middle, you know. And so I was specializing in finance and more on the transaction side is what I was learning over there. in the transaction team itself. It''s called TAS actually over there. And I was working along with the German team. German team would be the backend team. But the Swiss team was obviously the frontend team. So a lot of traditional clients over there understood that learning German as a skill set is very important for me. But nonetheless, all my team members were very kind enough to give me all the English speaking clients. But I was actually doing German learning as well over there. And simultaneously actually when I entered Europe, the dangle had just hit in. So there was a lot of displacement from Gulf countries of immigrants. So we started doing ...')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(245, 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '),
+(247, 'RM reflections - quite a down meeting!: ++ High energy and hustle ++ Meets our archetype of Solo GP ?? Need to verify a lot of what he says, how does he pick 5 out of 100 in this batch
+Meeting 2025-09-03: 
+Rajat reflections - Great find: ?? Not thoughtful at all ?? Should verify his signal and access ++ Easy Collective member to add ?? Can we fund him through the program which we have
+Notes: 1. Kodo - YC W21 is his portfolio company 1. Invested in Chime (?) 1. April is also his portfolio company, reads your emails 1. Bikayi - now called Bik, $5M ARR, raising Series B 1. Fund I = $12M 1. Fund II = $50M being raised WIP 1. Cheque increases from $250k to $500k, 30% in reserve, 50 Portfolio companies versus 40 (?) 1. Has created YT channel - European French YouTube channel, $12M deployed per year 1. Only independent YC podcast where founders from YC come 1. 1M LinkedIn impressions per month 1. Minimum $1M commit to the Lobster Capital fund 1. Co-investment into the $9.6M ARR company 1. Is your inbound from YC Launch page? Or elsewhere? 1. Monzo CoFo is the best YC partner per him based on data 1. Look at YC partner 1. How many customers does he have? How many of these are YC? 1. Check ACV and verify against calculations 1. Flywheel AI investment, 4 this batch
+Key Qs for @Aakash to answer: 1. Is he a suitable member to add to the US Collective? 1. How real is his access? 1. What are the hits from his YC portfolio to date? 1. Is he underwriting? Or, is this just dart throwing? 1. W...'),
+(248, 'Market Validation: - ICE Mortgage (parent of Encompass) has $11 billion revenue with $100+ billion valuation (roughly 10x revenue multiple) I mean, of course, we''ll keep it very interactive. If you guys have any questions, I''ll be happy to answer. And if you, any aspect that you are interested, we could probably dive into. I''ve spoken to Akash, maybe we could start. Maybe I can give you a quick intro about myself. Yeah. Yes. Right? I''ve spoken to Akash, so maybe I thinkWe have the notes from that conversation, soGreat, great. So just to quickly tell you about my background, so I have graduated from IIT Bombay. and I have worked for the last 20 years in the US Mortgage Banking Industry. So during this tenure, I have worked I basically worked at the cross section of your business as well as the technology, right? My experience has been such that I''ve worked with organizations where I''ve built the organizations literally from a bamboo shop or a residential apartment to a 3,000, 4,000-minute scale. have built companies I mean, there are all aspects of what you need, right? From your HR to strategy to sales to product engineering. So which has like, so I worked as a, when I started my mortgage journey, I was working with a US, California based lender. They were developing a loan origination system. So I built their loan origination system platform and then eventually built the entire mortgage banking function. Then I worked in a servicing in Altisource when I came to Bangalore and...'),
+(249, 'Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score** ---
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): 
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+De-brief (if any): 
+Next conversation with Founder on {use “@now”}: ---
+Attendees from DeVC:: 
+Z47 Conversation with Founder on {use “@now”}: 
+Notes:: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '),
+(250, 'BRC on Nikhil from Ujjwal Soni (competitions CG 2020): <u>Context:</u> Nikhil was a coordinator in his team - top 20 most popular folks in his batch - ⁠was a coordinator for competitions and services both. - ⁠we were the Covid MI . There was nothing to do in services. It was all basically competitions run on digital platform - ⁠nikhil I didn’t work with too closely. Suggested speaking to the service CG who was as close to nikhil - ⁠overall from what I know few of the extremely high energy guys from his batch. - ⁠”will do sowmthing big” vibes
+BRC on Nikhil from Ujwwal Kalra (WestBridge, senior at IIT-B): <u>Context</u>: good friends with nikhil and his co founder - clear hustler and hard worker - ⁠went through elections (cultural affairs) and hustled crazy. Lost it. But ran it all by himself. No team - ⁠street smarts : amongst the junior batch would be top 1% - ⁠people would get behind him - ⁠professional setups can he survive ? Too enthusiastic. Wants to do more. Would get frustrated in most professional setups. - ⁠was a people pleaser .. especially seniors etc. But over time we all realised that’s just his personality - ⁠ IQ wise normal iit chops. Nothing outstanding - ⁠intellectual curiosity is off the charts. Would try building new things. Was trying to build Rapido for iit campus. Then payments. - ⁠I was against him leaving the job but he wanted to take the plunge on lotto G - ⁠would you give him ownership at something you are bukdibg ? Would give but would worry and moni...')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(251, '**Product feedback from **[**Jay**](https://www.linkedin.com/in/jay-bhaskar-sharma-3a9975180/?originalSubdomain=in)**, associate @ CAM**: Context: Jay has used Lucio, Harvey and Legora – all three are being piloted at CAM; he ranked all of them similar in capability. “Lucio matches Harvey and Legora in capabilities, and it was built by a team that was bootstrapped” + Very high NPS for Lucio + Prefer Lucio over Harvey and Legora for the “India context”; Outside of this, all the tools are equal Can find minor differences if you sit and compare each features, but broadly all seem similar today + Legora/ Lucio > Harvey in terms of UX +/? Internally at CAM there might be a splithhouse on preferences. People prefer Legora/ lucio based on their familiarity and comfort + Seen the founders built the tool from scratch; Use cases they came up with during this journey continued to amaze; When it started out I never thought all this would be possible, but now it can redline so well + Direct and measureable ROI – translation of docs took 7 days to an external vendor vs 30 min now, effort scoping can be done in 1 hour, etc. ? Pilots are long and take 2-3 monhts <u>**Detailed notes**</u> **Background and Context** - Jay has seen Lucio being built from inception - College batchmates with Lucio founders from NLU Bangalore - Though not worked directly on Lucio, involved in early discussions - Has witnessed technology development from idea genesis - Disclosed potential bias as batchmate but main...'),
+(253, 'RM reflections - SM for FF x Concept: ++ Tech spike - have won 11 Hackathons so far (2 of which are YC’s own Agent hackathons) ++ Track record of achievement - CoFo has return offer from Stripe (?) & doesn’t want to take it to start up ++ H&H - managed to get a few paying users (single seat) for their Legal Tech product +? Vedant (main CoFo) has an uncle who is a Partner @ Bill Gates’ father’s law firm | Hence, can get some network edge here +? Not from T1 college - have chip on the shoulder ?? Raw tech backwards FFs who don’t have a clue about GTM - basic insights from me were highly appreciated What would change my views: - Meeting w/ CoFo (is he truly impressive?) - Ref from one or two customers - MPE from team regarding Spike Next steps - Would want Cash/RA to do a 2PE - Will refer to YC
+RM notes: Product: Legal AI platform that ingests large volumes of complaint documents (3,000+ pages of AI-generated/scanned material) and produces structured internal documents usable by legal AI tools or lawyers directly. Key capabilities demoed: - Ingests 3,000+ pages of scanned counterparty submissions - Flags gaps in counterparty arguments - Highlights conflicts between what the counterparty stated vs. what documents suggest - Outputs: timeline mismatches, gap flags, follow-on work items for the lawyer - ICP: Paralegal / casualty specialist at SMB law firms and large law firms Traction: - $200/mo from a paralegal - $299/mo from a spend working at a law firm - In conversation with a l...'),
+(257, 'Action Items: - [ ] Complete investment process before year end - [ ] Rahul to connect Tane with Prasad (legal counsel) - [ ] Rahul to connect Tane with Sandeep Rangras - [ ] Tane to send term sheet and confirm 1% allocation once lead investor terms are finalized - [ ] Akash and Rahul to follow up on potential value-add connections - [ ] Plan for in-person meeting in HSR next week that is perfectly fine so it''s going to be a Yeah, I think anything in that 20 to 22.5 ish zone is perfectly fine because anyways your incubation from Lost Funk didn''t cost you anything which is good in a way you didn''t have to give up any equity there. Awesome. So Akash has joined. Akash Kesh Tane is the founder that we found very interesting at Lost Funk. He''s also one of the few companies from Lost Funk to get a check from Paras. And both you and I know he''s very, very not conservative with the capital, very selective with the capital. So appreciate you making the time Tane. And thanks also for giving us the intro to your boss at Absolute. I think he''s also started up. funny to see that. Yeah. But I''ll let Cash drive the conversation initially and then jump in. So Cash, over to you. What would be great is to Before you get better acquainted, we would love to hear about your life journey. Where did you grow up? How did life happen? Before you dove into building Mandrake. And then we can go deeper on the Mandrake play. Quick introduction, Akash, we''ve been with the firm for four years. Prior to thi...'),
+(258, 'Notes:: <u>**Founders**</u> [Prashant Adurty](https://www.linkedin.com/in/prashant-adurty-07858a2/) - ex-founder - Toy Academy (9 mos, acquired by Nestery), COO - HipBar (5 yrs), Partnerships - Capital Float (1 yr), Consultant - PwC (3 yrs), Arshiya (2 yrs), Accenture (2 yrs), Reliance Retail (2 yrs), Sterling (1 yr) Education - Stanford, LSE, University of Madras [Aman Bhargava](https://www.linkedin.com/in/aman-bhargava-b875215/) - Partner - Accelia (boutique debt IB), co-Founder - Prosperfit (4 yrs), CEO - Versura Shiksha (2 yrs), Capital Float (1.5 yrs), Fin advisory - GT (3 yrs), EY (2 yrs), KPMG (4 yrs) Education - Georgia Tech, CA Ireland [Harshit L](https://www.linkedin.com/in/harshit-lingamneni/?originalSubdomain=in) - Architect - Small Case (2 yrs), Hipbar (4.5 yrs), Hasura (2.5 yrs) <u>**Business Model**</u> Mannjal functions as a co-lending platform between mid to large NBFCs and very small regional NBFCs or BC partners. <u>**Call notes**</u> **Business** - Pivoted from SCF (2 types of anchors - digital (positive WC) + traditional (negative WC)]. Write offs was very high in digital and traditional was in negative WC. BBB market had players like progcap, ugro already which made differentiation difficult - Moved focus to sub 50 lakhs segment lending. Replace B2B guys with lenders - Fintechs have not made good NBFC > make good NBFCs great fintechs - Go to sub GST market (MFI+) - where there is requirement of assessed income - **Connect 100 crs entity (BCs + NBFCs) to ...'),
+(260, 'Product Solution & Technology: - AI-powered platform generating SOPs from CAD files and manufacturing data - Current MVP achieves 65% accuracy in SOP generation - Features: - Generates full release package including bill of materials - Human-in-loop learning process for improvements - Change control system with memory storage - Integration with AWS tech stack (moved from Vercel for security) **Challenges and Solutions:** - Early products faced **security issues**; they had to **switch from Vercel to AWS** to address enterprise-grade security concerns (needed for hardware manufacturers). - **Accuracy of SOPs** was a challenge, requiring continuous **model refinement**. The solution now uses **iterative learning**, where users can modify outputs, enhancing the **AI system’s efficiency** over time.
+Notes:: <u>**Meeting Notes**</u> **Team** - [**Sarah Parker**](https://www.linkedin.com/in/sarahmitchellparker/details/experience/) (Co-founder) - 20+ years of experience in aerospace engineering. - Started career at NASA, working on solar science telescopes. - Later managed life science experiments on the space station. - Transitioned into project management and leadership roles at NASA Ames. - Led teams in various aerospace projects at NASA before moving to Planet Lab - [**Ishita Tyagi**](https://www.linkedin.com/in/ishita-tyagi/) (Co-Founder) - Mechanical Engineering from UCLA - Previously at: - Tesla (Battery pack manufacturing, Reno) - UberJump (Electric bikes/scooters manufactur...')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(261, 'Conversation 2024-09-14T20:30:00.000+05:30 with @Rahul Mathur: Attendees: @Rahul Mathur 1. Progress - Product 1. Has worked with Vivek to now make the product OS agnostic 1. And, the product is now cloud vendor agnostic 1. Still not ready for MM deployment 1. Progress - Business 1. Is going to start pilots with: 1. Avey TV 1. Unfiltered podcast —> found out about them them from RM’s LinkedIn post 1. About Avey TV 1. Has a full time resource who sets up all the equipment 1. Paying ~₹5L per month for the same 1. Have ~100 editors in the Avey TV business and ~30 in the YAS (YouTube As a Service) business 1. ICP 1. Might be agencies which do gaming, video editing or designing 1. The Buyer at the agency is the Producer / right hand person of the creator 1. Looking to charge ₹5K to ₹10K per seat therefore this becomes a MM Sales motion 1. Progress - Team & Talent 1. Vivek has come onboard full time to work as an engineer 1. Is going to get ~5% equity which vests over 4 year with 1 year cliff 1. Taking home ~₹50K per month 1. Has taken most of the technical burden off Advait 1. Working with the founder of Fold Money & a friend on design aspect 1. Progress - Supply 1. Has realized that cannot work with GCP, Azure etc since they are too large 1. Working with an Indore based cloud provider called Neev Cloud 1. Promoter of the business is “paying it forward” — connected via LinkedIn 1. Have met in-person 1. Also got Shashank from MagicAPI to meet the NeevCloud owner 1. Qs which he asked...'),
+(263, '**Founder Backgrounds**: - **Mohan (CTO)**: IIT Guwahati CSE grad (2018-2022), worked at Sprinklr for 2.5 years with quick promotions. Enjoyed lab courses in college. Built a YouTube channel with 21K subscribers. - **Sudhanshu (CEO)**: IIT Guwahati CSE & Maths grad. Worked at Jupiter on ODS (on-demand salary product), Kirana Club, and Amex. Won internal Amex Shark Tank competition (₹1L prize). Enjoyed topology and probability courses. - **Sushant (Designer)**: From North Karnataka, IIT Guwahati grad. Mental math champion from 4th standard. Chess player (peak 1400-1500 rating). Previously at Flipkart where he designed home services and built chatbots that impressed Kalyan Krishnamurthy. **Matiks Journey** - Started as a side project while founders were employed elsewhere - Initially created a web-based platform where users could generate links to play math games with friends - Acquired 1.5K users in first week through link sharing on WhatsApp - Started GTM through LinkedIn, later expanded to Twitter with good results - Signed term sheet with InfoEdge in September 2024 (₹3 crore on ₹17 crore post) - Currently have 5 full-time team members plus 5-6 interns **Product & Metrics** - **User Flow**: Onboarding → score setting (45% completion) → game formats - **Most Popular Format**: Online duels (60% of activity) - **Other Formats**: Fastest finger first (20%), daily puzzles, KenKen puzzles - **Engagement**: KenKen puzzles average 5 mins on weekdays, 50 mins on weekends - **Referral...'),
+(264, 'Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---'),
+(265, 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '),
+(266, 'Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;
+INSERT INTO util.enrichment_staging (company_id, content) VALUES
+(267, 'Key Connections & Follow-ups: - Maven already in discussions with Razorpay Ventures for partnership and potential strategic investment - DeVC offered to help facilitate Razorpay connection given their close relationship as early investor - Portfolio companies identified for customer validation: Voicebit (restaurants) and Confilo (bank front office) Notion AI is transcribing this meeting. That''s the PII warning, I am gonna transcribe the meeting so I can share it with Akash. Awesome. I''ll give you a quick background about me, about the firm, and then would love to hear from your end. I was an entrepreneur like you, your YC Winter 26, I was YC Winter 21, different era, that was a Zepto batch, that was a COVID batch, that was 500 companies in one batch twice a year versus where you guys are now. And I sold my business, it was doing software for insurance brokers, very boring, pre-AI. I built a company in the era where you had to hire engineers to get code. Today you can burn through millions of tokens and get the same code built 10x faster and better. We''re three partners in the fund. Akash is an angel in Superbase, which is another super successful YC company. He also built and sold India''s largest real estate portal back when you and I were literally in our diapers. Second partner, Rajat, is the first investor in Razorpay, which is the stripe for India. Again, one of IC''s big hits in India as well. From the fund we''ve invested in several YC companies over the last couple of ba...'),
+(268, 'Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---'),
+(269, 'Financial Update — Mar 2026 (Audit): - Last Fiscal Revenue: $0 - Current Monthly Revenue: $0 - Jan 2026 Cash Balance: $760,000 - Jan 2026 Monthly Net Burn: $19,000'),
+(270, 'Notes:: 1. Thesis 1. OYO for Pharma, software for pharma & clinics 1. Transition from local chemist to modern medicine affilate store 1. B2b pharma shop digitization 1. Won''t charge for the software -> SaaS doesn''t work in India, we are a service provider 1. Quick Comm using local chemist inventory 1. He believes that acute is the only demand source (?) 1. Also was getting stock up orders 1. Customer has high WTP for acute (₹200) 1. Chronic is subscription or bulk buying 1. His journey 1. 2018 -> clinic, private clinic, preference given by front office staff. Thought of solving via software 1. Cold DM to Subhash to get an internship at Dukaan 1. Felt Dukaan is the right place to build a business or product 1. Pawan from OnArrival offered a paid sabbatical to try building 1. Got 20 orders posting stories on IG 1. Thought demand was only in Tier 1 cities 1. Market learnings 1. Chief Of Staff at Blinkit said they are struggling 1. Blinkit will try to onboard a partner for pharma 1. PharmEasy and 1mg doing 80% prescription meds via channel 1. i.e. local chemists are anyways getting bulk of the acute use-case volume 1. Apollo 24x7 is also doing prescription meds delivery 1. Schedule X or Schedule N medicines have strict regulations 1. Swiggy only focused on OTC meds and not prescription meds 1. Story 1. Business 1. Supply side 1. Young owner < 50 yrs works, QR placed at the store, 1. Channi Hittmat in Jammu, 3 partner stores amongst 13 stores in the area 1. 5 weeks of pilot 1. ₹20...'),
+(271, '**TK - Overall View: WM**: **Spikey: 1 (for Ajit); 0.5 (Akshay)** Spike Needed for the biz: consumer/product + High IQ + Both are good combo of right and left brain thinker + customer backward > citing example like building cities for people + Positive BRCs on both ?? Not up to date on numbers – rough calculating it; if running so many experiments numbers should be on top of mind to know which one is working ?? Slow on iteration and shipping – no increase in DAU/MAU over the last 3 months ?? Running too many experiments too early on small base ?? Lack of depth – Akshay asking random ques on AI hardware? <u>**Next Steps**</u> - Closely Track the team and metrics (DAU/MAU/engagement/retention) - No significant change as of now over the last three months. <u>**Detailed Meeting Notes (16.10.25)**</u> **Founder Background** - **Ajit Pol** - Grew up in an Air Force family in Pune; now married into a Marwari family. - Worked at Flipkart – across search and Insuretech biz (2018-21) - Moved to Leap, a full-stack edtech startup enabling students to study abroad - handling exam prep, university partnerships, visa, and financial assistance. - Was first PM at Leap, scaling the counselling business that contributed ~70 % of total revenue, with ARPU of ~$2,500 per student and company-level revenue of ₹300–400 Cr across India, the U.S., and the U.K. - Joined Buystar (founded by ex-manager Sriram) as Head of Product – Majority of rev from cricket but it’s highly seasonal so built Cricket Trum...')
+ON CONFLICT (company_id) DO UPDATE SET content = EXCLUDED.content;

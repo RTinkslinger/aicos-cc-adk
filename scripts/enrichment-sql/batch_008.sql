@@ -1,0 +1,73 @@
+UPDATE companies
+SET agent_ids_notes = CASE id
+    WHEN 169 THEN 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '
+    WHEN 173 THEN 'CV / KK / TK <> Nishank 2025-08-23: KK to add views and do deep ref checks <u>**CV Views**</u> <u>Spikey = 1?; Maybe for DeVC; Refs from college can move me to positive zone</u> High intrinsics (to confirm) in a bad business (50rs noodle with GT vision) and not real traction. Key Q to strong maybe: Is the guy real? ++ jugaadu - high enthu, high confidence, potentially high capability ++ numerate ++ IQ ++ seems like he’s done some work on product depth ++ state level badminton player - capability demonstrated across multiple dimensions ?? Not genuine? More excited by “perfora” than “swiggy”; “travel on trains”; “did so many interviews for 0.1% change in spice levels” - feels like a performance of “hustling genius who is consumer first”. Somehow didn’t buy it. ?? no good answer on consumer brands - or why foods ?? very inside out - and full of self (a lot of it is feels like bravado)- so is there a lot of beta? ?? will need refs to see if he’s really got the metal ?? not left BCG yet +? does he actually do all this work on consumer side (should check) <u>**TK Views**</u> <u>Overall: Weak Maybe</u> ++ Spikey = 1, FMF = 0 ++ Inside out ++ Highly numerate and high IQ, will figure out things ++ Strong pedigree and track record of picking things and going in depth – 3 research paper in Intl journals, Politics in IITD, poetry etc in IITD, State level badminton player;  all-rounder type - Does he has the right spike for the food buzz? - No strong reason for moving out of web3 – where ...'
+    WHEN 175 THEN 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '
+    WHEN 176 THEN 'Anupam Acharya - Monthly Newsletter - 2026-02-27: January 2026 Performance Update & TaraLabs.ai Launch **MAJOR MILESTONE: Organization rebranded under TaraLabs.ai** - More than a name change - commitment to "democratize credit through AI-led development" - Building "Credit OS" of the future - AI agents manage credit repair, monitoring, automated applications - GoCredit AI remains in development, working toward consumer-facing front-end - Vision: "empower every individual with an autonomous AI credit ally that doesn''t just track scores, but actively improves financial health through automated, intelligent interventions" - Updated vision deck: gocreditai.netlify.app **January 2026 Metrics:** - Total Revenue: ₹10,498,463 (flat due to "Operational Reset") - B2C Subscription Revenue: ₹3,403,565 (+4.4% MoM growth) - Total App Installs: 628,816 (21% organic reach) - Net Profit: ₹1,500,000 (14% margin) **Growing Pains (Jan & Feb):** - Technical Migration (Jan): New onboarding experience, upgraded OTP systems. 4-day breakage causing revenue loss - now stabilized. - Ad Experimentation (Feb): Testing new creatives/targeting under new App flow. Temporary spike in CPAs, dip in ROAS. Multiple exhaustive experiments conducted. - Strategy: Absorbing experimental costs now to identify high-performing "winners" for scale-up. **Path to March Breakout:** - Late February: Normalizing ROAS as they lock in successful AI-driven ad formulas - March (Breakout): Launch of "Loan Kavach" - first major pr...'
+    WHEN 177 THEN 'Notes:: 1. **Regarding M&A** 1. Decided to NOT go ahead with the M&A involving the family run jewelry business 1. Has since spent the time with QC co’s to understand the opportunity 1. BB founder had considered investing in him but couldn’t go ahead; hence the connect 1. **Regarding hardware** 1. Currently costs ~₹20K BOM including their margins 1. Reason for high cost is that the volume is low 1. They do assembly in-house 1. Working with contract component manufacturers 1. **Quick Commerce opportunity** 1. BB is integrating with Tata Croma and Tata Cliq 1. Will have all the electronics inventory on the QC channel shortly 1. Want to use the gordian delivery box for electronics (mobile, headphones, earphones etc) and gold coin 1. There would be seasonal demand for such products e.g. around the new model launches in mobile phones & festive season for gold coins 1. They expect ~5% of orders to be electronics category 1. Also open to buy the devices from Gordian 1. Also in talks with: 1. Blinkit — Albinder is his POC 1. Zepto — has spoken to the team 1. Rapido — keen to test this on their own delivery channel 1. **Insights** 1. There is wear & tear of the safe boxes hence needs a replacement every 18-36 months 1. He is able to provide telemetry on top of the hardware which is valuable 1. e.g. tamper warning 1. e.g. geolocation 1. **His doubt** 1. Should Gordian rent out the devices to the QC players for the peak demand season? 1. i.e. ~4 months per year 1. And rest of the 4 month...'
+    WHEN 180 THEN 'Heads up note written by @Rahul Mathur 2025-04-12T14:33:00.000+05:30: Hi team, Sharing the heads-up note for our investment in [Grexa](https://grexa.ai/). This is an AI marketing app for SMBs in India to automate their entire marketing effort — SEO, SEM, performance & social ads to drive hyperlocal footfall and Sales. DeVC is investing ₹43 Lakhs ($50K) as part of a wider ₹15 crore round led Utsam Somani’s iSeed This is a a Community Top Up w/ Utsav Somani | BRCs pending (ex Testbook CoFo’s) **Founders** 1. [Ashutosh Kumar](https://www.linkedin.com/in/ashutosh-kumar6/?originalSubdomain=in) (ex CoFo and CEO — Testbook) 1. IIT-B ‘07 to ‘12 1. [Arpit Oswal](https://in.linkedin.com/in/arpit-oswal) (ex CPO — Testbook) 1. IIT-B ‘07 to ‘12 1. [Ayush Varshney](https://www.linkedin.com/in/ayushvarshney/?originalSubdomain=in) (ex CTO — Testbook) 1. IIT Kanpur ‘10 to ‘14 1. [Narendra Agrawal](https://www.linkedin.com/in/narendraagrawal7?original_referer=https%3A%2F%2Fwww.google.com%2F&originalSubdomain=in) (ex CoFo & CMO — Testbook) 1. IIT-B ‘07 to ‘12 **Investing Process** 1. Rajat sourced this investment opportunity & shared with Aakash 1. Aakash: “Having known the founders for long, hard to go bigger at entry. Lots of risks that seem like will repeat. “ 1. Aakash did a 1PE with the founders followed by a full team meeting 1. Decision was: “Community cheque is no brainer - trendline strong | founders are known (ex Testbook) ” 1. Utsav committed to lead the round hence decision was to d...'
+    WHEN 183 THEN 'Key Metrics (as of March 2026): - **Total raised:** ~$12M (Pre-seed $1.4M + Seed $6M + Zuora strategic $5M) - **Cash in bank:** ~$3.5–3.8M - **ARR:** Not stated explicitly; ACV ~$60–120K per customer - **Pipeline:** $12M total; run rate $2.5M, adding ~$0.3M new pipe/month (grown from ~$0.5M to $2.5M in 9 months) - **Direct sales conversion:** ~18% - **Sales team:** 4 AEs (2 enterprise @ $1M quota, 2 mid-market @ $600–650K quota) - Partner
+Founder: **Arvind Gopalan** — CEO & Co-founder. Also spoken with Pranay (likely co-founder or early team). Building a partner-led GTM through ERP/billing platform resellers.
+Company Overview: Growfin is an AR (Accounts Receivable) automation platform focused on order-to-cash workflows — specifically cash application/reconciliation, collections management, and invoice presentment. Sits in the finance operations layer of the CFO stack, not core accounting/GL. Key integrations with NetSuite and Zuora (Zora), through which it also has a strategic investment.'
+    WHEN 188 THEN 'Founders Background (from Matrix internal notes) - 2026-02-10: HARSHIT MADAN: IIT KGP (''08-''12), BA at Opera Solutions (12-14), PM at Housing.com (14-15), Co-founder SME financing startup (15-17), Meesho (''17-''22) VP Product to VP & GM Supply Growth. Bob: "One of the sharpest and most structured problem solvers at Meesho. Very calm, composed. Built a very good team. Trusted hand for Vidit." Aakash (Housing days): "Great executor and operator, but not sure if he can do iterative 0-1 stuff in the dark." PRATEEK AGARWAL: IIT KGP (''08-''13), Field Engineer Schlumberger, PM Housing.com, Co-Founder Bite Club (''14-''16) raised ~$1M, Meesho (''16-''22) one of first employees when <10 people. Bob: "Very sharp and high IQ. Very iterative and great for 0-1." Aakash: "Cut out to be an entrepreneur from day 1. Loves to get his hands dirty." Dada ranking: "Prateek > UK > Harshit. Same category as Shobhit (Vegrow), Ankush (DSLR)."
+**Nitin Views**: - Overall: The combination of Harshit and Prateek building in the consumer domain is very exciting. They’ve both seen Meesho’s 0-1, 1-10 & 10-100 journeys closely and were instrumental in it. They were always sharp, but their Meesho stints have made them more polished and also taught them team building. They also always wanted to start-up (both had started-up in the past) - Harshit - I’ve worked with Harshit on a couple of short 2-3 week pieces - One of the sharpest and most structured problem solvers at Meesho (was very problem-first) - Very calm, co...'
+    WHEN 189 THEN 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '
+    WHEN 190 THEN 'Prep 2025-09-03T09:06:00.000+05:30: [File: download](https://prod-files-secure.s3.us-west-2.amazonaws.com/b21975bb-aebf-48e3-8c44-1573c4404129/ac6d370f-0d1d-45ed-b9dc-8d1a76100cfb/Semel_Shah_Haystack_OnePager.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Z4A6JIV6%2F20260320%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260320T102927Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGgaCXVzLXdlc3QtMiJGMEQCIGftJyDy4JSgt75dFJdnDE%2F%2BeAC%2FO2wBJkvT%2FQ6cCswPAiBDR2INkZIi1iz744cF3nD7DySgkWgE7mUsaCiMikBjGyr%2FAwgxEAAaDDYzNzQyMzE4MzgwNSIMD9%2BhMHa8F%2Bm7b0L6KtwDb2I0V3HgxiKKwtxYU56TuH2%2BeMlW2Kx58Ull7z5FZom85fLEeVLHba121J0og2No0r3aKZ1MNc23Pyv5%2FGZjX3kBtUx1w9w9pQj6HfHNPvEnN6LmIdbM1fww0paURRv1X9jjVaMR6eW8yNwoamxY9kQ1Zmni3ML6HTZAllI5FAaY4Bz8oiNbd5uMAR8%2F17M1BMcFF2FYTlC3wZ%2Bq0pVESLs1pcq%2BxetJVMlP7IykymIVe3iF6q7m868%2BysLcn40C6o%2BQQZ3BlwWd18xKJ3vT2q%2B555OulXT%2Fh%2BH6ITFKqTNvxRFB4lAEhWJSDDsAHtsGlPFWC3x%2FD3JysKhgVjRQyYnjyVJrSN1QpRG1yOLNUgU01ZQYs3bwKOVSIjuOss2Wg1XbNblmf6GVqkKPA7oJJ2Klfw6GObroRMSOfMa0UPTsWTURcOHuCNWpFdhsuhpU76SooHMyMFfM1TkKoZj6TJiZGz4cAcFahYU9%2F0FH0VksJ%2BGtgA1WuxkQ7UDnUcfvJo5mttw5Vl8sdeM9lw264pIzyfg8O2%2Bavj7%2FxlF4s1RAq%2FpvMcJ0Hl1KckFPSI7SeC0f8kG05ngcXXBluO%2Fm80Xq9hyNuFJl5oK7DcyzAyR%2B8XVIL59dF3BjtoYwpvzzzQY6pgFQpTWUetuyme3z1Y9LOt2uc0swBhdh23zYo%2Bs%2BVbEroz0e7BPm87G500WtzgstmGe%2F6TOLe5BMK9hoVLabv%2FbgGMQLmbQgsGiTWZYYKyMRqEAHM%2Bvye6Z4ghTLXwSGptGogFletfTnEh8fhBTMn7fmvz00TO5UEGjpqRSwv0yx3GHaqW%2B9%...'
+    ELSE agent_ids_notes
+END
+WHERE id IN (169, 173, 175, 176, 177, 180, 183, 188, 189, 190)
+  AND (agent_ids_notes IS NULL OR agent_ids_notes = '');

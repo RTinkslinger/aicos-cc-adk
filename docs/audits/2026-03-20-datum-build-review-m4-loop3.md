@@ -37,7 +37,7 @@ The Datum Agent build is **solid and production-ready for Phase 0 + Phase 1 (Cor
 - Auto-merge threshold at 0.90 is explicitly enforced as anti-pattern #8
 
 ### DB Column Names
-- **PASS**: CLAUDE.md correctly uses `person_name`, `current_role`, `home_base` (TEXT[]), `linkedin` throughout
+- **PASS**: CLAUDE.md correctly uses `person_name`, `role_title`, `home_base` (TEXT[]), `linkedin` throughout
 - Explicit warnings at multiple points: Section 3 query patterns, Section 5 enrichment priorities, Section 12 archetype taxonomy
 - Verified against live DB: no `name`, `role`, `city`, `company`, or `linkedin_url` columns exist on the `network` table
 
@@ -61,7 +61,7 @@ In Section 4 Step 6 (Report Back), the ACK example says:
 - Filled: name, company, role, linkedin_url, city (5/13 fields).
 - Web enriched: linkedin_url, city (2 fields via LinkedIn scrape).
 ```
-These should reference the actual column names (`person_name`, `current_role`, `linkedin`, `home_base`) for consistency. While ACK text is human-readable (not SQL), using incorrect column references could confuse the agent about which fields were actually filled.
+These should reference the actual column names (`person_name`, `role_title`, `linkedin`, `home_base`) for consistency. While ACK text is human-readable (not SQL), using incorrect column references could confuse the agent about which fields were actually filled.
 
 **Severity: Low.** The agent's SQL queries all use correct names. The ACK is just a summary string.
 
@@ -94,7 +94,7 @@ All 6 new columns confirmed present:
 - `aliases` (ARRAY)
 - `datum_source` (TEXT)
 - `datum_created_at` (TIMESTAMPTZ)
-- Pre-existing columns confirmed: `person_name`, `current_role`, `home_base` (ARRAY), `linkedin`, `embedding` (USER-DEFINED/vector)
+- Pre-existing columns confirmed: `person_name`, `role_title`, `home_base` (ARRAY), `linkedin`, `embedding` (USER-DEFINED/vector)
 
 ### Companies Table Alterations
 All 8 new columns confirmed present:
@@ -107,14 +107,14 @@ All 8 new columns confirmed present:
 ### Network Embedding Infrastructure
 3 triggers confirmed on the network table:
 - `embed_network_on_insert` -> `queue_embeddings` (AFTER INSERT)
-- `embed_network_on_update` -> `queue_embeddings` (AFTER UPDATE of person_name, current_role, home_base)
+- `embed_network_on_update` -> `queue_embeddings` (AFTER UPDATE of person_name, role_title, home_base)
 - `clear_network_embedding_on_update` -> `clear_column` (BEFORE UPDATE)
 - HNSW index `idx_network_embedding` confirmed present
 
 ### Migration File Quality
 - Idempotent (IF NOT EXISTS / ADD COLUMN IF NOT EXISTS throughout)
 - Well-commented with execution notes and verification queries
-- Correctly documents the design spec deviation: "The design spec assumed generic column names (name, role, city, linkedin_url). Actual columns are: person_name, current_role, home_base, linkedin."
+- Correctly documents the design spec deviation: "The design spec assumed generic column names (name, role, city, linkedin_url). Actual columns are: person_name, role_title, home_base, linkedin."
 
 ---
 
@@ -164,7 +164,7 @@ All 8 new columns confirmed present:
 ### datum-processing.md
 
 **Column names**:
-- Network table section explicitly lists: `person_name` (NOT "name"), `current_role` (NOT "role"), `linkedin` (NOT "linkedin_url"), `home_base` TEXT[] (NOT "city")
+- Network table section explicitly lists: `person_name` (NOT "name"), `role_title` (NOT "role"), `linkedin` (NOT "linkedin_url"), `home_base` TEXT[] (NOT "city")
 - All SQL examples in the skill use correct column names
 - Processing checklist is complete (11 steps in correct order)
 
@@ -181,14 +181,14 @@ Parsed:
   role: CTO
   company: Composio
 ```
-These are conceptual parsing outputs (not DB columns), but using `name` / `role` / `company` could confuse the agent when it then needs to map to `person_name` / `current_role` (which embeds company). The mapping from parsed fields to actual columns is not explicitly documented in the skill.
+These are conceptual parsing outputs (not DB columns), but using `name` / `role` / `company` could confuse the agent when it then needs to map to `person_name` / `role_title` (which embeds company). The mapping from parsed fields to actual columns is not explicitly documented in the skill.
 
 **Severity: Low.** The CLAUDE.md's Section 3 query patterns show the correct INSERT syntax, and the column reference table in the skill is explicit. But adding a "Parsed Field -> DB Column" mapping table would eliminate ambiguity.
 
 ### dedup-algorithm.md
 
 - 4-tier algorithm with correct SQL for each tier
-- **All SQL uses correct column names**: `person_name`, `current_role`, `linkedin` in SELECT statements
+- **All SQL uses correct column names**: `person_name`, `role_title`, `linkedin` in SELECT statements
 - Embedding similarity thresholds: 0.80 for persons, 0.85 for companies (correctly different)
 - Merge protocol with COALESCE pattern documented
 - Conflict handling (trivial vs meaningful differences) documented
@@ -260,10 +260,10 @@ The design spec (written before schema discovery) assumed generic column names. 
 | Spec Assumed | Actual (Build Used) | Resolution |
 |-------------|--------------------|----|
 | `name` column on network | `person_name` | Correct -- used actual name |
-| `role` column on network | `current_role` (contains "Role at Company") | Correct -- used actual name |
+| `role` column on network | `role_title` (contains "Role at Company") | Correct -- used actual name |
 | `city` column on network | `home_base` TEXT[] (array, not scalar) | Correct -- used actual name + type |
 | `linkedin_url` column on network | `linkedin` (pre-existing, 3247 values) | Correct -- used actual name, documented that linkedin_url was created then dropped |
-| `company` column on network | No separate column (embedded in `current_role`) | Correct -- CLAUDE.md explains the format |
+| `company` column on network | No separate column (embedded in `role_title`) | Correct -- CLAUDE.md explains the format |
 | `embedding_input` column on network | Not needed (trigger uses `embedding_input_network()` function) | Correct -- IRGI pattern uses functions, not columns |
 | UNIQUE index on linkedin | Not possible (existing duplicates) | Correct -- documented in migration comments |
 
@@ -319,7 +319,7 @@ This should be verified. If `source` doesn't exist, all notification inserts wil
 - None. The `notifications.source` column was verified present (varchar). All SQL patterns are correct.
 
 ### Should Fix (quality improvements)
-1. **Add parsed-field-to-column mapping** in datum-processing.md skill -- small table mapping `name -> person_name`, `role+company -> current_role`, `city -> home_base`, `linkedin_url -> linkedin`
+1. **Add parsed-field-to-column mapping** in datum-processing.md skill -- small table mapping `name -> person_name`, `role+company -> role_title`, `city -> home_base`, `linkedin_url -> linkedin`
 2. **Update ACK examples** in CLAUDE.md Section 4.6 to use actual column names for consistency
 
 ### Nice to Have (future loops)

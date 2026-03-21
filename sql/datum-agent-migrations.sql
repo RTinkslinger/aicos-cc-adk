@@ -87,15 +87,18 @@ COMMENT ON TABLE datum_requests IS 'Human-in-the-loop queue for Datum Agent. Cre
 -- =============================================================================
 -- PART 2: ALTER TABLE network — Enrichment + Dedup columns
 -- =============================================================================
--- The network table (3728 rows) already has: person_name, current_role,
+-- The network table (3728 rows) already has: person_name, role_title,
 -- home_base TEXT[], linkedin, embedding vector(1024), fts tsvector.
 -- Adding enrichment tracking, aliases, and source tracking for Datum Agent.
 --
 -- EXECUTED: 2026-03-20 via Supabase MCP (verified: all columns present)
 -- NOTE: The design spec assumed generic column names (name, role, city, linkedin_url).
---       Actual columns are: person_name, current_role, home_base, linkedin.
+--       Actual columns are: person_name, role_title, home_base, linkedin.
 --       The linkedin_url column was created then dropped (linkedin already had 3247 values).
 --       A UNIQUE index on linkedin was not possible due to existing duplicates.
+
+-- Page content (Notion page body, loaded from network-pages/ files)
+ALTER TABLE network ADD COLUMN IF NOT EXISTS page_content TEXT;
 
 -- Enrichment tracking
 ALTER TABLE network ADD COLUMN IF NOT EXISTS enrichment_status TEXT DEFAULT 'raw';
@@ -161,7 +164,8 @@ CREATE INDEX IF NOT EXISTS idx_network_embedding
   USING hnsw (embedding vector_cosine_ops);
 
 -- 4b. Content input function for network embedding
--- Uses ACTUAL column names: person_name, current_role, home_base (TEXT[])
+-- Uses ACTUAL column names: person_name, role_title, home_base (TEXT[])
+-- Updated 2026-03-20: Added page_content, linkedin, ids_notes for richer embeddings
 CREATE OR REPLACE FUNCTION embedding_input_network(rec network)
 RETURNS text
 LANGUAGE plpgsql
@@ -170,8 +174,11 @@ AS $$
 BEGIN
   RETURN
     coalesce(rec.person_name, '') || ' | ' ||
-    coalesce(rec.current_role, '') || ' | ' ||
-    coalesce(array_to_string(rec.home_base, ', '), '');
+    coalesce(rec.role_title, '') || ' | ' ||
+    coalesce(array_to_string(rec.home_base, ', '), '') || ' | ' ||
+    coalesce(rec.linkedin, '') || ' | ' ||
+    coalesce(rec.ids_notes, '') ||
+    CASE WHEN rec.page_content IS NOT NULL THEN E'\n' || left(rec.page_content, 2000) ELSE '' END;
 END;
 $$;
 
@@ -186,12 +193,12 @@ CREATE OR REPLACE TRIGGER embed_network_on_insert
   EXECUTE FUNCTION util.queue_embeddings('embedding_input_network', 'embedding');
 
 CREATE OR REPLACE TRIGGER embed_network_on_update
-  AFTER UPDATE OF "person_name", "current_role", "home_base" ON network
+  AFTER UPDATE OF "person_name", "role_title", "home_base", "page_content" ON network
   FOR EACH ROW
   EXECUTE FUNCTION util.queue_embeddings('embedding_input_network', 'embedding');
 
 CREATE OR REPLACE TRIGGER clear_network_embedding_on_update
-  BEFORE UPDATE OF "person_name", "current_role", "home_base" ON network
+  BEFORE UPDATE OF "person_name", "role_title", "home_base", "page_content" ON network
   FOR EACH ROW
   EXECUTE FUNCTION util.clear_column('embedding');
 
@@ -203,10 +210,13 @@ CREATE OR REPLACE TRIGGER clear_network_embedding_on_update
 -- VERIFICATION QUERIES (all verified 2026-03-20 via Supabase MCP)
 -- =============================================================================
 -- datum_requests: 0 rows, all columns present
--- network: enrichment_status, enrichment_source, last_enriched_at, linkedin (pre-existing),
---          aliases, datum_source, datum_created_at, embedding (pre-existing) — all present
+-- network: page_content, enrichment_status, enrichment_source, last_enriched_at,
+--          linkedin (pre-existing), aliases, datum_source, datum_created_at,
+--          embedding (pre-existing) — all present
+--          page_content loaded from network-pages/ files: 48 rows with meaningful content
 -- companies: enrichment_status, enrichment_source, last_enriched_at, domain (pre-existing),
 --            aliases, datum_source, datum_created_at — all present
--- network triggers: embed_network_on_insert, embed_network_on_update,
---                   clear_network_embedding_on_update — all present
+-- network triggers: embed_network_on_insert, embed_network_on_update (watches page_content),
+--                   clear_network_embedding_on_update (watches page_content) — all present
 -- network HNSW index: idx_network_embedding — present
+-- embedding_input_network: includes page_content (LEFT 2000 chars), linkedin, ids_notes

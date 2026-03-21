@@ -90,10 +90,10 @@ Web Tools MCP (HTTP server at localhost:8001):
 
 ```bash
 # Insert new person
-# NOTE: Network table uses person_name (not name), current_role (not role),
+# NOTE: Network table uses person_name (not name), role_title (not role),
 #       home_base TEXT[] (not city), linkedin (not linkedin_url).
 psql $DATABASE_URL <<'SQL'
-INSERT INTO network (person_name, current_role, linkedin, home_base, enrichment_status,
+INSERT INTO network (person_name, role_title, linkedin, home_base, enrichment_status,
                      enrichment_source, datum_source, datum_created_at, created_at, updated_at)
 VALUES ('Rahul Sharma', 'CTO at Composio', 'https://linkedin.com/in/rahul-sharma',
         ARRAY['San Francisco'], 'partial', 'datum_agent', 'cai_message', NOW(), NOW(), NOW())
@@ -103,7 +103,7 @@ SQL
 # Merge into existing person (COALESCE pattern — never overwrite with NULLs)
 psql $DATABASE_URL <<'SQL'
 UPDATE network SET
-  current_role = COALESCE('CTO at Composio', current_role),
+  role_title = COALESCE('CTO at Composio', role_title),
   linkedin = COALESCE('https://linkedin.com/in/rahul-sharma', linkedin),
   email = COALESCE(NULL, email),
   enrichment_status = 'partial',
@@ -114,14 +114,14 @@ WHERE id = 42;
 SQL
 
 # Dedup Tier 1: LinkedIn URL match
-psql $DATABASE_URL -c "SELECT id, person_name, current_role, linkedin FROM network WHERE linkedin = 'https://linkedin.com/in/rahul-sharma';"
+psql $DATABASE_URL -c "SELECT id, person_name, role_title, linkedin FROM network WHERE linkedin = 'https://linkedin.com/in/rahul-sharma';"
 
-# Dedup Tier 2: Exact name match (person_name column; company is embedded in current_role)
-psql $DATABASE_URL -c "SELECT id, person_name, current_role, linkedin FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
+# Dedup Tier 2: Exact name match (person_name column; company is embedded in role_title)
+psql $DATABASE_URL -c "SELECT id, person_name, role_title, linkedin FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
 
 # Dedup Tier 3: Embedding similarity (requires embedding to exist)
 psql $DATABASE_URL <<'SQL'
-SELECT id, person_name, current_role,
+SELECT id, person_name, role_title,
        1 - (embedding <=> (SELECT embedding FROM network WHERE id = $CANDIDATE_ID)) as similarity
 FROM network
 WHERE embedding IS NOT NULL
@@ -200,7 +200,7 @@ For merges: UPDATE using COALESCE pattern — never overwrite existing non-NULL 
 
 After write, refresh embedding input:
 ```bash
-# The auto-embedding trigger fires on INSERT or UPDATE of person_name, current_role, home_base
+# The auto-embedding trigger fires on INSERT or UPDATE of person_name, role_title, home_base
 # No manual embedding action needed — the pipeline handles it automatically.
 ```
 
@@ -231,7 +231,7 @@ If one exists, skip creating a duplicate.
 ```
 ACK: Processed 1 entity.
 - Created person: Rahul Sharma (Composio, CTO). ID=42.
-- Filled: person_name, current_role, linkedin, home_base, e_e_priority (5/13 fields).
+- Filled: person_name, role_title, linkedin, home_base, e_e_priority (5/13 fields).
 - Web enriched: linkedin, home_base (2 fields via LinkedIn scrape).
 - Datum requests: email, phone, archetype (3 pending).
 ```
@@ -262,14 +262,14 @@ Not all fields are equally important. Enrichment effort follows this priority:
 
 **IMPORTANT:** Network table column names differ from common naming:
 - `person_name` (not "name")
-- `current_role` (not "role" — contains "Role at Company" format)
+- `role_title` (not "role" — contains "Role at Company" format)
 - `home_base` TEXT[] (not "city" — is an array)
 - `linkedin` (not "linkedin_url")
 - `ids_notes` (IDS methodology notes)
 
 | Priority | Fields | Why |
 |----------|--------|-----|
-| **P0** | person_name, current_role | Identity. Without these, the record is useless. |
+| **P0** | person_name, role_title | Identity. Without these, the record is useless. |
 | **P1** | linkedin, e_e_priority | Durable key + classification. LinkedIn prevents future duplicates. |
 | **P2** | email, home_base | Contact + geographic overlap scoring. |
 | **P3** | phone, ids_notes, source | Nice-to-have. Do not burn web calls on these. |
@@ -327,7 +327,7 @@ After every write, compute and set enrichment_status:
 
 ```
 For persons:
-  required = [person_name, current_role]
+  required = [person_name, role_title]
   important = [linkedin, e_e_priority, email, home_base]
   If all required AND all important filled → 'enriched'
   If all required filled → 'partial'
@@ -433,7 +433,7 @@ After merge, always:
 2. Set `last_enriched_at = NOW()`
 3. Set `updated_at = NOW()`
 
-The embedding trigger fires automatically on UPDATE of person_name/current_role/home_base.
+The embedding trigger fires automatically on UPDATE of person_name/role_title/home_base.
 
 ---
 

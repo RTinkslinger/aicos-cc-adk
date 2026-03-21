@@ -75,7 +75,7 @@
 | Column | Filled | Gap | Fill % |
 |--------|--------|-----|--------|
 | person_name | 959 | 0 | 100% |
-| current_role | 959 | 0 | 100% |
+| role_title | 959 | 0 | 100% |
 | **linkedin** | 692 | 267 | **72%** |
 | **home_base** | 481 | 478 | **50%** |
 | **current_company_ids** | 641 | 318 | **67%** |

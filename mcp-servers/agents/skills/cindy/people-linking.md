@@ -63,9 +63,9 @@ psql $DATABASE_URL -t -A -c "SELECT id, person_name FROM network WHERE linkedin 
 
 ```bash
 psql $DATABASE_URL -t -A -c "
-  SELECT id, person_name, current_role FROM network
+  SELECT id, person_name, role_title FROM network
   WHERE LOWER(person_name) = LOWER('Rahul Sharma')
-    AND LOWER(current_role) ILIKE '%composio%';"
+    AND LOWER(role_title) ILIKE '%composio%';"
 ```
 
 - Confidence: **0.95** (name + company is highly reliable)
@@ -78,7 +78,7 @@ psql $DATABASE_URL -t -A -c "
 
 ```bash
 psql $DATABASE_URL -t -A -c "
-  SELECT id, person_name, current_role, email, phone FROM network
+  SELECT id, person_name, role_title, email, phone FROM network
   WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
 ```
 

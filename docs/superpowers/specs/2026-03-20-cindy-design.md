@@ -460,7 +460,7 @@ FUNCTION resolve_person(signal: PersonSignal) -> Resolution:
         match = query("""
             SELECT id, person_name FROM network
             WHERE LOWER(person_name) = LOWER($1)
-              AND LOWER(current_role) ILIKE '%' || LOWER($2) || '%'
+              AND LOWER(role_title) ILIKE '%' || LOWER($2) || '%'
         """, signal.name, signal.company)
         IF match:
             update_interaction_link(match.id, signal)
@@ -469,7 +469,7 @@ FUNCTION resolve_person(signal: PersonSignal) -> Resolution:
     # Tier 5: Name-only match (lower confidence)
     IF signal.name:
         matches = query("""
-            SELECT id, person_name, current_role, email, phone
+            SELECT id, person_name, role_title, email, phone
             FROM network
             WHERE LOWER(person_name) = LOWER($1)
         """, signal.name)
@@ -743,7 +743,7 @@ FUNCTION assemble_pre_meeting_context(calendar_event) -> PreMeetingBrief:
         IF person.status == 'matched':
             person_brief = {
                 name: person.name,
-                role: person.current_role,
+                role: person.role_title,
                 archetype: person.archetype,
                 last_interaction: query_last_interaction(person.id),
                 interaction_count_30d: query_interaction_count(person.id, days=30),
@@ -911,7 +911,7 @@ For every person reference, follow this sequence:
 1. **Email match:** `SELECT id FROM network WHERE email = $1` → auto-link (confidence 1.0)
 2. **Phone match:** `SELECT id FROM network WHERE phone = $1` → auto-link (confidence 1.0)
 3. **LinkedIn match:** `SELECT id FROM network WHERE linkedin = $1` → auto-link (confidence 1.0)
-4. **Exact name + company:** `WHERE LOWER(person_name) = LOWER($1) AND current_role ILIKE '%company%'` → auto-link (0.95)
+4. **Exact name + company:** `WHERE LOWER(person_name) = LOWER($1) AND role_title ILIKE '%company%'` → auto-link (0.95)
 5. **Name-only (single match):** → auto-link with flag (0.80)
 6. **Name-only (multiple matches):** → create datum request asking user to pick
 7. **No match:** → write datum_person to cai_inbox for Datum Agent

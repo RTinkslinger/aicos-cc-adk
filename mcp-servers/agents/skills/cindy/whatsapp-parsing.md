@@ -111,7 +111,7 @@ If no match, use `chat_name` (from `ZWAPROFILEPUSHNAME`) for name-based resoluti
 
 ```bash
 # Fuzzy name match
-psql $DATABASE_URL -t -A -c "SELECT id, person_name, current_role FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
+psql $DATABASE_URL -t -A -c "SELECT id, person_name, role_title FROM network WHERE LOWER(person_name) = LOWER('Rahul Sharma');"
 ```
 
 If still no match: create `datum_person` with phone number + push name.

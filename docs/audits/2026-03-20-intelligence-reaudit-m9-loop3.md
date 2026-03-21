@@ -39,12 +39,12 @@ The top tier (9+) still contains 52% of all actions, clustered at just 6 scores:
 
 | Metric | Result |
 |--------|--------|
-| Rows with `current_role = 'postgres'` (unquoted) | **3,722 (100%)** |
+| Rows with `role_title = 'postgres'` (unquoted) | **3,722 (100%)** |
 | Rows with valid non-postgres roles | **0** |
 
-**FAIL.** All 3,722 network rows still have `current_role` set to the literal string `'postgres'`. The M9 fix was **not applied** or was applied incorrectly. The original check 2 query used double-quoted `"current_role"` which in Postgres resolves to the session variable `current_role` (the database role name), not the table column — producing a false pass.
+**FAIL.** All 3,722 network rows still have `role_title` set to the literal string `'postgres'`. The M9 fix was **not applied** or was applied incorrectly. The original check 2 query used double-quoted `"role_title"` which in Postgres resolves to the session variable `role_title` (the database role name), not the table column — producing a false pass.
 
-**Root cause:** The column `current_role` (text) contains `'postgres'` as a default value from the initial data import. No migration has overwritten these with actual role data from Notion.
+**Root cause:** The column `role_title` (text) contains `'postgres'` as a default value from the initial data import. No migration has overwritten these with actual role data from Notion.
 
 ---
 
@@ -240,7 +240,7 @@ The top tier (9+) still contains 52% of all actions, clustered at just 6 scores:
 
 ## Priority Fixes for Next Loop
 
-1. **P0 — Network roles data fix:** Backfill `current_role` from Notion Network DB. This is the single biggest gap — affects search quality, network intelligence, and portfolio/network scoring.
+1. **P0 — Network roles data fix:** Backfill `role_title` from Notion Network DB. This is the single biggest gap — affects search quality, network intelligence, and portfolio/network scoring.
 2. **P1 — Score differentiation:** Add entity-specific signals to `compute_user_priority_score` (deal stage, last-interaction recency, company health indicators) to break apart the 9+ cluster.
 3. **P1 — Feedback loop:** Implement `update_preference_from_outcome` to learn from user accept/dismiss patterns.
 4. **P2 — Company embedding quality:** Regenerate company embeddings using description/sector/stage text rather than name-dominant vectors, so `find_related_companies` returns business-model peers.

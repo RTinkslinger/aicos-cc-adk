@@ -36,7 +36,7 @@ The search infrastructure has good *bones* -- 100% embedding coverage across all
 | Table | Fields Used for Embedding | Quality Assessment |
 |-------|--------------------------|-------------------|
 | **companies** | `name`, `sector`, `deal_status`, `jtbd`, `agent_ids_notes` | **Poor.** `jtbd` populated for only 916/4,565 (20%). `agent_ids_notes` populated for 0/4,565 (0%). Most companies embedded on name+sector only. |
-| **network** | `person_name`, `current_role`, `home_base` | **Broken.** `current_role` is "postgres" for ALL 3,722 records (data corruption). Embeddings are essentially name-only. |
+| **network** | `person_name`, `role_title`, `home_base` | **Broken.** `role_title` is "postgres" for ALL 3,722 records (data corruption). Embeddings are essentially name-only. |
 | **thesis_threads** | Full text (thread_name, core_thesis, etc.) | **Good.** Rich text fields, meaningful embeddings. |
 | **actions_queue** | Full text (action, reasoning, thesis_connection, etc.) | **Good.** Rich content, well-differentiated embeddings. |
 
@@ -45,7 +45,7 @@ The search infrastructure has good *bones* -- 100% embedding coverage across all
 | Table | Generated From | Quality |
 |-------|---------------|---------|
 | companies | `name \|\| sector \|\| agent_ids_notes` | **Weak.** Missing description, JTBD, sector_tags. `agent_ids_notes` always empty. |
-| network | `person_name \|\| current_role \|\| linkedin` | **Weak.** `current_role` is all "postgres". LinkedIn URL included but not useful for text search. |
+| network | `person_name \|\| role_title \|\| linkedin` | **Weak.** `role_title` is all "postgres". LinkedIn URL included but not useful for text search. |
 | thesis_threads | `thread_name \|\| core_thesis \|\| key_companies \|\| investment_implications` | **Good.** Rich FTS document. |
 | actions_queue | `action \|\| reasoning \|\| thesis_connection \|\| action_type` | **Good.** Comprehensive FTS coverage. |
 
@@ -97,7 +97,7 @@ Workaround tested: Direct FTS on network table.
 | # | Query (FTS only) | Results | Quality |
 |---|-----------------|---------|---------|
 | 27 | "investor" | Taz Patel, Madhu Chamarty, Kishore Ganji (3 results) | **Weak** -- only 3 of presumably hundreds of investors |
-| 28 | "founder CEO" | 10 results, all with `current_role` containing "founder" or "CEO" | **Partially works** for those with roles set (Nithin Kamath), but `current_role` = "postgres" for most |
+| 28 | "founder CEO" | 10 results, all with `role_title` containing "founder" or "CEO" | **Partially works** for those with roles set (Nithin Kamath), but `role_title` = "postgres" for most |
 
 **Person Search Accuracy: 0/5 via hybrid_search (excluded), 1/5 via FTS = FAIL**
 
@@ -285,7 +285,7 @@ All bottom-scored actions are **P1-P2 Research** items:
 | Table | FTS Effectiveness | Why |
 |-------|------------------|-----|
 | companies | **20%** (1/5 useful) | Generated column = `name + sector + empty`. Most business context (description, product, market) not indexed. |
-| network | **10%** | Generated column includes `current_role` which is all "postgres" and LinkedIn URLs. |
+| network | **10%** | Generated column includes `role_title` which is all "postgres" and LinkedIn URLs. |
 | actions_queue | **90%** | Generated column = `action + reasoning + thesis_connection + action_type`. Rich text, good recall. |
 | thesis_threads | **90%** | Generated column = `thread_name + core_thesis + key_companies + investment_implications`. Excellent. |
 
@@ -300,7 +300,7 @@ All bottom-scored actions are **P1-P2 Research** items:
 | # | Issue | Impact | Fix Effort |
 |---|-------|--------|-----------|
 | C1 | **Network table excluded from hybrid_search()** | Person searches impossible via primary search API. 3,722 contacts unsearchable. | Medium -- add network CTE to hybrid_search function |
-| C2 | **Network `current_role` all "postgres"** | Network FTS useless. Network embeddings are name-only. All person matching is degraded. | Low -- data fix: repopulate from Notion sync |
+| C2 | **Network `role_title` all "postgres"** | Network FTS useless. Network embeddings are name-only. All person matching is degraded. | Low -- data fix: repopulate from Notion sync |
 | C3 | **Company embedding inputs skeletal** | Companies are embedded on name+sector alone (JTBD empty 80%, IDS notes empty 100%). Embedding space is flat and undifferentiated. | Medium -- enrich `agent_ids_notes` and `jtbd` from page content, re-embed |
 | C4 | **`find_related_companies()` vector path disabled** | Related companies function is trigram-only (fuzzy name match). Semantic relatedness not functional. | Low -- pass query embedding as parameter, enable vector path |
 
@@ -326,7 +326,7 @@ All bottom-scored actions are **P1-P2 Research** items:
 ## 8. Recommendations (Priority Order)
 
 ### 1. Fix Network Data (Quick Win)
-- Repopulate `current_role` from Notion sync (all 3,722 records show "postgres")
+- Repopulate `role_title` from Notion sync (all 3,722 records show "postgres")
 - This immediately fixes network FTS and network embeddings
 
 ### 2. Enrich Company Embedding Inputs
@@ -336,7 +336,7 @@ All bottom-scored actions are **P1-P2 Research** items:
 - Re-embed after enrichment
 
 ### 3. Add Network to hybrid_search()
-Add a `network` CTE following the same semantic + keyword + combined pattern as the other 4 tables. Use `person_name` as title, `current_role || home_base` as snippet.
+Add a `network` CTE following the same semantic + keyword + combined pattern as the other 4 tables. Use `person_name` as title, `role_title || home_base` as snippet.
 
 ### 4. Enable Vector Path in find_related_companies()
 - Accept query embedding as an optional parameter
@@ -398,7 +398,7 @@ Add an overloaded `hybrid_search(query_text, ...)` signature that uses FTS-only 
 
 | Issue | Table | Severity | Details |
 |-------|-------|----------|---------|
-| `current_role` = "postgres" for ALL rows | network | CRITICAL | 3,722/3,722 records. Data corruption during initial sync. |
+| `role_title` = "postgres" for ALL rows | network | CRITICAL | 3,722/3,722 records. Data corruption during initial sync. |
 | `agent_ids_notes` empty for ALL rows | companies | HIGH | 0/4,565 populated. Field in FTS + embedding but never written. |
 | `jtbd` empty for 80% of rows | companies | HIGH | 916/4,565 populated. Key differentiator missing from most records. |
 | `sector` null for 37% of rows | companies | MEDIUM | 1,690/4,565 have null sector. |

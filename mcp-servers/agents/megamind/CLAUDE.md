@@ -105,12 +105,37 @@ STRUCTURED DATA, not raw content or entity signals.
 | `companies` (creates) | Datum Agent | Entity creation is Datum's domain |
 | `cai_inbox` | Orchestrator | Inbox management is Orchestrator's domain |
 
+### CRITICAL: Column Name Differences
+
+| Table | Column | Type | Notes |
+|-------|--------|------|-------|
+| `actions_queue` | `action` | TEXT | The action description. NOT `action_text`. |
+| `depth_grades` | `action_text` | TEXT | Copy of action text at grading time. |
+| `actions_queue` | `thesis_connection` | TEXT | **Pipe-delimited** (e.g., `'Thesis A\|Thesis B'`). NOT an array. |
+| `depth_grades` | `thesis_connections` | TEXT[] | **Array** (e.g., `ARRAY['Thesis A', 'Thesis B']`). |
+| `actions_queue` | `strategic_score` | NUMERIC | Megamind's ROI score. Writable by Megamind. |
+
+**Querying thesis_connection (pipe-delimited TEXT):**
+```sql
+-- Match a single thesis in pipe-delimited text:
+WHERE thesis_connection LIKE '%Agentic AI Infrastructure%'
+-- Or convert to array for ANY/ALL:
+WHERE $thesis_name = ANY(string_to_array(thesis_connection, '|'))
+```
+
+**Querying thesis_connections (array on depth_grades):**
+```sql
+-- Standard array overlap:
+WHERE 'Agentic AI Infrastructure' = ANY(thesis_connections)
+-- Or: WHERE thesis_connections && ARRAY['Agentic AI Infrastructure']
+```
+
 ### Core Query Patterns
 
 ```bash
 # Read open actions for depth grading
 psql $DATABASE_URL -t -A -c "
-  SELECT id, action_text, relevance_score, thesis_connection, action_type, assigned_to
+  SELECT id, action, relevance_score, thesis_connection, action_type, assigned_to
   FROM actions_queue
   WHERE assigned_to = 'Agent'
     AND status = 'Proposed'
@@ -120,16 +145,16 @@ psql $DATABASE_URL -t -A -c "
 
 # Read active thesis threads for context
 psql $DATABASE_URL -c "
-  SELECT name, conviction, status, core_thesis, key_questions
+  SELECT thread_name, conviction, status, core_thesis, key_question_summary
   FROM thesis_threads
   WHERE status IN ('Active', 'Exploring')
-  ORDER BY name"
+  ORDER BY thread_name"
 
 # Check diminishing returns — completed actions on same thesis in last 14 days
 psql $DATABASE_URL -t -A -c "
   SELECT COUNT(*)
   FROM depth_grades
-  WHERE thesis_connections && ARRAY['Agentic AI Infrastructure']
+  WHERE 'Agentic AI Infrastructure' = ANY(thesis_connections)
     AND execution_status = 'completed'
     AND created_at > NOW() - INTERVAL '14 days'"
 
@@ -157,6 +182,10 @@ INSERT INTO depth_grades (
   'pending', 'content',
   'Structured research on Composio competitive landscape. Cover: key competitors, market position, recent funding, founder background. 2-3 page report.'
 ) RETURNING id;
+
+-- NOTE: depth_grades.action_text is a COPY of the action text at grading time.
+-- actions_queue.action is the canonical column (not action_text).
+-- Always use `action` when querying actions_queue, `action_text` when querying depth_grades.
 SQL
 
 # Write cascade event
@@ -373,11 +402,11 @@ When the Orchestrator sends you completed agent work for cascade analysis:
    - Connected people (from results if entity-related)
 3. **Query all open actions in the blast radius:**
    ```sql
-   SELECT id, action_text, relevance_score, strategic_score, thesis_connection, status
+   SELECT id, action, relevance_score, strategic_score, thesis_connection, status
    FROM actions_queue
    WHERE status IN ('Proposed', 'Accepted')
-     AND (thesis_connection IN (affected_threads)
-          OR action_text ILIKE '%company_name%')
+     AND (thesis_connection LIKE '%' || $affected_thread || '%'
+          OR action ILIKE '%company_name%')
    ```
 4. **Re-score each affected action** with new context from the completed work:
    - Recalculate strategic ROI incorporating new information
@@ -404,7 +433,7 @@ When the Orchestrator sends you completed agent work for cascade analysis:
    {
      "rescored": [{"action_id": 55, "old_score": 7.2, "new_score": 4.1, "delta": -3.1, "reasoning": "..."}],
      "resolved": [{"action_id": 48, "reason": "Answered by ultra research"}],
-     "generated": [{"action_text": "Schedule intro to CEO", "score": 8.1, "reasoning": "...", "thesis_connection": "Agentic AI Infrastructure"}],
+     "generated": [{"action": "Schedule intro to CEO", "score": 8.1, "reasoning": "...", "thesis_connection": "Agentic AI Infrastructure"}],
      "summary": "Human-readable cascade summary"
    }
    ```
@@ -438,7 +467,7 @@ Periodic (triggered by Orchestrator, ~daily) comprehensive assessment:
 
 1. **Query full action space:**
    ```sql
-   SELECT id, action_text, relevance_score, strategic_score, thesis_connection,
+   SELECT id, action, relevance_score, strategic_score, thesis_connection,
           assigned_to, status, created_at
    FROM actions_queue
    WHERE status IN ('Proposed', 'Accepted', 'In Progress')
@@ -464,7 +493,7 @@ Periodic (triggered by Orchestrator, ~daily) comprehensive assessment:
    - Actions open > 14 days: auto-downgrade priority by 1 level
    - Actions open > 30 days: flag for resolution
    ```sql
-   SELECT id, action_text, created_at, status
+   SELECT id, action, created_at, status
    FROM actions_queue
    WHERE status IN ('Proposed', 'Accepted')
      AND created_at < NOW() - INTERVAL '14 days'

@@ -20,7 +20,7 @@ Applied 4 fixes addressing critical and high-severity issues from the M9 Intelli
 
 **Fix:** Added `nw_semantic`, `nw_keyword`, and `nw_combined` CTEs to the function following the exact same RRF pattern as the other 4 tables. Network results use:
 - **Title:** `person_name`
-- **Snippet:** `current_role | home_base` (comma-joined array)
+- **Snippet:** `role_title | home_base` (comma-joined array)
 - **Filters:** Respects `filter_tables` (use `'network'`), `filter_date_from`, `filter_date_to`
 - **No status filter** on network (table has no `status` column)
 
@@ -94,7 +94,7 @@ These items from the M9 audit require separate work:
 
 | Issue | Severity | Why Not Fixed Here |
 |-------|----------|--------------------|
-| C2: Network `current_role` all "postgres" | CRITICAL | Requires Notion sync repopulation, not a SQL function fix |
+| C2: Network `role_title` all "postgres" | CRITICAL | Requires Notion sync repopulation, not a SQL function fix |
 | C3: Company embedding inputs skeletal | CRITICAL | Requires enrichment pipeline (JTBD, IDS notes), re-embedding |
 | H1: Companies FTS too sparse | HIGH | Requires altering generated column definition |
 | H2: RRF score compression (k=60) | HIGH | Tuning change, needs A/B testing before deploying |

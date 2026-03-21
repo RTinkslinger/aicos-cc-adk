@@ -33,13 +33,13 @@ From the trigger event, determine which entities are affected:
 -- Example: affected_thesis = 'Agentic AI Infrastructure'
 
 -- Get all open actions in the blast radius
-SELECT id, action_text, relevance_score, strategic_score,
+SELECT id, action, relevance_score, strategic_score,
        thesis_connection, assigned_to, status, created_at
 FROM actions_queue
 WHERE status IN ('Proposed', 'Accepted', 'In Progress')
   AND (
-    thesis_connection = $affected_thesis
-    OR action_text ILIKE '%' || $affected_company || '%'
+    thesis_connection LIKE '%' || $affected_thesis || '%'
+    OR action ILIKE '%' || $affected_company || '%'
   )
 ORDER BY relevance_score DESC;
 ```
@@ -106,10 +106,10 @@ Rules:
 Write new actions:
 ```sql
 INSERT INTO actions_queue (
-  action_text, action_type, priority, status, assigned_to,
+  action, action_type, priority, status, assigned_to,
   relevance_score, reasoning, thesis_connection, source, created_at, updated_at
 ) VALUES (
-  $action_text, $action_type, $priority, 'Proposed', $assigned_to,
+  $action, $action_type, $priority, 'Proposed', $assigned_to,
   $relevance_score, $reasoning, $thesis_connection,
   'megamind_cascade', NOW(), NOW()
 ) RETURNING id;
@@ -192,7 +192,7 @@ The `cascade_report` column stores the full structured report for WebFront displ
   "rescored": [
     {
       "action_id": 55,
-      "action_text": "Research Composio competitive landscape",
+      "action": "Research Composio competitive landscape",
       "old_score": 7.2,
       "new_score": 4.1,
       "delta": -3.1,
@@ -202,13 +202,13 @@ The `cascade_report` column stores the full structured report for WebFront displ
   "resolved": [
     {
       "action_id": 48,
-      "action_text": "Add Composio to companies DB",
+      "action": "Add Composio to companies DB",
       "reason": "Done by Datum Agent as part of research pre-req"
     }
   ],
   "generated": [
     {
-      "action_text": "Schedule intro to Composio CEO via [mutual connection]",
+      "action": "Schedule intro to Composio CEO via [mutual connection]",
       "score": 8.1,
       "priority": "P1",
       "assigned_to": "Aakash",
@@ -269,7 +269,7 @@ for reference.
 ### Completed depth-graded work (most common trigger)
 
 ```sql
-SELECT dg.id, dg.action_id, aq.action_text, aq.thesis_connection
+SELECT dg.id, dg.action_id, aq.action, aq.thesis_connection
 FROM depth_grades dg
 JOIN actions_queue aq ON dg.action_id = aq.id
 WHERE dg.execution_status = 'completed'

@@ -1,0 +1,64 @@
+UPDATE companies
+SET agent_ids_notes = CASE id
+    WHEN 267 THEN 'Key Connections & Follow-ups: - Maven already in discussions with Razorpay Ventures for partnership and potential strategic investment - DeVC offered to help facilitate Razorpay connection given their close relationship as early investor - Portfolio companies identified for customer validation: Voicebit (restaurants) and Confilo (bank front office) Notion AI is transcribing this meeting. That''s the PII warning, I am gonna transcribe the meeting so I can share it with Akash. Awesome. I''ll give you a quick background about me, about the firm, and then would love to hear from your end. I was an entrepreneur like you, your YC Winter 26, I was YC Winter 21, different era, that was a Zepto batch, that was a COVID batch, that was 500 companies in one batch twice a year versus where you guys are now. And I sold my business, it was doing software for insurance brokers, very boring, pre-AI. I built a company in the era where you had to hire engineers to get code. Today you can burn through millions of tokens and get the same code built 10x faster and better. We''re three partners in the fund. Akash is an angel in Superbase, which is another super successful YC company. He also built and sold India''s largest real estate portal back when you and I were literally in our diapers. Second partner, Rajat, is the first investor in Razorpay, which is the stripe for India. Again, one of IC''s big hits in India as well. From the fund we''ve invested in several YC companies over the last couple of ba...'
+    WHEN 268 THEN 'Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---'
+    WHEN 269 THEN 'Financial Update — Mar 2026 (Audit): - Last Fiscal Revenue: $0 - Current Monthly Revenue: $0 - Jan 2026 Cash Balance: $760,000 - Jan 2026 Monthly Net Burn: $19,000'
+    WHEN 270 THEN 'Notes:: 1. Thesis 1. OYO for Pharma, software for pharma & clinics 1. Transition from local chemist to modern medicine affilate store 1. B2b pharma shop digitization 1. Won''t charge for the software -> SaaS doesn''t work in India, we are a service provider 1. Quick Comm using local chemist inventory 1. He believes that acute is the only demand source (?) 1. Also was getting stock up orders 1. Customer has high WTP for acute (₹200) 1. Chronic is subscription or bulk buying 1. His journey 1. 2018 -> clinic, private clinic, preference given by front office staff. Thought of solving via software 1. Cold DM to Subhash to get an internship at Dukaan 1. Felt Dukaan is the right place to build a business or product 1. Pawan from OnArrival offered a paid sabbatical to try building 1. Got 20 orders posting stories on IG 1. Thought demand was only in Tier 1 cities 1. Market learnings 1. Chief Of Staff at Blinkit said they are struggling 1. Blinkit will try to onboard a partner for pharma 1. PharmEasy and 1mg doing 80% prescription meds via channel 1. i.e. local chemists are anyways getting bulk of the acute use-case volume 1. Apollo 24x7 is also doing prescription meds delivery 1. Schedule X or Schedule N medicines have strict regulations 1. Swiggy only focused on OTC meds and not prescription meds 1. Story 1. Business 1. Supply side 1. Young owner < 50 yrs works, QR placed at the store, 1. Channi Hittmat in Jammu, 3 partner stores amongst 13 stores in the area 1. 5 weeks of pilot 1. ₹20...'
+    WHEN 271 THEN '**TK - Overall View: WM**: **Spikey: 1 (for Ajit); 0.5 (Akshay)** Spike Needed for the biz: consumer/product + High IQ + Both are good combo of right and left brain thinker + customer backward > citing example like building cities for people + Positive BRCs on both ?? Not up to date on numbers – rough calculating it; if running so many experiments numbers should be on top of mind to know which one is working ?? Slow on iteration and shipping – no increase in DAU/MAU over the last 3 months ?? Running too many experiments too early on small base ?? Lack of depth – Akshay asking random ques on AI hardware? <u>**Next Steps**</u> - Closely Track the team and metrics (DAU/MAU/engagement/retention) - No significant change as of now over the last three months. <u>**Detailed Meeting Notes (16.10.25)**</u> **Founder Background** - **Ajit Pol** - Grew up in an Air Force family in Pune; now married into a Marwari family. - Worked at Flipkart – across search and Insuretech biz (2018-21) - Moved to Leap, a full-stack edtech startup enabling students to study abroad - handling exam prep, university partnerships, visa, and financial assistance. - Was first PM at Leap, scaling the counselling business that contributed ~70 % of total revenue, with ARPU of ~$2,500 per student and company-level revenue of ₹300–400 Cr across India, the U.S., and the U.K. - Joined Buystar (founded by ex-manager Sriram) as Head of Product – Majority of rev from cricket but it’s highly seasonal so built Cricket Trum...'
+    WHEN 275 THEN 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '
+    WHEN 277 THEN 'Evaluation Plan + Key Questions to answer: 1. **What does the company do?** 1. 1. **Do we (DeVC/Z47) have a thesis on this space?** 1. 1. **What are the top 3 questions to diligence?** 1. 1. **Who has piped this company to us? What are their views?** 1. 1. **What do refs say about the founder?** 1. 1. **What''s the DeVC team views?** 1. 1. **What are the Collective signals?** 1. 1. **Why is this company likely to be special?** 1. 1. **Who can help? Experts / Venture Partners?** 1. 1. **Deal dynamics? Potential deal to do?** 1. ---
+Scoring (can be copied for multiple people): **Spiky Score** **EO/FMF/Thesis/Price Score**
+Deck insights from Notion AI on {use “@now”}: ---
+Intro conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Follow-up conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Next conversation with Founder on {use “@now”}: 
+Attendees from DeVC:: 
+Notes:: 
+De-brief (if any): ---
+Z47 Conversation with Founder on {use “@now”}: 
+Attendees:: 
+Notes:: 
+De-brief (if any): '
+    WHEN 279 THEN 'Next Steps: - [ ] @Krish Bajaj to try the product and provide feedback - [ ] @Rahul Mathur to conduct reference checks on the founder - [ ] If progressing, arrange meeting with another partner at DVC - [ ] @Rahul Mathur to potentially connect founder with additional potential users Notes 1. Dr Winson Park - Korean researcher - 1. Hybrid job based in Dubai 1. Founder of Xpay recommended him 1. Product #1 - sentiment analysis for brands 1. $20 per month 1. Product #2 - receptionist for dentists 1. $500 per month from clinics 1. Was selling from India to USA 1. Discontinued 1. WhatsApp 1. Doing via Linked Devices 1. Indian user willing to pay $50 per month 1. US user willing to pay $80 per month 1. They want Slack integration 1. Shipped for Rishabh Dodo Payments 1. Smart / inherent virality via “@loop” 1. Users: 1. CA or Doctor for Qs 1. Founders to monitor senitments from 1. Students / others use it to listen to WA groups Sir, can I get one green tea please? Okay sir. Thank you. Hey Amon, how are you doing? Hey man, very nice background. Where are you calling from today? I''m in Bangalore. Thanks sir, it''s a fake background. No, I''ll go in. I''m in Bangalore. Residency has a global network, so I''m part of Bangalore right now. But yeah, I''ll go in Jan. For like 3 months. Where are you right now? I was in Bangalore. He is in HSR. Currently, I am in Badubhishnadi. Residency is a very good thing. I recently was in SF, I met Abhinav from Breather and he speaks very highly of the resid...'
+    WHEN 283 THEN 'Deck: [File: download](https://prod-files-secure.s3.us-west-2.amazonaws.com/b21975bb-aebf-48e3-8c44-1573c4404129/c03c41e0-d2d8-4543-b15d-a8d53a028d10/1._Modus_AI--Fundraising.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666H7XLVMC%2F20260320%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260320T105658Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGgaCXVzLXdlc3QtMiJHMEUCIQD%2FGwFQao5dI0GDb0x7cTeid9oZgJvyW3cDhABH3pf1DQIgC7f3rxd8uGiKg5KHV2Qm%2FpWbTb2nxymg0%2FiQ7Y9vpNQq%2FwMIMRAAGgw2Mzc0MjMxODM4MDUiDBytoewTaYvbMdVlwircA9RuoshDLpVmLUs5HzjvLIafs%2F8vodmSo2haKbTwYaNq7QsDD1%2F60JZdzJoJ1MuXmiMSTVfhi1%2BRmjYWfpx8DkTLVV2D476v21rBhx5MhjJFnwDWLDb9Vt422VEniywh2u0MkWmkQNVJUKBibTKixMDJ11zET1udRjc5rMrCqktenqwwLJApNTstRRY2yOqj05VVl7ZBSGKyHtAtmYaOX1y7DaYD542MYsIzax84lcuDaRqyaEYQHJzmGNk58ll0CPrHE7Dn4W%2FJytkBTf7%2F5vRnqnQKjo1h3RD3Ly77ym%2BuwaCXgf89w8bKXPngKJT%2BKDFGrVitPB7%2B9n7EOt3q695JXKLe6x03OZFdDBGfrbzfBdidKjG%2FQV8XxbLcOmae6L%2FtLW%2FXT4FowuNryQ9P1dRoQL78baiqkfZ5v6CHq0C1djUH4Uc5wGbcx04soPh5OUbyrqlA9foKr1ftn1ihzs0j33zoLfrXYgRjMOZ8PXE3NL6EqymbDWQukJ721H62fntScwONK5iw0OsrXMX%2Bfj5N7BOGkyN2bnWLcCaNem8idcqs6B34vJoi0aorH%2Fe0PAD%2F0YgV1UsVQhPorYXkNEmzHJt5EMTlRvXld8xr7yeWLKcw%2BqhG%2BK5sjqWDMJv8880GOqUB58NbLqpzQXZeLn6vIAMKvgYBzbTVKS43VBnwTQnawerr9deqPDSGyhVCsuTEjxw7pLu4xI2%2BPKdrwcPz6eMZgJbvLnc1BrgR9HU2BYwXMpTVG25glDq5DeTPFaQE9VzJnr9ULlwdGml%2FIC%2BAdxlrEiGDLC2VNDiC4ZT7r88CALFKhbuve2UJjT5SMvJeEeytgkwdGuwQMXq3X1PY%2BmtYjiUgxd%2Fv&X-...'
+    WHEN 284 THEN 'Notes:: 1. **Childhood** 1. Full Hindi guy 1. From small town in Bihar 1. Not strong financial background 1. 23 years old 1. **Rewards / gaming business** 1. First business he built at 17 1. Built an app on no-code platform 1. Got 1L+ installs 1. Was making $4K per month || scaled to 500K installs 1. Google killed the business by changing ads policy 1. **2nd business** 1. 1M installs 1. WhatsApp related business 1. Each QA update killed the release 1. BLR - Jain Univ — just before COVID - left 1. **Food delivery business in his local city** 1. Started before Swiggy & Zomato post COVID 1. Swiggy & Zomato entered which killed the business 1. Sold the software & logistics to a restaurant business locally 1. **Kutumb** 1. Approached Abhishek with an earlier idea 1. Abhishek told him to come to Kutumb & test 1. Wanted to find the next $1bn idea 1. Ran thousands of ads 1. Spoke to customers across T1 and T2 1. Explored a lot of T1/T2 cities 1. Tried multiple D2C products 1. Problem in D2C → frequency 1. **His learnings** 1. Snacks → high frequency category 1. Companies are making guilt free western snacks 1. Why not make traditional snacks guilt free 1. Ran 50 ads variants — found 50 SKUs 1. Saw QC tailwind 1. Mom is the culinary expert 1. He figured out something about the form factor (I can’t understand Hindi) 1. **MIS** 1. No QC | no 3P market 1. October - ₹3L in Sales | 70% pre-paid | CAC 1. **What would change if he had capital** 1. 3 years — ₹100 crore 1. **Kitchen** 1. Start...'
+    ELSE agent_ids_notes
+END
+WHERE id IN (267, 268, 269, 270, 271, 275, 277, 279, 283, 284)
+  AND (agent_ids_notes IS NULL OR agent_ids_notes = '');

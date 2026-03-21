@@ -47,7 +47,10 @@ except ImportError:
 # Configuration
 # ---------------------------------------------------------------------------
 
-# iCloud WhatsApp backup path (macOS)
+# WhatsApp Mac app path (primary — unencrypted sqlite)
+WHATSAPP_MAC_APP_DB = Path.home() / "Library" / "Group Containers" / "group.net.whatsapp.WhatsApp.shared" / "ChatStorage.sqlite"
+
+# iCloud WhatsApp backup path (fallback — .enc files, usually encrypted)
 ICLOUD_WHATSAPP_BASE = Path.home() / "Library" / "Mobile Documents" / "57T9237FN3~net~whatsapp~WhatsApp"
 
 # State file for incremental extraction
@@ -175,12 +178,20 @@ def datetime_to_cf(dt: datetime) -> float:
 
 
 def find_chat_storage() -> Optional[Path]:
-    """Locate ChatStorage.sqlite in iCloud backup directory."""
+    """Locate ChatStorage.sqlite — prefer Mac app (unencrypted), fall back to iCloud backup."""
+    # Primary: WhatsApp Mac native app (unencrypted sqlite, syncs from phone)
+    if WHATSAPP_MAC_APP_DB.exists():
+        logger.info("Found WhatsApp Mac app database: %s", WHATSAPP_MAC_APP_DB)
+        return WHATSAPP_MAC_APP_DB
+
+    # Fallback: iCloud backup directory
     if not ICLOUD_WHATSAPP_BASE.exists():
-        logger.error("WhatsApp iCloud directory not found: %s", ICLOUD_WHATSAPP_BASE)
+        logger.error(
+            "WhatsApp database not found. Install WhatsApp for Mac from the App Store, "
+            "or check iCloud backup at: %s", ICLOUD_WHATSAPP_BASE
+        )
         return None
 
-    # Walk the Accounts directory for the backup
     accounts_dir = ICLOUD_WHATSAPP_BASE / "Accounts"
     if not accounts_dir.exists():
         logger.error("Accounts directory not found: %s", accounts_dir)
@@ -194,28 +205,21 @@ def find_chat_storage() -> Optional[Path]:
         if not backup_dir.exists():
             continue
 
-        # Check for decrypted database first
         plain_db = backup_dir / "ChatStorage.sqlite"
         if plain_db.exists():
             logger.info("Found decrypted ChatStorage.sqlite: %s", plain_db)
             return plain_db
 
-        # Check for encrypted database
         enc_db = backup_dir / "ChatStorage.sqlite.enc"
         if enc_db.exists():
             logger.error(
                 "Found ENCRYPTED ChatStorage.sqlite.enc at %s. "
-                "WhatsApp iCloud backups are end-to-end encrypted. "
-                "To use this extractor, you need to:\n"
-                "  1. Decrypt the backup using your WhatsApp backup password, OR\n"
-                "  2. Use WhatsApp's local device backup (not iCloud), OR\n"
-                "  3. Export chat history via WhatsApp > Settings > Chats > Export Chat\n"
-                "Place the decrypted ChatStorage.sqlite in the same backup directory.",
+                "Use WhatsApp Mac app instead (primary path).",
                 enc_db,
             )
             return None
 
-    logger.error("No ChatStorage.sqlite found in any account backup directory")
+    logger.error("No ChatStorage.sqlite found")
     return None
 
 
@@ -232,13 +236,15 @@ def read_conversations(
         # 1. Find conversations with recent messages
         cursor = conn.execute(
             """
-            SELECT DISTINCT cs.Z_PK, cs.ZCONTACTJID, cs.ZPARTNERNAME, cs.ZSESSIONTYPE
+            SELECT cs.Z_PK, cs.ZCONTACTJID, cs.ZPARTNERNAME, cs.ZSESSIONTYPE,
+                   MAX(m.ZMESSAGEDATE) as last_msg_date
             FROM ZWACHATSESSION cs
             JOIN ZWAMESSAGE m ON m.ZCHATSESSION = cs.Z_PK
             WHERE m.ZMESSAGEDATE > ?
               AND cs.ZCONTACTJID IS NOT NULL
               AND cs.ZCONTACTJID != 'status@broadcast'
-            ORDER BY MAX(m.ZMESSAGEDATE) DESC
+            GROUP BY cs.Z_PK, cs.ZCONTACTJID, cs.ZPARTNERNAME, cs.ZSESSIONTYPE
+            ORDER BY last_msg_date DESC
             LIMIT ?
             """,
             (since_cf, MAX_CONVERSATIONS_PER_RUN),

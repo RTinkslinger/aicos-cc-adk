@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-21T08:50:00Z"
+      "timestamp": "2026-03-21T08:50:39Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -53,12 +53,12 @@
       "TRACES.md",
       "docs/audits/2026-03-21-m1-L21-30.md",
       "docs/audits/2026-03-21-m1-L31-40.md",
+      "docs/audits/2026-03-21-m1-L41-50.md",
       "docs/audits/2026-03-21-m10-L26-35.md",
       "docs/audits/2026-03-21-m10-L36-45.md",
       "docs/audits/2026-03-21-m10-L46-55.md",
-      "docs/audits/2026-03-21-m10-army-loops.md",
-      "docs/audits/2026-03-21-m12-L26-35.md",
-      "docs/audits/2026-03-21-m12-L36-45.md"
+      "docs/audits/2026-03-21-m10-L56-65.md",
+      "docs/audits/2026-03-21-m10-army-loops.md"
     ],
     "pending_inbox": []
   },
@@ -81,6 +81,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-21T08:50:00Z",
+  "updated_at": "2026-03-21T08:50:39Z",
   "updated_by": "cc"
 }

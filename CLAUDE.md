@@ -18,9 +18,11 @@ This file contains the ONLY correct way to operate in this project. **Golden Pat
 
 ### HARD RULES (violating ANY of these is a session failure)
 
-1. **AGENTS DO ALL THINKING.** Claude Agent SDK agents reason. SQL functions fetch data. Python scripts move data. If you write SQL that scores, assesses, recommends, detects, or predicts — you have FAILED. That logic belongs in an agent.
+1. **AGENTS DO ALL THINKING.** Claude Agent SDK PERSISTENT agents reason. SQL functions fetch data. Python scripts move data. If you write SQL that scores, assesses, recommends, detects, or predicts — you have FAILED. That logic belongs in an agent. NOT ephemeral agents. NOT Python scripts. PERSISTENT ClaudeSDKClient on the droplet.
 
-2. **MACHINE LOOP ≠ AGENT DOING WORK.** M4 machine loop BUILDS the Datum agent (its code, skills, tools, instructions). Datum agent RUNS AUTONOMOUSLY on the droplet. M8 machine loop BUILDS Cindy. Cindy RUNS on her own. The machine loop makes agents SMARTER. It does not DO the agent's work.
+2. **MACHINE LOOP ≠ AGENT DOING WORK.** M4 machine loop BUILDS the Datum agent (its code, skills, tools, instructions). Datum agent RUNS AUTONOMOUSLY on the droplet. The machine loop makes agents SMARTER. It does not DO the agent's work. Machine loops build: SQL tools + skill files + CLAUDE.md updates + hooks. ALL TOGETHER, never one without the others.
+
+2b. **AGENT CLAUDE.md = OBJECTIVES, NOT SCRIPTS.** Agent CLAUDE.md defines objectives, identity, boundaries. Skills define tools + patterns of success + anti-patterns. The agent REASONS about how to chain tools to achieve objectives. NEVER write step-by-step processing instructions in agent CLAUDE.md. NEVER. The agent is a reasoner, not a script runner. This has been violated in EVERY agent file written so far.
 
 3. **MACHINES ARE PERPETUAL.** They loop forever with internal specialist steps (product leadership → research → build → review → fix → cross-machine). They do NOT stop after one build. They do NOT ask "shall I proceed?" They EXECUTE.
 

@@ -15,7 +15,47 @@ SQL functions = simple data access TOOLS that agents call (fetch, aggregate, joi
 
 **Test:** If you're about to write SQL that "scores", "assesses", "recommends", "detects", or "predicts" — STOP. That logic belongs in an agent. The existing SQL functions are ENABLERS — inputs that agents reason about.
 
-**Agent architecture:** Agents evolve beyond Python-based tools toward reasoning-led approach with tools (Bash, Read/Write, MCP connections, Skills, web search). Not hardcoded Python pipelines. The agent REASONS about when to use which tool.
+**Agent architecture:** Agents are PERSISTENT Claude Agent SDK ClaudeSDKClient processes on the droplet. NOT ephemeral. NOT Python scripts with API calls. They REASON about how to achieve objectives, not follow step-by-step scripts.
+
+### 1a-ii. HOW AGENTS ARE BUILT (HARDCODED — violated 100+ times)
+
+**Agent CLAUDE.md = OBJECTIVES + IDENTITY + BOUNDARIES. NOT step-by-step instructions.**
+
+```
+CORRECT (objective-driven, agent reasons):
+  "Your objective: detect obligations from unprocessed interactions, extract strategic
+   signals, and surface intelligence to the fleet. You have 33 SQL tools and 4 skills.
+   Reason about HOW to achieve your objectives each session."
+
+WRONG (script-following, no reasoning):
+  "Step 1: SELECT * FROM interactions WHERE cindy_processed = FALSE
+   Step 2: For each row, extract obligations
+   Step 3: INSERT INTO obligations table"
+```
+
+**The component architecture:**
+
+| Component | What It Contains | How Agent Uses It |
+|-----------|-----------------|-------------------|
+| **CLAUDE.md** | Objectives, identity, boundaries, collaboration model, anti-patterns | Agent reads at start, understands WHO it is and WHAT to achieve |
+| **Skills** | Rich reference: tool signatures, WHEN to use, patterns of success, anti-patterns | Agent loads on demand when tackling a specific objective |
+| **Tools (SQL)** | Data access functions with signatures | Agent calls via psql when it REASONS it needs data |
+| **Hooks** | Lifecycle, compaction, iteration logging | System-level behaviors, not agent-directed |
+
+**Skills are REFERENCE MATERIAL, not scripts:**
+- Known successful patterns = "patterns of success" (suggestive, not mandatory)
+- Known failures = "anti-patterns" (what NOT to do)
+- Tool signatures with WHEN to use each (agent decides IF and HOW to chain)
+- The agent REASONS about tool chaining to achieve objectives. It is NOT following a script.
+
+**Machine loops build ALL of these TOGETHER:**
+- Build SQL tool → write skill teaching agent how to use it → update CLAUDE.md objectives → all in one loop
+- Skills and tools grow together — never tools without skills, never skills without tools
+- Agent CLAUDE.md evolves as capabilities grow (new objectives, refined boundaries)
+- Hooks added for lifecycle quality gates
+- NEVER write step-by-step processing instructions in CLAUDE.md
+- NEVER build Python scripts that encode intelligence logic
+- NEVER create ephemeral agents (subprocess API calls)
 
 ### 1b. Machine Loop ≠ Agent Doing Work
 

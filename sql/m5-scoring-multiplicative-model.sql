@@ -680,3 +680,61 @@ $function$;
 -- Regression: 20/22 PASS | Enrichment: 100% | Anomalies: 0
 -- New tools: score_diff(), scoring_calibration_report(), auto_dismiss_fulfilled_obligation_actions()
 -- Cron: snapshot_scores() now runs via refresh_active_scores() every 30min
+
+-- ============================================================
+-- PERPETUAL LOOP v10 (2026-03-21) — Cron Conflict + Depth Fix + Research Rebalance
+-- ============================================================
+
+-- 51. CRITICAL BUG: normalize_all_scores() fighting refresh_active_scores()
+-- normalize_all_scores() (cron jobid 6, every 6h) applied PERCENTILE RANK
+-- normalization on top of computed scores. This is a v1/v2 relic that:
+--   (a) Overwrote model-computed scores with rank-based scores every 6 hours
+--   (b) Caused 3+ point drift between stored and live scores
+--   (c) Made refresh_active_scores() appear broken (drift returned every 6h)
+-- Evidence: Manual refresh_active_scores() returned 26 refreshed, max drift 3.26
+--   — immediately after cron had "succeeded" 20 minutes earlier
+-- Root cause: Both crons ran as SECURITY DEFINER postgres role, no RLS,
+--   but normalize overwrote with prank scores, then refresh detected drift
+--   and corrected — then normalize overwrote again 6 hours later
+-- FIX: Disabled normalize_all_scores() cron (cron.unschedule(6))
+-- The v5.3 model with 18 multipliers + sigmoid wall handles distribution itself
+
+-- 52. compute_user_priority_score() — v5.3-M5L10
+-- Changes:
+--   depth_mult grade 1: 0.93 → 1.0 (neutral — grade 1 is uncalibrated default, not "shallow")
+--   depth_mult grade 0: NEW — 0.90 (explicit shallow penalty for downgraded actions)
+--   depth_mult now uses approved_depth when set (user override)
+--   Research type_mult: 0.82 → 0.88 (was over-penalizing accepted research actions)
+--   Research strat_hi type_mult: 0.92 → 0.95 (same reason)
+--   Research text fallback: 0.87 → 0.90, strat_hi 0.95 → 0.97
+-- Impact:
+--   93.9% of actions had depth_mult=0.93 (universal 7% drag) → now 1.0 (neutral)
+--   Accepted research #113: 3.83 → 4.42 (+0.59)
+--   Accepted research #14: 3.94 → 4.63 (+0.69)
+--   Distribution: 3-4 bucket dropped from 47.4% → 40.6%
+
+-- 53. scoring_health view — recreated with v5.3-M5L10 version string
+
+-- DISTRIBUTION BEFORE/AFTER (Proposed+Accepted):
+--   Bucket | Before v10 (stale) | After v10 (true model)
+--   9-10   | 10.0%              | 14.0% (scoring_health view, all active)
+--   7-8    | 33.3%              | 40.6%
+--   5-6    | 23.7%              | 18.8%
+--   3-4    | 33.0%              | 40.6% (obligation actions + time decay)
+--
+-- HIERARCHY: portfolio 6.74 > network 6.18 > pipeline 6.04 > thesis 5.34 ✓
+-- SEPARATION: Accepted avg 7.05 vs Dismissed avg 3.83 = gap 3.22
+
+-- REMAINING GAPS (for future loops):
+--   depth_grade coverage: 93.9% at grade 1 (uncalibrated) — needs M6 IRGI to assign real grades
+--   network_mult coverage: 0% on proposed (matched people have NULL e_e_priority — needs M12)
+--   explain_score() still has old depth_mult logic (grade 1 = 0.93) — cosmetic inconsistency
+--   4 obligation actions at score_confidence 0.5 — expected (minimal scoring data)
+--   Accepted/Dismissed overlap: dismissed #99 (8.11) and #100 (8.14) scored above accepted floor
+--     — these are batch-generated portfolio check-ins that were high-quality but dismissed
+--     — verb_pattern should eventually learn from this pattern
+
+-- MODEL STATE: v5.3-M5L10 | 18 multipliers | cap=[0.4,1.35] | sigmoid@8.0
+-- Crons: normalize_all_scores DISABLED (was jobid 6), 4 remaining crons healthy
+-- Regression: 20/22 PASS | Health: 10/10 | Enrichment: 100%
+-- Preference learning: guarded (115 decisions, 8.7% accept rate)

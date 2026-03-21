@@ -196,6 +196,40 @@ Trigger: "close session" / "end session" / "wrap up". All steps are conditional 
 3. **File classification:** Scripts and skills have ownership by feature — check before editing shared files
 4. Use `branch_lifecycle.sh` for the standard 6-step workflow
 
+## Machine → Loop → Step → Army Pattern (HARDCODED)
+
+**This is the MANDATORY execution pattern for all permanent machineries. No simplification.**
+
+### Structure
+```
+MACHINE (e.g., M1 WebFront) — permanent, loops forever
+  └── LOOP (one full cycle of all steps — runs N times per session)
+       ├── STEP: Build/Execute → ARMY of 4-5 specialist agents
+       ├── STEP: QA + User Review + Intelligence Review → ARMY of specialists
+       ├── STEP: Product Leadership Assessment → ARMY of specialists
+       │    (defines problems + exploratory solutions, NOT instructions)
+       ├── STEP: Think, Research, Problem Solve → ARMY of specialists
+       │    (deep research on unknowns, study best-in-class products)
+       └── STEP: Build/Execute (next iteration, using all prior step outputs)
+```
+
+### Rules
+1. **Each STEP has an ARMY of specialist agents (4-5 minimum).** Like a product team at Uber/Airbnb/ByteDance: product designer, UX researcher, UI designer, data scientist, engineer, QA lead, etc.
+2. **"Add X more agents per machine" = staff MORE specialists at each step.** Not a longer task list.
+3. **Loops are FULL CYCLES** — input → build → assess → product leadership → research → build again. Each cycle's output feeds the next cycle's input. Flywheel improvement.
+4. **Cross-machine sync is MANDATORY.** Machines are intertwined. Every specialist agent needs context from OTHER machines' recent outputs. Propagate changes across all machines.
+5. **Product Leadership step** suggests problems + exploratory directions, NOT instructions. "UX feels rough on tab transitions → maybe try visual loading feedback, faster data streaming, or novel approaches."
+6. **Think/Research/Solve step** = deep and wide research. Study Linear, Superhuman, Bloomberg. Research is core behavior, not optional.
+7. **Machine agent is an ORCHESTRATOR** that spawns specialist sub-agents via the Agent tool. It is NOT a solo worker doing sequential tasks.
+
+### Agent Architecture (Python = plumbing, Claude = reasoning)
+- Python scripts: data extraction, API calls, file I/O (plumbing ONLY)
+- Claude Agent SDK agents: all reasoning, signal extraction, people resolution, intelligence work
+- Datum agent: data ops (resolve, link, enrich, dedup)
+- Cindy agent: communications intelligence (obligations, signals — LLM reasoning, not regex)
+- Megamind agent: strategic reasoning (co-strategist, not slave)
+- ENIAC agent: research analyst (content + thesis)
+
 ## Action Scoring Model
 
 ```

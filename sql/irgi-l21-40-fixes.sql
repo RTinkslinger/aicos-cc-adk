@@ -1,0 +1,42 @@
+-- IRGI Intelligence Functions — L21-40 Fixes
+-- Date: 2026-03-20
+-- Machine: M6 IRGI
+-- Changes:
+--   L21-24: hybrid_search NULL embedding normalization
+--   L25-28: suggest_actions_for_thesis diversity constraint
+--   L29-32: USTOL false positive elimination (digest threshold tightening)
+--   L33-34: NEW find_similar_network(person_id, limit)
+--   L35-36: NEW thesis_momentum_report(thesis_id)
+--   L37-40: Performance optimization (3 functions: find_related_entities, suggest_actions_for_thesis, aggregate_thesis_evidence)
+--
+-- All functions deployed directly to Supabase via execute_sql.
+-- This file is a record of what was deployed; the canonical source is the database.
+--
+-- Performance results (all under 200ms target):
+--   hybrid_search: 33ms
+--   find_related_companies: 8ms
+--   find_related_entities: 85ms (was 435ms, optimized)
+--   score_action_thesis_relevance: 25ms
+--   route_action_to_bucket: 28ms
+--   suggest_actions_for_thesis: 25ms (was 631ms, optimized)
+--   aggregate_thesis_evidence: 87ms (was 915ms, optimized)
+--   detect_thesis_bias: 8ms
+--   find_similar_network: 104ms (NEW)
+--   thesis_momentum_report: 32ms (NEW)
+
+-- ============================================================================
+-- NOTE: The full function definitions are deployed to Supabase and documented
+-- in docs/audits/2026-03-20-m6-l21-40.md. Key optimization patterns used:
+--
+-- 1. HNSW Index Pattern: Use ORDER BY embedding <=> query LIMIT N instead of
+--    WHERE (1 - distance) > threshold. The threshold prevents index use.
+--
+-- 2. Pre-fetch + Small Cross-Join: Pre-fetch thesis embeddings into a CTE
+--    (7 rows), then cross-join against top-N candidates only.
+--
+-- 3. Split Connection vs Vector: Use entity_connections first (cheap index),
+--    then vector only for top-N remaining candidates.
+--
+-- 4. Weight Normalization: When query_embedding IS NULL, set eff_kw_weight=1.0
+--    and eff_sem_weight=0.0 to properly normalize combined_score.
+-- ============================================================================

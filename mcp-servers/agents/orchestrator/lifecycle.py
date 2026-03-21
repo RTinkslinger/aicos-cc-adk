@@ -649,6 +649,8 @@ def build_cindy_options():
         env={
             "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),
             "DATABASE_URL": os.environ.get("DATABASE_URL", ""),
+            "AGENTMAIL_API_KEY": os.environ.get("AGENTMAIL_API_KEY", ""),
+            "AGENTMAIL_INBOX_EMAIL": os.environ.get("AGENTMAIL_INBOX_EMAIL", ""),
         },
     )
 

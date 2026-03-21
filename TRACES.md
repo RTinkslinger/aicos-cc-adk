@@ -825,4 +825,35 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 
 **Key metrics:** 13,287 entity connections (10x), 3,531 network (deduped), bias_summary view live, CIR queue healthy, Megamind+Cindy live on droplet, /comms+/strategy deployed
 **Context:** Paused at API limit. ~13 agents still running (may complete). Full state in CHECKPOINT.md.
+
+### Iteration 31 - 2026-03-20
+**Phase:** Resume Machineries L21-40 + Cindy Real Data Pipeline
+**Focus:** Commit 284 files, launch all 8 machines L21-40, fix Cindy blockers, research Granola/WhatsApp access
+
+**Changes:**
+- `mcp-servers/agents/orchestrator/lifecycle.py` (fixed: AGENTMAIL_API_KEY + AGENTMAIL_INBOX_EMAIL now passed to Cindy agent env)
+- Committed 548 files (100,078 insertions) + pushed to GitHub
+
+**Machines Launched (all background, L21-40):**
+- M1 WebFront: blended_score switch, network page, Realtime, Lighthouse
+- M5 Scoring: strategic_score integration, compression fix (completed analysis phase)
+- M6 IRGI: semantic_score fix, diversity constraint, new functions
+- M7 Megamind: M7→M5 feedback loop fix, auto-grade remaining 74 actions
+- M8 Cindy: plug all 4 surfaces with real data (AgentMail, Granola, WhatsApp, Calendar)
+- M9 Intel QA: re-audit after all machine improvements
+- M10 CIR: queue processor routing fix, propagation testing
+- M12 Data: page content extraction, role filling, email extraction
+
+**Cindy Investigation:**
+- AgentMail API key confirmed on droplet but NOT injected into Cindy's env dict — FIXED
+- Granola MCP is Claude.ai-hosted OAuth integration — not directly accessible from Agent SDK on droplet. Deep research agent launched.
+- WhatsApp iCloud backup: E2E encryption OFF (confirmed via screenshot), but .enc files on disk still encrypted by Apple's file-level encryption. File header = binary, not sqlite. Deep research agent launched.
+- Pulled 15 real Granola meetings via MCP (Muro, Cultured Computers, Skyra, AuraML — rich deal intelligence)
+
+**Decisions:**
+- All machines loop autonomously with army-of-agents pattern. No pause for permission.
+- Deep and wide research as default behavior for all infrastructure/API/MCP unknowns — no assumptions.
+- M8 Cindy machine loops until all 4 surfaces produce real data at MVP level.
+
+**Context:** 9 background agents running (7 machines + 2 research). Session ongoing.
 ---

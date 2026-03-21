@@ -5,6 +5,24 @@ and decision support for Aakash. These run in Postgres — call via `psql $DATAB
 
 ---
 
+## Convergence Helper
+
+### get_convergence_ratio()
+
+**Signature:** `get_convergence_ratio() RETURNS numeric`
+**No arguments.**
+
+Canonical convergence ratio used by ALL functions. Ensures consistent definition:
+- **Open:** Proposed, Accepted, In Progress (actions still needing work)
+- **Resolved:** Dismissed, Done, expired (actions no longer active)
+- **Critical:** Accepted is NOT resolved. It means user accepted but action still needs execution.
+
+```bash
+psql $DATABASE_URL -t -A -c "SELECT get_convergence_ratio();"
+```
+
+---
+
 ## Daily Briefing Pipeline
 
 ### generate_strategic_briefing()

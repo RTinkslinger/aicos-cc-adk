@@ -129,6 +129,7 @@ You have the full Claude Code toolset. ALL tools allowed, `permission_mode=dontA
 - `actions_queue.strategic_score` is NUMERIC (your writable score, 0.0-1.0). **NEVER write values > 1.0.** Display as `/10` in briefings (multiply by 10).
 - `recalibrate_strategic_scores()` outputs 0-1 scale (normalized internally from 0-10 computation)
 - `auto_generate_obligation_followup_actions()` sets both `relevance_score` and `strategic_score` on creation
+- **Convergence definition (v5.1):** Open = Proposed/Accepted/In Progress. Resolved = Dismissed/Done/expired. Accepted is NOT resolved -- it means user accepted the action as worthwhile but it still needs execution. Use `get_convergence_ratio()` for canonical ratio.
 
 ---
 
@@ -202,6 +203,12 @@ All callable via `psql $DATABASE_URL -c "SELECT function_name(args)"`.
 | `auto_refresh_depth_grades()` | TABLE | Checks pending grades against current context |
 | `auto_dismiss_stale_actions()` | TABLE | Dismisses stale actions (>30d low score, >14d no grade) |
 | `cascade_dedup_guard(text, threshold)` | TABLE | Checks if proposed action duplicates existing |
+
+### Convergence Helper
+
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `get_convergence_ratio()` | numeric | Canonical convergence ratio. Open=Proposed/Accepted/In Progress, Resolved=Dismissed/Done/expired. All other functions call this. |
 
 ### Cascade & Convergence
 

@@ -54,7 +54,7 @@ Run maintenance functions regularly. Detect and handle garbage, staleness, drift
 ### Web Tools MCP (localhost:8001)
 `web_browse`, `web_scrape`, `web_search`, `fingerprint`, `check_strategy`, `manage_session`, `validate`
 
-### SQL Tool Functions (14 autonomous tools in Postgres)
+### SQL Tool Functions (23 tools in Postgres)
 Call via `psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOUR tools — they do heavy lifting inside Postgres.
 
 **Maintenance (6):**
@@ -83,12 +83,37 @@ Call via `psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOU
 | `datum_entity_health()` | Per-entity-type fill rate metrics | `(entity_type, metric, total_count, filled_count, pct, status)` |
 | `datum_thesis_coverage()` | Maps thesis threads to portfolio and actions | `(thesis, portfolio_count, action_count, active_portfolio, exited_portfolio)` |
 
+**Dashboard & Context (4):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `data_quality_dashboard()` | Full system dashboard — network, companies, portfolio, freshness, embeddings, entity_connections, thesis searchability | JSON object with all subsystems |
+| `enrich_action_context(action_id)` | Enriches a single action with company/portfolio/network context | Enriched action context |
+| `enrich_network_professional_context(person_id)` | Enriches a person with professional context from companies and portfolio | Professional context bundle |
+| `entity_freshness_score(entity_type, entity_id)` | Computes freshness score for a single entity | Freshness score and details |
+
+**Interaction Resolution (3):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `resolve_participant(name, context)` | Resolves a participant name to network ID with confidence | `(network_id, confidence, match_method)` |
+| `resolve_interaction_participants(interaction_id)` | Resolves all participants in an interaction | Resolution results per participant |
+| `resolve_interaction_participants_v2(interaction_id)` | V2 resolver with improved matching and context awareness | Resolution results per participant |
+
+**Search (2):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `enriched_search(query, limit)` | Semantic search across all entities with enriched results | Ranked results with context |
+| `enriched_balanced_search(query, limit)` | Balanced search across entity types with weighted relevance | Ranked results balanced across types |
+
 **Quick reference — which to run when:**
 - Routine heartbeat: `datum_daily_maintenance()` (runs everything)
 - Health check: `datum_entity_health()` + `datum_data_quality_check()`
+- Full system status: `data_quality_dashboard()`
 - After entity creation: `datum_cross_entity_linker()` + `datum_signal_propagator()`
 - After batch import: `datum_company_name_deduplicator()` + `datum_garbage_detector()`
 - Sync issues: `datum_notion_drift_check()`
+- Person lookup: `resolve_participant(name, context)`
+- Interaction processing: `resolve_interaction_participants_v2(interaction_id)`
+- Entity context: `enrich_action_context(id)` or `enrich_network_professional_context(id)`
 
 ---
 

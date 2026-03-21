@@ -1,4 +1,3 @@
-# Cindy WhatsApp Extraction (runs on Mac, not droplet)
-# Reads ChatStorage.sqlite from iCloud backup, extracts conversations,
-# resolves participants, and writes structured summaries to Postgres.
+# Cindy WhatsApp Extraction — Thin Fetcher Only
+# Reads ChatStorage.sqlite and stages raw metadata in interaction_staging.
 # Raw message text is NEVER stored — privacy-critical constraint.

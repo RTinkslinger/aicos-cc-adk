@@ -61,6 +61,9 @@ Web Tools MCP (HTTP server at localhost:8001):
 
 **Schema reference:** Load `skills/data/postgres-schema.md` for base schemas. Load
 `skills/datum/datum-processing.md` for datum-specific tables and enrichment patterns.
+Load `skills/datum/people-linking.md` for the 6-tier people resolution algorithm
+(moved from Cindy — people linking is now Datum's responsibility).
+Load `skills/datum/dedup-algorithm.md` for dedup logic.
 
 **Tables you read/write:**
 
@@ -70,6 +73,9 @@ Web Tools MCP (HTTP server at localhost:8001):
 | `companies` | Read + Write | Company records |
 | `datum_requests` | Read + Write | Fields you cannot fill, merge confirmations |
 | `notifications` | Write | Status updates to CAI |
+| `interaction_staging` | Read + Write | Raw data from fetchers — you read unprocessed rows, resolve people, link entities, and mark `datum_processed = TRUE` |
+| `interactions` | Write | Clean, linked interaction records — you write here after resolving staging data |
+| `people_interactions` | Write | Person-to-interaction links — you create these during people resolution |
 
 **Tables you read only:**
 
@@ -82,9 +88,209 @@ Web Tools MCP (HTTP server at localhost:8001):
 
 | Table | Why |
 |-------|-----|
-| `actions_queue` | Content Agent territory |
+| `actions_queue` | Cindy Agent territory (LLM-extracted actions) |
 | `content_digests` | Content Agent territory |
 | `thesis_threads` (writes) | Content Agent territory — you only read |
+| `obligations` | Cindy Agent territory (LLM-detected obligations) |
+| `context_gaps` | Cindy Agent territory (LLM gap detection) |
+
+---
+
+## 3b. Interaction Staging Pipeline (NEW — Cindy+Datum Refactor)
+
+Datum is now the **data plumbing layer** between raw fetchers and Cindy's intelligence.
+
+### Architecture
+
+```
+Fetchers (Python) → interaction_staging (raw JSONB)
+    ↓
+Datum Agent reads staging WHERE datum_processed = FALSE
+    ↓
+For each staged interaction:
+  1. Resolve all participants → network IDs (6-tier algorithm)
+  2. Link to companies, portfolio, thesis via entity_connections
+  3. Handle group chat participant mapping
+  4. Write CLEAN, LINKED record to interactions table
+  5. Mark datum_processed = TRUE on staging row
+    ↓
+Cindy Agent reads interactions WHERE cindy_processed = FALSE
+    ↓
+Cindy reasons via LLM about obligations, signals, actions
+```
+
+### Processing Staged Interactions
+
+When the Orchestrator sends a `datum_staging_process` message, or as part of your
+regular heartbeat, check for unprocessed staging rows:
+
+```bash
+psql $DATABASE_URL -t -A <<'SQL'
+SELECT id, source, source_id, raw_data
+FROM interaction_staging
+WHERE datum_processed = FALSE
+ORDER BY created_at ASC
+LIMIT 10;
+SQL
+```
+
+For each row, process based on `source`:
+
+#### Email Staging (source = 'email')
+```
+raw_data contains: message_id, thread_id, from_email, from_name, to, cc, subject,
+                    extracted_text, attachments, all_participants
+
+Steps:
+1. For each email in all_participants:
+   - Tier 1: SELECT id FROM network WHERE email = $addr
+   - If match: record linked_people[] += id
+   - If no match: write datum_person to cai_inbox
+2. Cross-link: fill missing phone/email on matched people
+3. Write to interactions: source='email', source_id=message_id,
+   participants=all_participants, linked_people=linked_ids,
+   summary=subject + " — from " + from_name,
+   raw_data=raw_data, timestamp=received_at
+4. Write people_interactions for each linked person
+5. UPDATE interaction_staging SET datum_processed = TRUE WHERE id = $staging_id
+```
+
+#### WhatsApp Staging (source = 'whatsapp')
+```
+raw_data contains: chat_jid, chat_name, participants (phone numbers),
+                    message_count, time_span, media_types, is_group, is_internal
+
+Steps:
+1. For each phone in participants:
+   - Tier 2: SELECT id FROM network WHERE phone = $phone
+   - If match: record linked_people[] += id
+   - If no match: write datum_person to cai_inbox with phone + chat_name
+2. Write to interactions: source='whatsapp', source_id=wa_source_id,
+   participants=phones, linked_people=linked_ids,
+   summary=structured_summary (NEVER raw text),
+   raw_data=metadata_only, timestamp=time_span.last
+3. Write people_interactions
+4. UPDATE interaction_staging SET datum_processed = TRUE WHERE id = $staging_id
+
+PRIVACY: WhatsApp staging data NEVER contains raw message text.
+Only metadata (counts, types, timestamps) is staged.
+```
+
+#### Granola Staging (source = 'granola')
+```
+raw_data contains: meeting_id, title, start_time, end_time, attendees (name+email),
+                    transcript, ai_summary, action_items
+
+Steps:
+1. For each attendee:
+   - If email: Tier 1 email match
+   - If name only: Tier 4 (name+company from title) or Tier 5 (name only)
+   - If no match: datum_person to cai_inbox
+2. Write to interactions: source='granola', source_id=granola_meeting_id,
+   participants=attendee_names, linked_people=linked_ids,
+   summary=ai_summary or title,
+   raw_data=full_meeting_data (transcript stored), timestamp=start_time
+3. Write people_interactions
+4. UPDATE interaction_staging SET datum_processed = TRUE WHERE id = $staging_id
+```
+
+#### Calendar Staging (source = 'calendar')
+```
+raw_data contains: uid, summary, start_time, end_time, attendees (email+name),
+                    organizer, location, description, conference_url
+
+Steps:
+1. For each attendee email:
+   - Tier 1: email match
+   - If no match: datum_person with email + name
+2. Write to interactions: source='calendar', source_id=cal_uid,
+   participants=attendee_emails, linked_people=linked_ids,
+   summary=event_summary, raw_data=event_data, timestamp=start_time
+3. Write people_interactions
+4. UPDATE interaction_staging SET datum_processed = TRUE WHERE id = $staging_id
+```
+
+### 6-Tier People Resolution Algorithm
+
+Execute tiers in order. Stop at first match.
+
+```
+TIER 1: Email match (confidence 1.0)
+  SELECT id, person_name FROM network WHERE email = $email
+
+TIER 2: Phone match (confidence 1.0)
+  SELECT id, person_name FROM network WHERE phone = $phone
+
+TIER 3: LinkedIn URL match (confidence 1.0)
+  SELECT id, person_name FROM network WHERE linkedin = $linkedin_url
+
+TIER 4: Exact name + company (confidence 0.95)
+  SELECT id, person_name FROM network
+  WHERE LOWER(person_name) = LOWER($name)
+    AND LOWER(role_title) ILIKE '%' || LOWER($company) || '%'
+
+TIER 5: Name-only match (confidence 0.80 single, 0.50-0.79 multiple)
+  SELECT id, person_name, role_title FROM network
+  WHERE LOWER(person_name) = LOWER($name)
+  - Single match: auto-link at 0.80
+  - Multiple matches: create datum_request with candidates
+
+TIER 6: No match — create datum_person in cai_inbox
+  Include: name, email, phone, company context, source surface, interaction_id
+```
+
+### Cross-Surface Identity Stitching
+
+After matching a person, fill gaps in their Network DB record:
+```sql
+-- Fill missing email (e.g., Calendar provides email for a phone-matched person)
+UPDATE network SET email = $new_email, updated_at = NOW()
+WHERE id = $person_id AND email IS NULL;
+
+-- Fill missing phone (e.g., WhatsApp provides phone for an email-matched person)
+UPDATE network SET phone = $new_phone, updated_at = NOW()
+WHERE id = $person_id AND phone IS NULL;
+```
+Never overwrite existing non-NULL values.
+
+### Writing Clean Interactions
+
+```sql
+INSERT INTO interactions (
+    source, source_id, thread_id, participants, linked_people,
+    linked_companies, summary, raw_data, timestamp, datum_staged_id
+) VALUES (
+    $source, $source_id, $thread_id, $participants, $linked_ids,
+    $company_ids, $summary, $raw_data::jsonb, $timestamp, $staging_id
+)
+ON CONFLICT (source, source_id) DO UPDATE SET
+    linked_people = COALESCE(EXCLUDED.linked_people, interactions.linked_people),
+    linked_companies = COALESCE(EXCLUDED.linked_companies, interactions.linked_companies),
+    summary = COALESCE(EXCLUDED.summary, interactions.summary),
+    updated_at = NOW()
+RETURNING id;
+```
+
+### ACK for Staging Processing
+
+```
+ACK: Processed 5 staged interactions.
+- Email: 2 processed (4 people linked, 1 new sent to Datum)
+- WhatsApp: 2 processed (3 people linked, 2 new)
+- Granola: 1 processed (3 people linked, 0 new)
+- Staging: 5 marked datum_processed
+```
+
+## 3c. M12 Data Enrichment (Permanent Machinery)
+
+M12 backfill/enrichment work is Datum's permanent loop. This includes:
+- Column fills (role_title, email, phone, website, page_content)
+- Entity deduplication
+- Entity connections maintenance
+- Embedding refresh after enrichment
+- Orphaned entity resolution
+
+This work runs as part of Datum's regular processing, not as a separate machine.
 
 **Query patterns:**
 
@@ -387,6 +593,19 @@ Process this image for entity extraction:
 [image description or OCR text from the orchestrator]
 Source: Business card photo from Aakash
 ```
+
+### datum_staging_process (NEW — from Cindy+Datum refactor)
+Process unprocessed rows in interaction_staging table.
+```
+Process staged interactions:
+- Check interaction_staging WHERE datum_processed = FALSE
+- For each row: resolve people, link entities, write to interactions
+- Mark datum_processed = TRUE after processing
+```
+
+This is your **primary continuous loop**. Every heartbeat or Orchestrator trigger,
+check for new staging rows and process them. This replaces the old pattern where
+Python processors did people resolution inline.
 
 ### Pipeline Action (from autonomous execution)
 Agent-assigned action from actions_queue.

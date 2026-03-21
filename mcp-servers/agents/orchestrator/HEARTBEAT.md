@@ -173,7 +173,46 @@ If < 24 hours: skip.
 
 ---
 
-## Step 3f: Cindy Scheduled Triggers
+## Step 3f: Datum Staging Check (NEW — Cindy+Datum Refactor)
+
+Check if there are unprocessed rows in interaction_staging that Datum needs to handle:
+
+```bash
+psql $DATABASE_URL -t -A -c "
+  SELECT count(*) FROM interaction_staging WHERE datum_processed = FALSE"
+```
+
+If count > 0: send to Datum Agent:
+> Process staged interactions: N rows pending in interaction_staging.
+> Check interaction_staging WHERE datum_processed = FALSE, resolve people, link entities, write to interactions.
+
+If Datum busy, skip — retry next heartbeat.
+
+If count = 0: skip.
+
+---
+
+## Step 3g: Cindy Intelligence Check (NEW — Cindy+Datum Refactor)
+
+Check if Datum has processed interactions that Cindy hasn't reasoned about yet:
+
+```bash
+psql $DATABASE_URL -t -A -c "
+  SELECT count(*) FROM interactions WHERE cindy_processed = FALSE"
+```
+
+If count > 0: send to Cindy Agent:
+> Reason about N new interactions. Query interactions WHERE cindy_processed = FALSE.
+> For each: detect obligations (LLM), extract signals, create actions, check for gaps.
+> Mark cindy_processed = TRUE when done.
+
+If Cindy busy, skip — retry next heartbeat.
+
+If count = 0: skip.
+
+---
+
+## Step 3h: Cindy Scheduled Triggers
 
 ### Granola poll (every 30 min)
 

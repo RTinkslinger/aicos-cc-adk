@@ -161,11 +161,18 @@ Use `send_to_megamind_agent`. Same fire-and-forget pattern — returns immediate
 
 Use `send_to_cindy_agent`. Same fire-and-forget pattern as other agents — returns immediately, Cindy works in background.
 
-**What Cindy does:** Communications observation — processes email, WhatsApp, Granola transcripts, and Calendar events. Extracts interaction intelligence: people linking, action items, thesis signals, deal signals, and context gap detection.
+**What Cindy does:** Communications intelligence — LLM-based reasoning over clean, linked
+interactions (already processed by Datum). Detects obligations, extracts signals, creates
+actions, identifies context gaps. Cindy does NOT do data plumbing (people resolution,
+entity linking) — that's Datum's job.
 
 **When to invoke:**
-- Inbox messages with `cindy_*` type prefix (cindy_email, cindy_whatsapp, cindy_meeting, cindy_calendar, cindy_gap_filled, cindy_granola_poll, cindy_calendar_poll)
-- Exception: `cindy_signal` messages route to **Megamind**, not Cindy (these are outbound signals FROM Cindy)
+- When `interactions WHERE cindy_processed = FALSE` has rows (Datum finished processing staging data)
+- Inbox messages with `cindy_*` type prefix (cindy_gap_filled, cindy_granola_poll, cindy_calendar_poll)
+- Exception: `cindy_signal` messages route to **Megamind**, not Cindy (outbound signals FROM Cindy)
+- NOTE: `cindy_email`, `cindy_whatsapp`, `cindy_meeting`, `cindy_calendar` inbox types now
+  trigger **fetchers first** (which stage to interaction_staging), then Datum processes staging,
+  then Cindy reasons about clean interactions. The Orchestrator checks Step 3f and 3g for this.
 
 **Batching rule:** If there are 3+ `cindy_*` messages of the same type, batch them into a single prompt:
 > Process communication batch (3 inbox messages):
@@ -233,5 +240,7 @@ Every 30 iterations (check `state/orc_iteration.txt`, if divisible by 30 and > 0
 12. Never perform depth grading or strategic assessment yourself — delegate to Megamind Agent
 13. Never send raw content or entity data to Megamind — it reasons over structured data only
 14. Never send `cindy_*` messages to Content Agent or Datum Agent — route to Cindy Agent
-15. Never send non-cindy messages to Cindy Agent — she only processes communication data
+15. Never send non-cindy messages to Cindy Agent — she only processes clean interactions via LLM reasoning
 16. Never route `cindy_signal` messages to Cindy — route to Megamind (these are outbound signals from Cindy)
+17. Never skip the staging check (Step 3f) — Datum must process staging before Cindy can reason
+18. Never send Cindy raw/unprocessed data — she reads from interactions WHERE cindy_processed = FALSE (Datum-cleaned data)

@@ -1,44 +1,31 @@
 """
-Cindy Email Processing Pipeline.
+Cindy Email Pipeline — Thin Fetcher Only.
 
-AgentMail integration for cindy.aacash@agentmail.to.
-Polls inbox, parses messages, extracts signals and obligations,
-resolves people, and writes to Supabase.
+Fetches emails from AgentMail and stages raw data in interaction_staging.
+NO signal extraction, NO obligation detection, NO people resolution.
+
+Datum Agent resolves people and writes to interactions.
+Cindy Agent reasons about obligations and signals via LLM.
 
 Usage:
-    python3 -m cindy.email --dry-run --use-sample-data
-    python3 -m cindy.email --since 2h
-    python3 -m cindy.email --help
+    python3 -m cindy.email.fetcher --dry-run --use-sample
+    python3 -m cindy.email.fetcher --since 2h
 """
 
-from cindy.email.email_processor import (
+from cindy.email.fetcher import (
     AgentMailClient,
-    DatabaseWriter,
     EmailMessage,
-    extract_action_items,
-    extract_deal_signals,
-    extract_thesis_signals,
+    StagingWriter,
+    fetch_and_stage,
     main,
     parse_agentmail_message,
-    process_email,
-    run,
-)
-from cindy.email.obligation_extractor import (
-    extract_due_date,
-    extract_obligations,
 )
 
 __all__ = [
     "AgentMailClient",
-    "DatabaseWriter",
     "EmailMessage",
-    "extract_action_items",
-    "extract_deal_signals",
-    "extract_due_date",
-    "extract_obligations",
-    "extract_thesis_signals",
+    "StagingWriter",
+    "fetch_and_stage",
     "main",
     "parse_agentmail_message",
-    "process_email",
-    "run",
 ]

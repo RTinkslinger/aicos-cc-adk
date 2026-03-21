@@ -997,3 +997,32 @@ A good assessment has:
 - Actionable recommendations (not "monitor situation")
 - Bucket distribution that identifies real gaps
 - Thesis momentum that captures recent conviction shifts
+
+---
+
+## 12. Strategic Functions Reference (L61-90)
+
+### generate_strategic_briefing()
+**Returns:** JSONB daily briefing for Aakash. Access via `strategic_briefing` view.
+**Sections:** top_actions (10), thesis_momentum (8 theses), portfolio_health (total/green/yellow/red + red_companies), recent_cascades (48h), convergence state, obligation_alerts, recommendations.
+**Usage:** `SELECT * FROM strategic_briefing;` or `SELECT generate_strategic_briefing();`
+
+### detect_opportunities()
+**Returns:** JSONB opportunity analysis.
+**Sections:** thesis_clusters (portfolio companies per thesis), cross_thesis_opportunities (companies at 3+ thesis intersections), high_conviction_pipeline (top actions on Very High/High theses), relationship_hotspots (network people connected to 2+ companies), strategic_insights.
+**Usage:** `SELECT detect_opportunities();`
+
+### generate_decision_framework(action_id INT)
+**Returns:** JSONB structured decision framework for a specific action.
+**Sections:** pros, cons, key_questions, recommended_next_step, thesis_context, portfolio_context.
+**Access all Ultra actions:** `SELECT * FROM decision_frameworks;`
+
+### generate_strategic_assessment() [UPGRADED]
+**Now includes:** portfolio_thesis_coverage, entity_connections count, pending_obligations, conviction_summary (all 8 theses), cascade_activity since last assessment.
+**Scheduled:** pg_cron job 8, daily at 6:00 UTC.
+
+### Key Views Added
+| View | Purpose |
+|------|---------|
+| `strategic_briefing` | Daily briefing (calls generate_strategic_briefing) |
+| `decision_frameworks` | All pending Ultra actions with structured frameworks |

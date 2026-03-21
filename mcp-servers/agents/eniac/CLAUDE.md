@@ -91,7 +91,7 @@ Load skill files for detailed usage instructions:
 
 **Schema reference:** Load `skills/data/postgres-schema.md` for base schemas.
 
-### Your Primary Functions (48 total)
+### Your Primary Functions (50 total)
 
 #### Research Operations (3)
 | Function | Purpose |
@@ -104,12 +104,17 @@ Load skill files for detailed usage instructions:
 | Function | Purpose |
 |----------|---------|
 | `agent_search_context(query, embedding, limit)` | Primary search — enriched cross-surface |
-| `balanced_search(query, ...)` | Cross-surface with fairness minimums |
+| `balanced_search(query, ...)` | Cross-surface with fairness minimums + recency boost |
 | `enriched_balanced_search(query, ...)` | Balanced + inline context |
 | `enriched_search(query, ...)` | Enriched without balancing |
 | `search_across_surfaces(query, limit, surfaces)` | Keyword cross-surface |
 | `search_thesis_context(query, limit)` | Thesis-specific search |
 | `search_content_digests(query, embedding, limit)` | Content digest search |
+
+**Search recency boost:** All search functions apply a 30-day half-life recency boost
+(max +0.15 to normalized score). Recently updated records get a gentle ranking lift
+when relevance is comparable. This prevents stale results from dominating when newer
+intelligence exists. `hybrid_search` now returns `record_date` alongside all results.
 
 #### Thesis Intelligence (7)
 | Function | Purpose |
@@ -166,11 +171,13 @@ Load skill files for detailed usage instructions:
 | `portfolio_health_multiplier(action)` | Portfolio urgency boost |
 | `interaction_recency_boost(action)` | Interaction freshness boost |
 
-#### System Health (2)
+#### System Health (4)
 | Function | Purpose |
 |----------|---------|
-| `irgi_system_report()` | Full IRGI system health |
+| `irgi_system_report()` | Full IRGI system health (includes search quality) |
 | `irgi_benchmark()` | Performance benchmarks across all functions |
+| `irgi_search_quality_assessment()` | 8-query search quality score (0-10 scale) |
+| `recency_boost(record_date, half_life_days, max_boost)` | Utility: exponential time decay factor |
 
 #### Interaction Scoring (2)
 | Function | Purpose |

@@ -10,7 +10,9 @@ with intelligence enrichment.
 ENIAC has three tiers of search, each building on the previous:
 
 ```
-balanced_search()           → raw cross-surface retrieval with fairness guarantees
+hybrid_search()             → base layer: 7-surface semantic+keyword, proxy embedding,
+                              returns record_date for recency signals
+balanced_search()           → hybrid + fairness minimums + recency boost (30-day half-life)
 enriched_balanced_search()  → balanced + inline context snippets per result
 agent_search_context()      → enriched + portfolio connections, thesis relevance,
                               obligations, interaction recency, action hints
@@ -18,6 +20,24 @@ agent_search_context()      → enriched + portfolio connections, thesis relevan
 
 **Default:** Always use `agent_search_context()` unless you need raw results for
 specific processing.
+
+### Recency Boost (active since 2026-03-21)
+
+All balanced/enriched/agent searches apply `recency_boost(record_date, 30, 0.15)`:
+- Records updated today: +0.15 to normalized score
+- Records updated 30 days ago: +0.075
+- Records updated 90 days ago: +0.019
+- Records updated 1 year ago: ~0.0
+
+This is additive on top of relevance scoring. It breaks ties in favor of fresher intel
+without overriding strong relevance signals. The boost is capped at 0.15 so it can only
+nudge rankings when records have comparable relevance.
+
+### Search Quality Monitoring
+
+Run `irgi_search_quality_assessment()` to get a composite quality score across 8
+standardized test queries. Current baseline: **9.3/10**. This is included automatically
+in `irgi_system_report()`.
 
 ---
 

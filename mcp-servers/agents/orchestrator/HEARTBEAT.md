@@ -42,7 +42,9 @@ If messages exist, **route by type**:
 | `cindy_granola_poll` | Cindy Agent | `send_to_cindy_agent` |
 | `cindy_calendar_poll` | Cindy Agent | `send_to_cindy_agent` |
 | `cindy_signal` | Megamind Agent | `send_to_megamind_agent` |
-| Everything else (track_source, research_request, general, ...) | Content Agent | `send_to_content_agent` |
+| `research_*` (any research prefix) | ENIAC Agent | `send_to_eniac_agent` |
+| `eniac_*` (any eniac prefix) | ENIAC Agent | `send_to_eniac_agent` |
+| Everything else (track_source, general, ...) | Content Agent | `send_to_content_agent` |
 
 ### Datum Batching Rule
 

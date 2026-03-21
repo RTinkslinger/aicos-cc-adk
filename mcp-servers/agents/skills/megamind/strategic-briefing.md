@@ -30,17 +30,18 @@ psql $DATABASE_URL -t -A -c "SELECT generate_strategic_briefing();"
 **Signature:** `format_strategic_briefing(p_date date DEFAULT CURRENT_DATE) RETURNS text`
 
 Transforms the raw JSONB briefing into a formatted plain-text memo for Aakash.
-Structured as 6 sections:
+v5.0 — Structured as 8 sections with human-readable scores:
 
 1. **NEEDS YOUR ATTENTION** — Red/urgent portfolio companies with runway, follow-on status, key questions
 2. **CONTRADICTIONS** — Red + SPR, Red + zero actions, expired runway, silent winners, idle SPR room
-3. **DECISIONS** — Top actions needing Aakash's decision, ranked by impact score
+3. **DECISIONS** — Top actions needing Aakash's decision. Scores displayed as `/10` (strategic_score * 10)
 4. **KEY QUESTIONS NEEDING ACTION** — Portfolio companies with key questions but zero open actions
 5. **FOLLOW-ON** — SPR/PR companies with ownership + room to deploy; Token/Zero companies
 6. **THESIS** — All thesis threads with bias flags, conviction, open action counts
-7. **OBLIGATION FOLLOW-UPS** — Pending obligation-generated actions
+7. **OBLIGATION FOLLOW-UPS** — Pending obligation-generated actions. Scores displayed as `/10`
 8. **PEOPLE** — You-owe / they-owe / coming-up obligations by person
 
+Header includes convergence health indicator: `[HEALTHY/OK/WARN/CRITICAL ratio]`.
 Internally calls `generate_strategic_narrative()` 3 times with different focus modes.
 
 ```bash

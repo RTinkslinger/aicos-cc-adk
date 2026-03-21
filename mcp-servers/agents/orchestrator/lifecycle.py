@@ -1,10 +1,10 @@
-"""Lifecycle manager — orchestrator + content agent + datum agent + megamind agent + cindy agent.
+"""Lifecycle manager — orchestrator + content + datum + megamind + cindy + eniac agents.
 
-Manages five persistent ClaudeSDKClient sessions connected via @tool bridge.
+Manages six persistent ClaudeSDKClient sessions connected via @tool bridge.
 Thin wrapper — ALL intelligence in CLAUDE.md files, ALL logging in hooks.
 
 Does 6 things:
-  1. Creates persistent ClaudeSDKClient for content agent + datum agent + megamind agent + cindy agent
+  1. Creates persistent ClaudeSDKClient for content + datum + megamind + cindy + eniac agents
   2. Creates persistent ClaudeSDKClient for orchestrator (with @tool bridge)
   3. Sends "heartbeat" to orchestrator every 60s
   4. Tracks token usage for all agents -> traces/manifest.json
@@ -31,11 +31,13 @@ CONTENT_WORKSPACE = AGENTS_ROOT / "content"
 DATUM_WORKSPACE = AGENTS_ROOT / "datum"
 MEGAMIND_WORKSPACE = AGENTS_ROOT / "megamind"
 CINDY_WORKSPACE = AGENTS_ROOT / "cindy"
+ENIAC_WORKSPACE = AGENTS_ROOT / "eniac"
 ORC_LIVE_LOG = ORC_WORKSPACE / "live.log"
 CONTENT_LIVE_LOG = CONTENT_WORKSPACE / "live.log"
 DATUM_LIVE_LOG = DATUM_WORKSPACE / "live.log"
 MEGAMIND_LIVE_LOG = MEGAMIND_WORKSPACE / "live.log"
 CINDY_LIVE_LOG = CINDY_WORKSPACE / "live.log"
+ENIAC_LIVE_LOG = ENIAC_WORKSPACE / "live.log"
 
 logger = logging.getLogger("lifecycle")
 logging.basicConfig(
@@ -60,6 +62,10 @@ class ClientState:
     cindy_client: Any = None
     cindy_needs_restart: bool = False
     cindy_busy: bool = False
+
+    eniac_client: Any = None
+    eniac_needs_restart: bool = False
+    eniac_busy: bool = False
 
 
 clients = ClientState()
@@ -196,6 +202,8 @@ def _state_dir(agent: str) -> Path:
         return MEGAMIND_WORKSPACE / "state"
     elif agent == "cindy":
         return CINDY_WORKSPACE / "state"
+    elif agent == "eniac":
+        return ENIAC_WORKSPACE / "state"
     else:
         raise ValueError(f"Unknown agent: {agent}")
 
@@ -480,7 +488,68 @@ def create_bridge_server():
             "content": [{"type": "text", "text": "Prompt sent to cindy agent. Working in background."}],
         }
 
-    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent, send_to_datum_agent, send_to_megamind_agent, send_to_cindy_agent])
+    async def _read_eniac_response():
+        """Background task: read eniac agent response, track tokens, detect compaction."""
+        try:
+            async for msg in clients.eniac_client.receive_response():
+                if isinstance(msg, AssistantMessage):
+                    _log_assistant_message(ENIAC_LIVE_LOG, msg)
+                elif isinstance(msg, ResultMessage):
+                    update_manifest_tokens("eniac", msg.usage)
+                    _log_result_message(ENIAC_LIVE_LOG, msg)
+                    logger.info(
+                        "Bridge: eniac done — turns=%d, cost=$%.4f",
+                        msg.num_turns,
+                        msg.total_cost_usd or 0,
+                    )
+                    if msg.result and "COMPACT_NOW" in msg.result:
+                        clients.eniac_needs_restart = True
+                        logger.info("Bridge: eniac agent signaled COMPACT_NOW")
+        except Exception as e:
+            logger.error("Bridge: error reading eniac response: %s", e)
+        finally:
+            clients.eniac_busy = False
+            _live_log(ENIAC_LIVE_LOG, "--- idle (ready for next prompt) ---")
+
+    @tool(
+        "send_to_eniac_agent",
+        "Send research work to the persistent ENIAC Agent for deep research, thesis analysis, "
+        "company intelligence, and cross-reference work. Returns immediately — ENIAC works in background. "
+        "If ENIAC is busy, returns a busy message.",
+        {"prompt": str},
+    )
+    async def send_to_eniac_agent(args: dict[str, Any]) -> dict[str, Any]:
+        if clients.eniac_client is None:
+            return {
+                "content": [{"type": "text", "text": "Error: ENIAC agent not connected"}],
+                "is_error": True,
+            }
+
+        if clients.eniac_busy:
+            return {
+                "content": [{"type": "text", "text": "ENIAC agent is still processing previous work. Will check again next heartbeat."}],
+            }
+
+        prompt = args["prompt"]
+        logger.info("Bridge: forwarding to eniac agent (%d chars)", len(prompt))
+        _live_log(ENIAC_LIVE_LOG, f">>> PROMPT: {prompt[:200]}")
+        clients.eniac_busy = True
+        try:
+            await clients.eniac_client.query(prompt)
+            asyncio.create_task(_read_eniac_response())
+        except Exception as e:
+            clients.eniac_busy = False
+            logger.error("Bridge: failed to send to eniac agent: %s", e)
+            return {
+                "content": [{"type": "text", "text": f"Error sending to eniac agent: {e}"}],
+                "is_error": True,
+            }
+
+        return {
+            "content": [{"type": "text", "text": "Prompt sent to ENIAC agent. Working in background."}],
+        }
+
+    return create_sdk_mcp_server(name="bridge", version="1.0.0", tools=[send_to_content_agent, send_to_datum_agent, send_to_megamind_agent, send_to_cindy_agent, send_to_eniac_agent])
 
 
 # --- Agent option builders ---
@@ -500,6 +569,7 @@ def build_orc_options(bridge_server):
             "mcp__bridge__send_to_datum_agent",
             "mcp__bridge__send_to_megamind_agent",
             "mcp__bridge__send_to_cindy_agent",
+            "mcp__bridge__send_to_eniac_agent",
         ],
         mcp_servers={"bridge": bridge_server},
         hooks={"PostToolUse": [HookMatcher(hooks=[orc_tool_hook])]},
@@ -771,6 +841,105 @@ async def restart_cindy_client():
     clients.cindy_needs_restart = False
 
 
+# --- ENIAC client lifecycle ---
+
+
+def build_eniac_options():
+    from claude_agent_sdk import AgentDefinition, ClaudeAgentOptions, HookMatcher, ThinkingConfigEnabled
+
+    eniac_tool_hook = _make_tool_hook(ENIAC_LIVE_LOG)
+
+    return ClaudeAgentOptions(
+        model=os.environ.get("AGENT_MODEL", "claude-sonnet-4-6"),
+        permission_mode="dontAsk",
+        allowed_tools=[
+            "Bash", "Read", "Write", "Edit", "Grep", "Glob", "Skill", "Agent",
+            "mcp__web__web_browse", "mcp__web__web_scrape", "mcp__web__web_search",
+            "mcp__web__fingerprint", "mcp__web__check_strategy",
+            "mcp__web__manage_session", "mcp__web__validate",
+        ],
+        mcp_servers={"web": {"type": "http", "url": "http://localhost:8001/mcp"}},
+        hooks={"PostToolUse": [HookMatcher(hooks=[eniac_tool_hook])]},
+        agents={
+            "web-researcher": AgentDefinition(
+                description="Web research specialist for deep multi-step investigations",
+                prompt=(
+                    "You are a web research specialist supporting ENIAC. Use web tools for "
+                    "deep investigations: competitive landscapes, company due diligence, "
+                    "evidence gathering. Return structured findings with source URLs and "
+                    "confidence scores (0.0-1.0). Focus on top 3-5 sources per query."
+                ),
+                tools=[
+                    "Bash", "Read", "Write", "Skill",
+                    "mcp__web__web_browse", "mcp__web__web_scrape", "mcp__web__web_search",
+                    "mcp__web__fingerprint", "mcp__web__check_strategy",
+                    "mcp__web__manage_session", "mcp__web__validate",
+                ],
+            ),
+            "thesis-analyst": AgentDefinition(
+                description="Thesis health, bias, and momentum analysis specialist",
+                prompt=(
+                    "You are a thesis analyst supporting ENIAC. Use Bash + psql $DATABASE_URL "
+                    "to query thesis intelligence functions. Analyze thesis health, detect bias, "
+                    "identify momentum patterns, and find cross-references. Return structured "
+                    "analysis with evidence citations."
+                ),
+                tools=["Bash", "Read", "Write", "Skill"],
+            ),
+            "company-profiler": AgentDefinition(
+                description="Company intelligence and deal pipeline specialist",
+                prompt=(
+                    "You are a company research specialist supporting ENIAC. Use Bash + psql "
+                    "for DB queries and web tools for external research. Build company profiles: "
+                    "competitive landscape, team, traction, market position. Return structured "
+                    "findings with confidence scores."
+                ),
+                tools=[
+                    "Bash", "Read", "Write", "Skill",
+                    "mcp__web__web_browse", "mcp__web__web_scrape", "mcp__web__web_search",
+                ],
+            ),
+        },
+        setting_sources=["project"],
+        thinking=ThinkingConfigEnabled(type="enabled", budget_tokens=10000),
+        effort="high",
+        max_turns=50,
+        max_budget_usd=5.0,
+        cwd=str(ENIAC_WORKSPACE),
+        env={
+            "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),
+            "DATABASE_URL": os.environ.get("DATABASE_URL", ""),
+            "FIRECRAWL_API_KEY": os.environ.get("FIRECRAWL_API_KEY", ""),
+        },
+    )
+
+
+async def start_eniac_client():
+    from claude_agent_sdk import ClaudeSDKClient
+
+    client = ClaudeSDKClient(options=build_eniac_options())
+    await client.__aenter__()
+    return client
+
+
+async def stop_eniac_client():
+    if clients.eniac_client:
+        try:
+            await clients.eniac_client.__aexit__(None, None, None)
+        except Exception as e:
+            logger.warning("Error stopping eniac client: %s", e)
+        clients.eniac_client = None
+
+
+async def restart_eniac_client():
+    logger.info("Restarting eniac agent session")
+    await stop_eniac_client()
+    bump_session("eniac")
+    reset_manifest_tokens("eniac", read_session_num("eniac"))
+    clients.eniac_client = await start_eniac_client()
+    clients.eniac_needs_restart = False
+
+
 # --- Pre-check: skip LLM if no work ---
 
 PIPELINE_INTERVAL_SECONDS = 12 * 3600  # 12 hours
@@ -854,6 +1023,13 @@ async def run_agent() -> None:
         _live_log(CINDY_LIVE_LOG, f"=== Cindy started — session #{read_session_num('cindy')} ===")
         logger.info("Cindy started — session #%d", read_session_num("cindy"))
 
+        # Start eniac agent
+        reset_manifest_tokens("eniac", read_session_num("eniac"))
+        clients.eniac_client = await start_eniac_client()
+        clients.eniac_needs_restart = False
+        _live_log(ENIAC_LIVE_LOG, f"=== ENIAC started — session #{read_session_num('eniac')} ===")
+        logger.info("ENIAC started — session #%d", read_session_num("eniac"))
+
         # Start orchestrator
         orc_session = read_session_num("orc")
         reset_manifest_tokens("orc", orc_session)
@@ -874,6 +1050,8 @@ async def run_agent() -> None:
                         await restart_megamind_client()
                     if clients.cindy_needs_restart:
                         await restart_cindy_client()
+                    if clients.eniac_needs_restart:
+                        await restart_eniac_client()
 
                     # Pre-check: skip LLM call if no work (free)
                     work_reason = await has_work()
@@ -921,6 +1099,7 @@ async def run_agent() -> None:
             await stop_datum_client()
             await stop_megamind_client()
             await stop_cindy_client()
+            await stop_eniac_client()
 
         # Always bump session on re-entry (exception or compaction)
         bump_session("orc")
@@ -948,6 +1127,7 @@ async def main() -> None:
     await stop_datum_client()
     await stop_megamind_client()
     await stop_cindy_client()
+    await stop_eniac_client()
     logger.info("Lifecycle manager stopped")
 
 

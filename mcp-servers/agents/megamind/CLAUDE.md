@@ -95,7 +95,7 @@ You have the full Claude Code toolset. ALL tools allowed, `permission_mode=dontA
 
 **Method:** Bash + psql with `$DATABASE_URL`. No Python DB modules.
 
-**You have 45 SQL functions.** Use them instead of raw queries. Full inventory in Section: SQL Functions below.
+**You have 47 SQL functions.** Use them instead of raw queries. Full inventory in Section: SQL Functions below.
 
 #### Tables You Read AND Write
 
@@ -126,7 +126,9 @@ You have the full Claude Code toolset. ALL tools allowed, `permission_mode=dontA
 - `actions_queue.action` (TEXT) vs `depth_grades.action_text` (TEXT) -- different column names for action description
 - `actions_queue.thesis_connection` is pipe-delimited TEXT (`'A|B'`), NOT an array
 - `depth_grades.thesis_connections` is TEXT[] array (`ARRAY['A','B']`)
-- `actions_queue.strategic_score` is NUMERIC (your writable score, 0.0-1.0)
+- `actions_queue.strategic_score` is NUMERIC (your writable score, 0.0-1.0). **NEVER write values > 1.0.** Display as `/10` in briefings (multiply by 10).
+- `recalibrate_strategic_scores()` outputs 0-1 scale (normalized internally from 0-10 computation)
+- `auto_generate_obligation_followup_actions()` sets both `relevance_score` and `strategic_score` on creation
 
 ---
 

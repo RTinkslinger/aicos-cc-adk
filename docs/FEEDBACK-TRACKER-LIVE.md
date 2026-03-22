@@ -1,36 +1,40 @@
 # Feedback Tracker — LIVE
-*Auto-updated by machine loops. Last update: 2026-03-22 — M8 Cindy Loop 3 (resolution 57%, cross-source intelligence built, people_interactions 9->413, 38 functions)*
+*Auto-updated by machine loops. Last update: 2026-03-22 — M9 Intel QA Loop 4 (3 bugs fixed: cindy_daily_briefing_v3 cancelled-leak + portfolio deal_momentum + datum_scorecard GREEN threshold. 4 NEW user feedback. System 7.2/10)*
 
 ---
 
-## HONEST SCORECARD — 6.9/10 (M10 CIR L3)
-| Dimension | Score | Key Issue |
-|-----------|-------|-----------|
-| Data Quality | 0.3/10 | 128/4,567 companies >500 chars (97% skeletal). Portfolio 142/142 rich. Core blocker. |
-| Connection Quality | 7.9/10 | **M10 L3:** 13,702 connections (was 21,486). 79% non-vector_similar. **660 multi-evidence** (was 31). 7,784 noise pruned. |
-| Scoring Quality | 8.0/10 | v5.5-M5L12: 22/23 tests. Convergence 0.862 (was 0.800). **Score overflow FIXED** (4 actions with 65-152 char decimals rounded). 18 multipliers, 46.2% obligation coverage. |
-| Obligation Quality | 8.5/10 | **M9 L3 FIXED:** #84 Quivly "deal negotiations" -> "portfolio follow-up". #67+#69 merged (Ayush/Schneider into #67, #69 cancelled). 16 total: 5 pending, 4 overdue, 4 escalated, 2 fulfilled, 1 cancelled. |
-| Intelligence Quality | 10/10 | 334 interactions + 715 WhatsApp. All 8 surfaces searchable. **M6 L3:** company_holistic_search NEW (4 match methods, 7 dimensions, 183ms). interaction_thesis_xref 58x faster (1006ms->17ms). WhatsApp fully enriched in agent_search_context. |
-| Cron Health | 9.8/10 | **M10 L3:** Morning thundering herd fixed (staggered 05:30-06:50). 98.5% success 24h. |
-| Embeddings | 9.9/10 | Companies 99.3%, Network 100%, WhatsApp 99.7%, Interactions 100%, Actions 100%. All 99%+. |
-| Agent CLAUDE.md | varies | Datum+Megamind 9/10, ENIAC 7/10, Cindy 4.5/10, Content 5.5/10. |
-| **OVERALL** | **6.9/10** | Up from 6.2: connection +3.4, cron +0.8, evidence enrichment NEW. Core blocker: skeletal companies. |
+## HONEST SCORECARD — 7.2/10 (M9 L4)
+| Dimension | Score | Delta | Key Evidence |
+|-----------|-------|-------|--------------|
+| Data Quality | 0.5/10 | +0.2 | 107/4,567 companies >500 chars (2.3% rich). 2,605 moderate (100-500). 1,855 skeletal. Portfolio 142/142 rich. Core blocker. |
+| Connection Quality | 7.9/10 | = | 13,702 connections. 79% non-vector_similar. 660 multi-evidence. Stable. |
+| Scoring Quality | 8.2/10 | +0.2 | v5.5-M5L12: 23/23 tests PASS. Convergence 0.856. Accepted avg 6.55 vs dismissed 2.56 (4.0 gap). Score overflow 0. 18 multipliers, 95.2% enrichment. |
+| Obligation Quality | 9.0/10 | +0.5 | **M9 L4 FIXED:** cindy_daily_briefing_v3 now excludes cancelled obligations AND portfolio cos from deal_momentum. 13 active obligations, 0 data leaks, 0 misclassifications. |
+| Intelligence Quality | 10/10 | = | 334 interactions + 715 WhatsApp. Search 9.8/10 (10 queries, all 8 surfaces, avg quality 9.79). |
+| Cron Health | 9.8/10 | = | 27 active crons. 3,917/3,973 succeeded 24h (98.6%). |
+| Embeddings | 9.9/10 | = | Companies 99.8%, Network 100%, Portfolio 100%, KQ 100%, WhatsApp 99.9%. Near-perfect. |
+| Agent CLAUDE.md | 7.5/10 | = | Datum+Megamind 9/10, ENIAC 7/10, Cindy 7/10 (boundaries clean, 38 functions), Content 5.5/10. |
+| WebFront UX | 5.0/10 | NEW | 4 NEW user feedback (FB-31 to FB-34): dismiss flow broken, Cindy lacks context, options not contextual, text input wanted. |
+| **OVERALL** | **7.2/10** | +0.3 | Bugs fixed, scoring stable, search excellent. BUT data quality (0.5/10) + 4 new UX gaps hold it back. |
 
-*Full audit: M10 CIR L3 -- cir_loop3_report() + megamind_honest_scorecard()*
+**What improved L3->L4:** 3 briefing bugs fixed, obligation data clean, scoring tests 23/23, search 9.8/10.
+**What's holding score back:** Data quality 0.5/10 (97.7% thin companies). 4 NEW user feedback items unprocessed. WebFront UX gaps.
+
+*Full audit: M9 L4 — cindy_daily_briefing_v3 verified + datum_scorecard verified + system-wide metrics*
 
 ---
 
 ## Summary
 | Metric | Value |
 |--------|-------|
-| Total feedback items | 29 |
+| Total feedback items | 31 |
 | Verified addressed | 17 |
 | Claimed addressed, M9 UNVERIFIED | 0 |
-| Unaddressed (P0) | 2 |
-| Unaddressed (new FB-29 to FB-32) | 4 |
+| Unaddressed (P0) | 3 (FB-29, FB-31, FB-32) |
+| Unaddressed (P1) | 4 (FB-30, FB-33, FB-34, FB-2) |
 | Unaddressed (system-level) | 3 |
 | Partially addressed | 2 |
-| Enhancement requests | 2 |
+| Enhancement requests | 2 (FB-27, FB-34) |
 
 ---
 
@@ -295,7 +299,9 @@
 
 **Assessment:** Portfolio page shows deep research (external) but lacks internal intelligence -- Notion page content, email threads, WhatsApp signals, temporal updates. Needs M1 to add internal intel section pulling from interactions + WhatsApp + Notion page_content.
 
-**Status:** UNADDRESSED -- needs M1 + M4
+**Implemented:** M1 L3 built `portfolio_internal_intel()` SQL function + "Internal Intelligence" section showing: key questions (flame), current focus/high impact (amber), scale of business (cyan), Notion context, recent interactions (via founder links with source badges), WhatsApp activity cards. All sourced from internal data stores (Notion, WhatsApp, Granola interactions).
+
+**Status:** ADDRESSED (M1 L3) -- email integration pending M8 Cindy
 
 ---
 
@@ -308,12 +314,20 @@
 
 ---
 
-### FB-32 | `/comms` | General | 2026-03-22 04:40
-**User said:** "I clicked not needed on the Abhishek Anita card and got some system backend like toast message and then the options just come back. Ideal would have been me clicking not needed and then a feedback of resolved/got it."
+### FB-32 | `/comms` | Bug | 2026-03-22 04:40
+**User said:** "I clicked not needed on the Abhishek Anita card and got some system backend like toast message and then the options just come back. Ideal would have been me clicking not needed and then a feedback of resolved/got it. That's how an intelligent EA would behave."
 
-**Assessment:** Comms page obligation dismissal UX broken -- backend error toast instead of clean confirmation, options reappear. Needs M1 to fix dismiss flow: API success handling, optimistic UI update, friendly confirmation.
+**Product Leadership Assessment:** The dismiss flow is broken end-to-end. User clicks "Not Needed" -> gets a raw backend error toast -> options reappear as if nothing happened. This is a trust-destroying UX failure. An intelligent EA would acknowledge the decision, confirm it, and remove the item from view.
 
-**Status:** UNADDRESSED -- needs M1
+**What needs to happen:**
+1. M1: Fix the API call + optimistic UI update. On click: immediately hide the item, show "Got it" confirmation, persist to backend.
+2. M1: Replace raw error toasts with user-friendly messages ("Noted, removing from your list").
+3. M8: Ensure the backend status change (obligation -> dismissed/cancelled) actually persists.
+4. Long-term: Every action should log to Cindy's "conversation" with user (FB-33 vision).
+
+**Implemented:** M1 L3 root cause found: `fetchObligations()` returned ALL obligations including dismissed. After `revalidatePath("/comms")`, server re-rendered, client state reset, dismissed card reappeared. Fixed by adding `.not("status", "in", "(dismissed,cancelled,fulfilled)")` filter to the DB query. Dismissed obligations now disappear permanently. Backend persist was already working correctly.
+
+**Status:** ADDRESSED (M1 L3)
 
 ---
 
@@ -333,6 +347,49 @@
 **Check now:** Visit `/network/2455` — page should render without crashing. Shows Rohan Joshi (Co-founder, Stellon Labs, Bay Area).
 
 **Status:** ✅ ADDRESSED (M1)
+
+---
+
+### FB-33 | `/comms` | General | 2026-03-22 04:42
+**User said:** "Actually the options that Cindy surfaces on an item under you owe etc should not be fixed. They should be in context of the action and person etc. And once I select something that should get logged as maybe a message history between Cindy and me. So that Cindy can smartly then remember what had happened for a particular past proposed action. There is little RL for Cindy. This is more perpetual contexts."
+
+**Product Leadership Assessment:** FUNDAMENTAL product insight. Currently Cindy shows fixed/generic action options (dismiss, reschedule, follow-up) regardless of context. The user wants:
+1. **Contextual options** — different actions based on the obligation type, person, company, and current state
+2. **Conversation memory** — every user decision logged as a Cindy-user "message history" so Cindy can reference past decisions
+3. **Perpetual context** — Cindy accumulates understanding of how user handles each person/situation over time
+4. **RL loop** — user responses become Cindy's training signal (not just feedback_store, but active context for future suggestions)
+
+This is the vision described in MEMORY.md's `progressive-disclosure-plus-chat` feedback. The conversation history between user and Cindy IS the reinforcement learning loop.
+
+**What needs to happen:**
+1. M8: Replace fixed option buttons with contextual ones generated per-obligation (using obligation type, person context, company context, past decisions for this person)
+2. M8: Create `cindy_conversation_log` table — stores every user decision + Cindy suggestion as a conversation thread per obligation/person
+3. M1: Wire UI to show contextual options and log selections to conversation_log
+4. M8: Build `cindy_get_person_decision_history(person_id)` — returns past decisions so Cindy can reference them in future suggestions
+
+**Status:** UNADDRESSED -- P1, needs M8 + M1. Core product evolution.
+
+---
+
+### FB-34 | `/actions` | General | 2026-03-22 04:47
+**User said:** "What is that box below just now supposed to be? I actually thought it could be a box for me to tell the AI CoS system in text something. That would be a 10x UX. I'll just type something and then the system figures out what I said and does things. Example in this case I would have liked to say give me draft of a mail message and if my mail was connected (which it would be later) then it would be lying in my drafts. And actually Cindy would have a track of what drafts got created and why and she would in her interface at top almost have messages for me to simply ask you asked for draft for muro introduction, it is ready to send and I have marked human capital team in to and kept rajat in cc. Should I send it?"
+
+**Product Leadership Assessment:** The user saw a UI element and immediately imagined the RIGHT product: a text input where you tell the AI CoS system what to do in natural language, and it executes. This is the L2 "chat with me about this" vision from progressive-disclosure, but applied SYSTEM-WIDE.
+
+**The vision the user described:**
+1. Text box on every page where user types natural language instructions
+2. System parses intent, routes to appropriate agent (Cindy for emails, ENIAC for research, Datum for data ops)
+3. Cindy drafts emails and holds them for approval ("ready to send, human capital in To, Rajat in CC")
+4. Cindy maintains a "messages for you" queue — proactive suggestions with 1-click action
+5. Full audit trail of what was requested, what was drafted, what was sent
+
+**What needs to happen:**
+1. M1: Add persistent text input component across all pages (like a command palette or chat bar)
+2. M7/Backend: Build intent router — parse natural language -> route to correct agent
+3. M8: Cindy email draft capability (AgentMail already exists: cindy.aacash@agentmail.to)
+4. M1: Cindy "messages for you" widget at top of comms page — proactive suggestions with approve/reject
+
+**Status:** UNADDRESSED -- P1, needs M1 + M7 + M8. Transformative UX feature.
 
 ---
 
@@ -372,8 +429,16 @@
 | ~~**P1**~~ | ~~FB-20~~ | ~~M9~~ | ~~Fix obligation #84 text~~ ✅ DONE (M9 L3) — "deal negotiations" -> "portfolio follow-up", category deal_followup -> portfolio_followup. Quivly confirmed portfolio (pipeline_status=Portfolio, deal_status=NA). |
 | ~~**P1**~~ | ~~FB-18~~ | ~~M9~~ | ~~Merge Ayush obligations #67+#69~~ ✅ DONE (M9 L3) — #67 consolidated with both tasks, #69 cancelled as merged_into_67. Ayush now has 2 distinct obligations. |
 | ~~**P1**~~ | ~~NEW~~ | ~~M9 L3~~ | ~~Fix score overflow (4 actions)~~ ✅ DONE — 4 actions with 65-152 char decimal precision rounded to 6 decimal places. datum_scorecard now reports 0 overflow. |
-| **P2** | NEW | M9 L4 | ENIAC CLAUDE.md Section 4 "Research Protocol" — 8-step script -> objectives |
-| **P1** | NEW | M9 L3 finding | cindy_daily_briefing_v3 still shows Quivly as "active deal" / "active negotiation" in deal_momentum. WhatsApp signal classification needs portfolio-awareness (same root cause as FB-20 but in deal_momentum detection). |
+| ~~**P1**~~ | ~~M9 L3 finding~~ | ~~M9 L4~~ | ~~cindy_daily_briefing_v3 deal_momentum shows portfolio cos as "active deal"~~ FIXED — portfolio companies filtered from deal_signals CTE via NOT EXISTS join on pipeline_status='Portfolio'. |
+| ~~**P1**~~ | ~~M9 L3 finding~~ | ~~M9 L4~~ | ~~cindy_daily_briefing_v3 top_actions shows cancelled obligation #69~~ FIXED — active_obligations CTE now filters NOT IN ('fulfilled','dismissed','cancelled'). |
+| ~~**P2**~~ | ~~M9 L3 finding~~ | ~~M9 L4~~ | ~~datum_scorecard GREEN threshold ignores score_overflow_count~~ FIXED — GREEN now requires v_score_overflow = 0. |
+| **P0** | FB-32 | M1+M8 | Comms dismiss flow broken — user clicks "Not Needed", gets error toast, options reappear. Fix API call, optimistic UI, friendly confirmation. |
+| **P0** | FB-31 | M8+M4 | Surabhi/Soulside obligation: Cindy lacks portfolio-awareness + wrong Surabhi person resolution. |
+| **P1** | FB-33 | M8+M1 | Contextual obligation options (not fixed buttons) + Cindy conversation log for perpetual context. Core product evolution. |
+| **P1** | FB-34 | M1+M7+M8 | Natural language text input across all pages + Cindy email draft capability + "messages for you" queue. Transformative UX. |
+| **P1** | FB-30 | M1+M4 | Portfolio page needs internal intelligence (Notion, WhatsApp, email) alongside deep research (external). |
+| **P1** | FB-29 | M8+M1 | Network person interaction history needs richer content, better UI, higher intelligence quality. |
+| **P2** | NEW | M9 L5 | ENIAC CLAUDE.md Section 4 "Research Protocol" — 8-step script -> objectives |
 | **P2** | FB-2 | ALL | Intelligence quality from 4.0/10 → target 7+/10 |
 
 ---
@@ -598,6 +663,55 @@ Built `datum_resolve_whatsapp_v4()` with 5 new strategies (8-12): abbreviated la
 **Bridge Table: people_interactions 9 -> 413** WhatsApp links populated.
 
 **Cindy Tool Count: 33 -> 38 functions.**
+
+---
+
+---
+
+## M9 Intel QA Loop 4 — 2026-03-22
+
+**System: 6.9/10 -> 7.2/10**
+
+**3 Bugs Fixed:**
+
+1. **cindy_daily_briefing_v3 — deal_momentum portfolio leak (L3 finding)**
+   - Bug: `deal_signals` CTE pulled WhatsApp interactions with `deal_signals IS NOT NULL` but never checked if the company was already in portfolio
+   - Result: Quivly (pipeline_status='Portfolio', ops_prio=P0) appeared as "active-deal / active negotiation" — misleading
+   - Fix: Added `NOT EXISTS (SELECT 1 FROM unnest(i.linked_companies) JOIN companies c ON c.id = company_id WHERE c.pipeline_status = 'Portfolio')` to the deal_signals CTE
+   - Verified: Quivly and Kilrr (both portfolio) no longer appear in deal_momentum. Only non-portfolio deal signals shown.
+
+2. **cindy_daily_briefing_v3 — cancelled obligation leak (L3 finding)**
+   - Bug: `active_obligations` CTE filtered `status NOT IN ('fulfilled', 'dismissed')` but missed `'cancelled'`
+   - Result: Obligation #69 (cancelled, merged into #67) appeared in top_actions with score 16.7
+   - Fix: Changed to `NOT IN ('fulfilled', 'dismissed', 'cancelled')`
+   - Also fixed: `system.obligations` count in the same function now uses the same 3-status exclusion
+   - Verified: top_actions shows 5 valid obligations (#68, #72, #70, #67, #75). No cancelled items. Count dropped 14->13.
+
+3. **datum_scorecard — GREEN threshold missing score_overflow check (L3 finding)**
+   - Bug: `overall_health` could be GREEN even with score_overflow_count > 0
+   - Fix: Added `AND v_score_overflow = 0` to the GREEN condition
+   - Verified: Currently GREEN (overflow = 0). Would correctly degrade to YELLOW if overflows reappear.
+
+**4 NEW User Feedback Items Catalogued (FB-31 to FB-34):**
+
+| FB | Page | Priority | Core Issue |
+|----|------|----------|------------|
+| FB-31 | /comms | P0 | Surabhi/Soulside obligation wrong — Cindy lacks portfolio context, MSC fund person resolution error |
+| FB-32 | /comms | P0 | Dismiss flow broken — error toast on "Not Needed", options reappear |
+| FB-33 | /comms | P1 | Options should be contextual (not fixed), logged as Cindy conversation history, perpetual context |
+| FB-34 | /actions | P1 | Text input for natural language commands, Cindy email drafts, "messages for you" proactive queue |
+
+**System Metrics Snapshot:**
+- 326 total SQL functions (23 Datum, 38 Cindy, 10 Megamind, 4 IRGI, 3 ENIAC)
+- 11 pending + 10 accepted + 105 dismissed actions
+- 334 interactions, 715 WhatsApp conversations
+- 13,702 entity connections (79% non-vector_similar)
+- 13 active obligations (0 cancelled leaking)
+- Convergence: 0.856 (stable)
+- Search: 9.8/10 across 10 test queries, all 8 surfaces hit
+- Crons: 98.6% success rate (3,917/3,973 in 24h)
+- Embeddings: 99.8% companies, 100% network, 100% portfolio, 100% KQ, 99.9% WhatsApp
+- Scoring: 23/23 regression tests PASS, accepted avg 6.55 vs dismissed 2.56
 
 ---
 

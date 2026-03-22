@@ -221,6 +221,25 @@ All callable via `psql $DATABASE_URL -c "SELECT function_name(args)"`.
 | `megamind_score_obligations()` | TABLE | Scores ALL open obligations with 5-component strategic priority (urgency, relationship_depth, portfolio_weight, deal_timing, fund_impact). Sets megamind_priority which auto-updates blended_priority (generated column: 0.6*cindy + 0.4*megamind). |
 | `megamind_honest_scorecard()` | jsonb | Honest system scorecard across 8 dimensions (data quality, connections, intelligence, convergence, obligations, scoring, cron, embeddings). No inflation. |
 
+### Morning Context & System Reports
+
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `megamind_morning_strategic_context(p_date)` | jsonb | Morning dashboard context: headline (convergence, red_portfolio_count, auto_handled_7d), todays_key_decision, strategic_risks (18 red companies), contradictions_summary (37 total, top HIGH), deal_momentum, top_obligation, convergence_insight. Used by WebFront home page. |
+| `megamind_system_report()` | jsonb | Full system report for /strategy page. |
+| `megamind_strategic_contradiction_detector()` | jsonb | Detects contradictions across portfolio: health_vs_followon, high_ownership_silent, score_vs_user_decision, cindy_vs_megamind, active_deal_no_actions, thesis_conviction_stale, expired_fumes. Returns by_type, by_severity, total_found, and full contradiction list. |
+| `cindy_system_report()` | jsonb | Cindy system report for /strategy page. |
+
+### Agent Task Thread RPCs
+
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `agent_task_list(p_agent, p_status)` | TABLE | List tasks for an agent. Status: 'all', 'pending', 'processing', 'needs_input', 'done'. |
+| `agent_task_thread(p_task_id)` | TABLE | Get all messages for a task thread. |
+| `agent_task_create(p_agent, p_user_input, p_context)` | TABLE | Create a new task + initial user message. Returns task row. |
+| `agent_task_respond(p_task_id, p_message_id, p_response)` | TABLE | Respond to a task message. Stores response jsonb on the message. |
+| `megamind_task_auto_process(p_task_id)` | jsonb | Auto-processes a pending Megamind task: loads strategic context, posts context message + confirmation message. Returns {success, task_id, task_type, status, messages_posted, message_ids}. |
+
 ### Cascade & Convergence
 
 | Function | Returns | Purpose |

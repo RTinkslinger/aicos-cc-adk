@@ -1015,3 +1015,96 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 **Changes:** `scripts/whatsapp_sync.sh` (new — wrapper pipeline with lock file, log rotation, staleness check), `scripts/whatsapp_ingest.py` (fixed REST API upsert: added `on_conflict=jid` to URL), `.env.local` (added SUPABASE_URL + SUPABASE_SECRET_KEY), `~/Library/LaunchAgents/com.aicos.whatsapp-sync.plist` (new — 15-min launchd agent)
 **Context:** WhatsApp data was manual-only (no cron, no launchd). Now automated: WhatsApp Desktop auto-starts on boot (Login Items), launchd runs extract+ingest every 900s, incremental mode means each run takes seconds. Supabase `sb_secret_` key format works with REST API. Fixed `on_conflict=jid` (was hitting `chat_name` unique constraint instead). Test run: 712 conversations upserted, 0 failures.
 ---
+
+### Iteration 35 - 2026-03-22
+**What:** Massive machine loop session — 31+ loops across 9 machines, system 5.2→7.4/10, agent thread architecture designed + built
+**Changes:**
+- `mcp-servers/agents/cindy/CLAUDE.md` (rewritten 1004→224 lines, objective-driven by M9)
+- `mcp-servers/agents/content/CLAUDE.md` (rewritten 632→189 lines, objective-driven by M9)
+- `mcp-servers/agents/megamind/CLAUDE.md` (+10 new functions, thread RPCs)
+- `mcp-servers/agents/eniac/CLAUDE.md` (search skill updates, company_holistic_search)
+- `mcp-servers/agents/skills/scoring/scoring-model.md` (v5.5-M5L12)
+- `mcp-servers/agents/skills/eniac/eniac-search.md` (8 surfaces, holistic search docs)
+- `scripts/whatsapp_sync.sh` (new — 15-min automation)
+- `scripts/whatsapp_ingest.py` (on_conflict=jid fix)
+- `docs/superpowers/specs/2026-03-22-agent-thread-ui-contract.md` (new — thread UI architecture)
+- `docs/FEEDBACK-TRACKER-LIVE.md` (continuously updated by all machines)
+- `docs/feedback-timeline-2026-03-22.md` (new — 37 feedback items captured)
+- `docs/audits/2026-03-22-*.md` (4 audit reports)
+- `sql/m5-scoring-multiplicative-model.sql` (v5.5 docs)
+- `aicos-digests/` (9+ deploys to digest.wiki — morning dashboard, deep research, internal intelligence, relationship intelligence, strategic context, thesis linking, dismiss UX, feedback widget context)
+
+**Supabase (40+ new SQL functions):**
+- M4: portfolio_founders(), portfolio_people_classified(), portfolio_investors(), datum_semantic_thesis_match(), datum_similar_companies(), datum_resolve_whatsapp_v3/v4/v5(), datum_create_missing_network_from_whatsapp(), datum_company_enrichment_scorecard(), datum_cross_enrich_companies_v2()
+- M5: compute_user_priority_score() v5.4→v5.5 (precision ROUND, network P0/P1/P2, obligation gate fix), explain_score() v5.4 sync, scoring_regression_test() +1 test
+- M6: search_whatsapp(), whatsapp_person_conversations(), person_holistic_search(), company_holistic_search(), search_disambiguation(), agent_search_for_task()
+- M7: megamind_convergence_opportunities(), megamind_action_routing(), megamind_daily_priorities(), megamind_morning_strategic_context(), megamind_strategic_contradiction_detector(), megamind_score_obligations(), megamind_route_to_agent(), megamind_honest_scorecard(), megamind_task_create/list/thread/respond/auto_process/post_message()
+- M8: cindy_whatsapp_resolve_participants(), cindy_whatsapp_activity_signals(), cindy_whatsapp_search(), cindy_whatsapp_person_context(), cindy_whatsapp_relationship_depth(), cindy_whatsapp_channel_enrichment(), cindy_bridge_whatsapp_to_interactions(), cindy_resolve_whatsapp_v2(), cindy_recalculate_obligation_priorities(), cindy_relationship_intelligence()
+- M10: cir_enrich_connection_evidence(), cir_loop3_report()
+- M1: portfolio_intelligence_report() updated, portfolio_internal_intel() new
+- Shared: agent_tasks + agent_task_messages tables (thread infrastructure)
+
+**Key metrics this session:**
+- System: 5.2/10 → 7.4/10 (M9 honest)
+- Interactions: 23 → 334 (14.5x)
+- WhatsApp resolved: 138 (35.8%) → 294 (76.2%)
+- Thesis-linked: 853 (18.7%) → 4,560 (99.8%)
+- Convergence: 0.800 → 0.904
+- Scoring: v5.3 → v5.5 (8.0/10, 23/23 tests)
+- Search: 7 → 8 surfaces (9.7/10)
+- Connections: 23,716 → 13,702 (-42%), multi-evidence 15 → 660
+- P0 bugs: 3 → 0 (all deployed)
+- Feedback: 19 → 37 items (widget now card-level aware)
+- WebFront: 9+ deploys (morning dashboard, deep research, internal intel, relationship intel, strategic context, thesis linking, feedback widget context)
+- Agent deploy: deploy.sh synced all rewrites to droplet
+- 31+ loops across 9 machines, 5 machines still running when session paused
+
+**Decisions:**
+- Agent thread UI contract: agents define WHAT (typed messages), M1 defines HOW (rendering). Single codebase for all agent tabs.
+- WhatsApp automation: 15-min launchd, WhatsApp Desktop in Login Items
+- Agent CLAUDE.md = objectives not scripts (enforced by M9 rewrites)
+- Feedback widget wired card-level (item_id, item_type, section populated)
+---
+
+### Iteration 36 - 2026-03-22
+**What:** Continued session — stabilization wave, 45+ loops total, system 5.2→8.0/10, agent thread architecture E2E tested, mobile nav fixed, deploy to droplet
+**Changes:**
+- `aicos-digests/src/components/BottomNav.tsx` (mobile nav: 6 tabs — Home, Actions, Portfolio, Cindy→/comms, Datum, Megamind→/strategy)
+- `aicos-digests/src/app/cindy/` (thread-only route for desktop, mobile uses /comms)
+- `aicos-digests/src/app/megamind/` (thread-only route for desktop, mobile uses /strategy)
+- `aicos-digests/src/app/datum/` (task interface with ThreadView)
+- `mcp-servers/agents/cindy/CLAUDE.md` (updated function inventory)
+- `mcp-servers/agents/megamind/CLAUDE.md` (updated function inventory, +3 thread RPCs)
+- `docs/feedback-timeline-2026-03-22.md` (37 feedback items, 22 patterns documented)
+- `docs/FEEDBACK-TRACKER-LIVE.md` (continuously updated by all machines)
+- `scripts/whatsapp_sync.sh` + launchd plist (WhatsApp 15-min automation)
+- Deploy to droplet via `deploy.sh` (all agent CLAUDE.md + skills synced)
+- Memory files: mobile-first testing, two feedback types, datum tab design, no-sql-reasoning-threads, dont-ask-just-route
+
+**Key metrics (session totals, continued from Iteration 35):**
+- Total loops: 45+ across 9 machines (stabilization wave in progress)
+- System: 5.2→8.0/10 (M9 honest)
+- Convergence: 0.800→0.904 (crossed 0.90 target)
+- Interactions: 23→442 (19.2x)
+- WhatsApp named resolution: 138 (35.8%)→302 (99.7%)
+- Thesis-linked: 853 (18.7%)→4,560 (99.8%)
+- Connections: 23,716→13,702 (-42%), multi-evidence 15→660 (44x)
+- Companies: 4,567→4,651 (+84 created from research files)
+- Scoring: v5.3→v5.5, 8.7/10, 23/23 tests
+- Search: 7→8 surfaces, 9.7/10, 46/46 benchmark
+- Thread RPCs: 18 built (Datum 7, Cindy 5, Megamind 6), 28/28 E2E tests pass
+- WebFront deploys: 14+ to digest.wiki
+- Feedback: 19→37 items, feedback widget card-level aware
+- Agent CLAUDE.md: Cindy 1004→224, Content 632→189 (scripts→objectives)
+- All agent files deployed to droplet via deploy.sh
+
+**Decisions:**
+- Mobile bottom nav: 6 tabs (Home/Actions/Portfolio/Cindy/Datum/Megamind). Cindy→/comms, Megamind→/strategy (preserves rich content)
+- Datum tab: 2 sections only — data gap threads (agent-initiated) + task assignment (user-initiated, async, file/photo attachments)
+- Two feedback types: explicit (widget, about product) vs implicit (agent interactions, RL signal for machines)
+- SQL auto_process functions are TOOLS for agents, not reasoning engines. Persistent agents on droplet do the reasoning.
+- User tests on mobile first. Never suggest cache workarounds — verify deploy and fix.
+- Don't ask permission to route feedback — just do it.
+
+**Stabilization wave (in progress):** M7 verified (22 functions, /strategy content, fresh briefing), M10 verified (100% embeddings, 27/27 crons, grade A). M1/M4/M5/M8/M9 still running stabilization loops. Megamind CLAUDE.md updated to 381 lines with 10 new function entries.
+---

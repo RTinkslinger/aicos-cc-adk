@@ -11,11 +11,68 @@
 
 Claude Agent SDK agents (ENIAC, Datum, Cindy, Megamind) do ALL intelligence work — reasoning, scoring, risk assessment, strategic analysis, obligation prioritization, intelligence generation. They use Claude model power with full context, tools, skills, MCPs.
 
-SQL functions = simple data access TOOLS that agents call (fetch, aggregate, join, store results). Python scripts = plumbing (lifecycle.py, deploy.sh, systemd, cron, data movement). WebFront renders AGENT OUTPUT stored in DB, not raw SQL function results.
-
-**Test:** If you're about to write SQL that "scores", "assesses", "recommends", "detects", or "predicts" — STOP. That logic belongs in an agent. The existing SQL functions are ENABLERS — inputs that agents reason about.
-
 **Agent architecture:** Agents are PERSISTENT Claude Agent SDK ClaudeSDKClient processes on the droplet. NOT ephemeral. NOT Python scripts with API calls. They REASON about how to achieve objectives, not follow step-by-step scripts.
+
+**Test:** If you're about to write SQL that "scores", "assesses", "recommends", "detects", or "predicts" — STOP. That logic belongs in an agent.
+
+### 1a-i. THE DATA FLOW (HARDCODED — violated 100+ times, NEVER AGAIN)
+
+```
+RAW DATA TABLES (SQL, maintained by data pipelines + Datum agent):
+  companies, network, portfolio, thesis_threads, whatsapp_conversations,
+  content_digests, actions_queue, user_feedback_store, agent_tasks
+
+          ↓ agents READ raw data using SQL tools (simple SELECT/JOIN)
+
+PERSISTENT AGENTS REASON (Claude Agent SDK on droplet):
+  Datum: identity resolution, data quality, enrichment
+  Cindy: obligation detection, relationship intelligence, communication analysis
+  Megamind: strategic reasoning, portfolio risk, action routing
+  ENIAC: thesis research, content analysis, evidence gathering
+
+          ↓ agents WRITE intelligence outputs to DB tables
+
+AGENT OUTPUT TABLES (written by agents, read by WebFront):
+  - Cindy writes: obligations, relationship_momentum, daily_briefings, deal_signals
+  - Megamind writes: strategic_briefings, contradiction_analysis, convergence_data
+  - ENIAC writes: research_findings, thesis_evidence, content_digests
+  - Datum writes: interactions, resolved identities, enriched profiles
+
+          ↓ WebFront does SIMPLE SELECT from agent output tables
+
+WEBFRONT (digest.wiki):
+  - Reads agent outputs with simple queries (SELECT, JOIN, ORDER BY)
+  - Light SQL views can FORMAT (sort, paginate, join) but NEVER generate intelligence
+  - Renders what agents PRODUCED, not what SQL computed on the fly
+```
+
+**What SQL can do:**
+- Read/write raw data tables (INSERT, UPDATE, SELECT, JOIN)
+- Search infrastructure (FTS, vector similarity, balanced_search — retrieval, not reasoning)
+- Deterministic computation (scoring FORMULA execution — agent designs formula, SQL runs it)
+- Formatting views (sort, paginate, join agent outputs for WebFront display)
+- Utility functions (fuzzy match, embedding similarity — tools agents call)
+
+**What SQL CANNOT do:**
+- Generate briefings, reports, or intelligence summaries
+- Detect obligations, risks, or signals from interactions
+- Reason about relationships, priorities, or strategic implications
+- Classify, disambiguate, or make inference-based decisions
+- Create any content, JSON, or information that requires JUDGMENT
+
+**Scoring exception (hybrid):** The scoring FORMULA (18 multipliers, weights) is designed by the M5 machine and executed as SQL (deterministic math). But agents can OVERRIDE scores with contextual reasoning for edge cases. Agent designs formula → SQL executes → agent reviews/overrides.
+
+**Search exception:** Search infrastructure (FTS, vector similarity, multi-surface search) is legitimate SQL. But disambiguation ("which Ashwin is the right one?") is agent reasoning. WebFront search uses SQL infra directly. Agents use search as a TOOL and reason about results.
+
+**Lifecycle trigger chain:**
+```
+WhatsApp upsert detected → lifecycle.py triggers Datum agent
+  → Datum resolves identities, creates interactions
+    → interactions table updated → lifecycle.py triggers Cindy agent
+      → Cindy reasons, writes intelligence outputs
+        → WebFront reads Cindy's outputs on next page load
+```
+Event-driven (pg_notify) for high-priority changes. Polling for batch operations.
 
 ### 1a-ii. HOW AGENTS ARE BUILT (HARDCODED — violated 100+ times)
 
@@ -127,21 +184,40 @@ Machine self-grades are meaningless. System reported 9.6/10 while user experienc
 
 ## 2. THE MACHINE LIST
 
-### Permanent Machines (perpetual evolution)
+### Permanent Machines (perpetual evolution) — v3
 
-| Machine | What It BUILDS/IMPROVES | What Runs AUTONOMOUSLY |
-|---------|------------------------|----------------------|
-| **M1 WebFront** | digest.wiki Next.js frontend | Deployed site on Vercel |
-| **M4 Datum** | Datum agent (Agent SDK) — code, skills, tools | Datum on droplet — autonomous data ops |
-| **M5 Scoring** | Scoring infrastructure (SQL tools for agents) | Scoring functions called by agents |
-| **M6 IRGI** | Intelligence retrieval infrastructure | IRGI functions used by ENIAC agent |
-| **M7 Megamind** | Megamind agent (Agent SDK) — CO-STRATEGIST across EVERYTHING | Megamind on droplet — autonomous strategy |
-| **M8 Cindy** | Cindy agent (Agent SDK) — EA intelligence | Cindy on droplet — autonomous EA |
-| **M9 Intel QA** | Quality auditing across all machines | Continuous quality gate |
-| **M10 CIR** | Nervous system (triggers, propagation, health) | CIR in Postgres (triggers, crons, queues) |
-| **M11 Obligations** | Obligation tracking infrastructure | Obligation system used by Cindy |
-| **M12 Data Enrichment** | Data quality + enrichment → then Datum ongoing | Enriched data feeds all machines |
-| **M-Backend** | Backend infra OUTSIDE Agent SDK (Python, deploy, systemd, cron) | Deployment pipeline, infra on droplet |
+**Agent Machines (4)** — each builds/improves ONE persistent agent:
+
+| Machine | Agent It Builds | What Agent Does Autonomously |
+|---------|----------------|------------------------------|
+| **M4 Datum** | Datum agent — skills, tools, CLAUDE.md, hooks, subagents | Autonomous data ops on droplet |
+| **M7 Megamind** | Megamind agent — co-strategist reasoning | Autonomous strategic analysis on droplet |
+| **M8 Cindy** | Cindy agent — EA intelligence | Autonomous comms/obligations on droplet |
+| **M-ENIAC** | ENIAC agent — research analyst | Autonomous thesis/company research on droplet |
+
+**Infrastructure Machines (7)** — continuous system improvement:
+
+| Machine | What It Builds/Improves |
+|---------|------------------------|
+| **M1 WebFront** | digest.wiki Next.js frontend (mobile-first, renders agent output) |
+| **M5 Scoring** | Scoring model + infrastructure (SQL tools FOR agents) |
+| **M6 IRGI** | Search, retrieval, intelligence infrastructure |
+| **M9 Intel QA** | Honest quality auditing across all machines |
+| **M10 CIR** | Embeddings, connections, triggers, crons, system health |
+| **M12 Data Enrichment** | Entity enrichment (queues work for Datum agent) |
+| **M-FEEDBACK** | Analyzes WebFront feedback with product org specialists, routes to machines |
+
+**Feedback routing:**
+
+| Source | Handler | Routes To |
+|--------|---------|-----------|
+| CC chat (user → CC) | CC Orchestrator | Relevant machines directly |
+| WebFront feedback widget | M-FEEDBACK (product org agents) | Decomposed tasks → relevant machines |
+| Agent interactions (implicit) | Each agent's conversation log | Agent's own machine + M5 scoring signal |
+
+**Why M-FEEDBACK exists:** User's WebFront feedback is about the FINAL EXPERIENCE — touches UI + intelligence + data + scoring + agents simultaneously. "This looks wrong" decomposes into: UI issue (→M1), data gap (→M4/M12), scoring bug (→M5), intelligence failure (→agent machines). A product org specialist team (PM, UX Researcher, Data Analyst, Engineering Lead) does this decomposition properly. CC orchestrator handles direct user inputs only.
+
+**Full machine registry with pending work:** `docs/source-of-truth/MACHINE-REGISTRY.md`
 
 ### Temp Machines (one-time outcome, dissolve when done)
 

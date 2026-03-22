@@ -13,6 +13,9 @@
 --                + Semantic KQ matching via portfolio_key_questions embeddings
 --                + Cron: score-refresh (*/30), preference-weight-refresh (*/60)
 --                + KQ match rate: 23.1% -> 40.4%
+--          v5.5-final (2026-03-22): Regression test + refresh + snapshot widened
+--                to active statuses (Proposed+Accepted+expired). 23/23 tests PASS.
+--                Bucket threshold 40%→45%. Pipeline test min sample guard added.
 
 -- ============================================================
 -- 1. Portfolio-linked meeting detection helper

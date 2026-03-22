@@ -127,17 +127,19 @@ You process interactions from four surfaces. Load the corresponding skill for de
 
 ---
 
-## 6. SQL Intelligence Functions (38 functions)
+## 6. SQL Intelligence Functions (46 functions)
 
 Load the corresponding skill file for usage patterns. All called via `psql $DATABASE_URL`.
 
 | Category | Functions | Skill |
 |----------|-----------|-------|
-| Obligation Management (10) | `cindy_obligation_full_context`, `generate_obligation_suggestions`, `obligation_staleness_audit`, `obligation_batch_action`, `obligation_health_summary`, `obligation_fulfillment_rate`, `obligation_urgency_multiplier`, `obligation_deliverable_phrase`, `cindy_obligation_key_question_link`, `cindy_obligation_kq_fts_match` | `skills/cindy/obligation-triage.md` |
+| Obligation Management (14) | `cindy_obligation_full_context`, `cindy_obligation_auto_generator_v2` (fetch/process/mark_processed modes), `cindy_obligation_portfolio_enricher`, `cindy_recalculate_obligation_priorities`, `cindy_deal_obligation_generator`, `cindy_obligation_key_question_link`, `cindy_obligation_kq_fts_match`, `cindy_conversation_log` (log/history_person/history_obligation/recent/patterns modes) | `skills/cindy/obligation-triage.md` |
+| Task System (5) | `cindy_task_create`, `cindy_task_list`, `cindy_task_thread`, `cindy_task_respond`, `cindy_task_auto_process` | (Datum-tab communication channel) |
 | Interaction Analysis (5) | `cindy_interaction_pattern_data`, `cindy_interaction_kq_intelligence`, `cindy_cross_source_reasoning`, `cindy_interaction_threads`, `cindy_kq_update_proposals` | `skills/cindy/interaction-analysis.md` |
 | EA Briefing (7) | `cindy_daily_briefing_v3`, `cindy_outreach_priorities`, `cindy_relationship_momentum`, `cindy_deal_velocity`, `cindy_autonomous_ea_dashboard`, `cindy_companies_needing_attention`, `cindy_relationship_intelligence` | `skills/cindy/ea-briefing.md` |
-| Person Intelligence (7) | `cindy_person_intelligence`, `person_communication_profile`, `cindy_draft_nudge_message`, `cindy_resolution_gaps`, `cindy_resolve_with_company_context`, `cindy_cross_link_people_interactions`, `cindy_network_creation_suggestions` | `skills/cindy/person-intelligence.md` |
-| WhatsApp (4) | `cindy_whatsapp_search`, `cindy_whatsapp_person_context`, `cindy_whatsapp_relationship_depth`, `cindy_whatsapp_channel_enrichment` | `skills/cindy/whatsapp-parsing.md` |
+| Person Intelligence (7) | `cindy_person_intelligence`, `cindy_draft_nudge_message`, `cindy_resolution_gaps`, `cindy_resolve_with_company_context`, `cindy_cross_link_people_interactions`, `cindy_network_creation_suggestions`, `cindy_resolve_whatsapp_v2` | `skills/cindy/person-intelligence.md` |
+| WhatsApp (7) | `cindy_whatsapp_search`, `cindy_whatsapp_person_context`, `cindy_whatsapp_relationship_depth`, `cindy_whatsapp_channel_enrichment`, `cindy_whatsapp_activity_signals`, `cindy_whatsapp_resolve_participants`, `cindy_bridge_whatsapp_to_interactions` | `skills/cindy/whatsapp-parsing.md` |
+| Resolution (1) | `cindy_resolve_whatsapp_safe` | `skills/cindy/people-linking.md` |
 | System & Quality (5) | `cindy_agent_full_context`, `cindy_agent_skill_registry`, `cindy_system_report`, `cindy_data_quality_check`, `cindy_intelligence_multiplier` | (utility — no separate skill) |
 
 ---

@@ -54,7 +54,7 @@ Run maintenance functions regularly. Detect and handle garbage, staleness, drift
 ### Web Tools MCP (localhost:8001)
 `web_browse`, `web_scrape`, `web_search`, `fingerprint`, `check_strategy`, `manage_session`, `validate`
 
-### SQL Tool Functions (23 tools in Postgres)
+### SQL Tool Functions (38 tools in Postgres)
 Call via `psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOUR tools — they do heavy lifting inside Postgres.
 
 **Maintenance (6):**
@@ -109,6 +109,37 @@ Call via `psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOU
 |----------|---------|---------|
 | `datum_scorecard()` | Concise JSON scorecard — companies, network, portfolio, actions, graph, queue, quality metrics with overall RED/YELLOW/GREEN health | JSON object |
 
+**Thread-Based Task System (7):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_task_create(user_input, context)` | Creates a task with auto-classification (merge/identity_resolution/data_update/enrichment/investigation) and initial status_update message | `{task_id, task_type, status, summary}` |
+| `datum_task_auto_process(task_id)` | Processes a task: entity matching, candidate cards, merge confirmations. Populates the thread with actionable messages. | `{status, message_id, match_count}` |
+| `datum_task_respond(task_id, message_id, response)` | Handles user response (approve/reject/select/reply). Executes merges/updates on approval. | `{status, next_message_id}` |
+| `datum_task_list(status, agent, limit)` | Lists tasks filtered by status ('all', 'needs_input', 'processing', 'done'). Default agent='datum'. | Task rows with message_count and last_activity |
+| `datum_task_thread(task_id)` | Returns all messages in a task thread, ordered chronologically | Message rows |
+| `datum_task_execute_merge(task_id, msg_content, response)` | Executes entity merge (company or person). Called by datum_task_respond on merge approval. | void |
+| `datum_task_execute_update(task_id, msg_content, response)` | Executes field update on company/person/thesis. Called by datum_task_respond on update approval. | void |
+
+**WhatsApp Identity Resolution (3):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_resolve_whatsapp_v3()` | Resolves WhatsApp contacts to network using exact name + fuzzy + phone matching | Resolution stats |
+| `datum_resolve_whatsapp_v4()` | Improved resolver with aliases, name normalization, and higher accuracy | Resolution stats |
+| `datum_resolve_whatsapp_v5()` | Latest resolver with company-context matching and multi-surface identity stitching | Resolution stats |
+
+**Semantic Matching (3):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_semantic_thesis_match(company_id)` | Matches a company to thesis threads using embedding similarity | Thesis match results with scores |
+| `datum_semantic_thesis_match_by_name(company_name)` | Matches by company name instead of ID | Thesis match results |
+| `datum_similar_companies(company_id, limit)` | Finds similar companies using vector similarity | Similar company rows with scores |
+
+**Cross-Enrichment (2):**
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `datum_cross_enrich_companies()` | Cross-enriches companies with data from portfolio, network, and entity connections | Enrichment stats |
+| `datum_cross_enrich_companies_v2()` | V2 with improved field mapping and conflict resolution | Enrichment stats |
+
 **Quick reference — which to run when:**
 - Routine heartbeat: `datum_daily_maintenance()` (runs everything)
 - Health check: `datum_entity_health()` + `datum_data_quality_check()`
@@ -119,6 +150,9 @@ Call via `psql $DATABASE_URL -c "SELECT * FROM function_name();"`. These are YOU
 - Person lookup: `resolve_participant(name, context)`
 - Interaction processing: `resolve_interaction_participants_v2(interaction_id)`
 - Entity context: `enrich_action_context(id)` or `enrich_network_professional_context(id)`
+- User-facing data tasks: `datum_task_create()` → `datum_task_auto_process()` → `datum_task_respond()`
+- WhatsApp identity resolution: `datum_resolve_whatsapp_v5()` (latest)
+- Thesis matching: `datum_semantic_thesis_match(company_id)` or `datum_similar_companies(company_id)`
 
 ---
 

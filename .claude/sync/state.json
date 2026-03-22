@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-22T04:22:54Z"
+      "timestamp": "2026-03-22T04:23:26Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -54,6 +54,7 @@
       "scripts/whatsapp_ingest.py",
       "docs/FEEDBACK-TRACKER-LIVE.md",
       "docs/audits/2026-03-22-m9-intel-qa-loop1.md",
+      "docs/audits/2026-03-22-m9-intel-qa-loop2.md",
       "docs/feedback-timeline-2026-03-22.md",
       "logs/",
       "scripts/whatsapp_sync.sh"
@@ -79,6 +80,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-22T04:22:54Z",
+  "updated_at": "2026-03-22T04:23:26Z",
   "updated_by": "cc"
 }

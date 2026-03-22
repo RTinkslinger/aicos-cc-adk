@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-22T04:01:17Z"
+      "timestamp": "2026-03-22T04:07:51Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -51,6 +51,7 @@
     "key_files_changed_last_session": [
       "TRACES.md",
       "scripts/whatsapp_ingest.py",
+      "docs/FEEDBACK-TRACKER-LIVE.md",
       "scripts/whatsapp_sync.sh"
     ],
     "pending_inbox": []
@@ -74,6 +75,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-22T04:01:17Z",
+  "updated_at": "2026-03-22T04:07:51Z",
   "updated_by": "cc"
 }

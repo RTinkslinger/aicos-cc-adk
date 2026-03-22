@@ -62,3 +62,6 @@ Thumbs.db
 ROADMAP.md
 .claude/worktrees/
 .env.local
+
+# WhatsApp conversation data (personal, extracted from local SQLite)
+data/whatsapp/

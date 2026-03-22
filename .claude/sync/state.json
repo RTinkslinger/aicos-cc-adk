@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-22T04:29:29Z"
+      "timestamp": "2026-03-22T04:31:26Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -52,13 +52,13 @@
       "TRACES.md",
       "mcp-servers/agents/cindy/CLAUDE.md",
       "mcp-servers/agents/content/CLAUDE.md",
+      "mcp-servers/agents/eniac/CLAUDE.md",
       "mcp-servers/agents/megamind/CLAUDE.md",
+      "mcp-servers/agents/skills/eniac/eniac-search.md",
       "mcp-servers/agents/skills/scoring/scoring-model.md",
       "scripts/whatsapp_ingest.py",
-      "docs/FEEDBACK-TRACKER-LIVE.md",
-      "docs/audits/2026-03-22-m9-intel-qa-loop1.md",
-      "docs/audits/2026-03-22-m9-intel-qa-loop2.md",
-      "docs/feedback-timeline-2026-03-22.md"
+      "sql/m5-scoring-multiplicative-model.sql",
+      "docs/FEEDBACK-TRACKER-LIVE.md"
     ],
     "pending_inbox": []
   },
@@ -81,6 +81,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-22T04:29:29Z",
+  "updated_at": "2026-03-22T04:31:26Z",
   "updated_by": "cc"
 }

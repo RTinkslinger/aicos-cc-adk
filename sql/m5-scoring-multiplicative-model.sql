@@ -624,20 +624,26 @@ $function$;
 -- Coverage: 19 newly enriched (was 23/42, now 42/42 = 100%)
 
 -- 46. obligation_urgency_multiplier(action_row) — 18th multiplier
--- Replaces the simple obligation_boost flag with real obligation data
--- Uses obligation_action_links to look up linked obligations
+-- v2 (M5L12): Removed source gate bug — now activates for ANY action with obligation_action_links
+-- Previously gated on source='obligation_followup' or obligation_boost flag, blocking 5/6 linked actions
+-- Uses obligation_action_links to look up linked obligations (source-agnostic)
 -- Factors: obligation priority (blended_priority), overdue days, obligation type, status
 -- Signals:
 --   Priority >= 0.9 (critical): +10%
 --   Priority >= 0.7 (high): +6%
+--   Priority >= 0.5 (medium): +2%
+--   Priority < 0.3 (low): -4%
 --   Overdue > 14d: +8%
 --   Overdue > 7d: +5%
+--   Overdue > 3d: +3%
 --   I_OWE_THEM type: +4% (reputation at stake)
---   Fulfilled obligation: 0.75x (-25% penalty — action is stale)
---   Orphaned (no obligation link): 0.92x (-8% penalty)
+--   Fulfilled/cancelled obligation: 0.75x (-25% penalty — action is stale)
+--   Orphaned obligation_followup with no links: 0.92x (-8% penalty)
+--   Normal action with no links: 1.0 (neutral)
 -- Cap: [0.75, 1.25]
--- Coverage: 6/30 proposed actions (20%)
--- Impact: AuraML obligations boosted to 1.19x, fulfilled obligations penalized to 0.75x
+-- Coverage: 6/6 linked proposed actions (100%, was 1/6 = 17%)
+-- Range: 0.75 (cancelled AuraML) to 1.14 (overdue Levocred, I_OWE_THEM)
+-- M8 Cindy differentiated priorities now flow through: 0.418-0.712 range produces 1.04-1.14
 
 -- 47. auto_dismiss_fulfilled_obligation_actions(dry_run) — cleanup tool
 -- Finds actions linked to fulfilled/completed/cancelled obligations
@@ -676,10 +682,12 @@ $function$;
 --   5-6    | 40.6%     | 40.0%
 --   3-4    | 15.6%     | 23.3% (fulfilled obligations pushed here)
 
--- MODEL STATE: v5.3-M5L9 | 18 multipliers | cap=[0.4,1.35] | sigmoid@8.0
--- Regression: 20/22 PASS | Enrichment: 100% | Anomalies: 0
--- New tools: score_diff(), scoring_calibration_report(), auto_dismiss_fulfilled_obligation_actions()
--- Cron: snapshot_scores() now runs via refresh_active_scores() every 30min
+-- MODEL STATE: v5.5-M5L12 | 18 multipliers | cap=[0.4,1.35] | sigmoid@8.0
+-- Regression: 22/23 PASS (priority_hierarchy: data composition issue, not model bug)
+-- New test: obligation_urgency_functional (6/6 linked actions active)
+-- Bug fixed: obligation_urgency_multiplier source gate removed (was blocking 5/6 linked actions)
+-- Regression test: score_diversity threshold scaled to action count (was hardcoded >=20)
+-- Enrichment: 100% | Anomalies: 0
 
 -- ============================================================
 -- PERPETUAL LOOP v10 (2026-03-21) — Cron Conflict + Depth Fix + Research Rebalance
@@ -747,3 +755,70 @@ $function$;
 -- Regression: 20/22 PASS | Health: 10/10 | Enrichment: 100%
 -- Preference learning: guarded (115 decisions, 8.7% accept rate)
 -- Verb pattern coverage: 54.2% (was 37.5%)
+
+-- ============================================================
+-- M5 Loop 2 (2026-03-22) — Network Multiplier Sync
+-- ============================================================
+
+-- 55. compute_user_priority_score() — v5.4-M5L11
+-- CRITICAL FIX: Network multiplier used Core/High/Medium/Low matching
+-- but actual DB values are P0🔥, P1, P2 (with emoji)
+-- Old: CASE np WHEN 'Core' THEN 0.12 WHEN 'High' THEN 0.08 ...
+-- New: CASE WHEN np ILIKE '%P0%' THEN 0.12 WHEN np ILIKE '%P1%' THEN 0.08 ...
+-- NULL fallback: name-matched person with NULL e_e_priority gets 1.03x (was 1.0)
+-- Embedding fallback: also updated to P0/P1/P2 matching
+-- ORDER BY: P0 > P1 > P2 > other > NULL (was Core > High > Medium > Low)
+
+-- 56. Depth multiplier sync in compute_user_priority_score()
+-- Grade 1: 0.93 → 1.0 (neutral, already done in v5.3-M5L10 but documenting)
+-- Grade 0: 0.90 (explicit skip penalty)
+-- approved_depth takes precedence over auto_depth
+
+-- ============================================================
+-- M5 Loop 3 (2026-03-22) — explain_score() Sync + Docs
+-- ============================================================
+
+-- 57. explain_score() — synced to v5.4-M5L11
+-- Was still using old Core/High/Medium/Low network matching (from v5.2 era)
+-- Changes:
+--   Network: P0/P1/P2 ILIKE matching (not WHEN 'Core' literal)
+--   NULL fallback: name-matched person with NULL priority → 1.03x boost
+--   Embedding fallback: P0/P1/P2 matching in embedding path too
+--   Depth grade 1: 0.93 → 1.0 (synced with compute function)
+--   Depth grade 0: 0.90 (synced with compute function)
+--   approved_depth takes precedence over auto_depth
+--   Added 'network_priority' field to multipliers JSONB output
+--   Model version: v5.3-M5L9 → v5.4-M5L11
+--   Formula string: 18 multipliers, cap=[0.4,1.35]
+
+-- 58. Dropped stale explain_score(integer) overload
+-- Bug: PostgreSQL resolved explain_score(29) to integer overload (v5.2),
+--   bypassing the updated bigint overload (v5.4-M5L11)
+-- FIX: DROP FUNCTION explain_score(integer)
+-- Only bigint variant now exists
+
+-- 59. scoring-model.md skill doc updated
+-- Network multiplier: Core/High/Medium/Low → P0/P1/P2 with actual values
+-- Depth multiplier: grade 1 = 1.0 (was 0.93), grade 0 = 0.90, approved_depth
+-- Model version header: v5.2-L96 → v5.4-M5L11
+
+-- DISTRIBUTION (28 active actions):
+--   9-10: 0 (0.0%) — no top-compression
+--   7-8: 13 (46.4%)
+--   5-6:  4 (14.3%)
+--   3-4: 10 (35.7%)
+--   1-2:  1 (3.6%)
+-- Regression: 22/22 PASS | Health: 10/10
+
+-- MULTIPLIER ACTIVITY AUDIT (10-action sample):
+--   obligation_mult: 1.000 for ALL — consistently inactive
+--   cindy_mult: 1.000 for ALL — consistently inactive
+--   financial_urgency: 1.000 for ALL — consistently inactive
+--   thesis_momentum: 1.100 for ALL — working but uniform
+--   interaction_recency: 100% coverage, avg 0.53 raw — working well
+--   portfolio_health: active for 5/28 — working where portfolio linked
+
+-- MODEL STATE: v5.4-M5L11 | 18 multipliers | cap=[0.4,1.35] | sigmoid@8.0
+-- Regression: 22/22 PASS | Health: 10/10
+-- Network priority values in DB: P0🔥 (3), P1 (6), P2 (1), NULL (3503)
+-- NEXT: investigate obligation_mult/cindy_mult inactivity

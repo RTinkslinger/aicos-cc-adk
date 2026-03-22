@@ -4,9 +4,9 @@ How the AI CoS user priority scoring system works. Read this before reasoning ab
 
 ---
 
-## Model Version: v5.2-L96
+## Model Version: v5.5-M5L12
 
-The scoring model is a **multiplicative model** with z-score normalization. It produces scores from 1.0 to ~9.5 (sigmoid-capped at 8.0 for top-end granularity).
+The scoring model is a **multiplicative model** with z-score normalization and 18 multipliers. It produces scores from 1.0 to ~9.5 (sigmoid-capped at 8.0 for top-end granularity).
 
 ## Architecture Overview
 
@@ -95,26 +95,28 @@ Action type determines base importance hierarchy:
 | Other | 1.00 |
 
 ### 4. Network Multiplier
-Matches person names in the action text against the `network` table:
+Matches person names in the action text against the `network` table. Uses actual DB priority values (P0/P1/P2 with emoji, not Core/High/Medium/Low):
 
 | Person Priority | Base Boost |
 |----------------|-----------|
-| Core | +12% |
-| High | +8% |
-| Medium | +4% |
-| Low | +1% |
+| P0 (contains "P0") | +12% |
+| P1 (contains "P1") | +8% |
+| P2 (contains "P2") | +4% |
+| Any other value | +2% |
+| NULL (name matched, no priority) | +3% (fallback) |
 
-Additional +2% if person's RYG status is Green. Falls back to embedding similarity (>0.65 threshold) if no text match found.
+Additional +2% if person's RYG status is Green. Falls back to embedding similarity (>0.65 threshold) if no text match found. Embedding fallback also uses P0/P1/P2 matching.
 
 ### 5. Depth Multiplier
-Uses `depth_grades.auto_depth` (1-4 scale from Megamind):
+Uses `depth_grades.auto_depth` or `approved_depth` (if set, takes precedence). 0-4 scale from Megamind:
 
 | Depth Grade | Multiplier |
 |-------------|-----------|
 | 4 (deepest) | 1.15 |
 | 3 | 1.05-1.10 (1.10 if strategic_score > 7) |
-| 2 | 1.01 |
-| 1 (shallow) | 0.93 |
+| 2 | 1.02 |
+| 1 (shallow) | 1.00 (neutral — v5.4 fix, was 0.93) |
+| 0 (skip) | 0.90 |
 
 ### 6. Freshness Multiplier
 For Proposed actions: `1.0 + 0.05 * e^(-0.1 * days_old)`. New actions get a small boost that decays exponentially.
@@ -129,7 +131,7 @@ Learned from user accept/dismiss behavior via `preference_weight_adjustments` ta
 Historical accept vs. dismiss rate for this action_type. Needs at least 3 decided actions to activate. Adjusts up to +/-8%.
 
 ### 10. Obligation Multiplier
-From `obligation_urgency_multiplier()`. Boosts actions tied to overdue obligations (relationship risk).
+From `obligation_urgency_multiplier()` (v2, M5L12). Activates for ANY action with `obligation_action_links`, regardless of source. Factors in blended_priority (from M8 Cindy's differentiated priorities 0.43-0.80), overdue days, obligation_type (I_OWE_THEM +4%), and fulfilled status (0.75x stale penalty). Orphan penalty (0.92x) only applies to `obligation_followup`-sourced actions with no links. Cap: [0.75, 1.25]. Coverage: 46% of proposed actions.
 
 ### 11. Cindy Intelligence Multiplier
 From `cindy_intelligence_multiplier()`. Boosts actions where Cindy (comms agent) has detected signals in emails/interactions.

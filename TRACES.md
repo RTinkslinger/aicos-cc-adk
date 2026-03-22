@@ -1009,3 +1009,9 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - M-WhatsApp temp: 715 conversations (153K messages) extracted + ingested to Supabase
 - Session ended 03:30 UTC. Total agents: 100+. System 3/10→8.3/10. Product D/4.8→B+/7.5.
 ---
+
+### Iteration 34 - 2026-03-21
+**What:** Automated WhatsApp sync pipeline — 15-min launchd schedule for SQLite→markdown→Supabase
+**Changes:** `scripts/whatsapp_sync.sh` (new — wrapper pipeline with lock file, log rotation, staleness check), `scripts/whatsapp_ingest.py` (fixed REST API upsert: added `on_conflict=jid` to URL), `.env.local` (added SUPABASE_URL + SUPABASE_SECRET_KEY), `~/Library/LaunchAgents/com.aicos.whatsapp-sync.plist` (new — 15-min launchd agent)
+**Context:** WhatsApp data was manual-only (no cron, no launchd). Now automated: WhatsApp Desktop auto-starts on boot (Login Items), launchd runs extract+ingest every 900s, incremental mode means each run takes seconds. Supabase `sb_secret_` key format works with REST API. Fixed `on_conflict=jid` (was hitting `chat_name` unique constraint instead). Test run: 712 conversations upserted, 0 failures.
+---

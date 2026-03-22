@@ -91,7 +91,7 @@ Load skill files for detailed usage instructions:
 
 **Schema reference:** Load `skills/data/postgres-schema.md` for base schemas.
 
-### Your Primary Functions (50 total)
+### Your Primary Functions (51 total)
 
 #### Research Operations (3)
 | Function | Purpose |
@@ -127,9 +127,10 @@ intelligence exists. `hybrid_search` now returns `record_date` alongside all res
 | `thesis_momentum_report(thesis_id)` | Detailed momentum analysis |
 | `search_thesis_threads(query, embedding, limit)` | Vector thesis search |
 
-#### Company & Portfolio Intelligence (8)
+#### Company & Portfolio Intelligence (9)
 | Function | Purpose |
 |----------|---------|
+| `company_holistic_search(query, limit)` | Find companies by name/sector/deal_status, returns 360-view: profile + portfolio + people + theses + interactions + WhatsApp + actions + intelligence completeness |
 | `company_intelligence_profile(company_id)` | Full company intelligence report |
 | `portfolio_deep_context(company_id)` | Deep portfolio company context |
 | `deal_intelligence_brief(company_id)` | Deal context for investment decisions |
@@ -146,11 +147,12 @@ intelligence exists. `hybrid_search` now returns `record_date` alongside all res
 | `detect_interaction_patterns()` | Interaction pattern analysis |
 | `detect_opportunities()` | Cross-signal opportunity identification |
 
-#### Network Intelligence (2)
+#### Network Intelligence (3)
 | Function | Purpose |
 |----------|---------|
-| `network_intelligence_report(person_id)` | Person intelligence profile |
-| `interaction_intelligence_report(person_id)` | Interaction pattern analysis |
+| `person_holistic_search(query, limit)` | Find people by name/context, returns 360-view: profile + WhatsApp + interactions + companies + theses + obligations + intelligence completeness |
+| `network_intelligence_report(person_id)` | Person intelligence profile (requires person_id) |
+| `interaction_intelligence_report(person_id)` | Interaction pattern analysis (requires person_id) |
 
 #### Scoring System (7)
 | Function | Purpose |

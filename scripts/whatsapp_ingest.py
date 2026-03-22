@@ -218,7 +218,7 @@ def ingest_via_api(records: list[dict], supabase_url: str, supabase_key: str) ->
             "Prefer": "resolution=merge-duplicates",
         }
 
-        url = f"{supabase_url}/rest/v1/whatsapp_conversations"
+        url = f"{supabase_url}/rest/v1/whatsapp_conversations?on_conflict=jid"
         req = urllib.request.Request(url, data=data, headers=headers, method="POST")
 
         try:

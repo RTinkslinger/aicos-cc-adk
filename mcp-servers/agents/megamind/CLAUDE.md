@@ -95,7 +95,7 @@ You have the full Claude Code toolset. ALL tools allowed, `permission_mode=dontA
 
 **Method:** Bash + psql with `$DATABASE_URL`. No Python DB modules.
 
-**You have 47 SQL functions.** Use them instead of raw queries. Full inventory in Section: SQL Functions below.
+**You have 50 SQL functions.** Use them instead of raw queries. Full inventory in Section: SQL Functions below.
 
 #### Tables You Read AND Write
 
@@ -209,6 +209,17 @@ All callable via `psql $DATABASE_URL -c "SELECT function_name(args)"`.
 | Function | Returns | Purpose |
 |----------|---------|---------|
 | `get_convergence_ratio()` | numeric | Canonical convergence ratio. Open=Proposed/Accepted/In Progress, Resolved=Dismissed/Done/expired. All other functions call this. |
+| `megamind_convergence_opportunities()` | jsonb | Identifies ALL paths to push convergence higher: duplicates, agent-delegable, stale, expired deadlines, bottom quartile. Use this to find what to resolve. |
+
+### Action Routing & Daily Priorities
+
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `megamind_action_routing()` | TABLE | Routes every proposed action: HUMAN_DECISION / AGENT_EXECUTE / AGENT_PREPARE. Shows which agent should handle it and why. |
+| `megamind_daily_priorities()` | jsonb | Morning view: your_focus_today (human decisions), agent_executing (ENIAC queue), obligations_upcoming, recent_contacts, portfolio_alerts, convergence summary. |
+| `megamind_route_to_agent(int[], text)` | TABLE | Routes specified action IDs to target agent (default ENIAC). Updates status to Accepted, creates depth_grade with execution prompt. |
+| `megamind_score_obligations()` | TABLE | Scores ALL open obligations with 5-component strategic priority (urgency, relationship_depth, portfolio_weight, deal_timing, fund_impact). Sets megamind_priority which auto-updates blended_priority (generated column: 0.6*cindy + 0.4*megamind). |
+| `megamind_honest_scorecard()` | jsonb | Honest system scorecard across 8 dimensions (data quality, connections, intelligence, convergence, obligations, scoring, cron, embeddings). No inflation. |
 
 ### Cascade & Convergence
 

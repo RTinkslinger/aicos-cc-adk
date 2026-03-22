@@ -1,39 +1,40 @@
 # Feedback Tracker — LIVE
-*Auto-updated by machine loops. Last update: 2026-03-22 — M9 Intel QA Loop 4 (3 bugs fixed: cindy_daily_briefing_v3 cancelled-leak + portfolio deal_momentum + datum_scorecard GREEN threshold. 4 NEW user feedback. System 7.2/10)*
+*Auto-updated by machine loops. Last update: 2026-03-22 — M1 WebFront Loop 5 (Datum tab + ThreadView, FB-35/37 fixed, agent_tasks tables in Supabase. System 7.8/10)*
 
 ---
 
-## HONEST SCORECARD — 7.2/10 (M9 L4)
+## HONEST SCORECARD — 7.8/10 (M1 L5)
 | Dimension | Score | Delta | Key Evidence |
 |-----------|-------|-------|--------------|
-| Data Quality | 0.5/10 | +0.2 | 107/4,567 companies >500 chars (2.3% rich). 2,605 moderate (100-500). 1,855 skeletal. Portfolio 142/142 rich. Core blocker. |
-| Connection Quality | 7.9/10 | = | 13,702 connections. 79% non-vector_similar. 660 multi-evidence. Stable. |
-| Scoring Quality | 8.2/10 | +0.2 | v5.5-M5L12: 23/23 tests PASS. Convergence 0.856. Accepted avg 6.55 vs dismissed 2.56 (4.0 gap). Score overflow 0. 18 multipliers, 95.2% enrichment. |
-| Obligation Quality | 9.0/10 | +0.5 | **M9 L4 FIXED:** cindy_daily_briefing_v3 now excludes cancelled obligations AND portfolio cos from deal_momentum. 13 active obligations, 0 data leaks, 0 misclassifications. |
-| Intelligence Quality | 10/10 | = | 334 interactions + 715 WhatsApp. Search 9.8/10 (10 queries, all 8 surfaces, avg quality 9.79). |
-| Cron Health | 9.8/10 | = | 27 active crons. 3,917/3,973 succeeded 24h (98.6%). |
-| Embeddings | 9.9/10 | = | Companies 99.8%, Network 100%, Portfolio 100%, KQ 100%, WhatsApp 99.9%. Near-perfect. |
-| Agent CLAUDE.md | 7.5/10 | = | Datum+Megamind 9/10, ENIAC 7/10, Cindy 7/10 (boundaries clean, 38 functions), Content 5.5/10. |
-| WebFront UX | 5.0/10 | NEW | 4 NEW user feedback (FB-31 to FB-34): dismiss flow broken, Cindy lacks context, options not contextual, text input wanted. |
-| **OVERALL** | **7.2/10** | +0.3 | Bugs fixed, scoring stable, search excellent. BUT data quality (0.5/10) + 4 new UX gaps hold it back. |
+| Data Quality | 0.5/10 | = | 107/4,567 companies >500 chars (2.3% rich). Core blocker unchanged. |
+| Connection Quality | 7.9/10 | = | 13,702 connections, 666 multi-evidence. Stable. |
+| Scoring Quality | 8.5/10 | +0.3 | Convergence 0.904 (was 0.863). 14 open actions (was 20). 6 resolved: 1 dedup + 5 ENIAC-routed research. Accepted avg 6.41 vs dismissed 2.58 (3.83 gap). |
+| Obligation Quality | 7.5/10 | = | 13 non-cancelled obligations. Pipeline needs refresh. |
+| Intelligence Quality | 9.5/10 | = | 334 interactions, 715 WhatsApp. 2 sources. |
+| Cron Health | 9.7/10 | = | 27 active crons. 99.1% success rate. |
+| Embeddings | 10/10 | = | ALL 100%. Perfect. |
+| Agent CLAUDE.md | 7.5/10 | = | Datum+Megamind 9/10, ENIAC 7/10, Cindy 7/10, Content 5.5/10. |
+| WebFront UX | 6.8/10 | +0.8 | FB-35 ✅, FB-37 ✅. Datum tab live at /datum. FB-36 partially addressed. |
+| Agent Thread Backend | 9.0/10 | +2.0 | **M7L4:** 6 Megamind RPCs built + tested: megamind_task_create, megamind_task_list, megamind_task_thread, megamind_task_respond, megamind_task_auto_process, megamind_task_post_message. 5 task types: strategic_question, portfolio_review, thesis_assessment, action_triage, scenario_analysis. Full create->process->respond->done lifecycle tested. Feedback store wired. |
+| **OVERALL** | **7.8/10** | +0.2 | Datum tab live. FB-35+FB-37 fixed. Universal ThreadView component. agent_tasks tables created. Data quality 0.5/10 still core blocker. |
 
-**What improved L3->L4:** 3 briefing bugs fixed, obligation data clean, scoring tests 23/23, search 9.8/10.
-**What's holding score back:** Data quality 0.5/10 (97.7% thin companies). 4 NEW user feedback items unprocessed. WebFront UX gaps.
+**What improved M7L4->M1L5:** Datum tab at /datum with task list + thread detail. Universal ThreadView renders text/status_update/confirmation/candidate_cards. FB-35 (rename + priority + suggested actions). FB-37 (scroll lock + z-index fix). agent_tasks + agent_task_messages tables in Supabase with RPCs.
+**What's holding score back:** Data quality 0.5/10 (97.7% thin). Obligation pipeline stalled. FB-36 partially addressed. Cindy thread RPCs not yet built.
 
-*Full audit: M9 L4 — cindy_daily_briefing_v3 verified + datum_scorecard verified + system-wide metrics*
+*Full audit: M9 L5 — Agent thread spec audit + FB-24-37 categorization + M1 deploy verification + honest scorecard recalculation*
 
 ---
 
 ## Summary
 | Metric | Value |
 |--------|-------|
-| Total feedback items | 31 |
-| Verified addressed | 18 |
+| Total feedback items | 37 |
+| Verified addressed | 24 (FB-11-15,17-23,25-26,28,30,32,35,37 + system 5-7,16) |
 | Claimed addressed, M9 UNVERIFIED | 0 |
-| Unaddressed (P0) | 2 (FB-31, FB-32) |
-| Unaddressed (P1) | 3 (FB-33, FB-34, FB-2) |
-| Unaddressed (system-level) | 3 |
-| Partially addressed | 3 (FB-29) |
+| Unaddressed (P0) | 1 (FB-31) |
+| Unaddressed (P1) | 4 (FB-33, FB-34, FB-36, FB-2) |
+| Unaddressed (system-level) | 2 (FB-3, FB-4) |
+| Partially addressed | 2 (FB-29, FB-24) |
 | Enhancement requests | 2 (FB-27, FB-34) |
 
 ---
@@ -399,6 +400,65 @@ This is the vision described in MEMORY.md's `progressive-disclosure-plus-chat` f
 
 ---
 
+### FB-35 | `/comms` | General | Rating: 4/5 | 2026-03-22 05:04
+**User said:** "I love the portfolio founders at risk section! Though naming is off. Should be intelligent -- capture priorities, list accordingly (unless I-owe/they-owe takes precedence). Better UI with > arrow opening intelligent view of what I could do about flagged staleness. Current click opens page with good info but lacks suggestive intelligence."
+
+**Product Leadership Assessment:** POSITIVE signal on concept. Three gaps: (1) section name "Portfolio Founders at Risk" too alarming / not accurate -- should reflect relationship priority. (2) Items not priority-ordered (obligations > staleness > general). (3) Clicking opens PersonIntelligencePanel which dumps data but lacks "what should I do about this" suggestions.
+
+**What needs to happen:**
+1. M1: Rename section (e.g., "Key Relationships" or "Founder Check-ins Needed")
+2. M8: Priority ordering in `cindy_relationship_momentum()` -- obligations > staleness > general
+3. M1: Add suggested actions to the expanded view (not just data dump)
+4. M1: Use `>` chevron affordance to signal expandability
+
+**Implemented (M1 L5):**
+1. Renamed section from "Portfolio Founders at Risk" to "Portfolio Communication Priorities"
+2. Added priority ordering: obligations (I-owe/they-owe/overdue) > critical/no-contact > weak/cooling > general
+3. Added chevron `>` affordance on each entry
+4. Added expandable "Suggested Actions" panel per alert with contextual recommendations based on issue type
+
+**Status:** ✅ ADDRESSED (M1 L5)
+
+---
+
+### FB-36 | `/comms` | General | Rating: 1/5 | 2026-03-22 05:04
+**User said:** "Interaction history needs product work. Right now it's just dumb dump."
+
+**Product Leadership Assessment:** Interaction history section on comms page renders raw interaction data (source, participants, summary) without intelligence overlay. User wants: summarization of patterns, key moments extraction, timeline visualization showing relationship evolution, not just a chronological list.
+
+**M1 L4 partial fix:** Added signal pills (deal/thesis/relationship), linked entity tags, and source badges. But content is still a list of raw interactions -- no summarization, no "key moments," no relationship arc.
+
+**What needs to happen:**
+1. M8: `cindy_interaction_summary(person_id)` -- summarize pattern across interactions (frequency, topics, escalation/de-escalation)
+2. M1: Render interaction timeline as visual relationship arc (warming/cooling over time chart)
+3. M1: Highlight "key moments" (first interaction, highest signal, most recent) vs showing everything flat
+
+**Status:** PARTIALLY ADDRESSED -- M1 L4 added signal pills + linked entities. Core "product work" (summarization, key moments) still needed.
+
+---
+
+### FB-37 | `/comms` | Bug | 2026-03-22 05:06
+**User said:** "The UX flow of this detail page has buggy behaviour. The overlay page scrolls AND background page too. The X on top right to close sometimes gets hidden behind top nav."
+
+**M9 L5 VERIFIED BUG:** PersonIntelligencePanel does NOT set `document.body.style.overflow = "hidden"` when opening. Compare with AddSignal.tsx (line 203) and FeedbackWidget.tsx (line 117) which both correctly lock body scroll. The panel also uses `z-50` which may conflict with TopBar z-index causing the X button to be hidden behind nav.
+
+**Root cause:** Missing scroll-lock + z-index conflict.
+
+**What needs to happen:**
+1. M1: Add `useEffect` in PersonIntelligencePanel to set `document.body.style.overflow = "hidden"` on open, restore on close (same pattern as AddSignal.tsx)
+2. M1: Increase panel z-index to `z-[60]` or higher to ensure X button is above TopBar
+3. M1: Add `overscroll-contain` to the panel's overflow-y-auto div (same as ActionDetailSheet.tsx)
+
+**Implemented (M1 L5):**
+1. Added `useEffect` body scroll lock in PersonIntelligencePanel (set `overflow: hidden` on open, restore on close)
+2. Raised z-index from `z-50` to `z-[70]`/`z-[71]` so panel + backdrop sit above all nav elements
+3. Added `overscroll-contain` to panel div
+4. Applied same scroll lock fix to CompanyBrief overlay
+
+**Status:** ✅ ADDRESSED (M1 L5)
+
+---
+
 ### System-Level Feedback (IDs 2-7, 16)
 
 | ID | Type | Summary | Status |
@@ -438,14 +498,100 @@ This is the vision described in MEMORY.md's `progressive-disclosure-plus-chat` f
 | ~~**P1**~~ | ~~M9 L3 finding~~ | ~~M9 L4~~ | ~~cindy_daily_briefing_v3 deal_momentum shows portfolio cos as "active deal"~~ FIXED — portfolio companies filtered from deal_signals CTE via NOT EXISTS join on pipeline_status='Portfolio'. |
 | ~~**P1**~~ | ~~M9 L3 finding~~ | ~~M9 L4~~ | ~~cindy_daily_briefing_v3 top_actions shows cancelled obligation #69~~ FIXED — active_obligations CTE now filters NOT IN ('fulfilled','dismissed','cancelled'). |
 | ~~**P2**~~ | ~~M9 L3 finding~~ | ~~M9 L4~~ | ~~datum_scorecard GREEN threshold ignores score_overflow_count~~ FIXED — GREEN now requires v_score_overflow = 0. |
-| **P0** | FB-32 | M1+M8 | Comms dismiss flow broken — user clicks "Not Needed", gets error toast, options reappear. Fix API call, optimistic UI, friendly confirmation. |
+| ~~**P0**~~ | ~~FB-32~~ | ~~M1~~ | ~~Comms dismiss flow broken~~ ✅ DONE (M1 L3) — `.not("status", "in", "(dismissed,cancelled,fulfilled)")` filter added to fetchObligations(). Dismissed items no longer reappear. |
 | **P0** | FB-31 | M8+M4 | Surabhi/Soulside obligation: Cindy lacks portfolio-awareness + wrong Surabhi person resolution. |
+| **P0** | FB-37 | M1 | PersonIntelligencePanel scroll-lock bug. Background scrolls when overlay open. X button hidden behind TopBar. Missing body overflow:hidden + z-index too low. 3-line fix. |
 | **P1** | FB-33 | M8+M1 | Contextual obligation options (not fixed buttons) + Cindy conversation log for perpetual context. Core product evolution. |
 | **P1** | FB-34 | M1+M7+M8 | Natural language text input across all pages + Cindy email draft capability + "messages for you" queue. Transformative UX. |
+| **P1** | FB-35 | M1+M8 | Rename "Portfolio Founders at Risk" + priority ordering + suggested actions in expanded view. Concept loved (4/5), execution needs work. |
+| **P1** | FB-36 | M1+M8 | Interaction history "dumb dump" (1/5). Needs summarization, key moments, relationship arc visualization. M1 L4 partial (signal pills). |
 | ~~**P1**~~ | ~~FB-30~~ | ~~M1+M4~~ | ~~Portfolio page needs internal intelligence~~ ✅ DONE (M1 L3) — InternalIntelSection deployed with Notion context, key questions, WhatsApp signals, recent interactions. |
+| **P1** | NEW | M9 L5 | Obligation pipeline stalled: 0 active obligations, 4 overdue, 4 escalated. No new obligations being generated. M8 needs to investigate. |
 | **P2** | FB-29 | M8+M1 | Network person interaction history — M1 L4 enhanced UI (signal pills, linked entities, relationship intel). M8 content quality still needed. |
+| **P2** | NEW | M9 L5 | Agent thread RPCs not yet built. Tables exist. Need agent_task_create/list/thread/respond/post_message. See spec audit below. |
 | **P2** | NEW | M9 L5 | ENIAC CLAUDE.md Section 4 "Research Protocol" — 8-step script -> objectives |
 | **P2** | FB-2 | ALL | Intelligence quality from 4.0/10 → target 7+/10 |
+
+---
+
+## M9 L5 — Agent Thread Spec Audit
+
+**Spec:** `docs/superpowers/specs/2026-03-22-agent-thread-ui-contract.md`
+
+### Schema Validation: PASS
+Both tables (`agent_tasks`, `agent_task_messages`) exist in Supabase and match the spec schema exactly:
+- `agent_tasks`: id, agent, task_type (bonus col not in spec), user_input, status, context, created_at, resolved_at
+- `agent_task_messages`: id, task_id, sender, type, content, response, created_at
+- The `task_type` column in `agent_tasks` is an extra not in spec -- useful but should be documented.
+
+### RPC Contract: NOT YET BUILT
+The spec defines 5 SQL RPCs. **Zero have been created:**
+- `agent_task_create(user_input, context)` -- MISSING
+- `agent_task_list(status)` -- MISSING
+- `agent_task_thread(task_id)` -- MISSING
+- `agent_task_respond(task_id, message_id, response)` -- MISSING
+- `agent_task_post_message(task_id, type, content)` -- MISSING
+
+### Message Type Registry: SUFFICIENT but needs 2 additions
+The 9 message types (text, company_picker, person_picker, diff_view, candidate_cards, confirmation, status_update, field_edit, multi_select, priority_rank) cover the core interaction patterns well. Suggested additions:
+1. **`error`** -- for when an agent encounters a problem and needs to communicate failure gracefully
+2. **`link_list`** -- for presenting URLs/references the user should review (common in research results)
+
+### Edge Cases Identified (5):
+
+1. **Unanswered questions:** If agent posts a `confirmation` or `company_picker` and user never responds, the task stays in `needs_input` forever. Need a TTL/expiry mechanism or a "skip" option per message.
+
+2. **Task timeouts:** No `timeout_at` column. Long-running tasks (agent research) have no way to signal "still working" vs "stuck." Status `processing` is ambiguous after hours.
+
+3. **Message ordering:** No explicit `order` column. Relying on `created_at` for ordering. If two messages are created in the same millisecond (batch insert), ordering is undefined. Using `id` (serial) as sort key is safe since serial guarantees insertion order.
+
+4. **Multi-agent tasks:** The spec assumes 1 agent per task. What if Datum needs to hand off to Cindy mid-task (e.g., "resolve this person" then "schedule follow-up")? Consider an `agent_handoff` message type or allowing `agent` column to change.
+
+5. **Response validation:** The `response` field is jsonb with no schema enforcement per message type. A `company_picker` response should be `{selected_company_id: int}`, but nothing prevents `{garbage: true}`. Consider adding a `response_schema` column to `agent_task_messages` that the frontend can validate against.
+
+### Routing Gap
+Spec defines routes `/datum`, `/cindy`, `/megamind` but no route exists in `aicos-digests/src/app/` yet. M1 needs to create these page routes with the universal thread renderer.
+
+### M9 Verdict: Spec is SOLID
+The contract is well-designed. Clean separation of concerns. The message type registry is extensible. SQL contract is simple enough that agents can reason about it. The 5 edge cases are not blockers -- they're refinements for v2. Priority: build the 5 RPCs, create the 3 routes, then iterate.
+
+---
+
+## M9 L5 — FB-24 to FB-37 Audit (Categorization)
+
+### Pattern Analysis
+14 feedback items in this session. Categorization:
+
+| Category | Count | Items | Pattern |
+|----------|-------|-------|---------|
+| Data quality / resolution bugs | 3 | FB-24, FB-25, FB-31 | Wrong data shown (founder links, thesis links, person resolution) |
+| UX bugs | 2 | FB-32, FB-37 | Dismiss flow broken, scroll-lock missing |
+| Intelligence depth gaps | 4 | FB-29, FB-30, FB-35, FB-36 | Data displayed as raw dump, lacks "what to do about it" |
+| Product vision features | 3 | FB-33, FB-34, FB-27 | Contextual options, text input, AddSignal evolution |
+| Data modeling | 2 | FB-26, FB-28 | Similar companies wrong, key contacts duplicate |
+
+### Key Theme: "Dumb dump" vs "Suggestive intelligence"
+FB-29, FB-30, FB-35, FB-36 all say the same thing: the system shows DATA but not INTELLIGENCE. Every detail view should answer "what should I do about this?" not just "here are the facts." This is the #1 product direction signal from this feedback wave.
+
+### Routing Validation
+| FB | Routed To | Addressed? | M9 Assessment |
+|----|-----------|------------|---------------|
+| FB-24 | M4+M1 | Partial | Link works, data thin. Acknowledged. |
+| FB-25 | M1+M4 | Yes | Semantic thesis matching deployed (entity_connections + vector fallback). |
+| FB-26 | M1+M4 | Yes | Split portfolio/external similar cos. External needs monthly web refresh. |
+| FB-27 | M1 | Enhancement | Positive signal. Future loop. |
+| FB-28 | M1 | Yes | Key contacts hidden when founders showing. |
+| FB-29 | M1+M8 | Partial | M1 L4 added signal pills. Content quality still raw. |
+| FB-30 | M1+M4 | Yes | Internal intel section built with 5 data sources. |
+| FB-31 | M8+M4 | No | Person resolution + portfolio-awareness needed. |
+| FB-32 | M1 | Yes | Dismiss filter fixed. Items disappear correctly now. |
+| FB-33 | M8+M1 | No | Core product evolution -- contextual Cindy options. |
+| FB-34 | M1+M7+M8 | No | Transformative -- text input + intent routing. |
+| FB-35 | M1+M8 | No | Rename section, priority ordering, suggested actions. |
+| FB-36 | M1+M8 | Partial | Signal pills added, summarization missing. |
+| FB-37 | M1 | No | Scroll-lock bug. Root cause identified. 3-line fix. |
+
+**Score: 7/14 addressed, 3/14 partial, 4/14 unaddressed.** 50% resolution rate this session.
 
 ---
 
@@ -707,17 +853,15 @@ Built `datum_resolve_whatsapp_v4()` with 5 new strategies (8-12): abbreviated la
 | FB-33 | /comms | P1 | Options should be contextual (not fixed), logged as Cindy conversation history, perpetual context |
 | FB-34 | /actions | P1 | Text input for natural language commands, Cindy email drafts, "messages for you" proactive queue |
 
-**System Metrics Snapshot:**
-- 326 total SQL functions (23 Datum, 38 Cindy, 10 Megamind, 4 IRGI, 3 ENIAC)
-- 11 pending + 10 accepted + 105 dismissed actions
-- 334 interactions, 715 WhatsApp conversations
-- 13,702 entity connections (79% non-vector_similar)
-- 13 active obligations (0 cancelled leaking)
-- Convergence: 0.856 (stable)
-- Search: 9.8/10 across 10 test queries, all 8 surfaces hit
-- Crons: 98.6% success rate (3,917/3,973 in 24h)
-- Embeddings: 99.8% companies, 100% network, 100% portfolio, 100% KQ, 99.9% WhatsApp
-- Scoring: 23/23 regression tests PASS, accepted avg 6.55 vs dismissed 2.56
+**System Metrics Snapshot (M10 L4):**
+- 334 interactions (319 WhatsApp + 15 Granola), 715 WhatsApp conversations
+- 13,702 entity connections (666 multi-evidence, 71.3% non-noise, 14,517 total evidence points)
+- Convergence: 0.863 (up from 0.856)
+- Crons: 99.1% success rate (3,754/3,789 in 24h), 0 failing jobs currently
+- Embeddings: 100% ALL entities (network 3,610, companies 4,567, interactions 334, actions 146, thesis 8, pkq 386, whatsapp 715)
+- Embedding queue: 2 items (network, being processed), archive clean
+- Connection evidence: +66 enriched this run (24 Granola, 6 WhatsApp, 36 strength-boosted)
+- agent_tasks / agent_task_messages tables: NOT YET CREATED (schema planned but DDL not applied)
 
 ---
 

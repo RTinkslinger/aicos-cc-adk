@@ -999,5 +999,13 @@ Milestone 1 established the Claude Code era foundation: fixed Content Digest/Act
 - M9 audit: 249 SQL functions, only 41 (16%) referenced in agent files. ENIAC has no CLAUDE.md. 208 functions invisible.
 - 8 new skill files written (obligation-triage, interaction-analysis, strategic-briefing, data-quality, enrichment, eniac-research, eniac-search, etc.)
 - M4 Datum: 3 skills written + CLAUDE.md updated with 14-function inventory + orchestrator routing updated. Gap CLOSED for Datum.
-- Session still active — 6 machines writing agent files. Total agents spawned: 90+
+- Agent CLAUDE.md rewrites: Datum 9/10, Megamind 9/10, Cindy rewritten, ENIAC created
+- 20 skill files (5,000+ lines). Persistent agent SDK pattern codified.
+- 3 enforcement hooks: golden-pattern-enforce, machine-health-check, check-feedback-before-agent
+- M5 v5.3: 18 multipliers, rogue normalize killed, overflow found
+- M7: convergence 0.800 (inflation bug fixed), briefing v5.1, score scale fixed
+- M8: deal intelligence pipeline, Quivly fix, ONE THING ranking fixed
+- M10: system 8.3/10 (A), product 7.5/10 (B+)
+- M-WhatsApp temp: 715 conversations (153K messages) extracted + ingested to Supabase
+- Session ended 03:30 UTC. Total agents: 100+. System 3/10→8.3/10. Product D/4.8→B+/7.5.
 ---

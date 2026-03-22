@@ -115,7 +115,21 @@ WRONG (script-following, no reasoning):
 - Python scripts CAN do: data manipulation, codified logical processing, non-reasoning tasks. Python scripts CANNOT do: reasoning, strategic decisions, intelligence generation. If it needs reasoning → agent. If it's pure data transformation → Python tool is fine.
 - Machine loops keep building tools and commands that agents can USE — the agent's power grows each loop
 
-### 1a-iii. AGENT BUILD REVIEW SPECIALIST (MANDATORY for M4/M6/M7/M8 loops)
+### 1a-iii. DEPLOY TO DROPLET AFTER EVERY BUILD STEP (MANDATORY for agent machines)
+
+Every machine loop that modifies agent files (CLAUDE.md, skills, subagent configs, lifecycle.py) MUST deploy to the droplet at the END of the build step. The persistent agents on the droplet only pick up changes when files are synced.
+
+**Deploy command:** `cd mcp-servers/agents && bash deploy-with-lock.sh`
+
+The lock file (`/tmp/aicos-deploy.lock`) prevents concurrent deploys. If another machine is deploying, wait up to 120s. Stale locks (>5 min) auto-removed.
+
+**NEVER:**
+- End a loop without deploying modified agent files
+- Skip deploy because "I'll do it at the end"
+- Assume another machine will deploy your changes
+- Deploy without the lock (always use `deploy-with-lock.sh`, never `deploy.sh` directly)
+
+### 1a-iv. AGENT BUILD REVIEW SPECIALIST (MANDATORY for M4/M6/M7/M8 loops)
 
 Every machine loop that builds agents (Datum, ENIAC, Megamind, Cindy) MUST include a **Best-in-Class Autonomous Agent Review** specialist. This specialist reviews work from the vantage point of:
 

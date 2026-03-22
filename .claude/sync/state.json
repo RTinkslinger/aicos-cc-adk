@@ -18,7 +18,7 @@
     "status": "active",
     "last_session": {
       "summary": "Iteration 30: 76 agents, 8 machines, 7 at loop 20. 19,421 entity connections, 100% embeddings, IRGI 8.75/10, CIR 8.6/10, quality 7.3/10. /comms+/strategy deployed. M7+M8 on droplet.",
-      "timestamp": "2026-03-22T11:04:56Z"
+      "timestamp": "2026-03-22T11:05:54Z"
     },
     "current_tasks": [],
     "recent_decisions": [
@@ -49,6 +49,7 @@
       "M9: Re-audit after next round of fixes"
     ],
     "key_files_changed_last_session": [
+      "TRACES.md",
       "docs/feedback-timeline-2026-03-22.md",
       "docs/machine-context/M-ENIAC.md",
       "docs/machine-context/M-FEEDBACK.md",
@@ -57,8 +58,7 @@
       "docs/machine-context/M12.md",
       "docs/machine-context/M4.md",
       "docs/machine-context/M5.md",
-      "docs/machine-context/M6.md",
-      "docs/machine-context/M7.md"
+      "docs/machine-context/M6.md"
     ],
     "pending_inbox": []
   },
@@ -81,6 +81,6 @@
       "Build traces: rolling window + compaction every 3 iterations"
     ]
   },
-  "updated_at": "2026-03-22T11:04:56Z",
+  "updated_at": "2026-03-22T11:05:54Z",
   "updated_by": "cc"
 }

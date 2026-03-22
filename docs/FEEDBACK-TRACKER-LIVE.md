@@ -28,12 +28,12 @@
 | Metric | Value |
 |--------|-------|
 | Total feedback items | 31 |
-| Verified addressed | 17 |
+| Verified addressed | 18 |
 | Claimed addressed, M9 UNVERIFIED | 0 |
-| Unaddressed (P0) | 3 (FB-29, FB-31, FB-32) |
-| Unaddressed (P1) | 4 (FB-30, FB-33, FB-34, FB-2) |
+| Unaddressed (P0) | 2 (FB-31, FB-32) |
+| Unaddressed (P1) | 3 (FB-33, FB-34, FB-2) |
 | Unaddressed (system-level) | 3 |
-| Partially addressed | 2 |
+| Partially addressed | 3 (FB-29) |
 | Enhancement requests | 2 (FB-27, FB-34) |
 
 ---
@@ -252,7 +252,9 @@
 
 **Implemented:** M1 L3 replaced ILIKE thesis matching with entity_connections (287 authoritative links from Datum) as primary source + semantic vector similarity (>0.35 threshold) as discovery fallback. fetchPortfolioThesis now accepts portfolioId for entity_connections lookup. Semantic matches displayed with dashed border to distinguish from confirmed links. SQL function updated, TS types updated, deployed.
 
-**Status:** ADDRESSED (M1 L3)
+**M4 L3 Backend:** Built `datum_semantic_thesis_match(company_id)` -- pure embedding cosine similarity + signal enrichment (explicit_mention, sector_overlap, page_reference, bucket_overlap). Also `datum_semantic_thesis_match_by_name(company_name)` wrapper. Bulk-updated thesis_thread_links on ALL 4,551 companies using semantic embeddings (was 853 ILIKE-based). Coverage: 853 -> 4,560 companies (99.8%). Quality verified: StepSecurity->Cybersecurity (1.0), CodeAnt->Agent-Friendly Codebase (1.0), Confido->Healthcare AI (1.0).
+
+**Status:** ADDRESSED (M1 L3 + M4 L3 backend)
 
 ---
 
@@ -263,7 +265,9 @@
 
 **Implemented:** M1 L3 split similar companies into two sections: (1) "Similar Portfolio Cos" — portfolio-to-portfolio vector similarity, links to portfolio search; (2) "Similar External Cos" — portfolio-to-companies vector similarity with >0.5 threshold, excluding companies already in portfolio. SQL function `portfolio_intelligence_report` updated with new columns: `similar_portfolio_top3`, `similar_external_top3`. External companies still use embeddings (not parallel search) — monthly web-search refresh is a future M12 task.
 
-**Status:** PARTIALLY ADDRESSED (M1 L3) -- portfolio peer matching live, external web-search enrichment pending M12
+**M4 L3 Backend:** Built `datum_similar_companies(company_id)` -- embedding-based similarity with rich metadata (sector, deal_status, sector_tags, top_thesis, thesis_strength, is_portfolio). Created `find_related_companies(text)` overload to fix broken WebFront RPC call (was passing p_query_text to a function that only accepted p_company_id). Pre6 AI correctly finds ProactAI, Fidura AI, Codity AI as similar.
+
+**Status:** ADDRESSED (M1 L3 + M4 L3 backend)
 
 ---
 
@@ -290,7 +294,9 @@
 
 **Assessment:** Network person page interaction history section needs richer content, better UI, and higher intelligence quality. Requires M8 Cindy improvements to interaction analysis + M1 UI polish.
 
-**Status:** UNADDRESSED -- needs M8 + M1
+**M1 L4 partial fix:** Enhanced interaction rendering with deal/thesis/relationship signal pills, linked company tags, and cindy_relationship_intelligence() wired on all person pages (relationship score, story, recommended actions, multi-surface breakdown). Deployed.
+
+**Status:** PARTIALLY ADDRESSED (M1 L4 — UI+intel enhanced, M8 content quality still needed)
 
 ---
 
@@ -436,8 +442,8 @@ This is the vision described in MEMORY.md's `progressive-disclosure-plus-chat` f
 | **P0** | FB-31 | M8+M4 | Surabhi/Soulside obligation: Cindy lacks portfolio-awareness + wrong Surabhi person resolution. |
 | **P1** | FB-33 | M8+M1 | Contextual obligation options (not fixed buttons) + Cindy conversation log for perpetual context. Core product evolution. |
 | **P1** | FB-34 | M1+M7+M8 | Natural language text input across all pages + Cindy email draft capability + "messages for you" queue. Transformative UX. |
-| **P1** | FB-30 | M1+M4 | Portfolio page needs internal intelligence (Notion, WhatsApp, email) alongside deep research (external). |
-| **P1** | FB-29 | M8+M1 | Network person interaction history needs richer content, better UI, higher intelligence quality. |
+| ~~**P1**~~ | ~~FB-30~~ | ~~M1+M4~~ | ~~Portfolio page needs internal intelligence~~ ✅ DONE (M1 L3) — InternalIntelSection deployed with Notion context, key questions, WhatsApp signals, recent interactions. |
+| **P2** | FB-29 | M8+M1 | Network person interaction history — M1 L4 enhanced UI (signal pills, linked entities, relationship intel). M8 content quality still needed. |
 | **P2** | NEW | M9 L5 | ENIAC CLAUDE.md Section 4 "Research Protocol" — 8-step script -> objectives |
 | **P2** | FB-2 | ALL | Intelligence quality from 4.0/10 → target 7+/10 |
 
